@@ -33,7 +33,7 @@
                     Judul:
                   </th>
                   <td>
-                    <span>Logo Ponpes Daarut Tauhid</span>
+                    <span>Logo Akhyar Institute</span>
                   </td>
                 </tr>
                 <tr>
@@ -41,7 +41,7 @@
                     Dimensi:
                   </th>
                   <td>
-                    <span>5x5cm</span>
+                    <span>6x6cm</span>
                   </td>
                 </tr>
                 <tr>
