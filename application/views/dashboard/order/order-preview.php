@@ -33,7 +33,7 @@
                     Judul:
                   </th>
                   <td>
-                    <span>Logo Ponpes Miftahul Midad</span>
+                    <span>Logo Ponpes Daarut Tauhid</span>
                   </td>
                 </tr>
                 <tr>
