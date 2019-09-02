@@ -33,7 +33,7 @@
                     Judul:
                   </th>
                   <td>
-                    <span>Logo Akhyar Institute</span>
+                    <span>Salah judul</span>
                   </td>
                 </tr>
                 <tr>
