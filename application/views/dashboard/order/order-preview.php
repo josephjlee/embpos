@@ -33,7 +33,7 @@
                     Judul:
                   </th>
                   <td>
-                    <span>Salah judul</span>
+                    <span>Judul salah diketik dari github</span>
                   </td>
                 </tr>
                 <tr>
