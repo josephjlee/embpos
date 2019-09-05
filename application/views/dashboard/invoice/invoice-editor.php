@@ -295,7 +295,7 @@
 
             <div class="row">
               <div class="col">
-                <textarea name="invoice[note]" id="note" class="form-control" style="border:none;font-size:13px" placeholder="Catatan..."></textarea>
+                <textarea name="invoice[note]" id="note" class="form-control" style="border:none;font-size:13px" placeholder="Catatan..."><?= $invoice_detail['note'] ?? ''; ?></textarea>
               </div>
             </div>
 
