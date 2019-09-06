@@ -29,6 +29,8 @@ class Pesanan_pcsr extends CI_Controller
 
         $this->pesanan_model->simpan($order);
 
+        $this->produksi_model->pesan_desain($order);
+
         redirect(base_url('pesanan/buat'));
     }  
 
