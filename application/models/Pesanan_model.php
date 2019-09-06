@@ -87,8 +87,8 @@ class Pesanan_model extends CI_Model
             order.number AS order_number,
             order.description,
             order.quantity,
+            order.price,
             order.process_status_id,
-            artwork.file_name AS artwork,
             process_status.name AS process_status
         ');
 
@@ -97,7 +97,6 @@ class Pesanan_model extends CI_Model
         $this->db->join('item', 'order.item_id = item.item_id');
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
-        $this->db->join('artwork', 'order.artwork_id = artwork.artwork_id', 'left');
         $this->db->join('process_status', 'order.process_status_id = process_status.process_status_id', 'left');
         $this->db->where('order.position_id !=', NULL);
 
@@ -158,20 +157,21 @@ class Pesanan_model extends CI_Model
             position.position_id,
             position.name AS position_name,
             order.image,
+            order.machine_file as emb,
             order.order_id,
             order.number AS order_number,
-            order.artwork_id,
             order.description,
             order.dimension,
             order.color,
+            order.material,
             order.quantity,
             order.price,
             (order.price*order.quantity) AS amount,
             order.received_date,
             order.required_date,
             order.process_status_id,
-            process_status.name AS process_status,
-            artwork.file_name
+            order.note,
+            process_status.name AS process_status
         ');
 
         $this->db->from('order');
@@ -179,7 +179,6 @@ class Pesanan_model extends CI_Model
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
         $this->db->join('customer', 'order.customer_id = customer.customer_id');
-        $this->db->join('artwork', 'order.artwork_id = artwork.artwork_id', 'left');
         $this->db->join('process_status', 'order.process_status_id = process_status.process_status_id', 'left');
         $this->db->where('order.position_id !=', NULL);
         $this->db->where('order_id', $order_id);
