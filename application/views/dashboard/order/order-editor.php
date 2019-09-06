@@ -14,21 +14,21 @@
 
 			<?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-			<a href="<?= base_url('pesanan/pratinjau/') . $order['order_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
+				<a href="<?= base_url('pesanan/pratinjau/') . $order['order_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
 
-			<div class="ml-auto">
+				<div class="ml-auto">
 
-				<a href="<?= $is_invoiced['number'] ? base_url('invoice/sunting/') . $is_invoiced['number'] : '#'; ?>"><span class="badge badge-primary py-2 px-3 text-uppercase mr-2"><?= $is_invoiced['message']; ?></span></a>
+					<a href="<?= $is_invoiced['number'] ? base_url('invoice/sunting/') . $is_invoiced['number'] : '#'; ?>"><span class="badge badge-primary py-2 px-3 text-uppercase mr-2"><?= $is_invoiced['message']; ?></span></a>
 
-				<a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $order['process_status']; ?></span></a>
+					<a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $order['process_status']; ?></span></a>
 
-			</div>
+				</div>
 
 			<?php endif; ?>
 
 		</div>
 
-	</div>	
+	</div>
 
 	<div class="row">
 
@@ -37,14 +37,15 @@
 
 			<!-- Alert Message -->
 			<?php if ($this->session->flashdata('message')) : ?>
-			<div class="alert alert-success alert-dismissible fade show shadow" role="alert">
-				<strong><?= $this->session->flashdata('message'); ?></strong>
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
+				<div class="alert alert-success alert-dismissible fade show shadow" role="alert">
+					<strong><?= $this->session->flashdata('message'); ?></strong>
+					<button type="button" class="close" data-dismiss="alert">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 			<?php endif; ?>
 
+			<!-- Order Form - Header -->
 			<div class="card shadow mb-3">
 
 				<div class="card-body">
@@ -71,15 +72,15 @@
 
 								<?php foreach ($customers as $customer) : ?>
 
-								<?php if ($this->uri->segment(2) == 'sunting') : ?>
-								<option value="<?= $customer['customer_id']; ?>" <?= $customer['customer_id'] == $order['customer_id'] ? 'selected' : ''; ?>>
-									<?= $customer['customer_name']; ?>
-								</option>
-								<?php endif; ?>
+									<?php if ($this->uri->segment(2) == 'sunting') : ?>
+										<option value="<?= $customer['customer_id']; ?>" <?= $customer['customer_id'] == $order['customer_id'] ? 'selected' : ''; ?>>
+											<?= $customer['customer_name']; ?>
+										</option>
+									<?php endif; ?>
 
-								<option value="<?= $customer['customer_id']; ?>">
-									<?= $customer['customer_name']; ?>
-								</option>
+									<option value="<?= $customer['customer_id']; ?>">
+										<?= $customer['customer_name']; ?>
+									</option>
 
 								<?php endforeach; ?>
 
@@ -107,7 +108,7 @@
 				</div>
 			</div>
 
-			<!-- Order Form -->
+			<!-- Order Form - Body -->
 			<div class="card shadow mb-3" id="order-form-body">
 
 				<div class="card-body">
@@ -130,17 +131,17 @@
 
 								<?php foreach ($items as $item) : ?>
 
-								<?php if ($this->uri->segment(2) == 'sunting') : ?>
+									<?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-								<option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>" <?= $item['item_id'] == $order['item_id'] ? 'selected' : ''; ?>>
-									<?= $item['item_name'] ?>
-								</option>
+										<option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>" <?= $item['item_id'] == $order['item_id'] ? 'selected' : ''; ?>>
+											<?= $item['item_name'] ?>
+										</option>
 
-								<?php endif; ?>
+									<?php endif; ?>
 
-								<option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>">
-									<?= $item['item_name'] ?>
-								</option>
+									<option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>">
+										<?= $item['item_name'] ?>
+									</option>
 
 								<?php endforeach; ?>
 
@@ -156,15 +157,15 @@
 
 								<?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-								<?php $positions = $this->pesanan_model->get_position_by_item_id($order['item_id']); ?>
+									<?php $positions = $this->pesanan_model->get_position_by_item_id($order['item_id']); ?>
 
-								<?php foreach ($positions as $position) : ?>
+									<?php foreach ($positions as $position) : ?>
 
-								<option value="<?= $position['position_id']; ?>" <?= $position['position_id'] == $order['position_id'] ? 'selected' : ''; ?>>
-									<?= $position['name'] ?>
-								</option>
+										<option value="<?= $position['position_id']; ?>" <?= $position['position_id'] == $order['position_id'] ? 'selected' : ''; ?>>
+											<?= $position['name'] ?>
+										</option>
 
-								<?php endforeach; ?>
+									<?php endforeach; ?>
 
 								<?php endif; ?>
 
@@ -172,9 +173,9 @@
 
 								<?php foreach ($positions as $position) : ?>
 
-								<option value="<?= $position['position_id']; ?>">
-									<?= $position['name'] ?>
-								</option>
+									<option value="<?= $position['position_id']; ?>">
+										<?= $position['name'] ?>
+									</option>
 
 								<?php endforeach; ?>
 
@@ -194,6 +195,10 @@
 						<div class="form-group col">
 							<label for=""><small>Warna</small></label>
 							<input type="text" name="order[color]" id="color" class="form-control color number" value="<?= $order['color'] ?? ''; ?>">
+						</div>
+						<div class="form-group col">
+							<label for=""><small>Bahan</small></label>
+							<input type="text" name="order[material]" id="material" class="form-control material number" value="<?= $order['color'] ?? ''; ?>">
 						</div>
 
 					</div>
@@ -222,9 +227,16 @@
 						<input type="text" name="" id="amount" class="form-control amount" value="<?= isset($order['amount']) ? moneyStr($order['amount']) : ''; ?>" readonly>
 					</div>
 
-
 				</div>
 
+			</div>
+
+			<!-- Order Form - Footer -->
+			<div class="card shadow">
+				<div class="card-body">
+					<label for="note"><small>Catatan</small></label>
+					<textarea name="order[note]" id="note" class="form-control" style="font-size:13px"><?= $order['note']; ?></textarea>
+				</div>
 			</div>
 
 		</div>
@@ -246,7 +258,7 @@
 						<button type="submit" id="save-data-btn" class="mr-2 action-btn"><i class="fas fa-save fa-2x"></i></button>
 
 						<?php if ($this->uri->segment(2) == 'sunting') : ?>
-						<a href="#" data-toggle="modal" data-target="#update-process-modal" class="action-btn"><i class="fas fa-tasks fa-2x"></i></a>
+							<a href="#" data-toggle="modal" data-target="#update-process-modal" class="action-btn"><i class="fas fa-tasks fa-2x"></i></a>
 						<?php endif; ?>
 
 						<a href="#" data-toggle="modal" data-target="#del-order-modal" class="action-btn"><i class="fas fa-trash-alt fa-2x"></i></a>
@@ -255,33 +267,66 @@
 				</div>
 			</div>
 
-			<!-- File Upload Card -->
+			<!-- Artwork Upload Card -->
 			<div class="card shadow mb-3">
 				<!-- Card Header - Accordion -->
 				<a href="#file-card__body" class="d-block card-header py-3" data-toggle="collapse" role="button">
-					<h6 class="m-0 font-weight-bold text-primary">File</h6>
+					<h6 class="m-0 font-weight-bold text-primary">File Gambar</h6>
 				</a>
 				<!-- Card Content - Collapse -->
 				<div class="collapse show" id="file-card__body">
 					<div class="card-body">
 
 						<?php if (isset($order['image'])) : ?>
-						<div class="d-flex align-items-center mb-3">
-							<img src="<?= base_url('assets/img/artwork/') . $order['image']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
-							<div>
-								<p class="font-weight-bold my-0"><?= $order['image']; ?></p>
-								<small>Diunggah pada: 29 Juli 2019</small>
+							<div class="d-flex align-items-center mb-3">
+								<img src="<?= base_url('assets/img/artwork/') . $order['image']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
+								<div>
+									<p class="font-weight-bold my-0"><?= $order['image']; ?></p>
+									<small>Diunggah pada: 29 Juli 2019</small>
+								</div>
+								<button type="button" data-toggle="modal" data-target="#del-artwork-modal" class="close ml-auto">
+									<span aria-hidden="true">&times;</span>
+								</button>
 							</div>
-							<button type="button" data-toggle="modal" data-target="#del-artwork-modal" class="close ml-auto">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
+						<?php else : ?>
+							<div class="custom-file">
+								<input type="file" name="image" class="custom-file-input" id="image">
+								<label class="custom-file-label" for="customFile">Pilih file...</label>
+							</div>
 						<?php endif; ?>
 
-						<div class="custom-file">
-							<input type="file" name="image" class="custom-file-input" id="image">
-							<label class="custom-file-label" for="customFile">Pilih file...</label>
-						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Machine File Upload Card -->
+			<div class="card shadow mb-3">
+				<!-- Card Header - Accordion -->
+				<a href="#file-card__body" class="d-block card-header py-3" data-toggle="collapse" role="button">
+					<h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
+				</a>
+				<!-- Card Content - Collapse -->
+				<div class="collapse show" id="file-card__body">
+					<div class="card-body">
+
+						<?php if (isset($order['emb'])) : ?>
+							<div class="d-flex align-items-center mb-3">
+								<img src="<?= base_url('assets/img/artwork/') . $order['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
+								<div>
+									<p class="font-weight-bold my-0"><?= $order['emb']; ?></p>
+									<small>Diunggah pada: 29 Juli 2019</small>
+								</div>
+								<button type="button" data-toggle="modal" data-target="#del-artwork-modal" class="close ml-auto">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						<?php else : ?>
+							<div class="custom-file">
+								<input type="file" name="image" class="custom-file-input" id="image">
+								<label class="custom-file-label" for="customFile">Pilih file...</label>
+							</div>
+						<?php endif; ?>
+
 					</div>
 				</div>
 			</div>
@@ -351,94 +396,94 @@
 
 <?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-<!-- Delete Artwork Modal-->
-<div class="modal fade" id="del-artwork-modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<form action="<?= base_url('processor/pesanan_pcsr/lepas_artwork'); ?>" method="post" id="del-order-artwork-form">
-			<input type="hidden" name="order[order_id]" id="order-id" value="<?= $order['order_id'] ?? ''; ?>">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Melepas gambar</h5>
-					<button class="close" type="button" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
+	<!-- Delete Artwork Modal-->
+	<div class="modal fade" id="del-artwork-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<form action="<?= base_url('processor/pesanan_pcsr/lepas_artwork'); ?>" method="post" id="del-order-artwork-form">
+				<input type="hidden" name="order[order_id]" id="order-id" value="<?= $order['order_id'] ?? ''; ?>">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Melepas gambar</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Gambar akan dilepas dari Pesanan ini tanpa menghapusnya dari sistem. Klik "Lepas" jika Anda yakin untuk melakukannya. </div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn btn-primary" id="del-artwork-btn">Lepas</button>
+					</div>
 				</div>
-				<div class="modal-body">Gambar akan dilepas dari Pesanan ini tanpa menghapusnya dari sistem. Klik "Lepas" jika Anda yakin untuk melakukannya. </div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary" id="del-artwork-btn">Lepas</button>
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>
 
-<!-- Delete Order Modal -->
-<div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<form action="<?= base_url('processor/pesanan_pcsr/hapus_pesanan'); ?>" method="post" id="del-order-form">
-			<input type="hidden" name="order[order_id]" id="modal-order-id" value="<?= $order['order_id']; ?>">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Yakin akan menghapus?</h5>
-					<button class="close" type="button" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
+	<!-- Delete Order Modal -->
+	<div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<form action="<?= base_url('processor/pesanan_pcsr/hapus_pesanan'); ?>" method="post" id="del-order-form">
+				<input type="hidden" name="order[order_id]" id="modal-order-id" value="<?= $order['order_id']; ?>">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Yakin akan menghapus?</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus pesanan ini.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn btn-primary" id="del-order-btn">Hapus</button>
+					</div>
 				</div>
-				<div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus pesanan ini.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary" id="del-order-btn">Hapus</button>
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>
 
-<!-- Mark as Finished Modal-->
-<div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
+	<!-- Mark as Modal-->
+	<div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
 
-		<form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
+			<form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
 
-			<input type="hidden" name="order[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
+				<input type="hidden" name="order[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
 
-			<div class="modal-content">
+				<div class="modal-content">
 
-				<div class="modal-header">
-					<h5 class="modal-title">Status Pengerjaan</h5>
-					<button class="close" type="button" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
+					<div class="modal-header">
+						<h5 class="modal-title">Status Pengerjaan</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+
+						<select name="order[process_status_id]" id="process-status" class="custom-select">
+
+							<option value="">Pilih...</option>
+
+							<?php $process_list = $this->db->get('process_status')->result_array(); ?>
+
+							<?php foreach ($process_list as $status) : ?>
+								<option value="<?= $status['process_status_id']; ?>"><?= $status['name']; ?></option>
+							<?php endforeach; ?>
+
+						</select>
+
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn btn-primary" id="update-process-btn">Perbarui</button>
+					</div>
+
 				</div>
 
-				<div class="modal-body">
+			</form>
 
-					<select name="order[process_status_id]" id="process-status" class="custom-select">
-
-						<option value="">Pilih...</option>
-
-						<?php $process_list = $this->db->get('process_status')->result_array(); ?>
-
-						<?php foreach ($process_list as $status) : ?>
-						<option value="<?= $status['process_status_id']; ?>"><?= $status['name']; ?></option>
-						<?php endforeach; ?>
-
-					</select>
-
-				</div>
-
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary" id="update-process-btn">Perbarui</button>
-				</div>
-
-			</div>
-
-		</form>
-
+		</div>
 	</div>
-</div>
 
 <?php endif; ?>
 
