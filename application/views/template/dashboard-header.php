@@ -11,7 +11,11 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Embryo | <?= $title; ?></title>
+  <?php if ($this->uri->segment('1') == 'invoice' && $this->uri->segment('2') == 'tampil') : ?>
+    <title><?= $title; ?></title>  
+  <?php else : ?>
+    <title>Embryo | <?= $title; ?></title>
+  <?php endif; ?>
 
   <!-- Libraries-->
   <link href="<?= base_url('vendors/'); ?>fontawesome-free/css/all.min.css" rel="stylesheet">

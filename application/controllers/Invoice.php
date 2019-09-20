@@ -74,10 +74,17 @@ class Invoice extends CI_Controller
 	public function tampil($invoice)
 	{
 
-		$data['title'] = 'Pratinjau INV-' . $invoice;
-
+		
 		$data['invoice_detail'] = $this->invoice_model->generate_invoice_data($invoice);
 		$data['customer'] = $this->pelanggan_model->get_customer_by_id($data['invoice_detail']['customer_id']);
+
+		// Prepare data for page title
+		$customer = $data['customer']['customer_name'];
+		$date = date('dmy');
+		
+		// Generate the tile using data above
+		$data['title'] = "INV_{$invoice}_{$customer}_{$date}";
+
 		$data['orders']  = $this->pesanan_model->get_order_by_invoice_id($data['invoice_detail']['invoice_id']);
 		$data['order_details']  = $this->pesanan_model->get_order_by_invoice_id($data['invoice_detail']['invoice_id']);
 		$data['product_details']  = $this->penjualan_model->get_product_sale_by_invoice_id($data['invoice_detail']['invoice_id']);
