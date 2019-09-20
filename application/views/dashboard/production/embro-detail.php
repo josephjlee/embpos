@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
   <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
-    <input type="hidden" name="production[production_id]" value="<?= $design_detail['production_id']; ?>">
+    <input type="hidden" name="production[production_id]" value="<?= $embro_detail['production_id']; ?>">
 
     <!-- Page Heading -->
     <div class="row mb-2">
@@ -13,7 +13,7 @@
 
           <div class="ml-auto">
 
-            <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $design_detail['status']; ?></span></a>
+            <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $embro_detail['status']; ?></span></a>
 
           </div>
 
@@ -32,15 +32,15 @@
 
             <div class="col d-flex justify-content-between align-items-center">
               <h4 class="text-uppercase font-weight-bold my-0">Swasti Bordir</h4>
-              <p class="my-0">Formulir Desain Bordir</p>
+              <p class="my-0">Detail Pesanan Bordir</p>
             </div>
 
           </div>
 
-          <?php if ($design_detail['artwork']) : ?>
+          <?php if ($embro_detail['artwork']) : ?>
             <div class="row py-4">
               <div class="col d-flex justify-content-center align-items-center">
-                <img class="img-fluid" src="<?= base_url('assets/img/artwork/') . $design_detail['artwork']; ?>" alt="">
+                <img class="img-fluid" src="<?= base_url('assets/img/artwork/') . $embro_detail['artwork']; ?>" alt="">
               </div>
             </div>
           <?php else : ?>
@@ -57,42 +57,66 @@
               <ul class="list-group">
                 <li class="list-group-item">
                   <p class="my-0"><small>Judul:</small></p>
-                  <p class="my-0" style="color:black"><?= $design_detail['title'] ?? '-'; ?></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['title'] ?? '-'; ?> (PS-<?= $embro_detail['order_number']; ?>)</p>
                 </li>
                 <li class="list-group-item">
                   <p class="my-0"><small>Barang:</small></p>
-                  <p class="my-0" style="color:black"><?= $design_detail['item'] ?? '-'; ?></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['item'] ?? '-'; ?></p>
                 </li>
                 <li class="list-group-item">
                   <p class="my-0"><small>Bahan:</small></p>
-                  <p class="my-0" style="color:black"><?= $design_detail['material'] ?? '-'; ?></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['material'] ?? '-'; ?></p>
+                </li>
+                <li class="list-group-item">
+                  <p class="my-0"><small>Dimensi:</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['dimension'] ?? '-'; ?>cm</p>
+                </li>
+                <li class="list-group-item">
+                  <p class="my-0"><small>Warna:</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['color'] ?? '-'; ?></p>
+                </li>
+                <li class="list-group-item">
+                  <p class="my-0"><small>Jumlah:</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['quantity'] ?? '-'; ?></p>
                 </li>
               </ul>
             </div>
 
             <div class="col d-flex justify-content-center">
-              <ul class="list-group">
+              <ul class="list-group">              
                 <li class="list-group-item">
-                  <p class="my-0"><small>Dimensi:</small></p>
-                  <p class="my-0" style="color:black"><?= $design_detail['dimension'] ?? '-'; ?>cm</p>
+                  <p class="my-0"><small>Mesin</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['machine'] ?? '-'; ?></p>
                 </li>
                 <li class="list-group-item">
-                  <p class="my-0"><small>Warna:</small></p>
-                  <p class="my-0" style="color:black"><?= $design_detail['color'] ?? '-'; ?></p>
+                  <p class="my-0"><small>Flashdisk</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['flashdisk'] ?? '-'; ?></p>
                 </li>
                 <li class="list-group-item">
-                  <p class="my-0"><small>Ulang:</small></p>
-                  <p class="my-0" style="color:black"><?= $design_detail['repeat'] ?? '-'; ?>x</p>
+                  <p class="my-0"><small>Nama File</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['file'] ?? '-'; ?></p>
+                </li>
+                <li class="list-group-item">
+                  <p class="my-0"><small>Otomatis</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['color_order'] ?? '-'; ?></p>
+                </li>
+                <li class="list-group-item">
+                  <p class="my-0"><small>Harga Operator</small></p>
+                  <p class="my-0" style="color:black"><?= moneyStr($embro_detail['labor_price']) ?? '-'; ?></p>
+                </li>
+                <li class="list-group-item">
+                  <p class="my-0"><small>Operator</small></p>
+                  <p class="my-0" style="color:black"><?= $embro_detail['operator'] ?? '-'; ?></p>
                 </li>
               </ul>
             </div>
 
           </div>
 
-          <?php if ($design_detail['note']) : ?>
+          <?php if ($embro_detail['note']) : ?>
             <div class="row py-4">
               <div class="col d-flex justify-content-center align-items-center">
-                <h5><?= $design_detail['note']; ?></h5>
+                <h5><?= $embro_detail['note']; ?></h5>
               </div>
             </div>
           <?php endif; ?>
@@ -123,79 +147,27 @@
           </div>
         </div>
 
-        <!-- Artwork Card -->
+        <!-- Machine File Card -->
         <div class="card shadow mb-3">
+
           <!-- Card Header - Accordion -->
-          <a href="#artwork-card" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">File Gambar</h6>
+          <a href="#machine-file-card" class="d-block card-header py-3" data-toggle="collapse" role="button">
+            <h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
           </a>
+          
           <!-- Card Content - Collapse -->
-          <div class="collapse show" id="artwork-card">
+          <div class="collapse show" id="machine-file-card">
             <div class="card-body">
 
-              <?php if ($design_detail['artwork']) : ?>
-                <div class="d-flex align-items-center">
-                  <img src="<?= base_url('assets/img/artwork/') . $design_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
+                <div class="d-flex align-items-center mb-3">
+                  <img src="<?= base_url('assets/img/artwork/') . $embro_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
                   <div>
-                    <p class="font-weight-bold my-0"><?= $design_detail['artwork']; ?></p>
-                    <!-- <small>Diunggah pada: 29 Juli 2019</small> -->
+                    <p class="font-weight-bold my-0"><?= $embro_detail['file']; ?></p>
                   </div>
                   <div class="ml-auto">
                     <i class="fas fa-download"></i>
                   </div>
                 </div>
-              <?php else : ?>
-                <div class="align-items-center">
-                  Belum ada gambar.
-                </div>
-              <?php endif; ?>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Machine File Upload Card -->
-        <div class="card shadow mb-3">
-          <!-- Card Header - Accordion -->
-          <a href="#machine-file-card" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
-          </a>
-          <!-- Card Content - Collapse -->
-          <div class="collapse show" id="machine-file-card">
-            <div class="card-body">
-
-              <?php if (isset($design_detail['file'])) : ?>
-                <div class="d-flex align-items-center mb-3">
-                  <img src="<?= base_url('assets/img/artwork/') . $design_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
-                  <div>
-                    <p class="font-weight-bold my-0"><?= $design_detail['file']; ?></p>
-                  </div>
-                  <button type="button" data-toggle="modal" data-target="#del-emb-modal" class="close ml-auto">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              <?php else : ?>
-                <div class="custom-file">
-                  <input type="file" name="order[machine_file]" class="custom-file-input" id="image">
-                  <label class="custom-file-label" for="customFile">Pilih file...</label>
-                </div>
-              <?php endif; ?>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Otomatis Input -->
-        <div class="card shadow mb-3">
-          <!-- Card Header - Accordion -->
-          <a href="#file-card__body" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">Urutan Otomatis</h6>
-          </a>
-          <!-- Card Content - Collapse -->
-          <div class="collapse show" id="file-card__body">
-            <div class="card-body">
-
-              <textarea name="production[color_order]" id="color-order" class="form-control" style="font-size:13px"><?= $design_detail['color_order'] ?></textarea>
 
             </div>
           </div>
@@ -213,7 +185,7 @@
 
       <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail'); ?>" method="post" id="update-process-form">
 
-        <input type="hidden" name="production[production_id]" id="production-id" value="<?= $design_detail['production_id']; ?>">
+        <input type="hidden" name="production[production_id]" id="production-id" value="<?= $embro_detail['production_id']; ?>">
         <input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
         <div class="modal-content">
@@ -231,10 +203,10 @@
 
               <option value="">Pilih...</option>
 
-              <?php $design_status_list = $this->produksi_model->get_design_status(); ?>
+              <?php $embro_status_list = $this->produksi_model->get_embro_status(); ?>
 
-              <?php foreach ($design_status_list as $status) : ?>
-                <option value="<?= $status['production_status_id']; ?>" <?= $status['production_status_id'] == $design_detail['production_status_id'] ? 'selected' : ''; ?>><?= $status['name']; ?></option>
+              <?php foreach ($embro_status_list as $status) : ?>
+                <option value="<?= $status['production_status_id']; ?>" <?= $status['production_status_id'] == $embro_detail['production_status_id'] ? 'selected' : ''; ?>><?= $status['name']; ?></option>
               <?php endforeach; ?>
 
             </select>

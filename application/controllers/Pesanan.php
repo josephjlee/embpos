@@ -10,6 +10,7 @@ class Pesanan extends CI_Controller
 
         $this->load->model('pesanan_model');
         $this->load->model('pelanggan_model');
+        $this->load->model('produksi_model');
     }
 
     /*
@@ -39,6 +40,10 @@ class Pesanan extends CI_Controller
         $data['order'] = $this->pesanan_model->get_single_order($order_id);
 
         $data['title'] = 'Sunting PSN-' . $data['order']['order_number'];
+
+        $data['production'] = $this->produksi_model->get_production_detail_by_order_id($order_id);
+
+        pretty_print($data['production']);
         
         $data['is_invoiced'] = $this->pesanan_model->check_invoice($order_id);
 
@@ -64,7 +69,10 @@ class Pesanan extends CI_Controller
     {
 
         $data['title'] = 'Semua Pesanan';
+
         $data['orders'] = $this->pesanan_model->get_all_orders();
+
+        pretty_print($data['orders'][1]);
 
         $data['content'] = $this->load->view('dashboard/order/order-index', $data, TRUE);
 

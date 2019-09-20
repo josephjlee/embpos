@@ -198,7 +198,7 @@
 						</div>
 						<div class="form-group col">
 							<label for=""><small>Bahan</small></label>
-							<input type="text" name="order[material]" id="material" class="form-control material number" value="<?= $order['color'] ?? ''; ?>">
+							<input type="text" name="order[material]" id="material" class="form-control material number" value="<?= $order['material'] ?? ''; ?>">
 						</div>
 
 					</div>
@@ -261,6 +261,8 @@
 							<a href="#" data-toggle="modal" data-target="#update-process-modal" class="action-btn"><i class="fas fa-tasks fa-2x"></i></a>
 						<?php endif; ?>
 
+						<a href="#" data-toggle="modal" data-target="#spec-modal" class="action-btn"><i class="fas fa-sliders-h fa-2x"></i></a>
+
 						<a href="#" data-toggle="modal" data-target="#del-order-modal" class="action-btn"><i class="fas fa-trash-alt fa-2x"></i></a>
 
 					</div>
@@ -278,43 +280,11 @@
 					<div class="card-body">
 
 						<?php if (isset($order['image'])) : ?>
-							<div class="d-flex align-items-center mb-3">
+							<div class="d-flex align-items-center">
 								<img src="<?= base_url('assets/img/artwork/') . $order['image']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
 								<div>
 									<p class="font-weight-bold my-0"><?= $order['image']; ?></p>
-									<small>Diunggah pada: 29 Juli 2019</small>
-								</div>
-								<button type="button" data-toggle="modal" data-target="#del-artwork-modal" class="close ml-auto">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						<?php else : ?>
-							<div class="custom-file">
-								<input type="file" name="image" class="custom-file-input" id="image">
-								<label class="custom-file-label" for="customFile">Pilih file...</label>
-							</div>
-						<?php endif; ?>
-
-					</div>
-				</div>
-			</div>
-
-			<!-- Machine File Upload Card -->
-			<div class="card shadow mb-3">
-				<!-- Card Header - Accordion -->
-				<a href="#file-card__body" class="d-block card-header py-3" data-toggle="collapse" role="button">
-					<h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
-				</a>
-				<!-- Card Content - Collapse -->
-				<div class="collapse show" id="file-card__body">
-					<div class="card-body">
-
-						<?php if (isset($order['emb'])) : ?>
-							<div class="d-flex align-items-center mb-3">
-								<img src="<?= base_url('assets/img/artwork/') . $order['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
-								<div>
-									<p class="font-weight-bold my-0"><?= $order['emb']; ?></p>
-									<small>Diunggah pada: 29 Juli 2019</small>
+									<!-- <small>Diunggah pada: 29 Juli 2019</small> -->
 								</div>
 								<button type="button" data-toggle="modal" data-target="#del-artwork-modal" class="close ml-auto">
 									<span aria-hidden="true">&times;</span>
@@ -466,7 +436,7 @@
 							<?php $process_list = $this->db->get('process_status')->result_array(); ?>
 
 							<?php foreach ($process_list as $status) : ?>
-								<option value="<?= $status['process_status_id']; ?>"><?= $status['name']; ?></option>
+								<option value="<?= $status['process_status_id']; ?>" <?= $status['process_status_id'] == $order['process_status_id'] ? 'selected' : ''; ?>><?= $status['name']; ?></option>
 							<?php endforeach; ?>
 
 						</select>
@@ -476,6 +446,56 @@
 					<div class="modal-footer">
 						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
 						<button type="submit" class="btn btn-primary" id="update-process-btn">Perbarui</button>
+					</div>
+
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+
+	<!-- Production Modal-->
+	<div class="modal fade" id="spec-modal" tabindex="-1" role="dialog" data-repeat="<?= $production['repeat'] ?? ''; ?>">
+
+		<div class="modal-dialog" role="document">
+
+			<form action="<?= base_url('processor/produksi_pcsr/atur_produksi'); ?>" method="post" id="spec-form">
+
+				<input type="hidden" name="redirect-here" value="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>">
+				
+				<input type="hidden" name="production[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
+
+				<input type="hidden" name="production[production_id]" id="production-id" value="<?= $production['production_id'] ?? ''; ?>">
+
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">Atur Produksi</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+
+					<div class="modal-body" data-color-order="<?= $production['color_order']; ?>" data-file="<?= $production['file']; ?>" data-flashdisk="<?= $production['flashdisk'] ?>" data-machine="<?= $production['machine']; ?>" data-operator="<?= $production['operator']; ?>" data-labor-price="<?= $production['labor_price']; ?>">
+
+						<div class="form-group">
+							<label for=""><small>Pengerjaan</small></label>
+							<select id="production-type" class="custom-select">
+								<option value="">Pilih...</option>
+								<option value="material">Bahan Baku</option>
+								<option value="design">Desain</option>
+								<option value="embroidery">Bordir</option>
+							</select>
+						</div>
+
+						<div id="unique-form-wrapper"></div>
+
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn btn-primary" id="set-spec-btn">Atur</button>
 					</div>
 
 				</div>

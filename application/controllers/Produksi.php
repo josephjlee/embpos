@@ -22,14 +22,40 @@ class Produksi extends CI_Controller {
 
         $this->load->view('layout/dashboard', $data);
     }
-
-    public function detail_desain($production_design_id)
+    
+    public function daftar_bordir()
     {
-        $data['title'] = "Pesanan Desain: DSN-{$production_design_id}";
+        $data['title'] = 'Daftar Bordir';
 
-        $data['design_detail'] = $this->produksi_model->get_design_detail_by_id($production_design_id);
+        $data['embro_list'] = $this->produksi_model->get_embro_list();
+
+        $data['view_script'] = 'index--embro.js';
+
+        $data['content'] = $this->load->view('dashboard/production/embro-index', $data, TRUE);
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
+    public function detail_desain($production_id)
+    {
+        $data['title'] = "Pesanan Desain: DSN-{$production_id}";
+
+        $data['design_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
+
+        pretty_print($data['design_detail']);
 
         $data['content'] = $this->load->view('dashboard/production/design-detail', $data, TRUE);
+
+        $this->load->view('layout/dashboard', $data);
+    }
+    
+    public function detail_bordir($production_id)
+    {
+        $data['title'] = "Pesanan Bordir: BRD-{$production_id}";
+
+        $data['embro_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
+
+        $data['content'] = $this->load->view('dashboard/production/embro-detail', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);
     }

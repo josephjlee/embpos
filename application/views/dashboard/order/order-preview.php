@@ -14,7 +14,7 @@
 
           <div class="col d-flex justify-content-between align-items-center">
             <h4 class="text-uppercase font-weight-bold my-0">Swasti Bordir</h4>
-            <p class="my-0">Formulir Desain Bordir</p>
+            <p class="my-0">Kartu Pesanan Bordir</p>
           </div>
 
         </div>
@@ -66,14 +66,6 @@
                   </th>
                   <td>
                     <span>merah, kuning, hijau</span>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope=" col" class="text-right">
-                    Ulang:
-                  </th>
-                  <td>
-                    <span>100x</span>
                   </td>
                 </tr>
               </tbody>

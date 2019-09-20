@@ -21,14 +21,25 @@ class Produksi_pcsr extends CI_Controller
     |     
     */
 
-    public function pesan_desain()
+    public function atur_produksi()
+    {
+        $production = $this->input->post('production');
+
+        $this->produksi_model->simpan($production);
+
+        $redirect_dest = $this->input->post('redirect-here');
+
+        redirect( $redirect_dest );
+    }
+    
+    public function perbarui_detail()
     {
 
-        $production_design = $this->input->post('production_design');
+        $production = $this->input->post('production');
 
-        $this->produksi_model->pesan_desain($production_design);
+        $this->produksi_model->perbarui($production);
 
-        redirect( base_url('pesanan/semua') );
+        redirect( $this->input->post('input-src') );
     }
 
 

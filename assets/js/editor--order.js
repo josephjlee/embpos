@@ -9,6 +9,72 @@ $(document).ready(function () {
 	const quantityInput = $('#quantity');
 	const priceInput = $('#price');
 
+	const quantityVal = quantityInput.val();
+	const priceVal = priceInput.val();
+	const suggestedPrice = moneyStr(moneyInt(priceVal) - 250);
+
+	const colorOrder = $('#spec-modal .modal-body').data('color-order');
+	const fileName = $('#spec-modal .modal-body').data('file');
+	const flashdisk = $('#spec-modal .modal-body').data('flashdisk');
+	const operator = $('#spec-modal .modal-body').data('operator');
+	const machineNum = $('#spec-modal .modal-body').data('machine');
+	const laborPrice = $('#spec-modal .modal-body').data('labor-price') ? $('#spec-modal .modal-body').data('labor-price') : suggestedPrice;
+
+	console.log(laborPrice);	
+
+	const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
+
+	const materialFormEl = `
+			<div class="form-group">
+				<label for="thread"><small>Benang</small></label>
+				<input type="text" name="production[thread]" id="thread" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="stabilizer"><small>Kain Keras</small></label>
+				<input type="text" name="production[stabilizer]" id="stabilizer" class="form-control">
+			</div>
+	`;
+
+	const designFormEl = `
+			<div class="form-group">
+				<label for="repeat"><small>Ulang (kuantitas: ${quantityVal}pcs)</small></label>
+				<input type="text" name="production[repeat]" id="repeat" class="form-control">
+			</div>
+		`;
+
+	const embroFormEl = `
+			<div class="form-row">
+				<div class="form-group col">
+					<label for="otomatis"><small>Otomatis</small></label>
+					<input type="text" name="production[color_order]" id="otomatis" class="form-control" value="${colorOrder}">
+				</div>
+				<div class="form-group col">
+					<label for="file"><small>Nama File</small></label>
+					<input type="text" name="production[file]" id="file" class="form-control" value="${fileName}">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col">
+					<label for="flashdisk"><small>Flashdisk</small></label>
+					<input type="text" name="production[flashdisk]" id="flashdisk" class="form-control" value="${flashdisk}">
+				</div>
+				<div class="form-group col">
+					<label for="mesin"><small>Mesin</small></label>
+					<input type="text" name="production[machine]" id="mesin" class="form-control" value="${machineNum}">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col">
+					<label for="operator"><small>Operator</small></label>
+					<input type="text" name="production[operator]" id="operator" class="form-control" value="${operator}">
+				</div>
+				<div class="form-group col">
+					<label for="harga"><small>Harga (harga asli: Rp${priceVal},00)</small></label>
+					<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${laborPrice}">
+				</div>
+			</div>
+	`;
+
 	function generatePriceCard() {
 
 		preventNaN($(this));
@@ -51,9 +117,9 @@ $(document).ready(function () {
 
 	function outputAmountCalc() {
 
-		const qty 		 = moneyInt($('#quantity').val()) ? moneyInt($('#quantity').val()) : 0 ;
-		const price 	 = moneyInt($('#price').val()) ? moneyInt($('#price').val()) : 0 ;
-		const discount = moneyInt($('#discount').val()) ? moneyInt($('#discount').val()) : 0 ;
+		const qty = moneyInt($('#quantity').val()) ? moneyInt($('#quantity').val()) : 0;
+		const price = moneyInt($('#price').val()) ? moneyInt($('#price').val()) : 0;
+		const discount = moneyInt($('#discount').val()) ? moneyInt($('#discount').val()) : 0;
 
 		$('#amount').val(moneyStr(multiplyTwoNums(qty, price) - discount));
 
@@ -103,6 +169,28 @@ $(document).ready(function () {
 
 	// Generate amount on discountInput blur
 	discountInput.keyup(outputAmountCalc);
+
+	// Set Production Spec
+	$('#production-type').change(function (e) {
+
+		// Populate form input element based on production type change
+		switch ($(this).val()) {
+
+			case 'material':
+				uniqueFormWrapper.html(materialFormEl);
+				break;
+
+			case 'design':
+				uniqueFormWrapper.html(designFormEl);
+				$('#spec-modal #repeat').val($(this).parents('.modal').data('repeat'));
+				break;
+
+			case 'embroidery':
+				uniqueFormWrapper.html(embroFormEl);
+				break;
+		}
+
+	});
 
 	// Send Customer Form Data
 	$(saveCustBtn).click(function (event) {

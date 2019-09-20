@@ -133,7 +133,7 @@
     </div>
   </div>
 
-  <!-- Spec Modal-->
+  <!-- Production Modal-->
   <div class="modal fade" id="spec-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
@@ -249,18 +249,18 @@
 
     }
 
-    if (clickedEl.matches('.spec-modal-trigger')) {
+    // if (clickedEl.matches('.spec-modal-trigger')) {
 
-      // Assign orderId to order-id input in the spec-modal
-      document.querySelector('#spec-modal #order-id').value = orderId;
+    //   // Assign orderId to order-id input in the spec-modal
+    //   document.querySelector('#spec-modal #order-id').value = orderId;
       
-      // Assign orderPrice to order-price input in the spec-modal
-      document.querySelector('#spec-modal #order-price').value = orderPrice;
+    //   // Assign orderPrice to order-price input in the spec-modal
+    //   document.querySelector('#spec-modal #order-price').value = orderPrice;
 
-      // Reset form
-      document.querySelector('#spec-form').reset();
+    //   // Reset form
+    //   document.querySelector('#spec-form').reset();
 
-    }
+    // }
 
   });
 
