@@ -316,13 +316,11 @@ class Pesanan_model extends CI_Model
               order.quantity AS qty,
               order.price AS price,
               (order.quantity*order.price) AS amount,
-              item.icon,
-              artwork.file_name AS artwork
+              item.icon
           ');
 
         $this->db->from('order');
         $this->db->join('item', 'order.item_id = item.item_id');
-        $this->db->join('artwork', 'order.artwork_id = artwork.artwork_id', 'left');
         $this->db->where('customer_id', $customer_id);
         $this->db->where('invoice_id', NULL);
 
