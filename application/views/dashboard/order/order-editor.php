@@ -235,7 +235,7 @@
 			<div class="card shadow">
 				<div class="card-body">
 					<label for="note"><small>Catatan</small></label>
-					<textarea name="order[note]" id="note" class="form-control" style="font-size:13px"><?= $order['note']; ?></textarea>
+					<textarea name="order[note]" id="note" class="form-control" style="font-size:13px"><?= $order['note'] ?? ''; ?></textarea>
 				</div>
 			</div>
 
