@@ -233,9 +233,8 @@ $(document).ready(function () {
 	customerSelect.change(function () {
 
 		let customerReq = sendAjax(
-			'http://embryo.test/ajax/pesanan_ajax/get_customer_order', {
-				customer_id: $(this).val()
-			}
+			`${window.location.origin}/ajax/pesanan_ajax/get_customer_order`, 
+			{customer_id: $(this).val()}
 		);
 
 		customerReq.done(function (data) {
@@ -474,7 +473,7 @@ $(document).ready(function () {
 
 		// Submit the form using AJAX.
 		let saveCustomer = sendAjax(
-			'http://embryo.test/ajax/pelanggan_ajax/tambah_pelanggan',
+			`${window.location.origin}/ajax/pelanggan_ajax/tambah_pelanggan`,
 			formData
 		);
 
