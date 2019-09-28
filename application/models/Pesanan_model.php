@@ -315,6 +315,7 @@ class Pesanan_model extends CI_Model
               order.dimension AS dimension,
               order.quantity AS qty,
               order.price AS price,
+              order.image,
               (order.quantity*order.price) AS amount,
               item.icon
           ');
@@ -331,15 +332,16 @@ class Pesanan_model extends CI_Model
 
             $item_index = 0;
 
-            $file_name   = $option_data['artwork'] ?? $option_data['icon'];
-            $file_folder = $option_data['artwork'] ? 'img/artwork' : 'icon';
+            $base_url    = base_url();
+            $file_name   = $option_data['image'] ?? $option_data['icon'];
+            $file_folder = $option_data['image'] ? 'img/artwork' : 'icon';
 
             $required_date = date('d-M-Y', strtotime($option_data['required_date']));
 
             return
                 "<div class='order-list-item d-flex justify-content-between align-items-center mb-3' data-order-id='{$option_data['id']}' data-desc='{$option_data['text']}' data-dimension='{$option_data['dimension']}' data-qty='{$option_data['qty']}' data-price='{$option_data['price']}' data-amount='{$option_data['amount']}' id='order-list-item-{$option_data['id']}' data-order-id='{$option_data['id']}'>
             <div class='d-flex align-items-center'>
-                <img class='mr-3' style='width:33px;height:33px' src='http://embryo.test/assets/{$file_folder}/{$file_name}'>
+                <img class='mr-3' style='width:33px;height:33px' src='{$base_url}/assets/{$file_folder}/{$file_name}'>
                 <div>
                     <div style='color:#9aa0ac;font-size:13px' class='order-item__required-date'>Diambil: {$required_date}</div>
                     <div style='color:#495057;font-size:15px' class='order-item__description'>{$option_data['text']}</div>
