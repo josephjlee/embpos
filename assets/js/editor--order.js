@@ -20,8 +20,6 @@ $(document).ready(function () {
 	const machineNum = $('#spec-modal .modal-body').data('machine');
 	const laborPrice = $('#spec-modal .modal-body').data('labor-price') ? $('#spec-modal .modal-body').data('labor-price') : suggestedPrice;
 
-	console.log(laborPrice);	
-
 	const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
 
 	const materialFormEl = `
@@ -84,7 +82,7 @@ $(document).ready(function () {
 		let priceConstant = selectedItem.data('priceconst');
 
 		stitchReq = sendAjax(
-			'http://embryo.test/ajax/pesanan_ajax/get_stitch_price', {
+			`${window.location.origin}/ajax/pesanan_ajax/get_stitch_price`, {
 				quantity_id: quantityID(moneyInt($(this).val()))
 			}
 		);
@@ -136,7 +134,7 @@ $(document).ready(function () {
 
 		// Request position by item_id
 		positionReq = sendAjax(
-			'http://embryo.test/ajax/pesanan_ajax/get_item_position', {
+			`${window.location.origin}/ajax/pesanan_ajax/get_item_position`, {
 				item_id: $(this).val()
 			}
 		);
@@ -203,7 +201,7 @@ $(document).ready(function () {
 
 		// Submit the form using AJAX.
 		let saveCustomer = sendAjax(
-			'http://embryo.test/ajax/pelanggan_ajax/tambah_pelanggan',
+			`${window.location.origin}/ajax/pelanggan_ajax/tambah_pelanggan`,
 			formData
 		);
 
