@@ -237,6 +237,8 @@ $(document).ready(function () {
 			{customer_id: $(this).val()}
 		);
 
+		console.log(customerReq);
+
 		customerReq.done(function (data) {
 
 			let orderListItems = JSON.parse(data);
