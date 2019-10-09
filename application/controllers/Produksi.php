@@ -42,8 +42,6 @@ class Produksi extends CI_Controller {
 
         $data['design_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
 
-        pretty_print($data['design_detail']);
-
         $data['content'] = $this->load->view('dashboard/production/design-detail', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);
@@ -54,6 +52,10 @@ class Produksi extends CI_Controller {
         $data['title'] = "Pesanan Bordir: BRD-{$production_id}";
 
         $data['embro_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
+
+        $data['output_records'] = $this->produksi_model->get_output_by_production_id($production_id);
+
+        $data['view_script'] = 'editor--embro_detail.js';
 
         $data['content'] = $this->load->view('dashboard/production/embro-detail', $data, TRUE);
 

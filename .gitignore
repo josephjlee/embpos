@@ -10,6 +10,7 @@ application/logs/*
 
 composer.lock
 
+vendorss
 application/config/config.php
 application/config/database.php
 

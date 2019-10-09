@@ -28,6 +28,13 @@ class Produksi_model extends CI_Model
         return $this->db->update('production', $production_data);
     }
 
+    public function rekam_output_mesin($output)
+    {
+        $output_data = $this->siapkan_data($output);
+
+        return $this->db->insert('output_embro', $output_data);
+    }
+
     public function siapkan_data($production)
     {
 
@@ -119,6 +126,22 @@ class Produksi_model extends CI_Model
         $this->db->join('order', 'production.order_id = order.order_id');
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
         $this->db->where('file!=', NULL);
+
+        return $this->db->get()->result_array();
+    }
+
+    public function get_output_by_production_id($production_id)
+    {
+        $this->db->select('
+            output_embro.output_embro_id AS output_id,
+            output_embro.quantity,
+            output_embro.date,
+            output_embro.shift,
+            employee.nick_name AS operator,
+            employee.employee_id
+        ');
+        $this->db->from('output_embro');
+        $this->db->join('employee', 'output_embro.employee_id = employee.employee_id');
 
         return $this->db->get()->result_array();
     }
@@ -306,5 +329,14 @@ class Produksi_model extends CI_Model
         ];
 
         return $cards;
+    }
+
+    public function get_operator_name()
+    {
+        $this->db->select('employee_id, nick_name');
+        $this->db->from('employee');
+        $this->db->where('job_role_id', 2);
+        
+        return $this->db->get()->result_array(); 
     }
 }

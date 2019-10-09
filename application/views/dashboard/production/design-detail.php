@@ -1,8 +1,9 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-  <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
+  <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
     <input type="hidden" name="production[production_id]" value="<?= $design_detail['production_id']; ?>">
+    <input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
     <!-- Page Heading -->
     <div class="row mb-2">
@@ -25,6 +26,9 @@
 
       <!-- Main Panel -->
       <div class="col-8">
+
+        <!-- Alert Message -->
+        <?= $this->session->flashdata('message') ?? ''; ?>
 
         <div class="card shadow mb-4">
 
@@ -176,7 +180,7 @@
                 </div>
               <?php else : ?>
                 <div class="custom-file">
-                  <input type="file" name="order[machine_file]" class="custom-file-input" id="image">
+                  <input type="file" name="file" class="custom-file-input" id="file">
                   <label class="custom-file-label" for="customFile">Pilih file...</label>
                 </div>
               <?php endif; ?>

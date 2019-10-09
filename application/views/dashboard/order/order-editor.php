@@ -36,14 +36,7 @@
 		<div class="col-8 mt-2">
 
 			<!-- Alert Message -->
-			<?php if ($this->session->flashdata('message')) : ?>
-				<div class="alert alert-success alert-dismissible fade show shadow" role="alert">
-					<strong><?= $this->session->flashdata('message'); ?></strong>
-					<button type="button" class="close" data-dismiss="alert">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-			<?php endif; ?>
+			<?= $this->session->flashdata('message') ?? ''; ?>
 
 			<!-- Order Form - Header -->
 			<div class="card shadow mb-3">

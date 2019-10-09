@@ -61,7 +61,6 @@
                 <select name="invoice[customer_id]" id="customers" class="custom-select">
                   <option value="">Pilih Pelanggan</option>
 
-
                   <?php if (isset($invoice_detail['customer_id'])) : ?>
 
                   <?php foreach ($customers as $customer) : ?>

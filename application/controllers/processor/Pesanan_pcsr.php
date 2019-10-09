@@ -121,7 +121,7 @@ class Pesanan_pcsr extends CI_Controller
         // If error, redirect to pesanan/buat with error message
         if (!$this->upload->do_upload('image')) {
 
-            $this->session->set_flashdata('message', $this->upload->display_errors('<div class="alert alert-warning alert-dismissible fade show" role="alert">', '<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button></div>'));
+            $this->session->set_flashdata('message', $this->upload->display_errors('<div class="alert alert-warning alert-dismissible fade show shadow" role="alert">', '<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button></div>'));
 
             redirect(base_url('pesanan/buat/'));
         }
