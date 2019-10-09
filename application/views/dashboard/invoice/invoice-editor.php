@@ -19,12 +19,12 @@
 
         <?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-        <a href="<?= base_url('invoice/tampil/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
+          <a href="<?= base_url('invoice/tampil/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
 
-        <div class="ml-auto">
-          <span class="badge badge-primary mr-2 py-2 px-3 text-uppercase"><?= $invoice_detail['payment_status']; ?></span>
-          <span class="badge badge-danger py-2 px-3 text-uppercase"><?= $invoice_detail['order_status']; ?></span>
-        </div>
+          <div class="ml-auto">
+            <span class="badge badge-primary mr-2 py-2 px-3 text-uppercase"><?= $invoice_detail['payment_status']; ?></span>
+            <span class="badge badge-danger py-2 px-3 text-uppercase"><?= $invoice_detail['order_status']; ?></span>
+          </div>
 
         <?php endif; ?>
 
@@ -63,15 +63,15 @@
 
                   <?php if (isset($invoice_detail['customer_id'])) : ?>
 
-                  <?php foreach ($customers as $customer) : ?>
-                  <option value="<?= $customer['customer_id']; ?>" <?= $customer['customer_id'] == $invoice_detail['customer_id'] ? 'selected' : ''; ?>><?= $customer['customer_name']; ?></option>
-                  <?php endforeach; ?>
+                    <?php foreach ($customers as $customer) : ?>
+                      <option value="<?= $customer['customer_id']; ?>" <?= $customer['customer_id'] == $invoice_detail['customer_id'] ? 'selected' : ''; ?>><?= $customer['customer_name']; ?></option>
+                    <?php endforeach; ?>
 
                   <?php else : ?>
 
-                  <?php foreach ($customers as $customer) : ?>
-                  <option value="<?= $customer['customer_id']; ?>"><?= $customer['customer_name']; ?></option>
-                  <?php endforeach; ?>
+                    <?php foreach ($customers as $customer) : ?>
+                      <option value="<?= $customer['customer_id']; ?>"><?= $customer['customer_name']; ?></option>
+                    <?php endforeach; ?>
 
                   <?php endif; ?>
                 </select>
@@ -176,9 +176,9 @@
 
                     $selected_product_id = array_map("product_id_only", $current_products);
 
-                  ?>
+                    ?>
 
-                  <?php 
+                  <?php
 
                     /**
                      * 
@@ -190,11 +190,11 @@
                      * 
                      */
 
-                    $current_item_index = $item_index != 0 ? $item_index + 1 : 0; 
-                    
+                    $current_item_index = $item_index != 0 ? $item_index + 1 : 0;
+
                     $product_index = 0;
 
-                  ?>
+                    ?>
 
                   <?php foreach ($current_products as $current_product) : ?>
 
@@ -340,116 +340,116 @@
 
         <?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-        <!-- Payment History Card -->
-        <div class="card shadow mb-3">
-          <a href="#paymentHistory" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">Riwayat Pembayaran</h6>
-          </a>
-          <div class="collapse show" id="paymentHistory">
-            <div class="card-body py-0">
+          <!-- Payment History Card -->
+          <div class="card shadow mb-3">
+            <a href="#paymentHistory" class="d-block card-header py-3" data-toggle="collapse" role="button">
+              <h6 class="m-0 font-weight-bold text-primary">Riwayat Pembayaran</h6>
+            </a>
+            <div class="collapse show" id="paymentHistory">
+              <div class="card-body py-0">
 
-              <table class="table">
-                <tbody>
+                <table class="table">
+                  <tbody>
 
-                  <?php if (!empty($payment_records)) : ?>
+                    <?php if (!empty($payment_records)) : ?>
 
-                  <?php foreach ($payment_records as $payment) : ?>
+                      <?php foreach ($payment_records as $payment) : ?>
 
-                  <tr data-payment-id="<?= $payment['payment_id']; ?>" data-payment-amount="<?= $payment['payment_amount']; ?>" data-payment-date="<?= date('Y-m-d', strtotime($payment['payment_date'])); ?>" data-payment-method="<?= $payment['payment_method_id']; ?>">
-                    <td class="px-0">
-                      <div>
-                        <small id="payment-date-display" style="color:#ec8615">
-                          Rp<span id="payment-amount-display"><?= moneyStr($payment['payment_amount']); ?></span>,00
-                        </small>
-                        <p style="font-size:14px;" id="payment-name-display">
-                          <span style="color:#495057"><?= date('d-m-Y', strtotime($payment['payment_date'])); ?></span> | <?= $payment['payment_name']; ?>
-                        </p>
-                      </div>
-                    </td>
-                    <td class="px-0 align-middle text-right">
-                      <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
-                        <i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                        <div class="dropdown-header">Tindakan:</div>
-                        <a href="" class="dropdown-item update-payment-trigger" data-toggle="modal" data-target="#updatePaymentModal">Sunting Detail</a>
-                        <a href="" class="dropdown-item del-payment-trigger" data-toggle="modal" data-target="#deletePaymentModal">Hapus Pembayaran</a>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <?php endforeach; ?>
-
-                  <?php else : ?>
-
-                  <tr>
-                    <td class="px-0">Belum ada pembayaran.</td>
-                  </tr>
-
-                  <?php endif; ?>
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Order Process Card -->
-        <div class="card shadow mb-3">
-          <a href="#process" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">Status Pengerjaan</h6>
-          </a>
-          <div class="collapse show" id="process">
-            <div class="card-body py-0">
-
-              <table class="table">
-                <tbody>
-
-                  <?php if ($current_orders) : ?>
-                    <?php foreach ($current_orders as $order) : ?>
-                      <tr data-order-id="<?= $order['order_id']; ?>">
-                        <td class="px-0">
-                          <div>
-                            <small id="payment-date-display" style="color:#ec8615"><?= $order['process_status']; ?></small>
-                            <p style="font-size:14px;" id="payment-name-display">
-                              <span style="color:#495057"><?= date('d-m-Y', strtotime($order['required_date'])); ?></span> | <?= $order['description']; ?>
-                            </p>
-                          </div>
-                        </td>
-                        <td class="px-0 align-middle text-right">
-
-                          <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                          </a>
-
-                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-
-                            <div class="dropdown-header">Tandai:</div>
-
-                            <?php $process_status = $this->db->get('process_status')->result_array(); ?>
-
-                            <?php foreach ($process_status as $status) : ?>
-                            <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#mark-as-modal" data-status-name=<?= $status['name']; ?> data-status-id="<?= $status['process_status_id']; ?>">
-                              <?= $status['name']; ?> <?= $status['name'] == $order['process_status'] ? '&#10003;' : ''; ?>
+                        <tr data-payment-id="<?= $payment['payment_id']; ?>" data-payment-amount="<?= $payment['payment_amount']; ?>" data-payment-date="<?= date('Y-m-d', strtotime($payment['payment_date'])); ?>" data-payment-method="<?= $payment['payment_method_id']; ?>">
+                          <td class="px-0">
+                            <div>
+                              <small id="payment-date-display" style="color:#ec8615">
+                                Rp<span id="payment-amount-display"><?= moneyStr($payment['payment_amount']); ?></span>,00
+                              </small>
+                              <p style="font-size:14px;" id="payment-name-display">
+                                <span style="color:#495057"><?= date('d-m-Y', strtotime($payment['payment_date'])); ?></span> | <?= $payment['payment_name']; ?>
+                              </p>
+                            </div>
+                          </td>
+                          <td class="px-0 align-middle text-right">
+                            <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                              <i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
                             </a>
-                            <?php endforeach; ?>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                              <div class="dropdown-header">Tindakan:</div>
+                              <a href="" class="dropdown-item update-payment-trigger" data-toggle="modal" data-target="#updatePaymentModal">Sunting Detail</a>
+                              <a href="" class="dropdown-item del-payment-trigger" data-toggle="modal" data-target="#deletePaymentModal">Hapus Pembayaran</a>
+                            </div>
+                          </td>
+                        </tr>
 
-                        </td>
+                      <?php endforeach; ?>
+
+                    <?php else : ?>
+
+                      <tr>
+                        <td class="px-0">Belum ada pembayaran.</td>
                       </tr>
-                    <?php endforeach; ?>
-                  <?php else : ?>
-                    <tr>
-                      <td class="px-0">Semua pesanan telah diselesaikan</td>
-                    </tr>
-                  <?php endif; ?>
 
-                </tbody>
-              </table>
+                    <?php endif; ?>
+
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Product Fulfillment Card -->
+          <!-- Order Process Card -->
+          <div class="card shadow mb-3">
+            <a href="#process" class="d-block card-header py-3" data-toggle="collapse" role="button">
+              <h6 class="m-0 font-weight-bold text-primary">Status Pengerjaan</h6>
+            </a>
+            <div class="collapse show" id="process">
+              <div class="card-body py-0">
+
+                <table class="table">
+                  <tbody>
+
+                    <?php if ($current_orders) : ?>
+                      <?php foreach ($current_orders as $order) : ?>
+                        <tr data-order-id="<?= $order['order_id']; ?>">
+                          <td class="px-0">
+                            <div>
+                              <small id="payment-date-display" style="color:#ec8615"><?= $order['process_status']; ?></small>
+                              <p style="font-size:14px;" id="payment-name-display">
+                                <span style="color:#495057"><?= date('d-m-Y', strtotime($order['required_date'])); ?></span> | <?= $order['description']; ?>
+                              </p>
+                            </div>
+                          </td>
+                          <td class="px-0 align-middle text-right">
+
+                            <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+
+                              <div class="dropdown-header">Tandai:</div>
+
+                              <?php $process_status = $this->db->get('process_status')->result_array(); ?>
+
+                              <?php foreach ($process_status as $status) : ?>
+                                <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#mark-as-modal" data-status-name=<?= $status['name']; ?> data-status-id="<?= $status['process_status_id']; ?>">
+                                  <?= $status['name']; ?> <?= $status['name'] == $order['process_status'] ? '&#10003;' : ''; ?>
+                                </a>
+                              <?php endforeach; ?>
+
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php else : ?>
+                      <tr>
+                        <td class="px-0">Semua pesanan telah diselesaikan</td>
+                      </tr>
+                    <?php endif; ?>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Fulfillment Card -->
 
         <?php endif; ?>
 
@@ -552,17 +552,17 @@
                 <?php $payment_methods = $this->pembayaran_model->get_payment_method(); ?>
 
                 <?php foreach ($payment_methods as $payment_method) : ?>
-                <option value="<?= $payment_method['payment_method_id']; ?>"><?= $payment_method['name']; ?></option>
+                  <option value="<?= $payment_method['payment_method_id']; ?>"><?= $payment_method['name']; ?></option>
                 <?php endforeach; ?>
 
               </select>
             </div>
 
             <?php if ($this->uri->segment(2) == 'sunting') : ?>
-            <div class="form-group">
-              <label for="modal-payment-date"><small>Tanggal</small></label>
-              <input type="date" name="payment[payment_date]" id="modal-payment-date" class="form-control">
-            </div>
+              <div class="form-group">
+                <label for="modal-payment-date"><small>Tanggal</small></label>
+                <input type="date" name="payment[payment_date]" id="modal-payment-date" class="form-control">
+              </div>
             <?php endif; ?>
 
           </div>
@@ -641,7 +641,7 @@
                   </div>
                 </div>
                 <a href="#" style="color:#AAB0C6" class="<?= in_array($catalog[$i]['product_id'], $selected_product_id) ? '' : 'add-product-btn'; ?>" id="add-product-<?= $catalog[$i]['product_id']; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>">
-                  <i class="fas fa-plus" ></i>
+                  <i class="fas fa-plus"></i>
                 </a>
               </div>
 
@@ -649,37 +649,37 @@
 
           <?php else : ?>
 
-          <?php for ($i = 0; $i < count($catalog); $i++) : ?>
+            <?php for ($i = 0; $i < count($catalog); $i++) : ?>
 
-            <div class="product-list-item d-flex justify-content-between align-items-center mb-3" data-product-index="<?= $i; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>" data-desc="<?= $catalog[$i]['title']; ?>" data-qty="1" data-price="<?= $catalog[$i]['sell_price']; ?>" data-amount="<?= $catalog[$i]['sell_price']; ?>" data-stock="<?= $catalog[$i]['stock']; ?>" id="product-list-item-<?= $catalog[$i]['product_id']; ?>">
+              <div class="product-list-item d-flex justify-content-between align-items-center mb-3" data-product-index="<?= $i; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>" data-desc="<?= $catalog[$i]['title']; ?>" data-qty="1" data-price="<?= $catalog[$i]['sell_price']; ?>" data-amount="<?= $catalog[$i]['sell_price']; ?>" data-stock="<?= $catalog[$i]['stock']; ?>" id="product-list-item-<?= $catalog[$i]['product_id']; ?>">
 
-              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
 
-                <a class="dropdown-toggle mr-3" href="#" role="button">
-                  <img style="width:33px;height:100%" src="<?= isset($catalog[$i]['image']) ? base_url('assets/img/product/') . $catalog[$i]['image'] : base_url('assets/icon/') . $catalog[$i]['item_icon']; ?>">
-                </a>
+                  <a class="dropdown-toggle mr-3" href="#" role="button">
+                    <img style="width:33px;height:100%" src="<?= isset($catalog[$i]['image']) ? base_url('assets/img/product/') . $catalog[$i]['image'] : base_url('assets/icon/') . $catalog[$i]['item_icon']; ?>">
+                  </a>
 
-                <div>
-                  <div style="color:#9aa0ac;font-size:13px;">
-                    <span style="margin-right:2px;color:#ec8615">
-                      Rp<?= number_format($catalog[$i]['sell_price'], 2, ',', '.'); ?>
-                    </span>
-                    <span>
-                      (<span id="stock"><?= $catalog[$i]['stock']; ?></span>pcs)
-                    </span>
+                  <div>
+                    <div style="color:#9aa0ac;font-size:13px;">
+                      <span style="margin-right:2px;color:#ec8615">
+                        Rp<?= number_format($catalog[$i]['sell_price'], 2, ',', '.'); ?>
+                      </span>
+                      <span>
+                        (<span id="stock"><?= $catalog[$i]['stock']; ?></span>pcs)
+                      </span>
+                    </div>
+                    <div style="color:#495057;font-size:15px"><?= $catalog[$i]['title']; ?></div>
                   </div>
-                  <div style="color:#495057;font-size:15px"><?= $catalog[$i]['title']; ?></div>
+
                 </div>
+
+                <a href='#' style='color:#AAB0C6' class='add-product-btn' id='add-product-<?= $catalog[$i]['product_id']; ?>' data-product-id="<?= $catalog[$i]['product_id']; ?>">
+                  <i class="fas fa-plus"></i>
+                </a>
 
               </div>
 
-              <a href='#' style='color:#AAB0C6' class='add-product-btn' id='add-product-<?= $catalog[$i]['product_id']; ?>' data-product-id="<?= $catalog[$i]['product_id']; ?>">
-                <i class="fas fa-plus"></i>
-              </a>
-
-            </div>
-
-          <?php endfor; ?>
+            <?php endfor; ?>
 
           <?php endif; ?>
         </div>
@@ -718,8 +718,8 @@
 
             <?php else : ?>
 
-            Tidak ada pesanan
-            
+              Tidak ada pesanan
+
             <?php endif; ?>
 
           <?php endif; ?>
@@ -737,218 +737,216 @@
 
 <?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-<!-- Detach Product Modal-->
-<div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <form action="<?= base_url('processor/invoice_pcsr/lepas_produk'); ?>" method="post" id="detach-product-form">
-      <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
-      <input type="hidden" name="product_sale[product_sale_id]" id="modal-product-sale-id" value="">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Yakin akan menghapus?</h5>
-          <button class="close" type="button" data-dismiss="modal">
-            <span aria-hidden="true">×</span>
-          </button>
+  <!-- Detach Product Modal-->
+  <div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form action="<?= base_url('processor/invoice_pcsr/lepas_produk'); ?>" method="post" id="detach-product-form">
+        <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
+        <input type="hidden" name="product_sale[product_sale_id]" id="modal-product-sale-id" value="">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Yakin akan menghapus?</h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus produk ini dari Invoice.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="del-product-btn">Hapus</button>
+          </div>
         </div>
-        <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus produk ini dari Invoice.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary" id="del-product-btn">Hapus</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Detach Order Modal-->
-<div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <form action="<?= base_url('processor/invoice_pcsr/lepas_pesanan'); ?>" method="post" id="detach-order-form">
-      <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
-      <input type="hidden" name="order[order_id]" id="modal-order-id" value="">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Yakin akan menghapus?</h5>
-          <button class="close" type="button" data-dismiss="modal">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus pesanan ini dari Invoice.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary" id="del-product-btn">Hapus</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Delete Invoice Modal-->
-<div class="modal fade" id="delOrderModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <form action="<?= base_url('processor/invoice_pcsr/hapus_invoice'); ?>" method="post" id="delete-invoice-form">
-      <input type="hidden" name="invoice[invoice_id]" id="invoice-id" value="<?= $invoice_detail['invoice_id']; ?>">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Yakin akan menghapus?</h5>
-          <button class="close" type="button" data-dismiss="modal">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus Invoice ini.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary" id="delInvoiceBtn">Hapus</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Update Payment Modal -->
-<div class="modal fade" id="updatePaymentModal" tabindex="-1" role="dialog">
-
-<div class="modal-dialog" role="document">
-
-  <form action="<?= base_url('processor/invoice_pcsr/perbarui_pembayaran')?>" method="post" id="update-payment-form">
-
-    <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
-
-    <input type="hidden" name="payment[payment_id]" id="update-payment-id" value="">
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Rekam Pembayaran</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-
-        <div class="form-group">
-          <label for="update-payment-amount"><small>Nominal</small></label>
-          <input type="text" name="payment[amount]" id="update-payment-amount" class="form-control" value="0">
-        </div>
-
-        <div class="form-group">
-          <label for="update-payment-method"><small>Metode Pembayaran</small></label>
-          <select name="payment[payment_method_id]" id="update-payment-method" class="custom-select">
-            <option value="">Pilih...</option>
-
-            <?php $payment_methods = $this->pembayaran_model->get_payment_method(); ?>
-
-            <?php foreach ($payment_methods as $payment_method) : ?>
-            <option value="<?= $payment_method['payment_method_id']; ?>"><?= $payment_method['name']; ?></option>
-            <?php endforeach; ?>
-
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="update-payment-date"><small>Tanggal</small></label>
-          <input type="date" name="payment[payment_date]" id="update-payment-date" class="form-control">
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-primary" id="save-payment-btn">Perbarui data</button>
-      </div>
+      </form>
     </div>
-  </form>
-
-</div>
-</div>
-
-<!-- Delete Payment Modal-->
-<div class="modal fade" id="deletePaymentModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <form action="<?= base_url('processor/invoice_pcsr/hapus_pembayaran'); ?>" method="post" id="delete-payment-form">
-      <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number']; ?>">
-      <input type="hidden" name="payment[payment_id]" id="del-payment-modal__payment-id" value="">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Yakin akan menghapus?</h5>
-          <button class="close" type="button" data-dismiss="modal">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus pembayaran ini.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary" id="delPaymentBtn">Hapus</button>
-        </div>
-      </div>
-    </form>
   </div>
-</div>
 
-<!-- Mark as Finished Modal-->
-<div class="modal fade" id="mark-as-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-
-    <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="mark-as-finished-form">
-
-      <input type="hidden" name="redirect-here" value="<?= "{$this->uri->segment(1)}/{$this->uri->segment(2)}/{$this->uri->segment(3)}" ?>">
-      <input type="hidden" name="order[order_id]" id="mark-modal-order-id" value="">
-
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h5 class="modal-title">Status Pengerjaan</h5>
-          <button class="close" type="button" data-dismiss="modal">
-            <span aria-hidden="true">×</span>
-          </button>
+  <!-- Detach Order Modal-->
+  <div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form action="<?= base_url('processor/invoice_pcsr/lepas_pesanan'); ?>" method="post" id="detach-order-form">
+        <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
+        <input type="hidden" name="order[order_id]" id="modal-order-id" value="">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Yakin akan menghapus?</h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus pesanan ini dari Invoice.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="del-product-btn">Hapus</button>
+          </div>
         </div>
-
-        <div class="modal-body"></div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-          <button type="submit" class="btn btn-primary" name="order[process_status_id]" id="status-btn" value="">Ya</button>
-        </div>
-
-      </div>
-
-    </form>
-
+      </form>
+    </div>
   </div>
-</div>
 
-<script>
-  const processCard = document.querySelector('#process');
+  <!-- Delete Invoice Modal-->
+  <div class="modal fade" id="delOrderModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form action="<?= base_url('processor/invoice_pcsr/hapus_invoice'); ?>" method="post" id="delete-invoice-form">
+        <input type="hidden" name="invoice[invoice_id]" id="invoice-id" value="<?= $invoice_detail['invoice_id']; ?>">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Yakin akan menghapus?</h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus Invoice ini.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="delInvoiceBtn">Hapus</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
-  processCard.addEventListener('click', (e) => {
+  <!-- Update Payment Modal -->
+  <div class="modal fade" id="updatePaymentModal" tabindex="-1" role="dialog">
 
-    let clickedEl = e.target;
+    <div class="modal-dialog" role="document">
 
-    // Grab order-id value from order-id data attribute of the respective row
-    let currentRow = clickedEl.closest('tr');
-    let orderId = currentRow.dataset.orderId;
+      <form action="<?= base_url('processor/invoice_pcsr/perbarui_pembayaran') ?>" method="post" id="update-payment-form">
 
-    if (clickedEl.matches('.status-mark-trigger')) {
+        <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
+
+        <input type="hidden" name="payment[payment_id]" id="update-payment-id" value="">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Rekam Pembayaran</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="update-payment-amount"><small>Nominal</small></label>
+              <input type="text" name="payment[amount]" id="update-payment-amount" class="form-control" value="0">
+            </div>
+
+            <div class="form-group">
+              <label for="update-payment-method"><small>Metode Pembayaran</small></label>
+              <select name="payment[payment_method_id]" id="update-payment-method" class="custom-select">
+                <option value="">Pilih...</option>
+
+                <?php $payment_methods = $this->pembayaran_model->get_payment_method(); ?>
+
+                <?php foreach ($payment_methods as $payment_method) : ?>
+                  <option value="<?= $payment_method['payment_method_id']; ?>"><?= $payment_method['name']; ?></option>
+                <?php endforeach; ?>
+
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="update-payment-date"><small>Tanggal</small></label>
+              <input type="date" name="payment[payment_date]" id="update-payment-date" class="form-control">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary" id="save-payment-btn">Perbarui data</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Delete Payment Modal-->
+  <div class="modal fade" id="deletePaymentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form action="<?= base_url('processor/invoice_pcsr/hapus_pembayaran'); ?>" method="post" id="delete-payment-form">
+        <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number']; ?>">
+        <input type="hidden" name="payment[payment_id]" id="del-payment-modal__payment-id" value="">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Yakin akan menghapus?</h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus pembayaran ini.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="delPaymentBtn">Hapus</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mark as Finished Modal-->
+  <div class="modal fade" id="mark-as-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+
+      <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="mark-as-finished-form">
+
+        <input type="hidden" name="redirect-here" value="<?= "{$this->uri->segment(1)}/{$this->uri->segment(2)}/{$this->uri->segment(3)}" ?>">
+        <input type="hidden" name="order[order_id]" id="mark-modal-order-id" value="">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Status Pengerjaan</h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary" name="order[process_status_id]" id="status-btn" value="">Ya</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    const processCard = document.querySelector('#process');
+
+    processCard.addEventListener('click', (e) => {
+
+      let clickedEl = e.target;
+
+      // Grab order-id value from order-id data attribute of the respective row
+      let currentRow = clickedEl.closest('tr');
+      let orderId = currentRow.dataset.orderId;
+
+      if (clickedEl.matches('.status-mark-trigger')) {
 
 
-      // Grab status data
-      let statusId = clickedEl.dataset.statusId;
-      let statusName = clickedEl.dataset.statusName;
+        // Grab status data
+        let statusId = clickedEl.dataset.statusId;
+        let statusName = clickedEl.dataset.statusName;
 
-      // Assign order-id value to the order-id hidden input in the mark-as-finished-modal
-      document.querySelector('#mark-modal-order-id').value = orderId
+        // Assign order-id value to the order-id hidden input in the mark-as-finished-modal
+        document.querySelector('#mark-modal-order-id').value = orderId
 
-      // Assign status data to the modal
-      document.querySelector('#mark-as-modal .modal-body').innerHTML = `
+        // Assign status data to the modal
+        document.querySelector('#mark-as-modal .modal-body').innerHTML = `
         Anda ingin mengubah status pesanan ini menjadi <strong>${statusName}?</strong>
       `;
 
-      document.querySelector('#status-btn').value = statusId;
+        document.querySelector('#status-btn').value = statusId;
 
-    }
+      }
 
-  });
-
-  
-</script>
+    });
+  </script>
 
 <?php endif; ?>

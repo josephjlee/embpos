@@ -16,10 +16,10 @@ class Produksi_pcsr extends CI_Controller
     | -------------------------------------------------------------------
     | PROCESSOR-TYPE METHOD
     | -------------------------------------------------------------------
-    | These method have no front-end, their job is to process 
+    | These method have no front-end, their job is to process
     | form submission. Ex: delete request, input request, etc...
-    |     
-    */
+    |
+     */
 
     public function atur_produksi()
     {
@@ -29,9 +29,9 @@ class Produksi_pcsr extends CI_Controller
 
         $redirect_dest = $this->input->post('redirect-here');
 
-        redirect( $redirect_dest );
+        redirect($redirect_dest);
     }
-    
+
     public function perbarui_detail()
     {
 
@@ -42,7 +42,7 @@ class Produksi_pcsr extends CI_Controller
 
         $this->produksi_model->perbarui($production);
 
-        redirect( $this->input->post('input-src') );
+        redirect($this->input->post('input-src'));
     }
 
     public function record_machine_output()
@@ -54,17 +54,17 @@ class Produksi_pcsr extends CI_Controller
 
         $this->produksi_model->rekam_output_mesin($output);
 
-        redirect( $this->input->post('input-src') );
+        redirect($this->input->post('input-src'));
     }
 
     /*
     | -------------------------------------------------------------------
     | UTILITY-TYPE METHOD
     | -------------------------------------------------------------------
-    | These method have no front-end, their job is to help render-type 
+    | These method have no front-end, their job is to help render-type
     | method on accomplishing their task.
-    |     
-    */
+    |
+     */
 
     public function file_exist($production_id)
     {
@@ -82,13 +82,13 @@ class Produksi_pcsr extends CI_Controller
 
         // If input file is empty then bailed out
         if ($file['size'] == 0) {
-            return NULL;
+            return null;
         }
 
         // Set up the upload library configuration
-        $config['upload_path']      = realpath(FCPATH . 'assets/img/dst');
-        $config['allowed_types']    = 'dst';
-        $config['max_size']         = 40960;
+        $config['upload_path'] = realpath(FCPATH . 'assets/img/dst');
+        $config['allowed_types'] = 'dst';
+        $config['max_size'] = 40960;
 
         $this->load->library('upload', $config);
 
@@ -102,6 +102,4 @@ class Produksi_pcsr extends CI_Controller
 
         return $this->upload->data()['file_name'];
     }
-
-
 }

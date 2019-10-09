@@ -125,7 +125,7 @@ class Produksi_model extends CI_Model
         $this->db->from('production');
         $this->db->join('order', 'production.order_id = order.order_id');
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
-        $this->db->where('file!=', NULL);
+        $this->db->where('file!=', null);
 
         return $this->db->get()->result_array();
     }
@@ -199,11 +199,11 @@ class Produksi_model extends CI_Model
     {
         $process_icon = '<i class="far fa-clock fa-lg"></i>';
 
-        if ($date_started != NULL && $date_finished == NULL) {
+        if ($date_started != null && $date_finished == null) {
             $process_icon = '<i class="fas fa-circle-notch fa-lg fa-spin"></i>';
         }
 
-        if ($date_started != NULL && $date_finished != NULL) {
+        if ($date_started != null && $date_finished != null) {
             $process_icon = '<i class="fas fa-check fa-lg"></i>';
         }
 
@@ -228,9 +228,9 @@ class Produksi_model extends CI_Model
 
         $sql .= $this->is_col_exist($table, 'output') != 0 ? "`{$table}`.`output`," : '';
 
-        $sql .= "(CASE 
-                    WHEN date_started IS NULL THEN 'menunggu' 
-                    WHEN date_started IS NOT NULL AND date_finished IS NULL THEN 'dikerjakan' 
+        $sql .= "(CASE
+                    WHEN date_started IS NULL THEN 'menunggu'
+                    WHEN date_started IS NOT NULL AND date_finished IS NULL THEN 'dikerjakan'
                     WHEN date_finished IS NOT NULL THEN 'selesai' END
                 ) AS status ";
 
@@ -243,7 +243,6 @@ class Produksi_model extends CI_Model
         return $sql;
     }
 
-
     public function get_undesigned_list()
     {
 
@@ -255,7 +254,6 @@ class Produksi_model extends CI_Model
 
         return $this->db->query($this->select_basic_card_data('preparation_process'))->result_array();
     }
-
 
     public function get_unembroideried_list()
     {
@@ -299,32 +297,32 @@ class Produksi_model extends CI_Model
                 'title' => 'Desain',
                 'icon' => 'fas fa-palette mr-2',
                 'url' => 'produksi/desain',
-                'data' => $this->db->query($this->select_basic_card_data('process_design'))->result_array()
+                'data' => $this->db->query($this->select_basic_card_data('process_design'))->result_array(),
             ],
             [
                 'title' => 'Persiapan Bahan Baku',
                 'icon' => 'fas fa-tape mr-2',
                 'url' => 'produksi/persiapan',
-                'data' => $this->db->query($this->select_basic_card_data('process_preparation'))->result_array()
+                'data' => $this->db->query($this->select_basic_card_data('process_preparation'))->result_array(),
             ],
             [
                 'title' => 'Bordir',
                 'icon' => 'fab fa-shirtsinbulk mr-2',
                 'url' => 'produksi/bordir',
-                'data' => $this->db->query($this->select_basic_card_data('process_embroidery'))->result_array()
+                'data' => $this->db->query($this->select_basic_card_data('process_embroidery'))->result_array(),
             ],
             [
                 'title' => 'Finishing',
                 'icon' => 'fas fa-cut mr-2',
                 'url' => 'produksi/bordir',
-                'data' => $this->db->query($this->select_basic_card_data('process_finishing'))->result_array()
+                'data' => $this->db->query($this->select_basic_card_data('process_finishing'))->result_array(),
             ],
             [
                 'title' => 'Packaging',
                 'icon' => 'fas fa-gift mr-2',
                 'url' => 'produksi/bordir',
-                'data' => $this->db->query($this->select_basic_card_data('process_finishing'))->result_array()
-            ]
+                'data' => $this->db->query($this->select_basic_card_data('process_finishing'))->result_array(),
+            ],
 
         ];
 
@@ -336,7 +334,7 @@ class Produksi_model extends CI_Model
         $this->db->select('employee_id, nick_name');
         $this->db->from('employee');
         $this->db->where('job_role_id', 2);
-        
-        return $this->db->get()->result_array(); 
+
+        return $this->db->get()->result_array();
     }
 }
