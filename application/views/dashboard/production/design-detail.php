@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-  <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+  <form action="<?= base_url('processor/produksi_pcsr/rekam_output_desainer') ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
     <input type="hidden" name="production[production_id]" value="<?= $design_detail['production_id']; ?>">
     <input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
@@ -215,7 +215,7 @@
   <div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail'); ?>" method="post" id="update-process-form">
+      <form action="<?= base_url('processor/produksi_pcsr/perbarui_status_desain'); ?>" method="post" id="update-process-form">
 
         <input type="hidden" name="production[production_id]" id="production-id" value="<?= $design_detail['production_id']; ?>">
         <input type="hidden" name="input-src" value="<?= current_url(); ?>">

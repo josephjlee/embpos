@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Produksi_pcsr extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -32,13 +31,27 @@ class Produksi_pcsr extends CI_Controller
         redirect($redirect_dest);
     }
 
-    public function perbarui_detail()
+    public function rekam_output_desainer()
     {
-
+        // Grab production data submited by the designer (color order)
         $production = $this->input->post('production');
 
-        // Use existing file or grab new uploaded file
+        // Check file submission, use existing or the uploaded one
         $production['file'] = $this->file_exist($production['production_id']) ?? $this->unggah($_FILES['file'], $this->input->post('input-src'));
+
+        // Update production_status_name to 'Desain Selesai'
+        $production['production_status_id'] = 3;
+
+        // Execute update process
+        $this->produksi_model->perbarui($production);
+
+        // Redirect to its original page
+        redirect($this->input->post('input-src'));
+    }
+
+    public function perbarui_status_desain()
+    {
+        $production = $this->input->post('production');
 
         $this->produksi_model->perbarui($production);
 
@@ -94,7 +107,6 @@ class Produksi_pcsr extends CI_Controller
 
         // If error, redirect to pesanan/buat with error message
         if (!$this->upload->do_upload('file')) {
-
             $this->session->set_flashdata('message', $this->upload->display_errors('<div class="alert alert-warning alert-dismissible fade show shadow" role="alert">', '<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button></div>'));
 
             redirect($redirect_dest);

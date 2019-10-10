@@ -46,6 +46,8 @@ class Pesanan extends CI_Controller
 
         $data['output'] = $this->produksi_model->sum_output_by_order_id($order_id);
 
+        $data['production_status'] = $this->produksi_model->check_production_status_by_order_id($order_id);
+
         $data['content'] = $this->load->view('dashboard/order/order-editor', $data, true);
 
         $data['view_script'] = 'editor--order.js';

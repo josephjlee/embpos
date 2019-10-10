@@ -161,6 +161,43 @@ class Produksi_model extends CI_Model
         return $this->db->get()->row_array();
     }
 
+    public function check_embro_progress_by_order_id($order_id)
+    {
+        $emb_output = $this->sum_output_by_order_id($order_id);
+
+        return round(($emb_output['quantity'] / $emb_output['order_qty']) * 100);
+    }
+
+    public function check_design_progress_by_order_id($order_id)
+    {
+        $design_progress = 0;
+        $production_status_id = $this->get_production_detail_by_order_id($order_id)['production_status_id'];
+        
+        switch ($production_status_id) {
+            case 1:
+                $design_progress = 0;
+                break;
+            case 2:
+                $design_progress = 50;
+                break;
+            case 3:
+                $design_progress = 100;
+                break;
+        }
+
+        return $design_progress;
+    }
+
+    public function check_production_status_by_order_id($order_id)
+    {
+        $production_status = [
+            'design'    => $this->check_design_progress_by_order_id($order_id),
+            'embro'     => $this->check_embro_progress_by_order_id($order_id)
+        ];
+
+        return $production_status;
+    }
+
     public function get_finishing_list()
     {
         $this->db->select('
@@ -183,7 +220,6 @@ class Produksi_model extends CI_Model
         $this->db->where('production_status_id', 6);
         
         return $this->db->get()->result_array();
-
     }
 
     public function get_production_detail_by_id($production_id)
