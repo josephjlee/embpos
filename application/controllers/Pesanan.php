@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pesanan extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -25,10 +24,10 @@ class Pesanan extends CI_Controller
     public function buat()
     {
         $data['title'] = 'Buat Pesanan';
-        
+
         $data['order']['order_number'] = $this->pesanan_model->new_order_number();
 
-        $data['content'] = $this->load->view('dashboard/order/order-editor', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/order/order-editor', $data, true);
 
         $data['view_script'] = 'editor--order.js';
 
@@ -42,35 +41,36 @@ class Pesanan extends CI_Controller
         $data['title'] = 'Sunting PSN-' . $data['order']['order_number'];
 
         $data['production'] = $this->produksi_model->get_production_detail_by_order_id($order_id);
-        
+
         $data['is_invoiced'] = $this->pesanan_model->check_invoice($order_id);
 
-        $data['content'] = $this->load->view('dashboard/order/order-editor', $data, TRUE);
+        $data['output'] = $this->produksi_model->sum_output_by_order_id($order_id);
+
+        $data['content'] = $this->load->view('dashboard/order/order-editor', $data, true);
 
         $data['view_script'] = 'editor--order.js';
 
         $this->load->view('layout/dashboard', $data);
     }
-    
+
     public function pratinjau($order_id)
     {
         $data['order'] = $this->pesanan_model->get_single_order($order_id);
 
         $data['title'] = 'Pratinjau PSN-' . $data['order']['order_number'];
 
-        $data['content'] = $this->load->view('dashboard/order/order-preview', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/order/order-preview', $data, true);
 
         $this->load->view('layout/dashboard', $data);
     }
 
     public function semua()
     {
-
         $data['title'] = 'Semua Pesanan';
 
         $data['orders'] = $this->pesanan_model->get_all_orders();
 
-        $data['content'] = $this->load->view('dashboard/order/order-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/order/order-index', $data, true);
 
         $data['view_script'] = 'index--order.js';
 
@@ -81,7 +81,7 @@ class Pesanan extends CI_Controller
     {
         $data['title'] = 'Pesanan Selesai';
         $data['orders'] = $this->pesanan_model->get_all_finished_orders();
-        $data['content'] = $this->load->view('dashboard/order/order-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/order/order-index', $data, true);
 
         $data['view_script'] = 'index--order.js';
 
@@ -92,7 +92,7 @@ class Pesanan extends CI_Controller
     {
         $data['title'] = 'Pesanan Aktif';
         $data['orders'] = $this->pesanan_model->get_all_active_orders();
-        $data['content'] = $this->load->view('dashboard/order/order-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/order/order-index', $data, true);
 
         $data['view_script'] = 'index--order.js';
 
@@ -103,7 +103,7 @@ class Pesanan extends CI_Controller
     {
         $data['title'] = 'Pesanan Antri';
         $data['orders'] = $this->pesanan_model->get_queued_orders();
-        $data['content'] = $this->load->view('dashboard/order/order-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/order/order-index', $data, true);
 
         $data['view_script'] = 'index--order.js';
 
@@ -114,9 +114,9 @@ class Pesanan extends CI_Controller
     | -------------------------------------------------------------------
     | UTILITY-TYPE METHOD
     | -------------------------------------------------------------------
-    | These method have no front-end, their job is to help render-type 
+    | These method have no front-end, their job is to help render-type
     | method on accomplishing their task.
-    |     
+    |
     */
 
     public function image_exist($order_id)
@@ -135,7 +135,7 @@ class Pesanan extends CI_Controller
 
         // If input file is empty then bailed out
         if ($file['size'] == 0) {
-            return NULL;
+            return null;
         }
 
         // Set up the upload library configuration
@@ -147,7 +147,6 @@ class Pesanan extends CI_Controller
 
         // If error, redirect to pesanan/buat with error message
         if (!$this->upload->do_upload('image')) {
-
             $this->session->set_flashdata('message', $this->upload->display_errors('<div class="alert alert-warning alert-dismissible fade show" role="alert">', '<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button></div>'));
 
             redirect(base_url('pesanan/buat/'));
@@ -155,5 +154,4 @@ class Pesanan extends CI_Controller
 
         return $this->upload->data()['file_name'];
     }
-
 }

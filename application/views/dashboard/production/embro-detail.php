@@ -66,7 +66,7 @@
             </div>
 
             <div class="col d-flex justify-content-center">
-              <ul class="list-group">              
+              <ul class="list-group">
                 <li class="list-group-item">
                   <p class="my-0"><small>Mesin</small></p>
                   <p class="my-0" style="color:black"><?= $embro_detail['machine'] ?? '-'; ?></p>
@@ -140,20 +140,20 @@
           <a href="#machine-file-card" class="d-block card-header py-3" data-toggle="collapse" role="button">
             <h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
           </a>
-          
+
           <!-- Card Content - Collapse -->
           <div class="collapse show" id="machine-file-card">
             <div class="card-body">
 
-                <div class="d-flex align-items-center">
-                  <img src="<?= base_url('assets/img/artwork/') . $embro_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
-                  <div>
-                    <p class="font-weight-bold my-0"><?= $embro_detail['file']; ?></p>
-                  </div>
-                  <div class="ml-auto">
-                    <i class="fas fa-download"></i>
-                  </div>
+              <div class="d-flex align-items-center">
+                <img src="<?= base_url('assets/img/artwork/') . $embro_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
+                <div>
+                  <p class="font-weight-bold my-0"><?= $embro_detail['file']; ?></p>
                 </div>
+                <div class="ml-auto">
+                  <i class="fas fa-download"></i>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -176,41 +176,45 @@
 
                   <?php if (!empty($output_records)) : ?>
 
-                  <?php foreach ($output_records as $output) : ?>
+                    <?php $total_output = 0; ?>
 
-                  <tr data-output-id="<?= $output['output_id']; ?>" data-output-quantity="<?= $output['quantity']; ?>" data-output-operator="<?= $output['employee_id']; ?>" data-output-shift="<?= $output['shift']; ?>">
+                    <?php foreach ($output_records as $output) : ?>
 
-                    <td class="px-0">
-                      <div>
-                        <small id="output-date-display" style="color:#ec8615">
-                          <span id="output-amount-display"><?= moneyStr($output['quantity']); ?></span>pcs
-                        </small>
-                        <p style="font-size:14px;" id="output-name-display" class="my-0">
-                          <span style="color:#495057"><?= date('d-m-Y', strtotime($output['date'])); ?> | Shift <?= $output['shift']; ?> |</span> <?= $output['operator']; ?>
-                        </p>
-                      </div>
-                    </td>
+                      <tr data-output-id="<?= $output['output_id']; ?>" data-output-quantity="<?= $output['quantity']; ?>" data-output-operator="<?= $output['employee_id']; ?>" data-output-shift="<?= $output['shift']; ?>">
 
-                    <td class="px-0 align-middle text-right">
-                      <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
-                        <i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                        <div class="dropdown-header">Tindakan:</div>
-                        <a href="" class="dropdown-item update-output-trigger" data-toggle="modal" data-target="#updateoutputModal">Sunting Detail</a>
-                        <a href="" class="dropdown-item del-output-trigger" data-toggle="modal" data-target="#deleteoutputModal">Hapus Pembayaran</a>
-                      </div>
-                    </td>
+                        <td class="px-0">
+                          <div>
+                            <small id="output-date-display" style="color:#ec8615">
+                              <span id="output-amount-display"><?= moneyStr($output['quantity']); ?></span>pcs
+                            </small>
+                            <p style="font-size:14px;" id="output-name-display" class="my-0">
+                              <span style="color:#495057"><?= date('d-m-Y', strtotime($output['date'])); ?> | Shift <?= $output['shift']; ?> |</span> <?= $output['operator']; ?>
+                            </p>
+                          </div>
+                        </td>
 
-                  </tr>
+                        <td class="px-0 align-middle text-right">
+                          <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                            <div class="dropdown-header">Tindakan:</div>
+                            <a href="" class="dropdown-item update-output-trigger" data-toggle="modal" data-target="#updateoutputModal">Sunting Detail</a>
+                            <a href="" class="dropdown-item del-output-trigger" data-toggle="modal" data-target="#deleteoutputModal">Hapus Pembayaran</a>
+                          </div>
+                        </td>
 
-                  <?php endforeach; ?>
+                      </tr>
+
+                      <?php $total_output += (int) $output['quantity']; ?>
+
+                    <?php endforeach; ?>
 
                   <?php else : ?>
 
-                  <tr>
-                    <td class="px-0">Belum ada output.</td>
-                  </tr>
+                    <tr>
+                      <td class="px-0">Belum ada output.</td>
+                    </tr>
 
                   <?php endif; ?>
 
@@ -276,7 +280,7 @@
     </div>
   </div>
 
-  <!-- Outut Modal -->
+  <!-- Output Modal -->
   <div class="modal fade" id="output-modal" tabindex="-1" role="dialog">
 
     <div class="modal-dialog" role="document">
@@ -286,7 +290,6 @@
         <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">
         <input type="hidden" name="output[production_id]" value="<?= $embro_detail['production_id']; ?>">
         <input type="hidden" name="input-src" value="<?= current_url(); ?>">
-        
 
         <div class="modal-content">
 
@@ -300,8 +303,8 @@
           <div class="modal-body">
 
             <div class="form-group">
-              <label for="modal-output-qty"><small>Jumlah</small></label>
-              <input type="text" name="output[quantity]" id="modal-output-qty" class="form-control" value="" placeholder="0">
+              <label for="modal-output-qty"><small>Jumlah (kurang <?= $embro_detail['quantity'] - $total_output; ?>pcs)</small></label>
+              <input type="number" min="1" max="<?= $embro_detail['quantity'] - $total_output; ?>" name="output[quantity]" id="modal-output-qty" class="form-control" value="" placeholder="0">
             </div>
 
             <div class="form-group">
@@ -314,10 +317,10 @@
 
                 <option value="">Pilih operator</option>
 
-                <?php foreach($operators as $operator) : ?>
+                <?php foreach ($operators as $operator) : ?>
                   <option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
                 <?php endforeach; ?>
-                
+
               </select>
 
             </div>

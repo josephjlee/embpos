@@ -2,7 +2,6 @@
 
 class Produksi_model extends CI_Model
 {
-
     public function simpan($production)
     {
         if (!empty($production['production_id'])) {
@@ -37,7 +36,6 @@ class Produksi_model extends CI_Model
 
     public function siapkan_data($production)
     {
-
         $design_db_data = [];
 
         foreach ($production as $col => $val) {
@@ -77,6 +75,7 @@ class Produksi_model extends CI_Model
     {
         $this->db->select('
             order.number as order_number,
+            order.order_id,
             order.image as artwork,
             order.description as title,
             order.dimension,
@@ -144,6 +143,47 @@ class Produksi_model extends CI_Model
         $this->db->join('employee', 'output_embro.employee_id = employee.employee_id');
 
         return $this->db->get()->result_array();
+    }
+
+    public function sum_output_by_order_id($order_id)
+    {
+        $this->db->select('
+            order.number AS order_number,
+            ANY_VALUE(order.quantity) AS order_qty,
+            SUM(output_embro.quantity) AS quantity
+        ');
+        $this->db->from('output_embro');
+        $this->db->join('production', 'output_embro.production_id = production.production_id');
+        $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->where('order.order_id', $order_id);
+        $this->db->group_by('order.order_id');
+
+        return $this->db->get()->row_array();
+    }
+
+    public function get_finishing_list()
+    {
+        $this->db->select('
+            item.item_id,
+            item.name AS item_name,
+            item.icon AS item_icon,
+            position.position_id,
+            position.name AS position_name,
+            order.image,
+            order.required_date AS order_deadline,
+            order.order_id,
+            order.number AS order_number,
+            order.description,
+            order.quantity
+        ');
+        $this->db->from('order');
+        $this->db->join('item', 'order.item_id = item.item_id');
+        $this->db->join('position', 'order.position_id = position.position_id');
+        $this->db->join('production', 'order.order_id = production.order_id');
+        $this->db->where('production_status_id', 6);
+        
+        return $this->db->get()->result_array();
+
     }
 
     public function get_production_detail_by_id($production_id)
@@ -217,7 +257,6 @@ class Produksi_model extends CI_Model
 
     public function select_basic_card_data($table)
     {
-
         $sql = "SELECT
                     `{$table}`.`order_detail_id`,
                     `{$table}`.`date_started`,
@@ -245,13 +284,11 @@ class Produksi_model extends CI_Model
 
     public function get_undesigned_list()
     {
-
         return $this->db->query($this->select_basic_card_data('design_process'))->result_array();
     }
 
     public function get_unprepared_list()
     {
-
         return $this->db->query($this->select_basic_card_data('preparation_process'))->result_array();
     }
 
@@ -268,7 +305,6 @@ class Produksi_model extends CI_Model
 
     public function get_unfinished_list()
     {
-
         function is_unfinished(array $db_result_array)
         {
             return $db_result_array['is_designed'] == 1 && $db_result_array['is_prepared'] == 1 && $db_result_array['is_embroideried'] == 1 && $db_result_array['is_finished'] == 0;
@@ -279,7 +315,6 @@ class Produksi_model extends CI_Model
 
     public function get_unpacked_list()
     {
-
         function is_unpacked(array $db_result_array)
         {
             return $db_result_array['is_designed'] == 1 && $db_result_array['is_prepared'] == 1 && $db_result_array['is_embroideried'] == 1 && $db_result_array['is_finished'] == 1 && $db_result_array['is_packed'] == 0;
@@ -290,7 +325,6 @@ class Produksi_model extends CI_Model
 
     public function get_production_card_data()
     {
-
         $cards = [
 
             [

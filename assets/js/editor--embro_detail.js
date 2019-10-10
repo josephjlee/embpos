@@ -1,12 +1,9 @@
 $('document').ready(function () {
 
-	// Turn operatorSelect into Select2
-  // initSelect2( $('#modal-operator') );
+  // Turn operatorSelect into Selectize
   $('#modal-operator').selectize();
 
-  // Output money format on keyup
-  // $('#base-price').keyup(numberFormat);
-  // $('#sell-price').keyup(numberFormat);
-  // $('#stock').keyup(numberFormat);
-  
+  // Enable tooltip
+  $('#embro-progress-bar').tooltip();
+
 })

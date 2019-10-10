@@ -47,13 +47,13 @@ class Produksi_pcsr extends CI_Controller
 
     public function record_machine_output()
     {
-        // pretty_print($_POST);
-        // exit;
-
+        // Grab output data from form submission
         $output = $this->input->post('output');
 
+        // Record operator's output
         $this->produksi_model->rekam_output_mesin($output);
 
+        // Redirect to its original page
         redirect($this->input->post('input-src'));
     }
 

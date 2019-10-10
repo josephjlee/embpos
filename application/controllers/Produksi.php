@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script allowed!');
 
-class Produksi extends CI_Controller {
+class Produksi extends CI_Controller
+{
 
     public function __construct()
     {
@@ -22,7 +23,7 @@ class Produksi extends CI_Controller {
 
         $this->load->view('layout/dashboard', $data);
     }
-    
+
     public function daftar_bordir()
     {
         $data['title'] = 'Daftar Bordir';
@@ -32,6 +33,19 @@ class Produksi extends CI_Controller {
         $data['view_script'] = 'index--embro.js';
 
         $data['content'] = $this->load->view('dashboard/production/embro-index', $data, TRUE);
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
+    public function daftar_finishing()
+    {
+        $data['title'] = 'Daftar Finishing';
+
+        $data['finishing_list'] = $this->produksi_model->get_finishing_list();
+
+        $data['view_script'] = 'index--finishing.js';
+
+        $data['content'] = $this->load->view('dashboard/production/finishing-index', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);
     }
@@ -46,7 +60,7 @@ class Produksi extends CI_Controller {
 
         $this->load->view('layout/dashboard', $data);
     }
-    
+
     public function detail_bordir($production_id)
     {
         $data['title'] = "Pesanan Bordir: BRD-{$production_id}";
@@ -68,8 +82,7 @@ class Produksi extends CI_Controller {
 
         $data['production_data'] = $this->produksi_model->get_production_card_data();
         $data['content'] = $this->load->view('dashboard/production/production--checklist', $data, TRUE);
-        
+
         $this->load->view('layout/dashboard', $data);
     }
-
 }
