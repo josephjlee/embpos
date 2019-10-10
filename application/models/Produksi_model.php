@@ -125,6 +125,8 @@ class Produksi_model extends CI_Model
         $this->db->join('order', 'production.order_id = order.order_id');
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
         $this->db->where('file!=', null);
+        $this->db->where('color_order<>', '');
+        $this->db->where('machine<>', '');
 
         return $this->db->get()->result_array();
     }
@@ -164,6 +166,10 @@ class Produksi_model extends CI_Model
     public function check_embro_progress_by_order_id($order_id)
     {
         $emb_output = $this->sum_output_by_order_id($order_id);
+
+        if ($emb_output['quantity'] == 0) {
+            return 0;
+        }
 
         return round(($emb_output['quantity'] / $emb_output['order_qty']) * 100);
     }
