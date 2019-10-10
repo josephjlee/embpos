@@ -67,7 +67,7 @@ $(document).ready(function () {
 					<input type="text" name="production[operator]" id="operator" class="form-control" value="${operator}">
 				</div>
 				<div class="form-group col">
-					<label for="harga"><small>Harga (harga asli: Rp${priceVal},00)</small></label>
+					<label for="harga"><small>Harga (harga asli: Rp${priceVal})</small></label>
 					<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${laborPrice}">
 				</div>
 			</div>
@@ -83,8 +83,8 @@ $(document).ready(function () {
 
 		stitchReq = sendAjax(
 			`${window.location.origin}/ajax/pesanan_ajax/get_stitch_price`, {
-				quantity_id: quantityID(moneyInt($(this).val()))
-			}
+			quantity_id: quantityID(moneyInt($(this).val()))
+		}
 		);
 
 		stitchReq.done(function (data) {
@@ -99,7 +99,7 @@ $(document).ready(function () {
                     <div class="card stitch-card shadow">
                         <div class="card-body">
                             <small>Stitch &#8804 ${val.stitch_count}: </small>
-                            <h5>${multiplyTwoNums( moneyInt(val.stitch_price), priceConstant )}</h5>
+                            <h5>${multiplyTwoNums(moneyInt(val.stitch_price), priceConstant)}</h5>
                         </div>
                     </div>
                 </div>
@@ -135,8 +135,8 @@ $(document).ready(function () {
 		// Request position by item_id
 		positionReq = sendAjax(
 			`${window.location.origin}/ajax/pesanan_ajax/get_item_position`, {
-				item_id: $(this).val()
-			}
+			item_id: $(this).val()
+		}
 		);
 
 		// Assign respective position
