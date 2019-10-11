@@ -180,15 +180,15 @@ class Produksi_model extends CI_Model
     {
         $design_progress = 0;
         $production_status_id = $this->get_production_detail_by_order_id($order_id)['production_status_id'];
-        
-        switch ($production_status_id) {
-            case 1:
+
+        switch (true) {
+            case $production_status_id == 1:
                 $design_progress = 0;
                 break;
-            case 2:
+            case $production_status_id == 2:
                 $design_progress = 50;
                 break;
-            case 3:
+            case $production_status_id > 3:
                 $design_progress = 100;
                 break;
         }
@@ -226,7 +226,7 @@ class Produksi_model extends CI_Model
         $this->db->join('position', 'order.position_id = position.position_id');
         $this->db->join('production', 'order.order_id = production.order_id');
         $this->db->where('production_status_id', 6);
-        
+
         return $this->db->get()->result_array();
     }
 
