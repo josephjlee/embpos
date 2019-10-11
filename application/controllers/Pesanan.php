@@ -44,7 +44,7 @@ class Pesanan extends CI_Controller
 
         $data['is_invoiced'] = $this->pesanan_model->check_invoice($order_id);
 
-        $data['output'] = $this->produksi_model->sum_output_by_order_id($order_id);
+        $data['output'] = $this->produksi_model->get_production_output_by_order_id($order_id);
 
         $data['production_status'] = $this->produksi_model->check_production_status_by_order_id($order_id);
 
