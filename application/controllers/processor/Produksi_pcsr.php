@@ -24,6 +24,8 @@ class Produksi_pcsr extends CI_Controller
     {
         $production = $this->input->post('production');
 
+        $production['file'] = $this->file_exist($production['production_id']) ?? $this->unggah($_FILES['file'], $this->input->post('input-src'));
+
         $this->produksi_model->simpan($production);
 
         $redirect_dest = $this->input->post('redirect-here');
@@ -33,7 +35,7 @@ class Produksi_pcsr extends CI_Controller
 
     public function rekam_output_desainer()
     {
-        // Grab production data submited by the designer (color order)
+        // Grab the color order data submited by the designer
         $production = $this->input->post('production');
 
         // Check file submission, use existing or the uploaded one
@@ -49,16 +51,7 @@ class Produksi_pcsr extends CI_Controller
         redirect($this->input->post('input-src'));
     }
 
-    public function perbarui_status_desain()
-    {
-        $production = $this->input->post('production');
-
-        $this->produksi_model->perbarui($production);
-
-        redirect($this->input->post('input-src'));
-    }
-
-    public function record_machine_output()
+    public function rekam_output_operator()
     {
         // Grab output data from form submission
         $output = $this->input->post('output');
@@ -67,6 +60,15 @@ class Produksi_pcsr extends CI_Controller
         $this->produksi_model->rekam_output_mesin($output);
 
         // Redirect to its original page
+        redirect($this->input->post('input-src'));
+    }
+
+    public function perbarui_detail()
+    {
+        $production = $this->input->post('production');
+
+        $this->produksi_model->perbarui($production);
+
         redirect($this->input->post('input-src'));
     }
 

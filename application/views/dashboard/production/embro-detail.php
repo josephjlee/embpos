@@ -4,6 +4,23 @@
   <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
     <input type="hidden" name="production[production_id]" value="<?= $embro_detail['production_id']; ?>">
 
+    <!-- Page Heading -->
+    <div class="row mb-2">
+
+      <div class="col d-flex justify-content-start align-items-center">
+
+        <h1 class="h3 text-gray-800 mr-2"><?= $title; ?></h1>
+
+          <div class="ml-auto">
+
+            <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $embro_detail['status']; ?></span></a>
+
+          </div>
+
+      </div>
+
+    </div>
+
     <div class="row">
 
       <!-- Main Panel -->
@@ -285,7 +302,7 @@
 
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/produksi_pcsr/record_machine_output'); ?>" method="post">
+      <form action="<?= base_url('processor/produksi_pcsr/rekam_output_operator'); ?>" method="post">
 
         <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">
         <input type="hidden" name="output[production_id]" value="<?= $embro_detail['production_id']; ?>">
