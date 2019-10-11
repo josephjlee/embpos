@@ -133,7 +133,7 @@ class Produksi_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function get_output_by_production_id($production_id)
+    public function get_embro_output_by_production_id($production_id)
     {
         $this->db->select('
             output_embro.output_embro_id AS output_id,
@@ -145,6 +145,21 @@ class Produksi_model extends CI_Model
         ');
         $this->db->from('output_embro');
         $this->db->join('employee', 'output_embro.employee_id = employee.employee_id');
+
+        return $this->db->get()->result_array();
+    }
+
+    public function get_finishing_output_by_production_id($production_id)
+    {
+        $this->db->select('
+            output_finishing.output_finishing_id AS output_id,
+            output_finishing.quantity,
+            output_finishing.date,
+            employee.nick_name AS operator,
+            employee.employee_id
+        ');
+        $this->db->from('output_finishing');
+        $this->db->join('employee', 'output_finishing.employee_id = employee.employee_id');
 
         return $this->db->get()->result_array();
     }
@@ -410,11 +425,11 @@ class Produksi_model extends CI_Model
         return $cards;
     }
 
-    public function get_operator_name()
+    public function get_employee_name_by_job_id($job_id)
     {
         $this->db->select('employee_id, nick_name');
         $this->db->from('employee');
-        $this->db->where('job_role_id', 2);
+        $this->db->where('job_role_id', $job_id);
 
         return $this->db->get()->result_array();
     }

@@ -339,7 +339,7 @@
 
               <label for="modal-operator"><small>Operator</small></label>
 
-              <?php $operators = $this->produksi_model->get_operator_name(); ?>
+              <?php $operators = $this->produksi_model->get_employee_name_by_job_id(2); ?>
 
               <select name="output[employee_id]" id="modal-operator">
 
