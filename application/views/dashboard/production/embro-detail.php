@@ -2,6 +2,7 @@
 <div class="container-fluid">
 
   <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
+
     <input type="hidden" name="production[production_id]" value="<?= $embro_detail['production_id']; ?>">
 
     <!-- Page Heading -->
@@ -21,6 +22,7 @@
 
     </div>
 
+    <!-- Page Body -->
     <div class="row">
 
       <!-- Main Panel -->
@@ -313,6 +315,8 @@
 
         <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">
         <input type="hidden" name="output[production_id]" value="<?= $embro_detail['production_id']; ?>">
+        <input type="hidden" name="current-output" value="<?= $total_output; ?>">
+        <input type="hidden" name="order-qty" value="<?= $embro_detail['quantity']; ?>">
         <input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
         <div class="modal-content">

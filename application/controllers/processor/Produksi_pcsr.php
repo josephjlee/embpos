@@ -59,6 +59,16 @@ class Produksi_pcsr extends CI_Controller
         // Record operator's output
         $this->produksi_model->rekam_output_mesin($output);
 
+        // Grab current output and order quantity data
+        $current_output = $this->input->post('current-output');
+        $order_quantity = $this->input->post('order-qty');
+
+        // Check total output after update. If equal to order quantity then update production_status_id to 6
+        $production['production_id'] = $output['production_id'];
+        $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 6 : 5;
+
+        $this->produksi_model->perbarui($production);
+
         // Redirect to its original page
         redirect($this->input->post('input-src'));
     }
