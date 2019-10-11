@@ -68,6 +68,8 @@ class Produksi_model extends CI_Model
         $this->db->join('order', 'production.order_id = order.order_id');
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
 
+        $this->db->where('order.image<>', '');
+
         return $this->db->get()->result_array();
     }
 
