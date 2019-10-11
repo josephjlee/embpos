@@ -4,49 +4,49 @@
   <!-- Page Heading -->
   <h1 class="h3 mb-3 text-gray-800"><?= $title; ?></h1>
 
-  <!-- embro List Table -->
+  <!-- Finishing List Table -->
   <div class="card shadow mb-4">
     <div class="card-body" id="order-detail-table-card">
       <table class="table table-hover" id="dataTable">
         <thead class="thead-light">
           <tr>
             <th>Gambar</th>
-            <th>Pesanan</th>
-            <th>Judul</th>
-            <th>Mesin</th>
-            <th>Operator</th>
+            <th>ID</th>
+            <th>Barang</th>
+            <th>Posisi</th>
+            <th>Jumlah</th>
             <th>Diambil</th>
             <th>Status</th>
             <th>#</th>
           </tr>
         </thead>
         <tbody style="font-size:14px">
-          <?php foreach ($embro_list as $embro) : ?>
+          <?php foreach ($finishing_list as $finishing) : ?>
             <tr>
               <td class="text-center">
-                <?php if ($embro['artwork']) : ?>
-                  <img style="width:33px;height:100%" src="<?= base_url('assets/img/artwork/') . $embro['artwork']; ?>">
+                <?php if ($finishing['image']) : ?>
+                  <img style="width:33px;height:100%" src="<?= base_url('assets/img/artwork/') . $finishing['image']; ?>">
                 <?php else : ?>
                   <div>-</div>
                 <?php endif; ?>
               </td>
               <td>
-                PS-<?= $embro['order_number']; ?>
+                PS-<?= $finishing['order_number']; ?>
               </td>
               <td>
-                <a href="<?= base_url('produksi/detail_bordir/') . $embro['production_id']; ?>" style="color:#858796"><?= $embro['title']; ?></a>
+                <a href="<?= base_url('produksi/detail_finishing/') . $finishing['production_id']; ?>" style="color:#858796"><?= $finishing['description']; ?></a>
               </td>
               <td>
-                <?= $embro['machine']; ?>
+                <?= $finishing['position_name']; ?>
               </td>
               <td>
-                <?= $embro['operator']; ?>
+                <?= $finishing['quantity']; ?>
               </td>
               <td>
-                <?= date('d/m/Y', strtotime($embro['required'])); ?>
+                <?= date('d/m/Y', strtotime($finishing['deadline'])); ?>
               </td>
               <td>
-                <?= $embro['status']; ?>
+                <?= $finishing['status']; ?>
               </td>
               <td>
                 <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">

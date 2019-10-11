@@ -215,17 +215,20 @@ class Produksi_model extends CI_Model
             position.position_id,
             position.name AS position_name,
             order.image,
-            order.required_date AS order_deadline,
+            order.required_date AS deadline,
             order.order_id,
             order.number AS order_number,
             order.description,
-            order.quantity
+            order.quantity,
+            production.production_id,
+            production_status.name AS status
         ');
         $this->db->from('order');
         $this->db->join('item', 'order.item_id = item.item_id');
         $this->db->join('position', 'order.position_id = position.position_id');
         $this->db->join('production', 'order.order_id = production.order_id');
-        $this->db->where('production_status_id', 6);
+        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
+        $this->db->where('production.production_status_id', 6);
 
         return $this->db->get()->result_array();
     }
