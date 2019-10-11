@@ -298,7 +298,7 @@
 			<!-- Project Card Example -->
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+					<h6 class="m-0 font-weight-bold text-primary">Pengerjaan</h6>
 				</div>
 				<div class="card-body">
 					<h4 class="small font-weight-bold">Desain <span class="float-right"><?= $production_status['design']; ?>%</span></h4>
