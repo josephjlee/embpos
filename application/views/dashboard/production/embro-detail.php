@@ -11,11 +11,11 @@
 
         <h1 class="h3 text-gray-800 mr-2"><?= $title; ?></h1>
 
-          <div class="ml-auto">
+        <div class="ml-auto">
 
-            <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $embro_detail['status']; ?></span></a>
+          <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $embro_detail['status']; ?></span></a>
 
-          </div>
+        </div>
 
       </div>
 
@@ -238,6 +238,13 @@
                 </tbody>
 
               </table>
+
+              <div class="output-progress mb-3">
+                <h4 class="small font-weight-bold">Total <span class="float-right"><?= round(($total_output / $embro_detail['quantity']) * 100); ?>%</span></h4>
+                <div class="progress mb-4">
+                  <div class="progress-bar bg-warning" id="embro-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $total_output; ?>pcs" <?= 'style="width:' . ($total_output / $embro_detail['quantity']) * 100 . '%"'; ?>></div>
+                </div>
+              </div>
 
             </div>
 
