@@ -311,7 +311,7 @@
 					</div>
 					<h4 class="small font-weight-bold">Finishing <span class="float-right">60%</span></h4>
 					<div class="progress mb-4">
-						<div class="progress-bar" role="progressbar" style="width: 0%"></div>
+						<div class="progress-bar" id="finishing-progress-bar" role="progressbar" style="width: 0%"></div>
 					</div>
 				</div>
 			</div>

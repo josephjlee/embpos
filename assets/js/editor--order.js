@@ -226,4 +226,9 @@ $(document).ready(function () {
 	$('#price').keyup(numberFormat);
 	$('#discount').keyup(numberFormat);
 
+	// Enable tooltip
+	$('#design-progress-bar').tooltip();
+	$('#embro-progress-bar').tooltip();
+	$('#finishing-progress-bar').tooltip();
+
 });
