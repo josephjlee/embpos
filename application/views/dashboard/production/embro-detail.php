@@ -193,9 +193,9 @@
 
                 <tbody>
 
-                  <?php if (!empty($output_records)) : ?>
+                  <?php $total_output = 0; ?>
 
-                    <?php $total_output = 0; ?>
+                  <?php if (!empty($output_records)) : ?>
 
                     <?php foreach ($output_records as $output) : ?>
 
