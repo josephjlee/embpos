@@ -27,11 +27,11 @@ class Produksi_model extends CI_Model
         return $this->db->update('production', $production_data);
     }
 
-    public function rekam_output_mesin($output)
+    public function rekam_output($output, $table)
     {
         $output_data = $this->siapkan_data($output);
 
-        return $this->db->insert('output_embro', $output_data);
+        return $this->db->insert($table, $output_data);
     }
 
     public function siapkan_data($production)
@@ -164,7 +164,27 @@ class Produksi_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function sum_output_by_order_id($order_id)
+    public function check_design_output_by_order_id($order_id)
+    {
+        $design_output = 'Antri';
+        $production_status_id = $this->get_production_detail_by_order_id($order_id)['production_status_id'];
+
+        switch (true) {
+            case $production_status_id == 1:
+                $design_output = 'Antri';
+                break;
+            case $production_status_id == 2:
+                $design_output = 'Dikerjakan';
+                break;
+            case $production_status_id >= 3:
+                $design_output = 'Selesai';
+                break;
+        }
+
+        return $design_output;
+    }
+
+    public function sum_output_embro_by_order_id($order_id)
     {
         $this->db->select('
             order.number AS order_number,
@@ -180,15 +200,31 @@ class Produksi_model extends CI_Model
         return $this->db->get()->row_array();
     }
 
-    public function check_embro_progress_by_order_id($order_id)
+    public function sum_output_finishing_by_order_id($order_id)
     {
-        $emb_output = $this->sum_output_by_order_id($order_id);
+        $this->db->select('
+            order.number AS order_number,
+            ANY_VALUE(order.quantity) AS order_qty,
+            SUM(output_finishing.quantity) AS quantity
+        ');
+        $this->db->from('output_finishing');
+        $this->db->join('production', 'output_finishing.production_id = production.production_id');
+        $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->where('order.order_id', $order_id);
+        $this->db->group_by('order.order_id');
 
-        if ($emb_output['quantity'] == 0) {
-            return 0;
-        }
+        return $this->db->get()->row_array();
+    }
 
-        return round(($emb_output['quantity'] / $emb_output['order_qty']) * 100);
+    public function get_production_output_by_order_id($order_id)
+    {
+        $production_output = [
+            'design'    => $this->check_design_output_by_order_id($order_id),
+            'embro'     => $this->sum_output_embro_by_order_id($order_id)['quantity'],
+            'finishing' => $this->sum_output_finishing_by_order_id($order_id)['quantity']
+        ];
+
+        return $production_output;
     }
 
     public function check_design_progress_by_order_id($order_id)
@@ -203,7 +239,7 @@ class Produksi_model extends CI_Model
             case $production_status_id == 2:
                 $design_progress = 50;
                 break;
-            case $production_status_id > 3:
+            case $production_status_id >= 3:
                 $design_progress = 100;
                 break;
         }
@@ -211,11 +247,35 @@ class Produksi_model extends CI_Model
         return $design_progress;
     }
 
+    public function check_embro_progress_by_order_id($order_id)
+    {
+        $emb_output = $this->sum_output_embro_by_order_id($order_id);
+
+        if ($emb_output['quantity'] == 0) {
+            return 0;
+        }
+
+        return round(($emb_output['quantity'] / $emb_output['order_qty']) * 100);
+    }
+
+    public function check_finishing_progress_by_order_id($order_id)
+    {
+        $finishing_output = $this->sum_output_finishing_by_order_id($order_id);
+
+        if ($finishing_output['quantity'] == 0) {
+            return 0;
+        }
+
+        return round(($finishing_output['quantity'] / $finishing_output['order_qty']) * 100);
+    }
+
+
     public function check_production_status_by_order_id($order_id)
     {
         $production_status = [
             'design'    => $this->check_design_progress_by_order_id($order_id),
-            'embro'     => $this->check_embro_progress_by_order_id($order_id)
+            'embro'     => $this->check_embro_progress_by_order_id($order_id),
+            'finishing' => $this->check_finishing_progress_by_order_id($order_id)
         ];
 
         return $production_status;

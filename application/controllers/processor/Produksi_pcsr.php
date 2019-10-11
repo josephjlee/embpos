@@ -57,7 +57,7 @@ class Produksi_pcsr extends CI_Controller
         $output = $this->input->post('output');
 
         // Record operator's output
-        $this->produksi_model->rekam_output_mesin($output);
+        $this->produksi_model->rekam_output($output, 'output_embro');
 
         // Grab current output and order quantity data
         $current_output = $this->input->post('current-output');
@@ -66,6 +66,28 @@ class Produksi_pcsr extends CI_Controller
         // Check total output after update. If equal to order quantity then update production_status_id to 6
         $production['production_id'] = $output['production_id'];
         $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 6 : 5;
+
+        $this->produksi_model->perbarui($production);
+
+        // Redirect to its original page
+        redirect($this->input->post('input-src'));
+    }
+
+    public function rekam_output_finishing()
+    {
+        // Grab output data from form submission
+        $output = $this->input->post('output');
+
+        // Record operator's output
+        $this->produksi_model->rekam_output($output, 'output_finishing');
+
+        // Grab current output and order quantity data
+        $current_output = $this->input->post('current-output');
+        $order_quantity = $this->input->post('order-qty');
+
+        // Check total output after update. If equal to order quantity then update production_status_id to 6
+        $production['production_id'] = $output['production_id'];
+        $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 9 : 8;
 
         $this->produksi_model->perbarui($production);
 

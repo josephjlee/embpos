@@ -67,11 +67,26 @@ class Produksi extends CI_Controller
 
         $data['embro_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
 
-        $data['output_records'] = $this->produksi_model->get_output_by_production_id($production_id);
+        $data['output_records'] = $this->produksi_model->get_embro_output_by_production_id($production_id);
 
         $data['view_script'] = 'editor--embro_detail.js';
 
         $data['content'] = $this->load->view('dashboard/production/embro-detail', $data, TRUE);
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
+    public function detail_finishing($production_id)
+    {
+        $data['title'] = "Tugas Finishing: FIN-{$production_id}";
+
+        $data['finishing_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
+
+        $data['output_records'] = $this->produksi_model->get_finishing_output_by_production_id($production_id);
+
+        $data['view_script'] = 'editor--finishing_detail.js';
+
+        $data['content'] = $this->load->view('dashboard/production/finishing-detail', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);
     }
