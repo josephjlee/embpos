@@ -145,6 +145,7 @@ class Produksi_model extends CI_Model
         ');
         $this->db->from('output_embro');
         $this->db->join('employee', 'output_embro.employee_id = employee.employee_id');
+        $this->db->where('output_embro.production_id', $production_id);
 
         return $this->db->get()->result_array();
     }
@@ -306,6 +307,23 @@ class Produksi_model extends CI_Model
         $this->db->where('production.production_status_id', 6);
 
         return $this->db->get()->result_array();
+    }
+
+    public function list_operator_output()
+    {
+        $query = $this->db->query('
+            SELECT 
+                employee.employee_id, 
+                employee.nick_name,
+                IFNULL(SUM(output_embro.quantity),0) AS quantity,
+                (IFNULL(SUM(output_embro.quantity),0) * IFNULL(ANY_VALUE(production.labor_price),0)) AS value
+            FROM employee
+            LEFT JOIN output_embro ON employee.employee_id = output_embro.employee_id
+            LEFT JOIN production ON output_embro.production_id = production.production_id
+            GROUP BY employee.employee_id
+        ');
+
+        return $query->result_array();
     }
 
     public function get_production_detail_by_id($production_id)
