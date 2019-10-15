@@ -304,7 +304,7 @@ class Produksi_model extends CI_Model
         $this->db->join('position', 'order.position_id = position.position_id');
         $this->db->join('production', 'order.order_id = production.order_id');
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
-        $this->db->where('production.production_status_id', 6);
+        $this->db->where('production.production_status_id>=', 6);
 
         return $this->db->get()->result_array();
     }
