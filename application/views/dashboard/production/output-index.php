@@ -57,7 +57,7 @@
       <div class="card shadow mb-3">
 
         <!-- Card Header - Accordion -->
-        <a href="#actionCard" class="d-block card-header py-3" data-toggle="collapse" role="button">
+        <a href="#perodCard" class="d-block card-header py-3" data-toggle="collapse" role="button">
           <h6 class="m-0 font-weight-bold text-primary">Periode</h6>
         </a>
 
