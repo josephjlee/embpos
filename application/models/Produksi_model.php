@@ -309,21 +309,31 @@ class Produksi_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function list_operator_output()
+    public function list_operator_output($period)
     {
-        $query = $this->db->query('
+
+        /**
+         * Query operator production output for current period.
+         * Dynamic start and end date is based on current day relative to 17th day
+         */
+
+        $start_date = $period['start'];
+        $end_date = $period['end'];
+
+        $sql = "
             SELECT 
                 employee.employee_id, 
-                employee.nick_name,
+                employee.name,
                 IFNULL(SUM(output_embro.quantity),0) AS quantity,
                 (IFNULL(SUM(output_embro.quantity),0) * IFNULL(ANY_VALUE(production.labor_price),0)) AS value
             FROM employee
             LEFT JOIN output_embro ON employee.employee_id = output_embro.employee_id
             LEFT JOIN production ON output_embro.production_id = production.production_id
+            WHERE output_embro.date BETWEEN '{$start_date}' AND '{$end_date}'
             GROUP BY employee.employee_id
-        ');
+        ";
 
-        return $query->result_array();
+        return $this->db->query($sql)->result_array();
     }
 
     public function get_production_detail_by_id($production_id)

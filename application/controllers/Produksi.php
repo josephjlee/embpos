@@ -91,6 +91,22 @@ class Produksi extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
+    public function output()
+    {
+
+        $data['title'] = 'Output Produksi';
+
+        $data['period'] = $this->input->post('period') ?? $this->current_period();
+
+        $data['output_list'] = $this->produksi_model->list_operator_output($data['period']);
+
+        $data['view_script'] = 'index--production_output.js';
+
+        $data['content'] = $this->load->view('dashboard/production/output-index', $data, TRUE);
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
     public function proses()
     {
         $data['title'] = 'Proses Berjalan';
@@ -99,5 +115,24 @@ class Produksi extends CI_Controller
         $data['content'] = $this->load->view('dashboard/production/production--checklist', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);
+    }
+
+    public function current_period()
+    {
+        /**
+         * Check whether user-defined period range exist.
+         * If it is, use that. If not, use current periode
+         */
+
+        $start_date = date('d') < 17 ? date('Y-m-d', mktime(0, 0, 0, date('m') - 1, 17, date('Y'))) : date('Y-m-d', mktime(0, 0, 0, date('m'), 17, date('Y')));
+
+        $end_date =  date('d') < 17 ? date('Y-m-d', mktime(0, 0, 0, date('m'), 16, date('Y'))) : date('Y-m-d', mktime(0, 0, 0, date('m') + 1, 16, date('Y')));
+
+        $period = [
+            'start' => $start_date,
+            'end' => $end_date
+        ];
+
+        return $period;
     }
 }
