@@ -61,7 +61,7 @@ class Pesanan_model extends CI_Model
     public function detach_order($order)
     {
         $this->db->where('order_id', $order['order_id']);
-		return $this->db->update('order', ['invoice_id' => NULL]);
+        return $this->db->update('order', ['invoice_id' => NULL]);
     }
 
     public function detach_artwork($order)
@@ -197,7 +197,7 @@ class Pesanan_model extends CI_Model
     {
 
         $this->db->select('item_id, name AS item_name, price_constant AS item_pc');
-		$this->db->order_by('item_name');
+        $this->db->order_by('item_name');
 
         return $this->db->get('item')->result_array();
     }
@@ -247,18 +247,18 @@ class Pesanan_model extends CI_Model
         $this->db->join('item_position', 'item_position.position_id = position.position_id', 'left');
         $this->db->order_by('name');
         $this->db->where('item_position.item_id', $item_id);
-        
+
         return $this->db->get('position')->result_array();
     }
 
     public function get_stitch_price_by_quantity_id($quantity_id)
     {
         $this->db->select('stitch.stitch_id, stitch.name AS stitch_count, price.price AS stitch_price');
-		$this->db->join('price', 'price.stitch_id = stitch.stitch_id');
-		$this->db->order_by('stitch_id', 'asc');
+        $this->db->join('price', 'price.stitch_id = stitch.stitch_id');
+        $this->db->order_by('stitch_id', 'asc');
         $this->db->where('price.quantity_id', $quantity_id);
-		
-		return $this->db->get('stitch')->result_array();
+
+        return $this->db->get('stitch')->result_array();
     }
 
     public function get_order_metas($invoice_id)
