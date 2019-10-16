@@ -69,41 +69,9 @@ class Produksi_model extends CI_Model
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
 
         $this->db->where('order.image<>', '');
+        $this->db->where('production.production_status_id<=', 3);
 
         return $this->db->get()->result_array();
-    }
-
-    public function select_production_detail()
-    {
-        $this->db->select('
-            order.number as order_number,
-            order.order_id,
-            order.image as artwork,
-            order.description as title,
-            order.dimension,
-            order.material,
-            order.color,
-            order.quantity,
-            order.required_date as required,
-            order.note,
-            production.production_id,
-            production.repeat,
-            production.color_order,
-            production.production_status_id,
-            production_status.name as status,
-            production.machine,
-            production.flashdisk,
-            production.file,
-            production.operator,
-            production.labor_price,
-            item.name as item
-        ');
-        $this->db->from('production');
-        $this->db->join('order', 'production.order_id = order.order_id');
-        $this->db->join('item', 'order.item_id = item.item_id');
-        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
-
-        return $this->db->get_compiled_select();
     }
 
     public function get_embro_list()
@@ -129,8 +97,58 @@ class Produksi_model extends CI_Model
         $this->db->where('file!=', null);
         $this->db->where('color_order<>', '');
         $this->db->where('machine<>', '');
+        $this->db->where('production.production_status_id>', 2);
+        $this->db->where('production.production_status_id<', 6);
 
         return $this->db->get()->result_array();
+    }
+
+    public function get_finishing_list()
+    {
+        $this->db->select('
+            item.item_id,
+            item.name AS item_name,
+            item.icon AS item_icon,
+            position.position_id,
+            position.name AS position_name,
+            order.image,
+            order.required_date AS deadline,
+            order.order_id,
+            order.number AS order_number,
+            order.description,
+            order.quantity,
+            production.production_id,
+            production_status.name AS status
+        ');
+        $this->db->from('order');
+        $this->db->join('item', 'order.item_id = item.item_id');
+        $this->db->join('position', 'order.position_id = position.position_id');
+        $this->db->join('production', 'order.order_id = production.order_id');
+        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
+        $this->db->where('production.production_status_id>', 5);
+        $this->db->where('production.production_status_id<', 9);
+
+        return $this->db->get()->result_array();
+    }
+
+    public function check_design_output_by_order_id($order_id)
+    {
+        $design_output = 'Antri';
+        $production_status_id = $this->get_production_detail_by_order_id($order_id)['production_status_id'];
+
+        switch (true) {
+            case $production_status_id == 1:
+                $design_output = 'Antri';
+                break;
+            case $production_status_id == 2:
+                $design_output = 'Dikerjakan';
+                break;
+            case $production_status_id >= 3:
+                $design_output = 'Selesai';
+                break;
+        }
+
+        return $design_output;
     }
 
     public function get_embro_output_by_production_id($production_id)
@@ -163,26 +181,6 @@ class Produksi_model extends CI_Model
         $this->db->join('employee', 'output_finishing.employee_id = employee.employee_id');
 
         return $this->db->get()->result_array();
-    }
-
-    public function check_design_output_by_order_id($order_id)
-    {
-        $design_output = 'Antri';
-        $production_status_id = $this->get_production_detail_by_order_id($order_id)['production_status_id'];
-
-        switch (true) {
-            case $production_status_id == 1:
-                $design_output = 'Antri';
-                break;
-            case $production_status_id == 2:
-                $design_output = 'Dikerjakan';
-                break;
-            case $production_status_id >= 3:
-                $design_output = 'Selesai';
-                break;
-        }
-
-        return $design_output;
     }
 
     public function sum_output_embro_by_order_id($order_id)
@@ -282,33 +280,6 @@ class Produksi_model extends CI_Model
         return $production_status;
     }
 
-    public function get_finishing_list()
-    {
-        $this->db->select('
-            item.item_id,
-            item.name AS item_name,
-            item.icon AS item_icon,
-            position.position_id,
-            position.name AS position_name,
-            order.image,
-            order.required_date AS deadline,
-            order.order_id,
-            order.number AS order_number,
-            order.description,
-            order.quantity,
-            production.production_id,
-            production_status.name AS status
-        ');
-        $this->db->from('order');
-        $this->db->join('item', 'order.item_id = item.item_id');
-        $this->db->join('position', 'order.position_id = position.position_id');
-        $this->db->join('production', 'order.order_id = production.order_id');
-        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
-        $this->db->where('production.production_status_id>=', 6);
-
-        return $this->db->get()->result_array();
-    }
-
     public function list_operator_output($period)
     {
 
@@ -336,6 +307,39 @@ class Produksi_model extends CI_Model
         return $this->db->query($sql)->result_array();
     }
 
+    public function select_production_detail()
+    {
+        $this->db->select('
+            order.number as order_number,
+            order.order_id,
+            order.image as artwork,
+            order.description as title,
+            order.dimension,
+            order.material,
+            order.color,
+            order.quantity,
+            order.required_date as required,
+            order.note,
+            production.production_id,
+            production.repeat,
+            production.color_order,
+            production.production_status_id,
+            production_status.name as status,
+            production.machine,
+            production.flashdisk,
+            production.file,
+            production.operator,
+            production.labor_price,
+            item.name as item
+        ');
+        $this->db->from('production');
+        $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->join('item', 'order.item_id = item.item_id');
+        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
+
+        return $this->db->get_compiled_select();
+    }
+
     public function get_production_detail_by_id($production_id)
     {
         $select_production_detail = $this->select_production_detail($production_id);
@@ -351,6 +355,19 @@ class Produksi_model extends CI_Model
 
         return $this->db->query($production_detail_query)->row_array();
     }
+
+    public function get_employee_name_by_job_id($job_id)
+    {
+        $this->db->select('employee_id, nick_name');
+        $this->db->from('employee');
+        $this->db->where('job_role_id', $job_id);
+
+        return $this->db->get()->result_array();
+    }
+
+    /***
+     * Unused method in current implementation 
+     * */
 
     public function get_production_status()
     {
@@ -511,14 +528,5 @@ class Produksi_model extends CI_Model
         ];
 
         return $cards;
-    }
-
-    public function get_employee_name_by_job_id($job_id)
-    {
-        $this->db->select('employee_id, nick_name');
-        $this->db->from('employee');
-        $this->db->where('job_role_id', $job_id);
-
-        return $this->db->get()->result_array();
     }
 }
