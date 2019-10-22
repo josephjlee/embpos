@@ -99,8 +99,8 @@ class Pesanan_model extends CI_Model
         ');
 
         $this->db->from('order');
-        $this->db->join('customer', 'order.customer_id = customer.customer_id');
-        $this->db->join('item', 'order.item_id = item.item_id');
+        $this->db->join('customer', 'order.customer_id = customer.customer_id', 'left');
+        $this->db->join('item', 'order.item_id = item.item_id', 'left');
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
         $this->db->join('production', 'order.order_id = production.order_id', 'left');
