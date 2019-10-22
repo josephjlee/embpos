@@ -295,26 +295,30 @@
 				</div>
 			</div>
 
-			<!-- Project Card Example -->
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">Pengerjaan</h6>
+			<?php if ($this->uri->segment(2) == 'sunting') : ?>
+
+				<!-- Project Card Example -->
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">Pengerjaan</h6>
+					</div>
+					<div class="card-body">
+						<h4 class="small font-weight-bold">Desain <span class="float-right"><?= $production_status['design']; ?>%</span></h4>
+						<div class="progress mb-4">
+							<div class="progress-bar bg-danger" id="design-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['design']; ?>" <?= 'style="width:' . $production_status['design'] . '%"'; ?>></div>
+						</div>
+						<h4 class="small font-weight-bold">Bordir <span class="float-right"><?= $production_status['embro']; ?>%</span></h4>
+						<div class="progress mb-4">
+							<div class="progress-bar bg-warning" id="embro-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['embro']; ?>pcs" <?= 'style="width:' . $production_status['embro'] . '%"'; ?>></div>
+						</div>
+						<h4 class="small font-weight-bold">Finishing <span class="float-right"><?= $production_status['finishing']; ?>%</span></h4>
+						<div class="progress mb-4">
+							<div class="progress-bar" id="finishing-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['finishing']; ?>pcs" <?= 'style="width:' . $production_status['finishing'] . '%"'; ?>></div>
+						</div>
+					</div>
 				</div>
-				<div class="card-body">
-					<h4 class="small font-weight-bold">Desain <span class="float-right"><?= $production_status['design']; ?>%</span></h4>
-					<div class="progress mb-4">
-						<div class="progress-bar bg-danger" id="design-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['design']; ?>" <?= 'style="width:' . $production_status['design'] . '%"'; ?>></div>
-					</div>
-					<h4 class="small font-weight-bold">Bordir <span class="float-right"><?= $production_status['embro']; ?>%</span></h4>
-					<div class="progress mb-4">
-						<div class="progress-bar bg-warning" id="embro-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['embro']; ?>pcs" <?= 'style="width:' . $production_status['embro'] . '%"'; ?>></div>
-					</div>
-					<h4 class="small font-weight-bold">Finishing <span class="float-right"><?= $production_status['finishing']; ?>%</span></h4>
-					<div class="progress mb-4">
-						<div class="progress-bar" id="finishing-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['finishing']; ?>pcs" <?= 'style="width:' . $production_status['finishing'] . '%"'; ?>></div>
-					</div>
-				</div>
-			</div>
+
+			<?php endif; ?>
 
 		</div>
 
