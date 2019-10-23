@@ -2,7 +2,25 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-3 text-gray-800"><?= $title; ?></h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h1 class="h3 text-gray-800"><?= $title; ?></h1>
+
+    <?php
+
+    $receivable = 0;
+
+    foreach ($invoices as $invoice) {
+      $receivable += $invoice['payment_due'];
+    }
+
+    ?>
+
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+      Piutang: Rp<?= moneyStrDot($receivable) ?>,00
+    </a>
+
+  </div>
 
   <!-- Orders Table -->
   <div class="card shadow mb-4" id="invoice-index-card">
@@ -90,7 +108,6 @@
 </div>
 
 <script>
-
   const invoiceIndexCard = document.querySelector('#invoice-index-card');
 
   invoiceIndexCard.addEventListener('click', (e) => {
@@ -109,5 +126,4 @@
     }
 
   });
-  
 </script>

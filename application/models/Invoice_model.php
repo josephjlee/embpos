@@ -34,7 +34,7 @@ class Invoice_model extends CI_Model
     public function hapus($invoice)
     {
         $this->db->where('invoice_id', $invoice['invoice_id']);
-		return $this->db->delete('invoice');
+        return $this->db->delete('invoice');
     }
 
     public function simpan_pembayaran($payment)
@@ -191,22 +191,22 @@ class Invoice_model extends CI_Model
 
     public function get_all_invoice_discount()
     {
-      $this->db->select('discount');
-      $this->db->from('invoice');
-      $this->db->order_by('invoice.number', 'DESC');
+        $this->db->select('discount');
+        $this->db->from('invoice');
+        $this->db->order_by('invoice.number', 'DESC');
 
-      return $this->db->get()->result_array();
+        return $this->db->get()->result_array();
     }
 
     public function get_all_invoices_payment()
     {
-      $this->db->select('IFNULL( SUM(payment.amount),0 ) AS payment');
-      $this->db->from('invoice');
-      $this->db->join('payment', 'invoice.invoice_id = payment.invoice_id', 'left');
-      $this->db->group_by('invoice.invoice_id');
-      $this->db->order_by('invoice.number', 'DESC');
+        $this->db->select('IFNULL( SUM(payment.amount),0 ) AS payment');
+        $this->db->from('invoice');
+        $this->db->join('payment', 'invoice.invoice_id = payment.invoice_id', 'left');
+        $this->db->group_by('invoice.invoice_id');
+        $this->db->order_by('invoice.number', 'DESC');
 
-      return $this->db->get()->result_array();
+        return $this->db->get()->result_array();
     }
 
     public function get_all_invoices_meta()
@@ -224,7 +224,6 @@ class Invoice_model extends CI_Model
         $this->db->order_by('invoice.number', 'DESC');
 
         return $this->db->get()->result_array();
-        
     }
 
     public function get_all_invoices_payment_due()
@@ -248,16 +247,14 @@ class Invoice_model extends CI_Model
 
     public function list_all_invoices()
     {
-      function merge_payment_due($payment_due_arr, $invoice_meta_arr) 
-      {
-        $invoice_meta_arr['payment_due'] = $payment_due_arr['payment_due'];
-        return $invoice_meta_arr;
-      }
+        function merge_payment_due($payment_due_arr, $invoice_meta_arr)
+        {
+            $invoice_meta_arr['payment_due'] = $payment_due_arr['payment_due'];
+            return $invoice_meta_arr;
+        }
 
-      return array_map("merge_payment_due", $this->get_all_invoices_payment_due(), $this->get_all_invoices_meta());
+        return array_map("merge_payment_due", $this->get_all_invoices_payment_due(), $this->get_all_invoices_meta());
     }
-
-
 
     public function get_invoice_meta($invoice_number)
     {
