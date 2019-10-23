@@ -509,7 +509,7 @@ class Pesanan_model extends CI_Model
         foreach ($order as $col => $val) {
             $order_db_data[$col] = $val;
 
-            if ($col == 'quantity' || $col == 'price' || $col == 'discount') {
+            if ($col == 'quantity' || $col == 'price') {
                 $order_db_data[$col] = str_replace(',', '', $val);
             }
         }

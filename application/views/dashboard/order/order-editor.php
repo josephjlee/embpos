@@ -203,13 +203,10 @@
 							<label for="quantity"><small>Kuantitas</small></label>
 							<input type="text" name="order[quantity]" id="quantity" class="form-control quantity number text-right" value="<?= isset($order['quantity']) ? moneyStr($order['quantity']) : ''; ?>">
 						</div>
+
 						<div class="form-group col">
 							<label for=""><small>Harga</small></label>
 							<input type="text" name="order[price]" id="price" class="form-control price number text-right" value="<?= isset($order['price']) ? moneyStr($order['price']) : ''; ?>">
-						</div>
-						<div class="form-group col">
-							<label for=""><small>Diskon</small></label>
-							<input type="text" name="order[discount]" id="discount" class="form-control discount number text-right" value="<?= isset($order['discount']) ? moneyStr($order['discount']) : ''; ?>" placeholder="0">
 						</div>
 
 					</div>
