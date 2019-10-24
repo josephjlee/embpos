@@ -27,7 +27,6 @@ class Invoice_pcsr extends CI_Controller
 
 	public function simpan()
 	{
-
 		// Grab invoice data from form submission
 		$invoice 	= $this->input->post('invoice');
 		$products = $this->input->post('products');
@@ -46,6 +45,7 @@ class Invoice_pcsr extends CI_Controller
 		// Save product sales when product added
 		if ($products) {
 			$this->penjualan_model->tambah($products, $new_invoice_id, $customer_id);
+			$this->produk_model->update_stock_on_purchase($products);
 		}
 
 		// Update order by assigning $new_invoice_id when orders added
@@ -193,25 +193,23 @@ class Invoice_pcsr extends CI_Controller
 		$payment['customer_id'] = $invoice['customer_id'];
 
 		// Insert the payment data using simpan method of pembayaran_model
-		$this->pembayaran_model->simpan($payment);		
+		$this->pembayaran_model->simpan($payment);
 
 		// Redirect to current detil page to refresh the data
 		redirect(base_url('invoice/sunting/') . $invoice['number']);
-
 	}
 
 	public function perbarui_pembayaran()
 	{
 
 		$invoice = $this->input->post('invoice');
-		$payment = $this->input->post('payment');		
+		$payment = $this->input->post('payment');
 
 		// Update the payment data using simpan method of pembayaran_model
 		$this->pembayaran_model->simpan($payment);
 
 		// Redirect to current detil page to refresh the data
 		redirect(base_url('invoice/sunting/') . $invoice['number']);
-
 	}
 
 	public function hapus_pembayaran()
@@ -224,5 +222,4 @@ class Invoice_pcsr extends CI_Controller
 
 		redirect(base_url('invoice/sunting/') . $invoice['number']);
 	}
-
 }

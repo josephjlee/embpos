@@ -27,7 +27,7 @@ class Produk extends MY_Controller
 
     $data['title'] = 'Tambah Produk';
 
-    $data['content'] = $this->load->view('dashboard/product/product-create', $data, TRUE);
+    $data['content'] = $this->load->view('dashboard/product/product-editor', $data, TRUE);
 
     $data['view_script'] = 'editor--product.js';
 
@@ -41,7 +41,7 @@ class Produk extends MY_Controller
 
     $data['title'] = 'Sunting ' . $data['product']['sku'];
 
-    $data['content'] = $this->load->view('dashboard/product/product-create', $data, TRUE);
+    $data['content'] = $this->load->view('dashboard/product/product-editor', $data, TRUE);
 
     $data['view_script'] = 'editor--product.js';
 
@@ -107,5 +107,4 @@ class Produk extends MY_Controller
 
     return $this->db->get()->row_array()['image'];
   }
-  
 }

@@ -23,7 +23,6 @@ class Produk_model extends CI_Model
 
   public function perbarui($product)
   {
-
     $product_data = $this->siapkan_data($product);
 
     $this->db->where('product_id', $product['product_id']);
@@ -32,16 +31,16 @@ class Produk_model extends CI_Model
   }
 
   public function hapus($product)
-    {
-        $this->db->where('product_id', $product['product_id']);
-        return $this->db->delete('product');
-    }
+  {
+    $this->db->where('product_id', $product['product_id']);
+    return $this->db->delete('product');
+  }
 
-    public function detach_image($product)
-    {
-        $this->db->where('product_id', $product['product_id']);
-        return $this->db->update('product', ['image' => NULL]);
-    }
+  public function detach_image($product)
+  {
+    $this->db->where('product_id', $product['product_id']);
+    return $this->db->update('product', ['image' => NULL]);
+  }
 
   public function get_all_products()
   {
@@ -54,7 +53,7 @@ class Produk_model extends CI_Model
       product.item_id,
       item.name AS item_name,
       item.icon AS item_icon,
-      (product.stock - (SELECT IFNULL(SUM(quantity), 0) FROM product_sale WHERE `product`.product_id = `product_sale`.product_id)) AS stock, 
+      product.stock, 
       ( SELECT IFNULL( SUM(quantity),0 ) FROM product_sale WHERE product_sale.product_id = product.product_id ) AS sold,
       product.base_price,
       product.sell_price
@@ -69,7 +68,7 @@ class Produk_model extends CI_Model
     $this->db->select('
       product.product_id, 
       product.title, 
-      (product.stock - (SELECT IFNULL(SUM(quantity), 0) FROM product_sale WHERE `product`.product_id = `product_sale`.product_id)) AS stock, 
+      product.stock, 
       product.sell_price, 
       product.image,
       item.icon AS item_icon
@@ -125,5 +124,29 @@ class Produk_model extends CI_Model
     }
 
     return $product_db_data;
+  }
+
+  public function get_stock_by_product_id($product_id)
+  {
+    $this->db->select('stock');
+    $this->db->from('product');
+    $this->db->where('product_id', $product_id);
+
+    return $this->db->get()->row_array()['stock'];
+  }
+
+  public function update_stock_on_purchase($product_solds)
+  {
+    $data = [];
+
+    $i = 0;
+
+    foreach ($product_solds as $products) {
+      $data[$i]['product_id'] = $products['product_id'];
+      $data[$i]['stock'] = $this->get_stock_by_product_id($products['product_id']) - $products['quantity'];
+      $i++;
+    }
+
+    $this->db->update_batch('product', $data, 'product_id');
   }
 }
