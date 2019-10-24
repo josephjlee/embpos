@@ -6,45 +6,13 @@ $(document).ready(function () {
 			"thousands": "."
 		},
 		"columnDefs": [{
-			"targets": [0, 9],
+			"targets": [0, 8],
 			"orderable": false
 		}],
 		"order": [
 			[5, "desc"]
-		],
-		"aoColumns": [
-			null,
-			null,
-			null,
-			null,
-			null,
-			{
-				"sType": "date-uk"
-			},
-			null,
-			{
-				"sType": "date-uk"
-			},
-			null,
-			null
 		]
 	});
-
-	jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-		"date-uk-pre": function (a) {
-			var ukDatea = a.split('/');
-			return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
-		},
-
-		"date-uk-asc": function (a, b) {
-			return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-		},
-
-		"date-uk-desc": function (a, b) {
-			return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-		}
-	});
-
 
 	// const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
 

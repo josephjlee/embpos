@@ -41,13 +41,13 @@
         <tbody style="font-size:14px">
           <?php foreach ($invoices as $invoice) : ?>
             <tr data-invoice-id="<?= $invoice['invoice_id']; ?>">
-              <td>
+              <td data-sort="<?= $invoice['number']; ?>">
                 <a style="color:#858796" href="<?= base_url('invoice/sunting/') . $invoice['number']; ?>">INV-<?= $invoice['number']; ?></a>
               </td>
               <td>
                 <?= $invoice['customer']; ?>
               </td>
-              <td>
+              <td data-sort="<?= strtotime($invoice['payment_date']); ?>">
                 <?= date('d/m/Y', strtotime($invoice['payment_date'])); ?>
               </td>
               <td>
@@ -59,11 +59,11 @@
               <td>
                 <?= $this->pesanan_model->check_order_progress($invoice['invoice_id']) ?>
               </td>
-              <td>
+              <td data-sort="<?= strtotime($invoice['invoice_date']); ?>">
                 <?= date('d/m/Y', strtotime($invoice['invoice_date'])); ?>
               </td>
               <td>
-                <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                <a class=" dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
                   <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">

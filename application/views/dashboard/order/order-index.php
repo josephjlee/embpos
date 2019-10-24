@@ -29,7 +29,7 @@
               <td class="text-center">
                 <img style="width:33px;height:100%" src="<?= isset($order['image2']) ? base_url('assets/img/artwork/') . $order['image2'] : base_url('assets/icon/') . $order['item_icon']; ?>">
               </td>
-              <td>
+              <td data-sort="<?= $order['order_number']; ?>">
                 PSN-<?= $order['order_number']; ?>
               </td>
               <td>
@@ -41,7 +41,7 @@
               <td>
                 <?= moneyStrDot($order['quantity']); ?>
               </td>
-              <td>
+              <td data-sort="<?= strtotime($order['order_deadline']); ?>">
                 <?= date('d/m/Y', strtotime($order['order_deadline'])); ?>
               </td>
               <td>
@@ -50,7 +50,7 @@
               <td>
                 <?= $order['customer_name']; ?>
               </td>
-              <td>
+              <td data-sort="<?= $order['invoice_number']; ?>">
                 <?php if (empty($order['invoice_number'])) : ?>
                   <span>Belum ada</span>
                 <?php else : ?>
@@ -253,7 +253,7 @@
 
     //   // Assign orderId to order-id input in the spec-modal
     //   document.querySelector('#spec-modal #order-id').value = orderId;
-      
+
     //   // Assign orderPrice to order-price input in the spec-modal
     //   document.querySelector('#spec-modal #order-price').value = orderPrice;
 
@@ -263,5 +263,4 @@
     // }
 
   });
-
 </script>
