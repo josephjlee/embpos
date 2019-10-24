@@ -5,7 +5,6 @@ $(document).ready(function () {
 
 	const itemSelect = $('#item');
 	const customerSelect = $('#customer-select');
-	const discountInput = $('#discount');
 	const quantityInput = $('#quantity');
 	const priceInput = $('#price');
 
@@ -117,9 +116,8 @@ $(document).ready(function () {
 
 		const qty = moneyInt($('#quantity').val()) ? moneyInt($('#quantity').val()) : 0;
 		const price = moneyInt($('#price').val()) ? moneyInt($('#price').val()) : 0;
-		const discount = moneyInt($('#discount').val()) ? moneyInt($('#discount').val()) : 0;
 
-		$('#amount').val(moneyStr(multiplyTwoNums(qty, price) - discount));
+		$('#amount').val(moneyStr(multiplyTwoNums(qty, price)));
 
 	}
 
@@ -164,9 +162,6 @@ $(document).ready(function () {
 
 	// Generate amount on priceInput blur
 	priceInput.keyup(outputAmountCalc);
-
-	// Generate amount on discountInput blur
-	discountInput.keyup(outputAmountCalc);
 
 	// Set Production Spec
 	$('#production-type').change(function (e) {
@@ -224,7 +219,6 @@ $(document).ready(function () {
 	// Output money format on keyup
 	$('#quantity').keyup(numberFormat);
 	$('#price').keyup(numberFormat);
-	$('#discount').keyup(numberFormat);
 
 	// Enable tooltip
 	$('#design-progress-bar').tooltip();
