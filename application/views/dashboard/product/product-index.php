@@ -2,7 +2,17 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-3 text-gray-800"><?= $title; ?></h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 text-gray-800"><?= $title; ?></h1>
+    <div>
+      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        Total Stok: <?= moneyStrDot($stock_data['quantity']) ?>pcs
+      </a>
+      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        Total Nilai: Rp<?= moneyStrDot($stock_data['value']) ?>,00
+      </a>
+    </div>
+  </div>
 
   <!-- Orders Table -->
   <div class="card shadow mb-4">
@@ -82,28 +92,27 @@
 
 <!-- Delete Product Modal -->
 <div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<form action="<?= base_url('processor/produk_pcsr/hapus_produk'); ?>" method="post" id="del-product-form">
-			<input type="hidden" name="product[product_id]" id="modal-product-id" value="">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Yakin akan menghapus?</h5>
-					<button class="close" type="button" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus produk ini.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary" id="del-product-btn">Hapus</button>
-				</div>
-			</div>
-		</form>
-	</div>
+  <div class="modal-dialog" role="document">
+    <form action="<?= base_url('processor/produk_pcsr/hapus_produk'); ?>" method="post" id="del-product-form">
+      <input type="hidden" name="product[product_id]" id="modal-product-id" value="">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Yakin akan menghapus?</h5>
+          <button class="close" type="button" data-dismiss="modal">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus produk ini.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="del-product-btn">Hapus</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
-
   const productCard = document.querySelector('#product-table-card');
 
   productCard.addEventListener('click', (e) => {

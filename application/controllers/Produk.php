@@ -55,6 +55,8 @@ class Produk extends MY_Controller
 
     $data['products'] = $this->produk_model->get_all_products();
 
+    $data['stock_data'] = $this->produk_model->get_stock_data();
+
     $data['content'] = $this->load->view('dashboard/product/product-index', $data, TRUE);
 
     $data['view_script'] = 'index--product.js';

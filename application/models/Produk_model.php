@@ -173,4 +173,16 @@ class Produk_model extends CI_Model
 
     $this->db->update_batch('product', $data, 'product_id');
   }
+
+  public function get_stock_data()
+  {
+    $this->db->select('
+      SUM(stock*sell_price) AS value,
+      SUM(stock) AS quantity
+    ');
+
+    $this->db->from('product');
+
+    return $this->db->get()->row_array();
+  }
 }
