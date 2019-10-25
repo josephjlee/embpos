@@ -611,12 +611,21 @@
     <div class="modal-dialog" role="document">
 
       <div class="modal-content">
+
         <div class="modal-header">
           <h5 class="modal-title">Daftar Produk</h5>
           <button class="close" type="button" data-dismiss="modal">
             <span aria-hidden="true">×</span>
           </button>
         </div>
+
+        <div class="input-group mt-3 px-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-search"></i></span>
+          </div>
+          <input type="text" id="filter-input" class="form-control" placeholder="Cari produk...">
+        </div>
+
         <div class="modal-body">
 
           <!-- product-index is auto incremented on product list iteration -->
@@ -627,7 +636,7 @@
 
             <?php for ($i = 0; $i < count($catalog); $i++) : ?>
 
-              <div class="product-list-item d-flex justify-content-between align-items-center mb-3 <?= in_array($catalog[$i]['product_id'], $selected_product_id) ? 'unavailable' : ''; ?>" data-product-index="<?= $i; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>" data-desc="<?= $catalog[$i]['title']; ?>" data-qty="1" data-price="<?= $catalog[$i]['sell_price']; ?>" data-amount="<?= $catalog[$i]['sell_price']; ?>" id="product-list-item-<?= $catalog[$i]['product_id']; ?>">
+              <div class="product-list-item justify-content-between align-items-center mb-3 <?= in_array($catalog[$i]['product_id'], $selected_product_id) ? 'unavailable' : ''; ?>" data-product-index="<?= $i; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>" data-desc="<?= $catalog[$i]['title']; ?>" data-qty="1" data-price="<?= $catalog[$i]['sell_price']; ?>" data-amount="<?= $catalog[$i]['sell_price']; ?>" id="product-list-item-<?= $catalog[$i]['product_id']; ?>" style="display:flex">
 
                 <div class="d-flex align-items-center">
                   <a class="dropdown-toggle mr-3" href="#" role="button">
@@ -638,7 +647,7 @@
                       <span style="margin-right:2px;color:#ec8615">Rp<?= number_format($catalog[$i]['sell_price'], 2, ',', '.'); ?></span>
                       (<span id="stock"><?= $catalog[$i]['stock']; ?></span>pcs)
                     </div>
-                    <div style="color:#495057;font-size:15px"><?= $catalog[$i]['title']; ?></div>
+                    <div class="product-name" style="color:#495057;font-size:15px"><?= $catalog[$i]['title']; ?></div>
                   </div>
                 </div>
                 <a href="#" style="color:#AAB0C6" class="<?= in_array($catalog[$i]['product_id'], $selected_product_id) ? '' : 'add-product-btn'; ?>" id="add-product-<?= $catalog[$i]['product_id']; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>">
@@ -652,7 +661,7 @@
 
             <?php for ($i = 0; $i < count($catalog); $i++) : ?>
 
-              <div class="product-list-item d-flex justify-content-between align-items-center mb-3" data-product-index="<?= $i; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>" data-desc="<?= $catalog[$i]['title']; ?>" data-qty="1" data-price="<?= $catalog[$i]['sell_price']; ?>" data-amount="<?= $catalog[$i]['sell_price']; ?>" data-stock="<?= $catalog[$i]['stock']; ?>" id="product-list-item-<?= $catalog[$i]['product_id']; ?>">
+              <div class="product-list-item justify-content-between align-items-center mb-3" data-product-index="<?= $i; ?>" data-product-id="<?= $catalog[$i]['product_id']; ?>" data-desc="<?= $catalog[$i]['title']; ?>" data-qty="1" data-price="<?= $catalog[$i]['sell_price']; ?>" data-amount="<?= $catalog[$i]['sell_price']; ?>" data-stock="<?= $catalog[$i]['stock']; ?>" id="product-list-item-<?= $catalog[$i]['product_id']; ?>" style="display:flex">
 
                 <div class="d-flex align-items-center">
 
@@ -669,7 +678,7 @@
                         (<span id="stock"><?= $catalog[$i]['stock']; ?></span>pcs)
                       </span>
                     </div>
-                    <div style="color:#495057;font-size:15px"><?= $catalog[$i]['title']; ?></div>
+                    <div class="product-name" style="color:#495057;font-size:15px"><?= $catalog[$i]['title']; ?></div>
                   </div>
 
                 </div>
@@ -734,6 +743,29 @@
   </div>
 
 </div>
+
+<script>
+  const filterInput = document.querySelector('#filter-input');
+
+  filterInput.addEventListener('keyup', (e) => {
+
+    let filterValue = filterInput.value.toUpperCase();
+
+    let productNames = document.querySelectorAll('.product-name');
+
+    for (let i = 0; i < productNames.length; i++) {
+      const productName = productNames[i].innerHTML;
+
+      // console.log(productNames[i].closest('.product-list-item'));
+
+      if (productName.toUpperCase().indexOf(filterValue) > -1) {
+        productNames[i].closest('.product-list-item').style.display = 'flex';
+      } else {
+        productNames[i].closest('.product-list-item').style.display = 'none';
+      }
+    };
+  });
+</script>
 <!-- /.container-fluid -->
 
 <?php if ($this->uri->segment(2) == 'sunting') : ?>
