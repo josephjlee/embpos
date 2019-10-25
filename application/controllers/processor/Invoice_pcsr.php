@@ -75,10 +75,6 @@ class Invoice_pcsr extends CI_Controller
 
 	public function perbarui()
 	{
-
-		// pretty_print($_POST);
-		// exit;
-
 		$invoice 	= $this->input->post('invoice');
 		$orders 	= $this->input->post('orders');
 		$products = $this->input->post('products');
