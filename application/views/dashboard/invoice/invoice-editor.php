@@ -200,6 +200,7 @@
 
                     <tr id="product-entry-<?= $current_product['product_id']; ?>" class="product-entry" data-item-index="<?= $current_item_index; ?>" data-product-index="<?= $product_index; ?>" data-product-id="<?= $current_product['product_id']; ?>" data-product-sale-id="<?= $current_product['product_sale_id']; ?>">
                       <input type="hidden" name="products[<?= $product_index ?>][product_sale_id]" value="<?= $current_product['product_sale_id']; ?>">
+                      <input type="hidden" name="products[<?= $product_index ?>][product_id]" value="<?= $current_product['product_id']; ?>">
                       <td id="product-del-btn-col" class="pr-0">
                         <a href='#' style='color:#AAB0C6' class="product-del-trigger" data-toggle="modal" data-target="#del-product-modal"><i class="fas fa-times"></i></a>
                       </td>

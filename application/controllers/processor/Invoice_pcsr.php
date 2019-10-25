@@ -76,6 +76,9 @@ class Invoice_pcsr extends CI_Controller
 	public function perbarui()
 	{
 
+		// pretty_print($_POST);
+		// exit;
+
 		$invoice 	= $this->input->post('invoice');
 		$orders 	= $this->input->post('orders');
 		$products = $this->input->post('products');
@@ -120,16 +123,18 @@ class Invoice_pcsr extends CI_Controller
 		if ($products) {
 
 			$existing_products = array_filter($products, "existing_product");
-			$new_products 		 = array_filter($products, "new_product");
+			$new_products 	= array_filter($products, "new_product");
 
 			// When existing products submitted, run update
 			if ($existing_products) {
+				$this->produk_model->update_stock_on_update($existing_products);
 				$this->penjualan_model->perbarui($existing_products, $invoice['invoice_id'], $invoice['customer_id']);
 			}
 
 			// When new products submitted, run insert
 			if ($new_products) {
 				$this->penjualan_model->tambah($new_products, $invoice['invoice_id'], $invoice['customer_id']);
+				$this->produk_model->update_stock_on_purchase($new_products);
 			}
 		}
 

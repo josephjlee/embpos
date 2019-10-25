@@ -135,6 +135,15 @@ class Produk_model extends CI_Model
     return $this->db->get()->row_array()['stock'];
   }
 
+  public function get_product_sale_qty_by_id($product_sale_id)
+  {
+    $this->db->select('quantity');
+    $this->db->from('product_sale');
+    $this->db->where('product_sale_id', $product_sale_id);
+
+    return $this->db->get()->row_array()['quantity'];
+  }
+
   public function update_stock_on_purchase($product_solds)
   {
     $data = [];
@@ -144,6 +153,21 @@ class Produk_model extends CI_Model
     foreach ($product_solds as $products) {
       $data[$i]['product_id'] = $products['product_id'];
       $data[$i]['stock'] = $this->get_stock_by_product_id($products['product_id']) - $products['quantity'];
+      $i++;
+    }
+
+    $this->db->update_batch('product', $data, 'product_id');
+  }
+
+  public function update_stock_on_update($product_solds)
+  {
+    $data = [];
+
+    $i = 0;
+
+    foreach ($product_solds as $products) {
+      $data[$i]['product_id'] = $products['product_id'];
+      $data[$i]['stock'] = $this->get_stock_by_product_id($products['product_id']) + $this->get_product_sale_qty_by_id($products['product_sale_id']) - $products['quantity'];
       $i++;
     }
 
