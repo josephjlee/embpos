@@ -41,7 +41,7 @@
             <!-- Customer Detail -->
             <div class="col-6" style="color:#283044">
               <div class="bill-name mb-2">
-                <p><?= $customer['customer_name']; ?> <?= $customer['customer_company'] ? "{$customer['customer_company']}" : ""; ?></p>
+                <p><?= $customer['customer_name']; ?> <?= $customer['customer_company'] ? "({$customer['customer_company']})" : ""; ?></p>
                 <p><?= $customer['customer_phone'] ? "({$customer['customer_phone']})" : ''; ?></p>
               </div>
               <div class="bill-to">
@@ -103,39 +103,39 @@
 
                   <?php foreach ($order_details as $order_detail) : ?>
 
-                  <tr>
-                    <td id="order-item-col" style="width:40%">
-                      <p><?= $order_detail['description']; ?></p>
-                    </td>
-                    <td id="order-qty-col" class="text-right">
-                      <p><?= $order_detail['quantity']; ?></p>
-                    </td>
-                    <td id="order-price-col" class="text-right align-middle"">
+                    <tr>
+                      <td id="order-item-col" style="width:40%">
+                        <p><?= $order_detail['description']; ?></p>
+                      </td>
+                      <td id="order-qty-col" class="text-right">
+                        <p><?= $order_detail['quantity']; ?></p>
+                      </td>
+                      <td id="order-price-col" class="text-right align-middle"">
                                                     <p>Rp<?= number_format($order_detail['price'], 2, ',', '.'); ?></p>
                                                   </td>
                                                   <td id=" order-amount-col" class="text-right align-middle pr-0">
-                      <p>Rp<?= number_format($order_detail['amount'], 2, ',', '.'); ?></p>
-                    </td>
-                  </tr>
+                        <p>Rp<?= number_format($order_detail['amount'], 2, ',', '.'); ?></p>
+                      </td>
+                    </tr>
 
                   <?php endforeach; ?>
 
                   <?php foreach ($product_details as $product) : ?>
 
-                  <tr>
-                    <td id="product-items-col" style="width:40%">
-                      <p><?= $product['title']; ?></p>
-                    </td>
-                    <td id="product-qty-col" class="text-right">
-                      <p><?= moneyStr($product['quantity']); ?></p>
-                    </td>
-                    <td id="product-price-col" class="text-right">
-                      <p>Rp<?= moneyStr($product['price']); ?>,00</p>
-                    </td>
-                    <td id="product-amount-col" class="text-right pr-0">
-                      <p>Rp<?= moneyStr($product['amount']); ?>,00</p>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td id="product-items-col" style="width:40%">
+                        <p><?= $product['title']; ?></p>
+                      </td>
+                      <td id="product-qty-col" class="text-right">
+                        <p><?= moneyStr($product['quantity']); ?></p>
+                      </td>
+                      <td id="product-price-col" class="text-right">
+                        <p>Rp<?= moneyStr($product['price']); ?>,00</p>
+                      </td>
+                      <td id="product-amount-col" class="text-right pr-0">
+                        <p>Rp<?= moneyStr($product['amount']); ?>,00</p>
+                      </td>
+                    </tr>
 
                   <?php endforeach; ?>
 
