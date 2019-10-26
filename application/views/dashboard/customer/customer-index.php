@@ -29,53 +29,53 @@
 
           <?php foreach ($customers as $customer) : ?>
 
-          <tr data-id="<?= $customer['customer_id'] ?>" data-name="<?= $customer['customer_name']; ?>" data-phone="<?= $customer['customer_phone']; ?>" data-address="<?= $customer['customer_address']; ?>" data-email="<?= $customer['cust_email']; ?>" data-company="<?= $customer['customer_company']; ?>">
+            <tr data-id="<?= $customer['customer_id'] ?>" data-name="<?= $customer['customer_name']; ?>" data-phone="<?= $customer['customer_phone']; ?>" data-address="<?= $customer['customer_address']; ?>" data-email="<?= $customer['cust_email']; ?>" data-company="<?= $customer['customer_company']; ?>">
 
-            <td>
-              <?php if ($customer['customer_company']) : ?>
-              <small><?= $customer['customer_company']; ?></small>
-              <p class="my-0"><?= $customer['customer_name']; ?></p>
-              <?php else : ?>
-              <p class="my-2"><?= $customer['customer_name']; ?></p>
-              <?php endif; ?>
-            </td>
+              <td data-sort="<?= $customer['customer_name']; ?>">
+                <?php if ($customer['customer_company']) : ?>
+                  <small><?= $customer['customer_company']; ?></small>
+                  <p class="my-0"><?= $customer['customer_name']; ?></p>
+                <?php else : ?>
+                  <p class="my-2"><?= $customer['customer_name']; ?></p>
+                <?php endif; ?>
+              </td>
 
-            <td>
-              <?= $customer['customer_phone'] ? "{$customer['customer_phone']}" : 'tidak diketahui'; ?>
-            </td>
+              <td>
+                <?= $customer['customer_phone'] ? "{$customer['customer_phone']}" : 'tidak diketahui'; ?>
+              </td>
 
-            <td>
-              <?= $customer['cust_email'] ? "{$customer['cust_email']}" : 'tidak diketahui'; ?>
-            </td>
+              <td>
+                <?= $customer['cust_email'] ? "{$customer['cust_email']}" : 'tidak diketahui'; ?>
+              </td>
 
-            <td>
-              <?= $customer['customer_address'] ? "{$customer['customer_address']}" : 'tidak diketahui'; ?>
-            </td>
+              <td>
+                <?= $customer['customer_address'] ? "{$customer['customer_address']}" : 'tidak diketahui'; ?>
+              </td>
 
-            <td>
-              <?= moneyStrDot($customer['buy_qty']); ?>
-            </td>
+              <td>
+                <?= moneyStrDot($customer['buy_qty']); ?>
+              </td>
 
-            <td>
-              <?= moneyStrDot($customer['order_qty']); ?>
-            </td>
+              <td>
+                <?= moneyStrDot($customer['order_qty']); ?>
+              </td>
 
-            <td>
-              <?= moneyStrDot($customer['total_value']); ?>,00
-            </td>
+              <td>
+                <?= moneyStrDot($customer['total_value']); ?>,00
+              </td>
 
-            <td>
-              <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
-                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                <div class="dropdown-header">Tindakan:</div>
-                <a href="" class="dropdown-item edit-modal-trigger" data-toggle="modal" data-target="#addCustomerModal">Sunting Detail</a>
-                <a href="" class="dropdown-item del-modal-trigger" data-toggle="modal" data-target="#delCustomerModal">Hapus Pelanggan</a>
-              </div>
-            </td>
+              <td>
+                <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                  <div class="dropdown-header">Tindakan:</div>
+                  <a href="" class="dropdown-item edit-modal-trigger" data-toggle="modal" data-target="#addCustomerModal">Sunting Detail</a>
+                  <a href="" class="dropdown-item del-modal-trigger" data-toggle="modal" data-target="#delCustomerModal">Hapus Pelanggan</a>
+                </div>
+              </td>
 
-          </tr>
+            </tr>
 
           <?php endforeach; ?>
 
