@@ -85,7 +85,14 @@ class Pelanggan_model extends CI_Model
 	public function get_all_customers()
 	{
 
-		$this->db->select('customer.customer_id, customer.name AS customer_name');
+		$this->db->select("
+			customer_id, 
+			IF(
+				company != '', 
+					CONCAT(name, ' (', UPPER(company), ')'),
+					CONCAT(name, ' ', UPPER(address))
+			) AS customer_name
+		");
 		$customer_query = $this->db->get('customer');
 
 		return $customer_query->result_array();
@@ -96,7 +103,7 @@ class Pelanggan_model extends CI_Model
 
 		$this->db->select('
             customer_id,
-            company AS customer_company,
+            UPPER(company) AS customer_company,
             name AS customer_name,
             address AS customer_address,
             phone AS customer_phone            
