@@ -140,15 +140,15 @@
                       </td>
 
                       <td id="items-col" style="width:40%">
-                        <input type="text" id="items" class="items form-control" placeholder="Nama pesanan" value="<?= $order['description']; ?>" readonly>
+                        <input type="text" name="orders[<?= $item_index; ?>][description]" id="items" class="items form-control" placeholder="Nama pesanan" value="<?= $order['description']; ?>">
                       </td>
 
                       <td id="qty-col">
-                        <input type="text" id="quantity-<?= $item_index; ?>" class="form-control quantity number text-right" value="<?= moneyStr($order['quantity']); ?>" readonly>
+                        <input type="text" name="orders[<?= $item_index; ?>][quantity]" id="quantity-<?= $item_index; ?>" class="form-control quantity number text-right" value="<?= $order['quantity']; ?>">
                       </td>
 
                       <td id="price-col">
-                        <input type="text" id="price-<?= $item_index; ?>" class="form-control price number text-right" value="<?= moneyStr($order['price']); ?>" readonly>
+                        <input type="text" name="orders[<?= $item_index; ?>][price]" id="price-<?= $item_index; ?>" class="form-control price number text-right" value="<?= $order['price']; ?>">
                       </td>
 
                       <td id="amount-col" class="pr-0">
@@ -157,8 +157,8 @@
 
                     </tr>
 
-                    <?php $item_index++ ?>
-                    <?php $order_index++ ?>
+                    <?php $item_index++; ?>
+                    <?php $order_index++; ?>
 
                   <?php endforeach; ?>
 
@@ -190,7 +190,7 @@
                      * 
                      */
 
-                    $current_item_index = $item_index != 0 ? $item_index + 1 : 0;
+                    $current_item_index = $item_index != 0 ? $item_index : 0;
 
                     $product_index = 0;
 
@@ -208,10 +208,10 @@
                         <input type="text" id="items" class="items form-control" value="<?= $current_product['title']; ?>" readonly>
                       </td>
                       <td id="product-qty-col">
-                        <input type="text" name="products[<?= $product_index ?>][quantity]" id="quantity-<?= $product_index ?>" class="form-control text-right quantity number" value="<?= moneyStr($current_product['quantity']); ?>">
+                        <input type="text" name="products[<?= $product_index ?>][quantity]" id="quantity-<?= $product_index ?>" class="form-control text-right quantity number" value="<?= $current_product['quantity']; ?>">
                       </td>
                       <td id="product-price-col">
-                        <input type="text" id="price-<?= $product_index ?>" class="form-control text-right price number" value="<?= moneyStr($current_product['price']); ?>" readonly>
+                        <input type="text" id="price-<?= $product_index ?>" class="form-control text-right price number" value="<?= $current_product['price']; ?>" readonly>
                       </td>
                       <td id="product-amount-col" class="pr-0">
                         <input type="text" id="amount-<?= $product_index ?>" class="form-control text-right amount" value="<?= moneyStr($current_product['amount']); ?>" readonly>

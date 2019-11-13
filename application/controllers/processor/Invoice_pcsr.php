@@ -81,6 +81,12 @@ class Invoice_pcsr extends CI_Controller
 		$payment 	= $this->input->post('payment');
 
 		// Create callback functions for processing the data
+		function existing_order($order)
+		{
+			// Return order that already have order_id
+			return !empty($order['order_id']);
+		}
+
 		function new_order($order)
 		{
 			// Return orders that don't have invoice_id yet
@@ -102,15 +108,19 @@ class Invoice_pcsr extends CI_Controller
 		// Save invoice update
 		$this->invoice_model->simpan($invoice);
 
-		// Record order when order is added
+		// Record order entry based on order status (existing or new)
 		if ($orders) {
 
-			// Grab new orders only
+			$existing_orders = array_filter($orders, "existing_order");
 			$new_order = array_filter($orders, "new_order");
 
-			// Assign invoice_id to the new orders
-			if ($new_order) {
+			// For the existing_orders, update its detail
+			if ($existing_orders) {
+				$this->pesanan_model->perbarui_banyak($existing_orders);
+			}
 
+			// For the new orders, assign invoice_id
+			if ($new_order) {
 				$this->pesanan_model->assign_invoice_id($new_order, $invoice['invoice_id']);
 			}
 		}

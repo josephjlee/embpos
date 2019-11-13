@@ -176,10 +176,10 @@ $(document).ready(function () {
 					<input type="text" id="items" class="items form-control" value="${desc}" readonly>
 				</td>
 				<td id="qty-col">
-					<input type="text" id="quantity-${orderIndex}" class="form-control text-right quantity number" value="${qty}" readonly>
+					<input type="text" name="orders[${itemIndex}][quantity]" id="quantity-${orderIndex}" class="form-control text-right quantity number" value="${qty}">
 				</td>
 				<td id="price-col">
-					<input type="text" id="price-${orderIndex}" class="form-control text-right price number" value="${price}" readonly>
+					<input type="text" name="orders[${itemIndex}][price]" id="price-${orderIndex}" class="form-control text-right price number" value="${price}">
 				</td>
 				<td id="amount-col" class="pr-0">
 					<input type="text" id="amount-${orderIndex}" class="form-control text-right amount" value="${amount}" readonly>
@@ -233,8 +233,8 @@ $(document).ready(function () {
 	customerSelect.change(function () {
 
 		let customerReq = sendAjax(
-			`${window.location.origin}/ajax/pesanan_ajax/get_customer_order`, 
-			{customer_id: $(this).val()}
+			`${window.location.origin}/ajax/pesanan_ajax/get_customer_order`,
+			{ customer_id: $(this).val() }
 		);
 
 		console.log(customerReq);
@@ -392,17 +392,47 @@ $(document).ready(function () {
 		preventNaN($(this));
 
 		// Grab productId from parent row data attribute
-		let productId = $(this).parents('tr').data('product-id');
+		// let productId = $(this).parents('tr').data('product-id');
+		let rowIndex = $(this).parents('tr').data('item-index');
 
 		// Grab quantity and price value for amount calculation purpose
 		let qty = moneyInt($(this).val());
-		let price = moneyInt($(`#product-entry-${productId}`).find('.price').val());
+		// let price = moneyInt($(`#product-entry-${productId}`).find('.price').val());
+		let price = moneyInt($(`[data-item-index=${rowIndex}]`).find('.price').val());
+
+		console.log('RowIndex: ' + rowIndex);
+		console.log('price: ' + price);
 
 		// Format the result of qty*price operation into money string and store into amount variable
 		let amount = moneyStr(multiplyTwoNums(qty, price))
 
 		// Output the amount into its respective amount 
-		$(`#product-entry-${productId}`).find('.amount').val(amount);
+		$(`[data-item-index=${rowIndex}]`).find('.amount').val(amount);
+
+		// Collect all amount value to recalculate the subtotal
+		collectAmount();
+
+		// Output the calculation result into calculation table
+		updateCalcTable();
+
+	});
+
+	tableBody.on('keyup', '.price', function (e) {
+
+		preventNaN($(this));
+
+		// Grab itemIndex from parent row data attribute
+		let rowIndex = $(this).parents('tr').data('item-index');
+
+		// Grab quantity and price value for amount calculation purpose
+		let qty = moneyInt($(`[data-item-index=${rowIndex}]`).find('.quantity').val());
+		let price = moneyInt($(this).val());
+
+		// Format the result of qty*price operation into money string and store into amount variable
+		let amount = moneyStr(multiplyTwoNums(qty, price))
+
+		// Output the amount into its respective amount 
+		$(`[data-item-index=${rowIndex}]`).find('.amount').val(amount);
 
 		// Collect all amount value to recalculate the subtotal
 		collectAmount();
@@ -414,7 +444,7 @@ $(document).ready(function () {
 
 	// Process user-inputted amount
 	$('#payment-form').submit(function (e) {
-	
+
 		// Prevent default behavior
 		e.preventDefault();
 

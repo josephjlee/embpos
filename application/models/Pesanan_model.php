@@ -31,6 +31,20 @@ class Pesanan_model extends CI_Model
         return $this->db->update('order', $order_data);
     }
 
+    public function perbarui_banyak($orders)
+    {
+        $orders_data = [];
+
+        foreach ($orders as $col => $val) {
+            $orders_data[$col] = $val;
+            if ($col == 'price' || $col = 'quantity') {
+                $orders_data[$col] = str_replace(',', '', $val);
+            }
+        }
+
+        return $this->db->update_batch('order', $orders_data, 'order_id');
+    }
+
     public function hapus($order)
     {
         $this->db->where('order_id', $order['order_id']);
