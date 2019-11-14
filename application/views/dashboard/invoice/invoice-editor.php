@@ -425,7 +425,11 @@
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-                              <div class="dropdown-header">Tandai:</div>
+                              <div class="dropdown-header pb-0">Tindakan:</div>
+
+                              <a href="#" class="dropdown-item" data-toggle="modal" data-target="#order-detail-modal">Lihat Detail</a>
+
+                              <div class="dropdown-header pb-0">Tandai:</div>
 
                               <?php $process_status = $this->db->get('process_status')->result_array(); ?>
 
@@ -602,6 +606,142 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Order Detail Modal -->
+  <div class="modal fade" id="order-detail-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{Judul Pesanan}</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="form-row">
+
+            <div class="form-group col">
+              <label for="received-date"><small>Tanggal Pesan</small></label>
+              <input class="form-control" type="date" name="order[received_date]" id="received-date" value="">
+            </div>
+
+            <div class="form-group col">
+              <label for="received-date"><small>Tanggal Diambil</small></label>
+              <input class="form-control" type="date" name="order[required_date]" id="required-date" value="">
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group col">
+
+              <label for="item"><small>Jenis barang</small></label>
+              <select name="order[item_id]" id="item" style="height:500px!important">
+
+                <option value="">Pilih...</option>
+
+                <?php $items = $this->pesanan_model->get_all_items(); ?>
+
+                <?php foreach ($items as $item) : ?>
+
+                  <?php if ($this->uri->segment(2) == 'sunting') : ?>
+
+                    <option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>" <?= $item['item_id'] == $order['item_id'] ? 'selected' : ''; ?>>
+                      <?= $item['item_name'] ?>
+                    </option>
+
+                  <?php endif; ?>
+
+                  <option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>">
+                    <?= $item['item_name'] ?>
+                  </option>
+
+                <?php endforeach; ?>
+
+              </select>
+
+            </div>
+
+            <div class="form-group col">
+
+              <label for="position"><small>Posisi yang diinginkan</small></label>
+              <select name="order[position_id]" id="position" class="custom-select position">
+                <option value="">Pilih...</option>
+
+                <?php if ($this->uri->segment(2) == 'sunting') : ?>
+
+                  <?php $positions = $this->pesanan_model->get_position_by_item_id($order['item_id']); ?>
+
+                  <?php foreach ($positions as $position) : ?>
+
+                    <option value="<?= $position['position_id']; ?>" <?= $position['position_id'] == $order['position_id'] ? 'selected' : ''; ?>>
+                      <?= $position['name'] ?>
+                    </option>
+
+                  <?php endforeach; ?>
+
+                <?php endif; ?>
+
+                <?php $positions = $this->pesanan_model->get_item_position_pairs(); ?>
+
+                <?php foreach ($positions as $position) : ?>
+
+                  <option value="<?= $position['position_id']; ?>">
+                    <?= $position['name'] ?>
+                  </option>
+
+                <?php endforeach; ?>
+
+
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group col">
+              <label for="dimension"><small>Dimensi</small></label>
+              <input type="text" name="order[dimension]" id="dimension" class="form-control dimension number" value="">
+            </div>
+            <div class="form-group col">
+              <label for=""><small>Warna</small></label>
+              <input type="text" name="order[color]" id="color" class="form-control color number" value="">
+            </div>
+            <div class="form-group col">
+              <label for=""><small>Bahan</small></label>
+              <input type="text" name="order[material]" id="material" class="form-control material number" value="">
+            </div>
+
+          </div>
+
+          <div>
+            <h4 class="small font-weight-bold">Desain <span class="float-right">20%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"></div>
+            </div>
+            <h4 class="small font-weight-bold">Bordir <span class="float-right">40%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
+            </div>
+            <h4 class="small font-weight-bold">Finishing <span class="float-right">60%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar" role="progressbar" style="width: 60%"></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary">Simpan</button>
+        </div>
+      </div>
     </div>
   </div>
 

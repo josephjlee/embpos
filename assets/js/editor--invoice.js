@@ -2,6 +2,7 @@ $(document).ready(function () {
 
 	// Define the elements
 	let customerSelect = $('#customers');
+	let itemSelect = $('#item');
 
 	const orderList = $('#order-list-modal .modal-body');
 	let amountArr = [];
@@ -228,6 +229,7 @@ $(document).ready(function () {
 
 	// Initialize Select2 on document load
 	initSelect2(customerSelect);
+	itemSelect.selectize();
 
 	// AJAX - Populate order-list modal with uninvoiced orders
 	customerSelect.change(function () {
