@@ -408,7 +408,7 @@
 
                     <?php if ($current_orders) : ?>
                       <?php foreach ($current_orders as $order) : ?>
-                        <tr data-order-id="<?= $order['order_id']; ?>">
+                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>">
                           <td class="px-0">
                             <div>
                               <small id="payment-date-display" style="color:#ec8615"><?= $order['process_status']; ?></small>
@@ -425,19 +425,11 @@
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-                              <div class="dropdown-header pb-0">Tindakan:</div>
+                              <div class="dropdown-header">Tindakan:</div>
 
-                              <a href="#" class="dropdown-item" data-toggle="modal" data-target="#order-detail-modal">Lihat Detail</a>
-
-                              <div class="dropdown-header pb-0">Tandai:</div>
-
-                              <?php $process_status = $this->db->get('process_status')->result_array(); ?>
-
-                              <?php foreach ($process_status as $status) : ?>
-                                <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#mark-as-modal" data-status-name=<?= $status['name']; ?> data-status-id="<?= $status['process_status_id']; ?>">
-                                  <?= $status['name']; ?> <?= $status['name'] == $order['process_status'] ? '&#10003;' : ''; ?>
-                                </a>
-                              <?php endforeach; ?>
+                              <a href="#" class="dropdown-item view-order-detail" data-toggle="modal" data-target="#order-detail-modal">Lihat Detail</a>
+                              <a href="#" class="dropdown-item view-order-process" data-toggle="modal" data-target="#order-process-modal">Lihat Proses</a>
+                              <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#update-process-modal">Tandai Sebagai</a>
 
                           </td>
                         </tr>
@@ -606,142 +598,6 @@
           </div>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Order Detail Modal -->
-  <div class="modal fade" id="order-detail-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{Judul Pesanan}</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-
-        <div class="modal-body">
-
-          <div class="form-row">
-
-            <div class="form-group col">
-              <label for="received-date"><small>Tanggal Pesan</small></label>
-              <input class="form-control" type="date" name="order[received_date]" id="received-date" value="">
-            </div>
-
-            <div class="form-group col">
-              <label for="received-date"><small>Tanggal Diambil</small></label>
-              <input class="form-control" type="date" name="order[required_date]" id="required-date" value="">
-            </div>
-
-          </div>
-
-          <div class="form-row">
-
-            <div class="form-group col">
-
-              <label for="item"><small>Jenis barang</small></label>
-              <select name="order[item_id]" id="item" style="height:500px!important">
-
-                <option value="">Pilih...</option>
-
-                <?php $items = $this->pesanan_model->get_all_items(); ?>
-
-                <?php foreach ($items as $item) : ?>
-
-                  <?php if ($this->uri->segment(2) == 'sunting') : ?>
-
-                    <option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>" <?= $item['item_id'] == $order['item_id'] ? 'selected' : ''; ?>>
-                      <?= $item['item_name'] ?>
-                    </option>
-
-                  <?php endif; ?>
-
-                  <option value="<?= $item['item_id']; ?>" data-priceconst="<?= $item['item_pc']; ?>">
-                    <?= $item['item_name'] ?>
-                  </option>
-
-                <?php endforeach; ?>
-
-              </select>
-
-            </div>
-
-            <div class="form-group col">
-
-              <label for="position"><small>Posisi yang diinginkan</small></label>
-              <select name="order[position_id]" id="position" class="custom-select position">
-                <option value="">Pilih...</option>
-
-                <?php if ($this->uri->segment(2) == 'sunting') : ?>
-
-                  <?php $positions = $this->pesanan_model->get_position_by_item_id($order['item_id']); ?>
-
-                  <?php foreach ($positions as $position) : ?>
-
-                    <option value="<?= $position['position_id']; ?>" <?= $position['position_id'] == $order['position_id'] ? 'selected' : ''; ?>>
-                      <?= $position['name'] ?>
-                    </option>
-
-                  <?php endforeach; ?>
-
-                <?php endif; ?>
-
-                <?php $positions = $this->pesanan_model->get_item_position_pairs(); ?>
-
-                <?php foreach ($positions as $position) : ?>
-
-                  <option value="<?= $position['position_id']; ?>">
-                    <?= $position['name'] ?>
-                  </option>
-
-                <?php endforeach; ?>
-
-
-              </select>
-
-            </div>
-
-          </div>
-
-          <div class="form-row">
-
-            <div class="form-group col">
-              <label for="dimension"><small>Dimensi</small></label>
-              <input type="text" name="order[dimension]" id="dimension" class="form-control dimension number" value="">
-            </div>
-            <div class="form-group col">
-              <label for=""><small>Warna</small></label>
-              <input type="text" name="order[color]" id="color" class="form-control color number" value="">
-            </div>
-            <div class="form-group col">
-              <label for=""><small>Bahan</small></label>
-              <input type="text" name="order[material]" id="material" class="form-control material number" value="">
-            </div>
-
-          </div>
-
-          <div>
-            <h4 class="small font-weight-bold">Desain <span class="float-right">20%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"></div>
-            </div>
-            <h4 class="small font-weight-bold">Bordir <span class="float-right">40%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
-            </div>
-            <h4 class="small font-weight-bold">Finishing <span class="float-right">60%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar" role="progressbar" style="width: 60%"></div>
-            </div>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-          <button type="button" class="btn btn-primary">Simpan</button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1057,29 +913,210 @@
     </div>
   </div>
 
-  <!-- Mark as Finished Modal-->
-  <div class="modal fade" id="mark-as-modal" tabindex="-1" role="dialog">
+  <!-- Order Detail Modal -->
+  <div class="modal fade" id="order-detail-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="mark-as-finished-form">
+      <form action="<?= base_url('pesanan/perbarui'); ?>" method="post">
+        <div class="modal-content">
 
-        <input type="hidden" name="redirect-here" value="<?= "{$this->uri->segment(1)}/{$this->uri->segment(2)}/{$this->uri->segment(3)}" ?>">
-        <input type="hidden" name="order[order_id]" id="mark-modal-order-id" value="">
+          <div class="modal-header">
+            <h5 class="modal-title">Detail Pesanan</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="description"><small>Judul bordiran</small></label>
+                <input type="text" name="order[description]" id="description" class="form-control description" value="">
+              </div>
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="received-date"><small>Tanggal Pesan</small></label>
+                <input class="form-control" type="date" name="order[received_date]" id="received-date" value="">
+              </div>
+
+              <div class="form-group col">
+                <label for="received-date"><small>Tanggal Diambil</small></label>
+                <input class="form-control" type="date" name="order[required_date]" id="required-date" value="">
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+
+                <label for="item"><small>Jenis barang</small></label>
+                <select name="order[item_id]" id="item">
+
+                  <option value="">Pilih...</option>
+
+                  <?php $items = $this->pesanan_model->get_all_items(); ?>
+
+                  <?php foreach ($items as $item) : ?>
+
+                    <option value="<?= $item['item_id']; ?>">
+                      <?= $item['item_name'] ?>
+                    </option>
+
+                  <?php endforeach; ?>
+
+                </select>
+
+              </div>
+
+              <div class="form-group col">
+
+                <label for="position"><small>Posisi yang diinginkan</small></label>
+                <select name="order[position_id]" id="position" class="custom-select position">
+                  <option value="">Pilih...</option>
+
+                  <?php $positions = $this->pesanan_model->get_item_position_pairs(); ?>
+
+                  <?php foreach ($positions as $position) : ?>
+
+                    <option value="<?= $position['position_id']; ?>">
+                      <?= $position['name'] ?>
+                    </option>
+
+                  <?php endforeach; ?>
+
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="dimension"><small>Dimensi</small></label>
+                <input type="text" name="order[dimension]" id="dimension" class="form-control dimension number" value="">
+              </div>
+              <div class="form-group col">
+                <label for=""><small>Warna</small></label>
+                <input type="text" name="order[color]" id="color" class="form-control color number" value="">
+              </div>
+              <div class="form-group col">
+                <label for=""><small>Bahan</small></label>
+                <input type="text" name="order[material]" id="material" class="form-control material number" value="">
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="quantity"><small>Kuantitas</small></label>
+                <input type="text" name="order[quantity]" id="quantity" class="form-control quantity number text-right" value="">
+              </div>
+
+              <div class="form-group col">
+                <label for=""><small>Harga</small></label>
+                <input type="text" name="order[price]" id="price" class="form-control price number text-right" value="">
+              </div>
+
+              <div class="form-group col">
+                <label for=""><small>Total</small></label>
+                <input type="text" name="" id="amount" class="form-control amount" value="" readonly>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-primary">Simpan</button>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Order Progress Modal -->
+  <div class="modal fade" id="order-process-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <h4 class="small font-weight-bold">Desain <span class="float-right">20%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"></div>
+            </div>
+            <h4 class="small font-weight-bold">Bordir <span class="float-right">40%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
+            </div>
+            <h4 class="small font-weight-bold">Finishing <span class="float-right">60%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar" role="progressbar" style="width: 60%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mark as Modal-->
+  <div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+
+      <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
+
+        <input type="hidden" name="order[order_id]" id="order-id" value="">
 
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title">Status Pengerjaan</h5>
+            <h5 class="modal-title"></h5>
             <button class="close" type="button" data-dismiss="modal">
-              <span aria-hidden="true">×</span>
+              <span>×</span>
             </button>
           </div>
 
-          <div class="modal-body"></div>
+          <div class="modal-body">
+
+            <label for="process-status"><small>Tandai sebagai</small></label>
+            <select name="order[process_status_id]" id="process-status" class="custom-select">
+
+              <option value="">Pilih...</option>
+
+              <?php $process_list = $this->db->get('process_status')->result_array(); ?>
+
+              <?php foreach ($process_list as $status) : ?>
+                <option value="<?= $status['process_status_id']; ?>">
+                  <?= $status['name']; ?>
+                </option>
+              <?php endforeach; ?>
+
+            </select>
+
+          </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary" name="order[process_status_id]" id="status-btn" value="">Ya</button>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="update-process-btn">Perbarui</button>
           </div>
 
         </div>

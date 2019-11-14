@@ -229,7 +229,8 @@ $(document).ready(function () {
 
 	// Initialize Select2 on document load
 	initSelect2(customerSelect);
-	itemSelect.selectize();
+	var $select = itemSelect.selectize();
+	var selectize = $select[0].selectize;
 
 	// AJAX - Populate order-list modal with uninvoiced orders
 	customerSelect.change(function () {
@@ -534,5 +535,56 @@ $(document).ready(function () {
 		});
 
 	});
+
+	// Populate Order Detail Modal on 'Lihat Detail' click
+	$('#process').on('click', '.view-order-detail', function (e) {
+
+		let description = $(this).parents('tr').data('description');
+		let orderDate = $(this).parents('tr').data('order-date');
+		let requiredDate = $(this).parents('tr').data('required-date');
+		let itemId = $(this).parents('tr').data('item-id');
+		let positionId = $(this).parents('tr').data('position-id');
+		let dimension = $(this).parents('tr').data('dimension');
+		let color = $(this).parents('tr').data('color');
+		let material = $(this).parents('tr').data('material');
+		let quantity = $(this).parents('tr').data('quantity');
+		let price = $(this).parents('tr').data('price');
+		let amount = $(this).parents('tr').data('amount');
+
+		$('#order-detail-modal #received-date').val(orderDate);
+		$('#order-detail-modal #order-date').val(requiredDate);
+		selectize.setValue(itemId, false);
+		$('#order-detail-modal #description').val(description);
+		$('#order-detail-modal #position').val(positionId);
+		$('#order-detail-modal #dimension').val(dimension);
+		$('#order-detail-modal #color').val(color);
+		$('#order-detail-modal #material').val(material);
+		$('#order-detail-modal #quantity').val(quantity);
+		$('#order-detail-modal #price').val(price);
+		$('#order-detail-modal #amount').val(amount);
+
+	});
+
+	// Populate Order Process Modal on 'Lihat Proses' click
+	$('#process').on('click', '.view-order-process', function (e) {
+
+		let description = $(this).parents('tr').data('description');
+
+		$('#order-process-modal .modal-title').html(description);
+
+	});
+
+	// Set Selected Process in Status Mark Modal on 'Tandai Sebagai' click
+	$('#process').on('click', '.status-mark-trigger', function (e) {
+
+		let description = $(this).parents('tr').data('description');
+		let processStatusId = $(this).parents('tr').data('process-status-id');
+
+		$('#update-process-modal .modal-title').html(description);
+		$('#update-process-modal #process-status').val(processStatusId);
+
+	});
+
+
 
 });
