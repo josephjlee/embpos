@@ -30,6 +30,15 @@ class Pesanan_pcsr extends CI_Controller
         redirect(base_url('pesanan/buat'));
     }
 
+    public function simpan_dari_invoice()
+    {
+        $order = $this->input->post('order');
+
+        $this->pesanan_model->simpan($order);
+
+        redirect(base_url($this->input->post('source-url')));
+    }
+
     public function perbarui()
     {
 

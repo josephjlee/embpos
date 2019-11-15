@@ -391,6 +391,7 @@ class Pesanan_model extends CI_Model
             order.color,
             order.quantity,
             order.price,
+            order.note,
             (order.price*order.quantity) AS amount,
             order.received_date,
             order.required_date,

@@ -408,7 +408,7 @@
 
                     <?php if ($current_orders) : ?>
                       <?php foreach ($current_orders as $order) : ?>
-                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>">
+                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>">
                           <td class="px-0">
                             <div>
                               <small id="payment-date-display" style="color:#ec8615"><?= $order['process_status']; ?></small>
@@ -917,7 +917,11 @@
   <div class="modal fade" id="order-detail-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('pesanan/perbarui'); ?>" method="post">
+      <form action="<?= base_url('processor/pesanan_pcsr/simpan_dari_invoice'); ?>" method="post">
+
+        <input type="hidden" name="order[order_id]" id="order-id" value="">
+        <input type="hidden" name="source-url" id="source-url" value="<?= $this->uri->uri_string(); ?>">
+
         <div class="modal-content">
 
           <div class="modal-header">
@@ -955,7 +959,7 @@
               <div class="form-group col">
 
                 <label for="item"><small>Jenis barang</small></label>
-                <select name="order[item_id]" id="item">
+                <select name="order[item_id]" id="item" data-is-selected="false">
 
                   <option value="">Pilih...</option>
 
@@ -1032,11 +1036,18 @@
 
             </div>
 
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="note"><small>Catatan</small></label>
+                <textarea name="order[note]" id="note" class="form-control" style="font-size:13px"></textarea>
+              </div>
+            </div>
+
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
 
         </div>

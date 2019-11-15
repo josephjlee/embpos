@@ -539,6 +539,7 @@ $(document).ready(function () {
 	// Populate Order Detail Modal on 'Lihat Detail' click
 	$('#process').on('click', '.view-order-detail', function (e) {
 
+		let orderId = $(this).parents('tr').data('order-id');
 		let description = $(this).parents('tr').data('description');
 		let orderDate = $(this).parents('tr').data('order-date');
 		let requiredDate = $(this).parents('tr').data('required-date');
@@ -550,18 +551,64 @@ $(document).ready(function () {
 		let quantity = $(this).parents('tr').data('quantity');
 		let price = $(this).parents('tr').data('price');
 		let amount = $(this).parents('tr').data('amount');
+		let note = $(this).parents('tr').data('note');
 
+		$('#order-detail-modal #order-id').val(orderId);
 		$('#order-detail-modal #received-date').val(orderDate);
-		$('#order-detail-modal #order-date').val(requiredDate);
-		selectize.setValue(itemId, false);
+		$('#order-detail-modal #required-date').val(requiredDate);
 		$('#order-detail-modal #description').val(description);
-		$('#order-detail-modal #position').val(positionId);
 		$('#order-detail-modal #dimension').val(dimension);
 		$('#order-detail-modal #color').val(color);
 		$('#order-detail-modal #material').val(material);
 		$('#order-detail-modal #quantity').val(quantity);
 		$('#order-detail-modal #price').val(price);
 		$('#order-detail-modal #amount').val(amount);
+		$('#order-detail-modal #note').val(note);
+
+		selectize.setValue(itemId, false);
+
+		// Request position by item_id
+		positionReq = sendAjax(
+			`${window.location.origin}/ajax/pesanan_ajax/get_item_position`,
+			{ item_id: itemSelect.val() }
+		);
+
+		// Assign respective position
+		positionReq.done(function (data) {
+
+			let options = outputOptions(data, 'Pilih posisi');
+
+			$('#position').html(options);
+			$('#order-detail-modal #position').val(positionId);
+
+		});
+
+		$('#order-detail-modal #item').data('is-selected', true);
+
+	});
+
+	// After order detail modal is shown, populate positionSelect based on itemSelect change
+	itemSelect.on('change', function () {
+
+		let isSelected = $(this).data('is-selected');
+
+		// Request position by item_id
+		positionReq = sendAjax(
+			`${window.location.origin}/ajax/pesanan_ajax/get_item_position`,
+			{ item_id: $(this).val() }
+		);
+
+		// Assign respective position
+		positionReq.done(function (data) {
+
+			let options = outputOptions(data, 'Pilih posisi');
+
+			if (isSelected) {
+				$('#position').html(options);
+				$('#position').focus();
+			}
+
+		});
 
 	});
 
