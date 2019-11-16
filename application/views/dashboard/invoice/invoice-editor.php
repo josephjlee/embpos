@@ -372,7 +372,6 @@
                               <i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                              <div class="dropdown-header">Tindakan:</div>
                               <a href="" class="dropdown-item update-payment-trigger" data-toggle="modal" data-target="#updatePaymentModal">Sunting Detail</a>
                               <a href="" class="dropdown-item del-payment-trigger" data-toggle="modal" data-target="#deletePaymentModal">Hapus Pembayaran</a>
                             </div>
@@ -425,11 +424,11 @@
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-                              <div class="dropdown-header">Tindakan:</div>
-
                               <a href="#" class="dropdown-item view-order-detail" data-toggle="modal" data-target="#order-detail-modal">Lihat Detail</a>
                               <a href="#" class="dropdown-item view-order-process" data-toggle="modal" data-target="#order-process-modal">Lihat Proses</a>
                               <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#update-process-modal">Tandai Sebagai</a>
+
+                            </div>
 
                           </td>
                         </tr>
@@ -1096,6 +1095,7 @@
       <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="">
+        <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
 
         <div class="modal-content">
 

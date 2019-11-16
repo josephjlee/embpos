@@ -624,10 +624,13 @@ $(document).ready(function () {
 	// Set Selected Process in Status Mark Modal on 'Tandai Sebagai' click
 	$('#process').on('click', '.status-mark-trigger', function (e) {
 
+		let orderId = $(this).parents('tr').data('order-id');
+
 		let description = $(this).parents('tr').data('description');
 		let processStatusId = $(this).parents('tr').data('process-status-id');
 
 		$('#update-process-modal .modal-title').html(description);
+		$('#update-process-modal #order-id').val(orderId);
 		$('#update-process-modal #process-status').val(processStatusId);
 
 	});
