@@ -14,6 +14,7 @@ class Invoice extends CI_Controller
 		$this->load->model('penjualan_model');
 		$this->load->model('produk_model');
 		$this->load->model('pembayaran_model');
+		$this->load->model('produksi_model');
 	}
 
 

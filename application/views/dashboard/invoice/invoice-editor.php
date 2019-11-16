@@ -406,8 +406,15 @@
                   <tbody>
 
                     <?php if ($current_orders) : ?>
+
                       <?php foreach ($current_orders as $order) : ?>
-                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>">
+
+                        <?php $production_status = $this->produksi_model->check_production_status_by_order_id($order['order_id']); ?>
+
+                        <?php $output = $this->produksi_model->get_production_output_by_order_id($order['order_id']); ?>
+
+                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>">
+
                           <td class="px-0">
                             <div>
                               <small id="payment-date-display" style="color:#ec8615"><?= $order['process_status']; ?></small>
@@ -416,6 +423,7 @@
                               </p>
                             </div>
                           </td>
+
                           <td class="px-0 align-middle text-right">
 
                             <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
@@ -431,12 +439,17 @@
                             </div>
 
                           </td>
+
                         </tr>
+
                       <?php endforeach; ?>
+
                     <?php else : ?>
+
                       <tr>
                         <td class="px-0">Semua pesanan telah diselesaikan</td>
                       </tr>
+
                     <?php endif; ?>
 
                   </tbody>
@@ -1066,19 +1079,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <div>
-            <h4 class="small font-weight-bold">Desain <span class="float-right">20%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"></div>
-            </div>
-            <h4 class="small font-weight-bold">Bordir <span class="float-right">40%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
-            </div>
-            <h4 class="small font-weight-bold">Finishing <span class="float-right">60%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar" role="progressbar" style="width: 60%"></div>
-            </div>
+          <h4 class="small font-weight-bold">Desain <span class="float-right" id="design-progress-bar-title"></span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-danger" id="design-progress-bar" role="progressbar" data-toggle="tooltip" title=""></div>
+          </div>
+          <h4 class="small font-weight-bold">Bordir <span class="float-right" id="embro-progress-bar-title"></span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-warning" id="embro-progress-bar" role="progressbar" data-toggle="tooltip" title=""></div>
+          </div>
+          <h4 class="small font-weight-bold">Finishing <span class="float-right" id="finishing-progress-bar-title"></span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar" id="finishing-progress-bar" role="progressbar" data-toggle="tooltip" title=""></div>
           </div>
         </div>
         <div class="modal-footer">

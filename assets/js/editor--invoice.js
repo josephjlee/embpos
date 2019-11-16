@@ -616,8 +616,23 @@ $(document).ready(function () {
 	$('#process').on('click', '.view-order-process', function (e) {
 
 		let description = $(this).parents('tr').data('description');
+		let designStatus = $(this).parents('tr').data('status-design');
+		let embroStatus = $(this).parents('tr').data('status-embro');
+		let finishingStatus = $(this).parents('tr').data('status-finishing');
+		let designOutput = $(this).parents('tr').data('output-design');
+		let embroOutput = $(this).parents('tr').data('output-embro');
+		let finishingOutput = $(this).parents('tr').data('output-finishing');
 
 		$('#order-process-modal .modal-title').html(description);
+		$('#order-process-modal #design-progress-bar-title').html(`${designStatus}%`);
+		$('#order-process-modal #embro-progress-bar-title').html(`${embroStatus}%`);
+		$('#order-process-modal #finishing-progress-bar-title').html(`${finishingStatus}%`);
+		$('#order-process-modal #design-progress-bar').css('width', `${designStatus}%`);
+		$('#order-process-modal #embro-progress-bar').css('width', `${embroStatus}%`);
+		$('#order-process-modal #finishing-progress-bar').css('width', `${finishingStatus}%`);
+		$('#order-process-modal #design-progress-bar').attr('title', `${designOutput}`);
+		$('#order-process-modal #embro-progress-bar').attr('title', `${embroOutput}pcs`);
+		$('#order-process-modal #finishing-progress-bar').attr('title', `${finishingOutput}pcs`);
 
 	});
 
