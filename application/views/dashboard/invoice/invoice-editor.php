@@ -229,6 +229,13 @@
 
             </table>
 
+            <!-- Add Order Button -->
+            <div class="row mb-3">
+              <div class="col">
+                <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill" data-toggle="modal" data-target="#add-order-modal">+ Tambah Produk</button>
+              </div>
+            </div>
+
             <!-- Invoice Calculation Table -->
             <div class="row justify-content-end mb-3">
               <div class="col pt-2" style="font-size:14px">
@@ -749,6 +756,148 @@
     </div>
 
   </div>
+
+  <!-- Add Order Modal -->
+  <div class="modal fade" id="add-order-modal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+
+      <form id="add-order-form">
+
+        <input type="hidden" id="order-id" value="">
+        <input type="hidden" id="amount" value="">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Detail Pesanan</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="description"><small>Judul bordiran</small></label>
+                <input type="text" id="description" class="form-control description" value="">
+              </div>
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="received-date"><small>Tanggal Pesan</small></label>
+                <input class="form-control" type="date" id="received-date" value="">
+              </div>
+
+              <div class="form-group col">
+                <label for="received-date"><small>Tanggal Diambil</small></label>
+                <input class="form-control" type="date" id="required-date" value="">
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+
+                <label for="item"><small>Jenis barang</small></label>
+                <select id="item" data-is-selected="false">
+
+                  <option value="">Pilih...</option>
+
+                  <?php $items = $this->pesanan_model->get_all_items(); ?>
+
+                  <?php foreach ($items as $item) : ?>
+
+                    <option value="<?= $item['item_id']; ?>">
+                      <?= $item['item_name'] ?>
+                    </option>
+
+                  <?php endforeach; ?>
+
+                </select>
+
+              </div>
+
+              <div class="form-group col">
+
+                <label for="position"><small>Posisi yang diinginkan</small></label>
+                <select id="position" class="custom-select position">
+                  <option value="">Pilih...</option>
+
+                  <?php $positions = $this->pesanan_model->get_item_position_pairs(); ?>
+
+                  <?php foreach ($positions as $position) : ?>
+
+                    <option value="<?= $position['position_id']; ?>">
+                      <?= $position['name'] ?>
+                    </option>
+
+                  <?php endforeach; ?>
+
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="dimension"><small>Dimensi</small></label>
+                <input type="text" id="dimension" class="form-control dimension number" value="">
+              </div>
+              <div class="form-group col">
+                <label for=""><small>Warna</small></label>
+                <input type="text" id="color" class="form-control color number" value="">
+              </div>
+              <div class="form-group col">
+                <label for=""><small>Bahan</small></label>
+                <input type="text" id="material" class="form-control material number" value="">
+              </div>
+
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="quantity"><small>Kuantitas</small></label>
+                <input type="text" id="quantity" class="form-control quantity number text-right" placeholder="0" value="">
+              </div>
+
+              <div class="form-group col">
+                <label for=""><small>Harga</small></label>
+                <input type="text" id="price" class="form-control price number text-right" placeholder="0" value="">
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="note"><small>Catatan</small></label>
+                <textarea id="note" class="form-control" style="font-size:13px"></textarea>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
 
 </div>
 

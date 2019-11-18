@@ -301,6 +301,7 @@ table a {
 	appearance: none;
 }
 
+#add-order-modal .selectize-input,
 #order-detail-modal .selectize-input {
 	display: inline-block;
 	width: 100%;

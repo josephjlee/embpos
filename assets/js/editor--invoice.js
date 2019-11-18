@@ -2,7 +2,7 @@ $(document).ready(function () {
 
 	// Define the elements
 	let customerSelect = $('#customers');
-	let itemSelect = $('#item');
+	let addOrderItemSelect = $('#add-order-modal #item');
 
 	const orderList = $('#order-list-modal .modal-body');
 	let amountArr = [];
@@ -191,6 +191,39 @@ $(document).ready(function () {
 		return orderRowTemplate;
 	}
 
+	function addNewOrder(order, itemIndex, orderIndex) {
+
+		// Row template
+		let orderRowTemplate = `
+			<tr id="order-entry-${order.orderId}" class="order-entry" data-item-index="${itemIndex}" data-order-index="${orderIndex}" data-order-id="${order.orderId}">
+				<input type="hidden" name="orders[${orderIndex}][order_id]" value="${order.orderId}">
+				<input type="hidden" name="orders[${orderIndex}][received_date]" value="${order.orderDate}">
+				<input type="hidden" name="orders[${orderIndex}][required_date]" value="${order.requiredDate}">
+				<input type="hidden" name="orders[${orderIndex}][dimension]" value="${order.dimension}">
+				<input type="hidden" name="orders[${orderIndex}][color]" value="${order.color}">
+				<input type="hidden" name="orders[${orderIndex}][material]" value="${order.material}">
+				<input type="hidden" name="orders[${orderIndex}][note]" value="${order.note}">
+				<td id="del-btn-col" class="pr-0">
+					<a href='#' style='color:#AAB0C6' class="del-item-btn" data-order-id="${order.orderId}"><i class="fas fa-times"></i></a>
+				</td>
+				<td id="items-col" style="width:40%">
+					<input type="text" id="items" class="items form-control" value="${order.desc}" readonly>
+				</td>
+				<td id="qty-col">
+					<input type="text" name="orders[${itemIndex}][quantity]" id="quantity-${orderIndex}" class="form-control text-right quantity number" value="${order.qty}">
+				</td>
+				<td id="price-col">
+					<input type="text" name="orders[${itemIndex}][price]" id="price-${orderIndex}" class="form-control text-right price number" value="${order.price}">
+				</td>
+				<td id="amount-col" class="pr-0">
+					<input type="text" id="amount-${orderIndex}" class="form-control text-right amount" value="${order.amount}" readonly>
+				</td>
+			</tr>
+		`;
+
+		return orderRowTemplate;
+	}
+
 	function removeEntry(entryType, entryId, itemIndex) {
 
 		// Remove the respective product-entry row
@@ -227,10 +260,9 @@ $(document).ready(function () {
 
 	}
 
-	// Initialize Select2 on document load
+	// Initialize Select2/selectize on document load
 	initSelect2(customerSelect);
-	var $select = itemSelect.selectize();
-	var selectize = $select[0].selectize;
+	addOrderItemSelect.selectize();
 
 	// AJAX - Populate order-list modal with uninvoiced orders
 	customerSelect.change(function () {
@@ -321,7 +353,7 @@ $(document).ready(function () {
 
 	});
 
-	// Add order item
+	// Add pre-defined order item
 	$('#order-list-modal').on('click', '.add-order-btn', function (e) {
 
 		// Prevent default link behavior
@@ -354,6 +386,53 @@ $(document).ready(function () {
 
 		// Disable order-list to prevent re-added
 		toggleListItem('order', orderId);
+
+	});
+
+	// Add new order to invoice
+	$('#add-order-form').submit(function (e) {
+
+		// Prevent form submit default behavior
+		e.preventDefault();
+
+		// Grab detail from this form
+		let orderData = {
+			orderId: $('#add-order-form #order-id').val(),
+			orderDate: $('#add-order-form #received-date').val(),
+			requiredDate: $('#add-order-form #required-date').val(),
+			dimension: $('#add-order-form #dimension').val(),
+			color: $('#add-order-form #color').val(),
+			material: $('#add-order-form #material').val(),
+			note: $('#add-order-form #note').val(),
+			desc: $('#add-order-form #description').val(),
+			qty: $('#add-order-form #quantity').val(),
+			price: $('#add-order-form #price').val(),
+			amount: $('#add-order-form #amount').val()
+		}
+
+		// Assign item & order index for form submission purpose
+		let itemIndex = getItemEntryIndex();
+		let orderIndex = getEntryIndexFor('order');
+
+		// Create order using createOrderEntry function
+		let newOrderEntry = addNewOrder(orderData, itemIndex, orderIndex);
+
+		// Append the created order entry into tableBody
+		tableBody.append(newOrderEntry);
+
+		// Increment item index
+		itemIndex++;
+
+		// Increment order index
+		orderIndex++;
+
+		// Collect all amount val into amountArr
+		collectAmount();
+
+		// Calculate all amount sum and output the result into calculation table
+		updateCalcTable();
+
+		$(this).trigger('reset');
 
 	});
 
@@ -395,16 +474,11 @@ $(document).ready(function () {
 		preventNaN($(this));
 
 		// Grab productId from parent row data attribute
-		// let productId = $(this).parents('tr').data('product-id');
 		let rowIndex = $(this).parents('tr').data('item-index');
 
 		// Grab quantity and price value for amount calculation purpose
 		let qty = moneyInt($(this).val());
-		// let price = moneyInt($(`#product-entry-${productId}`).find('.price').val());
 		let price = moneyInt($(`[data-item-index=${rowIndex}]`).find('.price').val());
-
-		console.log('RowIndex: ' + rowIndex);
-		console.log('price: ' + price);
 
 		// Format the result of qty*price operation into money string and store into amount variable
 		let amount = moneyStr(multiplyTwoNums(qty, price))
@@ -417,6 +491,23 @@ $(document).ready(function () {
 
 		// Output the calculation result into calculation table
 		updateCalcTable();
+
+	});
+
+	//  Update add-order-modal's amount field when its quantity is change
+	$('#add-order-modal #quantity').keyup(function (e) {
+
+		preventNaN($(this));
+
+		// Grab quantity and price value for amount calculation purpose
+		let qty = moneyInt($(this).val());
+		let price = moneyInt($(this).parents('#add-order-modal').find('#price').val());
+
+		// Format the result of qty*price operation into money string and store into amount variable
+		let amount = moneyStr(multiplyTwoNums(qty, price));
+
+		// Output the amount into its respective amount 
+		$(this).parents('#add-order-modal').find('#amount').val(amount);
 
 	});
 
@@ -445,6 +536,22 @@ $(document).ready(function () {
 
 	});
 
+	//  Update add-order-modal's amount field when its price is change
+	$('#add-order-modal #price').keyup(function (e) {
+
+		preventNaN($(this));
+
+		// Grab quantity and price value for amount calculation purpose
+		let qty = moneyInt($(this).parents('#add-order-modal').find('#quantity').val());
+		let price = moneyInt($(this).val());
+
+		// Format the result of qty*price operation into money string and store into amount variable
+		let amount = moneyStr(multiplyTwoNums(qty, price));
+
+		// Output the amount into its respective amount 
+		$(this).parents('#add-order-modal').find('#amount').val(amount);
+
+	});
 	// Process user-inputted amount
 	$('#payment-form').submit(function (e) {
 
@@ -536,61 +643,8 @@ $(document).ready(function () {
 
 	});
 
-	// Populate Order Detail Modal on 'Lihat Detail' click
-	$('#process').on('click', '.view-order-detail', function (e) {
-
-		let orderId = $(this).parents('tr').data('order-id');
-		let description = $(this).parents('tr').data('description');
-		let orderDate = $(this).parents('tr').data('order-date');
-		let requiredDate = $(this).parents('tr').data('required-date');
-		let itemId = $(this).parents('tr').data('item-id');
-		let positionId = $(this).parents('tr').data('position-id');
-		let dimension = $(this).parents('tr').data('dimension');
-		let color = $(this).parents('tr').data('color');
-		let material = $(this).parents('tr').data('material');
-		let quantity = $(this).parents('tr').data('quantity');
-		let price = $(this).parents('tr').data('price');
-		let amount = $(this).parents('tr').data('amount');
-		let note = $(this).parents('tr').data('note');
-
-		$('#order-detail-modal #order-id').val(orderId);
-		$('#order-detail-modal #received-date').val(orderDate);
-		$('#order-detail-modal #required-date').val(requiredDate);
-		$('#order-detail-modal #description').val(description);
-		$('#order-detail-modal #dimension').val(dimension);
-		$('#order-detail-modal #color').val(color);
-		$('#order-detail-modal #material').val(material);
-		$('#order-detail-modal #quantity').val(quantity);
-		$('#order-detail-modal #price').val(price);
-		$('#order-detail-modal #amount').val(amount);
-		$('#order-detail-modal #note').val(note);
-
-		selectize.setValue(itemId, false);
-
-		// Request position by item_id
-		positionReq = sendAjax(
-			`${window.location.origin}/ajax/pesanan_ajax/get_item_position`,
-			{ item_id: itemSelect.val() }
-		);
-
-		// Assign respective position
-		positionReq.done(function (data) {
-
-			let options = outputOptions(data, 'Pilih posisi');
-
-			$('#position').html(options);
-			$('#order-detail-modal #position').val(positionId);
-
-		});
-
-		$('#order-detail-modal #item').data('is-selected', true);
-
-	});
-
-	// After order detail modal is shown, populate positionSelect based on itemSelect change
-	itemSelect.on('change', function () {
-
-		let isSelected = $(this).data('is-selected');
+	// populate add-order-modal positionSelect based on addOrderItemSelect change
+	addOrderItemSelect.on('change', function () {
 
 		// Request position by item_id
 		positionReq = sendAjax(
@@ -603,53 +657,11 @@ $(document).ready(function () {
 
 			let options = outputOptions(data, 'Pilih posisi');
 
-			if (isSelected) {
-				$('#position').html(options);
-				$('#position').focus();
-			}
+			$('#add-order-modal #position').html(options);
+			$('#add-order-modal #position').focus();
 
 		});
 
 	});
-
-	// Populate Order Process Modal on 'Lihat Proses' click
-	$('#process').on('click', '.view-order-process', function (e) {
-
-		let description = $(this).parents('tr').data('description');
-		let designStatus = $(this).parents('tr').data('status-design');
-		let embroStatus = $(this).parents('tr').data('status-embro');
-		let finishingStatus = $(this).parents('tr').data('status-finishing');
-		let designOutput = $(this).parents('tr').data('output-design');
-		let embroOutput = $(this).parents('tr').data('output-embro');
-		let finishingOutput = $(this).parents('tr').data('output-finishing');
-
-		$('#order-process-modal .modal-title').html(description);
-		$('#order-process-modal #design-progress-bar-title').html(`${designStatus}%`);
-		$('#order-process-modal #embro-progress-bar-title').html(`${embroStatus}%`);
-		$('#order-process-modal #finishing-progress-bar-title').html(`${finishingStatus}%`);
-		$('#order-process-modal #design-progress-bar').css('width', `${designStatus}%`);
-		$('#order-process-modal #embro-progress-bar').css('width', `${embroStatus}%`);
-		$('#order-process-modal #finishing-progress-bar').css('width', `${finishingStatus}%`);
-		$('#order-process-modal #design-progress-bar').attr('title', `${designOutput}`);
-		$('#order-process-modal #embro-progress-bar').attr('title', `${embroOutput}pcs`);
-		$('#order-process-modal #finishing-progress-bar').attr('title', `${finishingOutput}pcs`);
-
-	});
-
-	// Set Selected Process in Status Mark Modal on 'Tandai Sebagai' click
-	$('#process').on('click', '.status-mark-trigger', function (e) {
-
-		let orderId = $(this).parents('tr').data('order-id');
-
-		let description = $(this).parents('tr').data('description');
-		let processStatusId = $(this).parents('tr').data('process-status-id');
-
-		$('#update-process-modal .modal-title').html(description);
-		$('#update-process-modal #order-id').val(orderId);
-		$('#update-process-modal #process-status').val(processStatusId);
-
-	});
-
-
 
 });
