@@ -764,7 +764,6 @@
 
       <form id="add-order-form">
 
-        <input type="hidden" id="order-id" value="">
         <input type="hidden" id="amount" value="">
 
         <div class="modal-content">
@@ -781,7 +780,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label for="description"><small>Judul bordiran</small></label>
-                <input type="text" id="description" class="form-control description" value="">
+                <input type="text" id="description" class="form-control description" value="" required>
               </div>
             </div>
 
@@ -804,7 +803,7 @@
               <div class="form-group col">
 
                 <label for="item"><small>Jenis barang</small></label>
-                <select id="item" data-is-selected="false">
+                <select id="item" required>
 
                   <option value="">Pilih...</option>
 
@@ -825,7 +824,7 @@
               <div class="form-group col">
 
                 <label for="position"><small>Posisi yang diinginkan</small></label>
-                <select id="position" class="custom-select position">
+                <select id="position" class="custom-select position" required>
                   <option value="">Pilih...</option>
 
                   <?php $positions = $this->pesanan_model->get_item_position_pairs(); ?>
@@ -866,12 +865,12 @@
 
               <div class="form-group col">
                 <label for="quantity"><small>Kuantitas</small></label>
-                <input type="text" id="quantity" class="form-control quantity number text-right" placeholder="0" value="">
+                <input type="text" id="quantity" class="form-control quantity number text-right" placeholder="0" value="" required>
               </div>
 
               <div class="form-group col">
                 <label for=""><small>Harga</small></label>
-                <input type="text" id="price" class="form-control price number text-right" placeholder="0" value="">
+                <input type="text" id="price" class="form-control price number text-right" placeholder="0" value="" required>
               </div>
 
             </div>

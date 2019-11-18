@@ -262,7 +262,9 @@ $(document).ready(function () {
 
 	// Initialize Select2/selectize on document load
 	initSelect2(customerSelect);
-	addOrderItemSelect.selectize();
+
+	var $select = addOrderItemSelect.selectize();
+	var selectize = $select[0].selectize;
 
 	// AJAX - Populate order-list modal with uninvoiced orders
 	customerSelect.change(function () {
@@ -433,6 +435,7 @@ $(document).ready(function () {
 		updateCalcTable();
 
 		$(this).trigger('reset');
+		selectize.clear();
 
 	});
 
@@ -494,23 +497,6 @@ $(document).ready(function () {
 
 	});
 
-	//  Update add-order-modal's amount field when its quantity is change
-	$('#add-order-modal #quantity').keyup(function (e) {
-
-		preventNaN($(this));
-
-		// Grab quantity and price value for amount calculation purpose
-		let qty = moneyInt($(this).val());
-		let price = moneyInt($(this).parents('#add-order-modal').find('#price').val());
-
-		// Format the result of qty*price operation into money string and store into amount variable
-		let amount = moneyStr(multiplyTwoNums(qty, price));
-
-		// Output the amount into its respective amount 
-		$(this).parents('#add-order-modal').find('#amount').val(amount);
-
-	});
-
 	tableBody.on('keyup', '.price', function (e) {
 
 		preventNaN($(this));
@@ -536,10 +522,23 @@ $(document).ready(function () {
 
 	});
 
+	//  Update add-order-modal's amount field when its quantity is change
+	$('#add-order-modal #quantity').keyup(function (e) {
+
+		// Grab quantity and price value for amount calculation purpose
+		let qty = moneyInt($(this).val());
+		let price = moneyInt($(this).parents('#add-order-modal').find('#price').val());
+
+		// Format the result of qty*price operation into money string and store into amount variable
+		let amount = moneyStr(multiplyTwoNums(qty, price));
+
+		// Output the amount into its respective amount 
+		$(this).parents('#add-order-modal').find('#amount').val(amount);
+
+	});
+
 	//  Update add-order-modal's amount field when its price is change
 	$('#add-order-modal #price').keyup(function (e) {
-
-		preventNaN($(this));
 
 		// Grab quantity and price value for amount calculation purpose
 		let qty = moneyInt($(this).parents('#add-order-modal').find('#quantity').val());
@@ -552,6 +551,7 @@ $(document).ready(function () {
 		$(this).parents('#add-order-modal').find('#amount').val(amount);
 
 	});
+
 	// Process user-inputted amount
 	$('#payment-form').submit(function (e) {
 
