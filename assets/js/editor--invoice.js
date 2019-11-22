@@ -45,7 +45,7 @@ $(document).ready(function () {
 	function collectAmount() {
 
 		// Select each item amount 
-		let amountClass = document.querySelectorAll('.amount');
+		let amountClass = document.querySelectorAll('#invoice-detail-table .amount');
 
 		// Convert all selected .amount class into an array of amount object
 		let amountObjArr = Object.values(amountClass);
@@ -191,12 +191,28 @@ $(document).ready(function () {
 		return orderRowTemplate;
 	}
 
+	function createOrderListItem(order) {
+		return `
+		<div class="order-list-item d-flex justify-content-between align-items-center mb-3" data-order-id="${order.order_id}" data-desc="${order.description}" data-dimension="${order.dimension}" data-qty="${order.quantity}" data-price="${order.price}" data-amount="${order.amount}" id="order-list-item-${order.order_id}">
+			<div class="d-flex align-items-center">
+					<img class="mr-3" style="width:33px;height:33px" src="http://embpos.com//assets/icon/jacket.png">
+					<div>
+							<div style="color:#9aa0ac;font-size:13px" class="order-item__required-date">Diambil: ${order.required_date}</div>
+							<div style="color:#495057;font-size:15px" class="order-item__description">${order.description}</div>
+					</div>
+			</div>
+			<a href="#" style="color:#AAB0C6" class="add-order-btn" id="add-order-${order.order_id}" data-order-id="${order.order_id}">
+					<i class="fas fa-plus"></i>
+			</a>
+		</div>`;
+	}
+
 	function addNewOrder(order, itemIndex, orderIndex) {
 
 		// Row template
 		let orderRowTemplate = `
-			<tr id="order-entry-${order.orderId}" class="order-entry" data-item-index="${itemIndex}" data-order-index="${orderIndex}" data-order-id="${order.orderId}">
-				<input type="hidden" name="orders[${orderIndex}][order_id]" value="${order.orderId}">
+			<tr id="order-entry-${order.order_id}" class="order-entry" data-item-index="${itemIndex}" data-order-index="${orderIndex}" data-order-id="${order.order_id}">
+				<input type="hidden" name="orders[${orderIndex}][order_id]" value="${order.order_id}">
 				<input type="hidden" name="orders[${orderIndex}][received_date]" value="${order.orderDate}">
 				<input type="hidden" name="orders[${orderIndex}][required_date]" value="${order.requiredDate}">
 				<input type="hidden" name="orders[${orderIndex}][dimension]" value="${order.dimension}">
@@ -204,13 +220,13 @@ $(document).ready(function () {
 				<input type="hidden" name="orders[${orderIndex}][material]" value="${order.material}">
 				<input type="hidden" name="orders[${orderIndex}][note]" value="${order.note}">
 				<td id="del-btn-col" class="pr-0">
-					<a href='#' style='color:#AAB0C6' class="del-item-btn" data-order-id="${order.orderId}"><i class="fas fa-times"></i></a>
+					<a href='#' style='color:#AAB0C6' class="del-item-btn" data-order-id="${order.order_id}"><i class="fas fa-times"></i></a>
 				</td>
 				<td id="items-col" style="width:40%">
-					<input type="text" id="items" class="items form-control" value="${order.desc}" readonly>
+					<input type="text" id="items" class="items form-control" value="${order.description}" readonly>
 				</td>
 				<td id="qty-col">
-					<input type="text" name="orders[${itemIndex}][quantity]" id="quantity-${orderIndex}" class="form-control text-right quantity number" value="${order.qty}">
+					<input type="text" name="orders[${itemIndex}][quantity]" id="quantity-${orderIndex}" class="form-control text-right quantity number" value="${order.quantity}">
 				</td>
 				<td id="price-col">
 					<input type="text" name="orders[${itemIndex}][price]" id="price-${orderIndex}" class="form-control text-right price number" value="${order.price}">
@@ -273,8 +289,6 @@ $(document).ready(function () {
 			`${window.location.origin}/ajax/pesanan_ajax/get_customer_order`,
 			{ customer_id: $(this).val() }
 		);
-
-		console.log(customerReq);
 
 		customerReq.done(function (data) {
 
@@ -397,45 +411,71 @@ $(document).ready(function () {
 		// Prevent form submit default behavior
 		e.preventDefault();
 
-		// Grab detail from this form
-		let orderData = {
-			orderId: $('#add-order-form #order-id').val(),
-			orderDate: $('#add-order-form #received-date').val(),
-			requiredDate: $('#add-order-form #required-date').val(),
-			dimension: $('#add-order-form #dimension').val(),
-			color: $('#add-order-form #color').val(),
-			material: $('#add-order-form #material').val(),
-			note: $('#add-order-form #note').val(),
-			desc: $('#add-order-form #description').val(),
-			qty: $('#add-order-form #quantity').val(),
-			price: $('#add-order-form #price').val(),
-			amount: $('#add-order-form #amount').val()
-		}
+		// Fill order form customer_id with invoice's customer_id
+		let customerId = $('#customers').val();
+		$(this).find('#customer-id').val(customerId);
 
-		// Assign item & order index for form submission purpose
-		let itemIndex = getItemEntryIndex();
-		let orderIndex = getEntryIndexFor('order');
+		// Request new order-number using ajax
+		$.ajax({
 
-		// Create order using createOrderEntry function
-		let newOrderEntry = addNewOrder(orderData, itemIndex, orderIndex);
+			url: `${window.location.origin}/ajax/pesanan_ajax/new_order_number`,
 
-		// Append the created order entry into tableBody
-		tableBody.append(newOrderEntry);
+			success: function (result) {
 
-		// Increment item index
-		itemIndex++;
+				// Assign the new order number into order-number hidden field
+				$('#add-order-form #order-number').val(result);
 
-		// Increment order index
-		orderIndex++;
+				// Serialize order form data
+				let orderFormData = $('#add-order-form').serialize();
 
-		// Collect all amount val into amountArr
-		collectAmount();
+				// Submit form data using ajax
+				createOrder = sendAjax(
+					`${window.location.origin}/ajax/pesanan_ajax/add_order`,
+					orderFormData
+				);
 
-		// Calculate all amount sum and output the result into calculation table
-		updateCalcTable();
+				createOrder.done(function (data) {
 
-		$(this).trigger('reset');
-		selectize.clear();
+					let orderData = JSON.parse(data);
+
+					console.log(orderData);
+
+					// Assign item & order index for form submission purpose
+					let itemIndex = getItemEntryIndex();
+					let orderIndex = getEntryIndexFor('order');
+
+					// Append the newly created order into order-list-modal
+					let orderListItem = createOrderListItem(orderData);
+					orderList.append(orderListItem);
+
+					// Disable order-list to prevent re-added
+					toggleListItem('order', orderData.order_id);
+
+					// Create order using createOrderEntry function
+					let newOrderEntry = createOrderEntry(orderData.order_id, orderIndex, itemIndex);
+
+					// Append the created order entry into tableBody
+					tableBody.append(newOrderEntry);
+
+					// Increment item index
+					itemIndex++;
+
+					// Increment order index
+					orderIndex++;
+
+					// Collect all amount val into amountArr
+					collectAmount();
+
+					// Calculate all amount sum and output the result into calculation table
+					updateCalcTable();
+
+				});
+
+				$('#add-order-form').trigger('reset');
+				selectize.clear();
+			}
+
+		});
 
 	});
 

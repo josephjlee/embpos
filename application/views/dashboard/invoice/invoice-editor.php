@@ -232,7 +232,7 @@
             <!-- Add Order Button -->
             <div class="row mb-3">
               <div class="col">
-                <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill" data-toggle="modal" data-target="#add-order-modal">+ Tambah Produk</button>
+                <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill" data-toggle="modal" data-target="#add-order-modal">+ Tambah Pesanan</button>
               </div>
             </div>
 
@@ -762,9 +762,11 @@
 
     <div class="modal-dialog" role="document">
 
-      <form id="add-order-form">
+      <form action="<?= base_url('ajax/pesanan_ajax/add_order') ?>" id="add-order-form" method="post" data-order-number="">
 
         <input type="hidden" id="amount" value="">
+        <input type="hidden" id="customer-id" name="order[customer_id]" value="">
+        <input type="hidden" id="order-number" name="order[number]" value="">
 
         <div class="modal-content">
 
@@ -780,7 +782,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label for="description"><small>Judul bordiran</small></label>
-                <input type="text" id="description" class="form-control description" value="" required>
+                <input type="text" id="description" class="form-control description" name="order[description]" value="" required>
               </div>
             </div>
 
@@ -788,12 +790,12 @@
 
               <div class="form-group col">
                 <label for="received-date"><small>Tanggal Pesan</small></label>
-                <input class="form-control" type="date" id="received-date" value="">
+                <input class="form-control" type="date" id="received-date" name="order[received_date]" value="" required>
               </div>
 
               <div class="form-group col">
                 <label for="received-date"><small>Tanggal Diambil</small></label>
-                <input class="form-control" type="date" id="required-date" value="">
+                <input class="form-control" type="date" id="required-date" name="order[required_date]" value="" required>
               </div>
 
             </div>
@@ -803,7 +805,7 @@
               <div class="form-group col">
 
                 <label for="item"><small>Jenis barang</small></label>
-                <select id="item" required>
+                <select id="item" name="order[item_id]" required>
 
                   <option value="">Pilih...</option>
 
@@ -824,7 +826,7 @@
               <div class="form-group col">
 
                 <label for="position"><small>Posisi yang diinginkan</small></label>
-                <select id="position" class="custom-select position" required>
+                <select id="position" class="custom-select position" name="order[position_id]" required>
                   <option value="">Pilih...</option>
 
                   <?php $positions = $this->pesanan_model->get_item_position_pairs(); ?>
@@ -848,15 +850,15 @@
 
               <div class="form-group col">
                 <label for="dimension"><small>Dimensi</small></label>
-                <input type="text" id="dimension" class="form-control dimension number" value="">
+                <input type="text" id="dimension" class="form-control dimension number" name="order[dimension]" value="">
               </div>
               <div class="form-group col">
                 <label for=""><small>Warna</small></label>
-                <input type="text" id="color" class="form-control color number" value="">
+                <input type="text" id="color" class="form-control color number" name="order[color]" value="">
               </div>
               <div class="form-group col">
                 <label for=""><small>Bahan</small></label>
-                <input type="text" id="material" class="form-control material number" value="">
+                <input type="text" id="material" class="form-control material number" name="order[material]" value="">
               </div>
 
             </div>
@@ -865,12 +867,12 @@
 
               <div class="form-group col">
                 <label for="quantity"><small>Kuantitas</small></label>
-                <input type="text" id="quantity" class="form-control quantity number text-right" placeholder="0" value="" required>
+                <input type="text" id="quantity" class="form-control quantity number text-right" name="order[quantity]" placeholder="0" value="" required>
               </div>
 
               <div class="form-group col">
                 <label for=""><small>Harga</small></label>
-                <input type="text" id="price" class="form-control price number text-right" placeholder="0" value="" required>
+                <input type="text" id="price" class="form-control price number text-right" placeholder="0" name="order[price]" value="" required>
               </div>
 
             </div>
@@ -878,7 +880,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label for="note"><small>Catatan</small></label>
-                <textarea id="note" class="form-control" style="font-size:13px"></textarea>
+                <textarea id="note" class="form-control" name="order[note]" style="font-size:13px"></textarea>
               </div>
             </div>
 
