@@ -66,9 +66,9 @@ class Pesanan extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
-    public function semua()
+    public function daftar()
     {
-        $data['title'] = 'Semua Pesanan';
+        $data['title'] = 'Daftar Pesanan';
 
         $data['orders'] = $this->pesanan_model->get_all_orders();
 

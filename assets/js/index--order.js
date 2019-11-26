@@ -14,6 +14,13 @@ $(document).ready(function () {
 		]
 	});
 
+	var table = $('#dataTable').DataTable();
+
+	$('#filter-select').change(function (e) {
+		let filter = $(this).val();
+		table.columns(6).search(filter).draw();
+	});
+
 	// const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
 
 	// const materialFormEl = `
