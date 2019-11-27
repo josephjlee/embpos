@@ -38,76 +38,61 @@
 
           <?php foreach ($orders as $order) : ?>
 
-            <?php
-              switch (true) {
-                case $order['process_status_id'] == 5:
-                  $status_class = 'finished';
-                  break;
-                case $order['process_status_id'] != 1 && $order['process_status_id'] != 5:
-                  $status_class = 'processed';
-                  break;
-                case $order['process_status_id'] == 1:
-                  $status_class = 'queued';
-                  break;
-              }
-              ?>
-
-
-              <tr data-order-id="<?= $order['order_id']; ?>" data-order-price="<?= $order['price']; ?>" class="<?= $status_class; ?>">
-                <td class="text-center">
-                  <img style="width:33px;height:100%" src="<?= isset($order['image2']) ? base_url('assets/img/artwork/') . $order['image2'] : base_url('assets/icon/') . $order['item_icon']; ?>">
-                </td>
-                <td data-sort="<?= $order['order_number']; ?>">
-                  PSN-<?= $order['order_number']; ?>
-                </td>
-                <td>
-                  <a style="color:#858796" href="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>" class="text-link"><?= $order['item_name']; ?>: <?= $order['description']; ?></a>
-                </td>
-                <td>
-                  <?= $order['position_name']; ?>
-                </td>
-                <td>
-                  <?= moneyStrDot($order['quantity']); ?>
-                </td>
-                <td data-sort="<?= strtotime($order['order_deadline']); ?>">
-                  <?= date('d/m/Y', strtotime($order['order_deadline'])); ?>
-                </td>
-                <td>
-                  <?= $order['process_status']; ?>
-                </td>
-                <td>
-                  <?= $order['customer_name']; ?>
-                </td>
-                <td data-sort="<?= $order['invoice_number']; ?>">
-                  <?php if (empty($order['invoice_number'])) : ?>
-                    <span>Belum ada</span>
-                  <?php else : ?>
-                    <a href="<?= base_url('invoice/sunting/') . $order['invoice_number']; ?>" style="color:#858796">
-                      INV-<?= $order['invoice_number']; ?>
-                    </a>
-                  <?php endif; ?>
-                </td>
-                <td>
-
-                  <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
-                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+            <tr data-order-id="<?= $order['order_id']; ?>" data-order-price="<?= $order['price']; ?>">
+              <td class="text-center">
+                <img style="width:33px;height:100%" src="<?= isset($order['image2']) ? base_url('assets/img/artwork/') . $order['image2'] : base_url('assets/icon/') . $order['item_icon']; ?>">
+              </td>
+              <td data-sort="<?= $order['order_number']; ?>">
+                PSN-<?= $order['order_number']; ?>
+              </td>
+              <td>
+                <a style="color:#858796" href="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>" class="text-link"><?= $order['item_name']; ?>: <?= $order['description']; ?></a>
+              </td>
+              <td>
+                <?= $order['position_name']; ?>
+              </td>
+              <td>
+                <?= moneyStrDot($order['quantity']); ?>
+              </td>
+              <td data-sort="<?= strtotime($order['order_deadline']); ?>">
+                <?= date('d/m/Y', strtotime($order['order_deadline'])); ?>
+              </td>
+              <td>
+                <?= $order['process_status']; ?>
+              </td>
+              <td>
+                <?= $order['customer_name']; ?>
+              </td>
+              <td data-sort="<?= $order['invoice_number']; ?>">
+                <?php if (empty($order['invoice_number'])) : ?>
+                  <span>Belum ada</span>
+                <?php else : ?>
+                  <a href="<?= base_url('invoice/sunting/') . $order['invoice_number']; ?>" style="color:#858796">
+                    INV-<?= $order['invoice_number']; ?>
                   </a>
+                <?php endif; ?>
+              </td>
+              <td>
 
-                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                <a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
 
-                    <a class="dropdown-item" href="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>">Sunting Pesanan</a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-                    <a class="dropdown-item status-mark-trigger" href="#" data-toggle="modal" data-target="#mark-as-modal" data-status-id="<?= $order['process_status_id']; ?>">Tandai Sebagai</a>
+                  <a class="dropdown-item" href="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>">Sunting Pesanan</a>
 
-                    <a class="dropdown-item spec-modal-trigger" href="#" data-toggle="modal" data-target="#spec-modal">Atur Produksi</a>
+                  <a class="dropdown-item status-mark-trigger" href="#" data-toggle="modal" data-target="#mark-as-modal" data-status-id="<?= $order['process_status_id']; ?>">Tandai Sebagai</a>
 
-                    <a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#del-order-modal">Hapus Pesanan</a>
+                  <a class="dropdown-item spec-modal-trigger" href="#" data-toggle="modal" data-target="#spec-modal">Atur Produksi</a>
 
-                  </div>
+                  <a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#del-order-modal">Hapus Pesanan</a>
 
-                </td>
-              </tr>
-            <?php endforeach; ?>
+                </div>
+
+              </td>
+            </tr>
+          <?php endforeach; ?>
 
         </tbody>
       </table>
