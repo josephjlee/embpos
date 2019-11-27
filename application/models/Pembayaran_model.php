@@ -34,7 +34,7 @@ class Pembayaran_model extends CI_Model
   public function hapus($payment)
   {
     $this->db->where('payment_id', $payment['payment_id']);
-		return $this->db->delete('payment');
+    return $this->db->delete('payment');
   }
 
   public function get_payment_by_invoice_id($invoice_id)
@@ -110,6 +110,26 @@ class Pembayaran_model extends CI_Model
     $this->db->where('payment_id', $payment_id);
 
     return $this->db->get()->row_array();
+  }
+
+  public function get_total_payment_by_month($month)
+  {
+    $query = $this->db->query("SELECT SUM(amount) AS total_payment 
+      FROM payment 
+      WHERE MONTH(payment_date) = {$month} AND YEAR(payment_date) = YEAR(CURDATE())
+    ");
+    $result = $query->row_array();
+    return $result['total_payment'];
+  }
+
+  public function get_total_payment_by_month_by_method($month, $method_id)
+  {
+    $query = $this->db->query("SELECT IFNULL(SUM(amount),0) AS total_payment 
+      FROM payment 
+      WHERE MONTH(payment_date) = {$month} AND YEAR(payment_date) = YEAR(CURDATE()) AND payment_method_id = $method_id
+    ");
+    $result = $query->row_array();
+    return $result['total_payment'];
   }
 
   public function siapkan_data($payment)
