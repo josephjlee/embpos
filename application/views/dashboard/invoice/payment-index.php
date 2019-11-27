@@ -40,7 +40,7 @@
               <td>
                 <?= $payment['payment_id']; ?>
               </td>
-              <td>
+              <td data-sort="<?= strtotime($payment['payment_date']); ?>">
                 <?= date('d/m/Y', strtotime($payment['payment_date'])); ?>
               </td>
               <td>
@@ -49,10 +49,10 @@
               <td>
                 <?= $payment['payment_name']; ?>
               </td>
-              <td>
+              <td data-sort="<?= $payment['payment_amount']; ?>">
                 <?= moneyStrDot($payment['payment_amount']) . ',00'; ?>
               </td>
-              <td>
+              <td data-sort="<?= $payment['order_number']; ?>">
                 <a href="<?= base_url('invoice/sunting/') . $payment['order_number']; ?>">INV-<?= $payment['order_number']; ?></a>
               </td>
             </tr>
