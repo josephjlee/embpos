@@ -30,7 +30,7 @@
                   <div>-</div>
                 <?php endif; ?>
               </td>
-              <td>
+              <td data-sort="<?= $design['order_number']; ?>">
                 PS-<?= $design['order_number']; ?>
               </td>
               <td>
@@ -42,7 +42,7 @@
               <td>
                 <?= $design['repeat']; ?>
               </td>
-              <td>
+              <td data-sort="<?= $design['required']; ?>">
                 <?= date('d/m/Y', strtotime($design['required'])); ?>
               </td>
               <td>

@@ -31,10 +31,10 @@
                   <td>
                     <?= $output['name']; ?>
                   </td>
-                  <td class="text-right">
+                  <td class="text-right" data-sort="<?= $output['quantity']; ?>">
                     <?= moneyStrDot($output['quantity']); ?>
                   </td>
-                  <td class="text-right">
+                  <td class="text-right" data-sort="<?= $output['value']; ?>">
                     <?= moneyStrDot($output['value']); ?>,00
                   </td>
                   <td class="text-center">

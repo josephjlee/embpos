@@ -30,7 +30,7 @@
                   <div>-</div>
                 <?php endif; ?>
               </td>
-              <td>
+              <td data-sort="<?= $finishing['order_number']; ?>">
                 PS-<?= $finishing['order_number']; ?>
               </td>
               <td>
@@ -42,7 +42,7 @@
               <td>
                 <?= $finishing['quantity']; ?>
               </td>
-              <td>
+              <td data-sort="<?= $finishing['deadline']; ?>">
                 <?= date('d/m/Y', strtotime($finishing['deadline'])); ?>
               </td>
               <td>

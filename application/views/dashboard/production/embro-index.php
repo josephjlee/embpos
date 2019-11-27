@@ -30,7 +30,7 @@
                   <div>-</div>
                 <?php endif; ?>
               </td>
-              <td>
+              <td data-sort="<?= $embro['order_number']; ?>">
                 PS-<?= $embro['order_number']; ?>
               </td>
               <td>
@@ -42,7 +42,7 @@
               <td>
                 <?= $embro['operator']; ?>
               </td>
-              <td>
+              <td data-sort="<?= $embro['required']; ?>">
                 <?= date('d/m/Y', strtotime($embro['required'])); ?>
               </td>
               <td>
