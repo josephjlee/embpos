@@ -12,6 +12,13 @@ $(document).ready(function () {
 			[2, "desc"]
 		]
 	});
+
+	var table = $('#dataTable').DataTable();
+
+	$('#filter-select').change(function (e) {
+		let filter = $(this).val();
+		table.columns(4).search(filter).draw();
+	});
 });
 
 

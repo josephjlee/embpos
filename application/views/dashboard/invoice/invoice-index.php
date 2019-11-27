@@ -2,24 +2,16 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-
+  <div class="d-flex align-items-center justify-content-between mb-3">
     <h1 class="h3 text-gray-800"><?= $title; ?></h1>
-
-    <?php
-
-    $receivable = 0;
-
-    foreach ($invoices as $invoice) {
-      $receivable += $invoice['payment_due'];
-    }
-
-    ?>
-
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-      Piutang: Rp<?= moneyStrDot($receivable) ?>,00
-    </a>
-
+    <div>
+      <select id="filter-select" class="custom-select">
+        <option value="">semua</option>
+        <option value="lunas">lunas</option>
+        <option value="sebagian">sebagian</option>
+        <option value="kosong">kosong</option>
+      </select>
+    </div>
   </div>
 
   <!-- Orders Table -->
