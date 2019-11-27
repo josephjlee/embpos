@@ -69,10 +69,6 @@ class Invoice extends CI_Controller
 
 		$data['title'] = 'Semua Invoice';
 
-		// $data['receivable'] = $this->invoice_model->get_receivable_val();
-
-		// pretty_print($this->invoice_model->get_receivable_val());
-
 		$data['invoices'] = $this->invoice_model->list_all_invoices();
 
 		$data['content'] = $this->load->view('dashboard/invoice/invoice-index', $data, TRUE);

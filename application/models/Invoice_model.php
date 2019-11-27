@@ -308,6 +308,56 @@ class Invoice_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function get_total_invoice_by_month($month)
+    {
+        $query = $this->db->query("SELECT
+            MONTH(invoice.invoice_date),
+            SUM((
+                SELECT 
+                    IFNULL(SUM(`order`.quantity * `order`.price), 0)
+                FROM
+                    `order`
+                WHERE
+                    `order`.invoice_id = invoice.invoice_id
+            )) AS total_order_sale,
+            SUM((
+                SELECT 
+                    IFNULL(SUM(product_sale.quantity * product_sale.price),0)
+                FROM
+                    product_sale
+                WHERE
+                    product_sale.invoice_id = invoice.invoice_id
+            )) AS total_product_sale,
+            SUM(invoice.discount) AS total_discount
+        FROM
+            invoice
+                JOIN
+            customer ON invoice.customer_id = customer.customer_id
+        WHERE MONTH(invoice.invoice_date) = {$month}
+        GROUP BY MONTH(invoice.invoice_date)
+        ");
+        $result = $query->row_array();
+
+        return $result['total_order_sale'] + $result['total_product_sale'] - $result['total_discount'];
+    }
+
+    public function get_total_paid_by_month($month)
+    {
+        $query = $this->db->query("SELECT
+            MONTH(invoice.invoice_date),
+            SUM(payment.amount) AS total_paid
+        FROM
+            invoice
+                JOIN
+            payment ON invoice.invoice_id = payment.invoice_id
+        WHERE MONTH(invoice.invoice_date) = MONTH(CURDATE())
+        GROUP BY MONTH(invoice.invoice_date)
+        ");
+        $result = $query->row_array();
+
+        return $result['total_paid'];
+    }
+
     public function siapkan_data($product)
     {
 

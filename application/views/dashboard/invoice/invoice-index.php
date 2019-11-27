@@ -14,6 +14,86 @@
     </div>
   </div>
 
+  <div class="row">
+
+    <!-- This month Gross Revenue -->
+
+    <?php $total_invoice = $this->invoice_model->get_total_invoice_by_month(date('m')); ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Invoice (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_invoice); ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-file-invoice-dollar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total paid -->
+
+    <?php $total_paid = $this->invoice_model->get_total_paid_by_month(date('m')); ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Terbayar (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_paid); ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receivable Card -->
+
+    <?php $total_receivable = $total_invoice - $total_paid; ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Piutang (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_receivable); ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-comment-dollar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Order -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pengerjaan Aktif (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="active-inv"></span> invoice</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-cog fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Orders Table -->
   <div class="card shadow mb-4" id="invoice-index-card">
     <div class="card-body">
@@ -48,8 +128,8 @@
               <td>
                 <?= $this->invoice_model->check_payment_status($invoice['invoice_id'])['payment_status']; ?>
               </td>
-              <td>
-                <?= $this->pesanan_model->check_order_progress($invoice['invoice_id']) ?>
+              <td <?= date('m', strtotime($invoice['invoice_date'])) == date('m') ? 'class="invoice-status-col"' : ''; ?>>
+                <?= $this->pesanan_model->check_order_progress($invoice['invoice_id']); ?>
               </td>
               <td data-sort="<?= strtotime($invoice['invoice_date']); ?>">
                 <?= date('d/m/Y', strtotime($invoice['invoice_date'])); ?>
@@ -101,6 +181,16 @@
 
 <script>
   const invoiceIndexCard = document.querySelector('#invoice-index-card');
+  const invStatusNodeList = document.querySelectorAll('.invoice-status-col');
+  const invStatusArray = Array.from(invStatusNodeList);
+
+  let totalActiveInv = 0;
+  for (let index = 0; index < invStatusArray.length; index++) {
+    if (invStatusArray[index].innerText == 'Tuntas') continue;
+    totalActiveInv++
+  }
+
+  document.querySelector('#active-inv').innerHTML = totalActiveInv;
 
   invoiceIndexCard.addEventListener('click', (e) => {
 
