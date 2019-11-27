@@ -36,4 +36,11 @@ $(document).ready(function () {
 		}
 	});
 
+	var table = $('#dataTable').DataTable();
+
+	$('#filter-select').change(function (e) {
+		let filter = $(this).val();
+		table.columns(3).search(filter).draw();
+	});
+
 });
