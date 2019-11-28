@@ -37,10 +37,42 @@ class Penjualan_model extends CI_Model
     return $product_query->result_array();
   }
 
+  public function get_total_sale_by_month($month)
+  {
+    $query = $this->db->query("SELECT 
+          SUM(product_sale.quantity * product_sale.price) AS total_sale
+      FROM
+          product_sale
+              JOIN
+          invoice ON product_sale.invoice_id = invoice.invoice_id
+      WHERE MONTH(invoice.invoice_date) = {$month} AND YEAR(invoice.invoice_date) = YEAR(CURDATE())
+    ");
+
+    $result = $query->row_array();
+
+    return $result['total_sale'];
+  }
+
+  public function get_total_sold_by_month($month)
+  {
+    $query = $this->db->query("SELECT 
+          SUM(product_sale.quantity) AS total_sold
+      FROM
+          product_sale
+              JOIN
+          invoice ON product_sale.invoice_id = invoice.invoice_id
+      WHERE MONTH(invoice.invoice_date) = {$month} AND YEAR(invoice.invoice_date) = YEAR(CURDATE())
+    ");
+
+    $result = $query->row_array();
+
+    return $result['total_sold'];
+  }
+
   public function hapus($product_sale)
   {
     $this->db->where('product_sale_id', $product_sale['product_sale_id']);
-		return $this->db->delete('product_sale');
+    return $this->db->delete('product_sale');
   }
 
   public function siapkan_data($products, $invoice_id, $customer_id)

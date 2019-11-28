@@ -11,6 +11,7 @@ class Produk extends MY_Controller
     parent::__construct();
 
     $this->load->model('produk_model');
+    $this->load->model('penjualan_model');
   }
 
   /*

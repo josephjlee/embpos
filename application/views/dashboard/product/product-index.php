@@ -4,13 +4,85 @@
   <!-- Page Heading -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 text-gray-800"><?= $title; ?></h1>
-    <div>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        Total Stok: <?= moneyStrDot($stock_data['quantity']) ?>pcs
-      </a>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        Total Nilai: Rp<?= moneyStrDot($stock_data['value']) ?>,00
-      </a>
+  </div>
+
+  <!-- Data Cards -->
+  <div class="row">
+
+    <!-- Stock Value -->
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Nilai Stok (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($stock_data['value']) ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-coins fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock Quantity -->
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Stok (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= moneyStrDot($stock_data['quantity']) ?>pcs</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-gift fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Sold -->
+
+    <?php $total_sold = $this->penjualan_model->get_total_sold_by_month(date('m')); ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Laku (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= moneyStrDot($total_sold); ?>pcs</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dolly fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Order -->
+
+    <?php $total_sale = $this->penjualan_model->get_total_sale_by_month(date('m')); ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Penjualan (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_sale); ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
