@@ -96,6 +96,7 @@ class Pesanan_model extends CI_Model
             position.position_id,
             position.name AS position_name,
             order.image,
+            order.received_date,
             order.required_date AS order_deadline,
             order.order_id,
             order.number AS order_number,
@@ -493,6 +494,36 @@ class Pesanan_model extends CI_Model
         }
 
         return $status;
+    }
+
+    public function get_order_value_by_month($month)
+    {
+        $query = $this->db->query("SELECT 
+                    IFNULL(SUM(quantity * price),0) AS order_value
+                FROM
+                    embryo.`order`
+                WHERE
+                    MONTH(received_date) = {$month}
+        ");
+
+        $result = $query->row_array();
+
+        return $result['order_value'];
+    }
+
+    public function get_order_quantity_by_month($month)
+    {
+        $query = $this->db->query("SELECT 
+                    IFNULL(SUM(quantity),0) AS order_quantity
+                FROM
+                    embryo.`order`
+                WHERE
+                    MONTH(received_date) = {$month}
+        ");
+
+        $result = $query->row_array();
+
+        return $result['order_quantity'];
     }
 
     public function check_invoice($order_id)

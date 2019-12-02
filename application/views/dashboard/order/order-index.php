@@ -16,6 +16,85 @@
     </div>
   </div>
 
+  <!-- Data Card -->
+  <div class="row">
+
+    <!-- Order Value -->
+
+    <?php $order_value = $this->pesanan_model->get_order_value_by_month(date('m')); ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Nilai Pesanan (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($order_value); ?></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-coins fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Quantity -->
+
+    <?php $order_quantity = $this->pesanan_model->get_order_quantity_by_month(date('m')); ?>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Pesanan (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= moneyStrDot($order_quantity); ?>pcs</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-box-open fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Order Card -->
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pesanan Selesai (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="complete-order-qty"></span>pcs</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Order -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pesanan Aktif (<?= date('M') ?>)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="active-order-qty"></span>pcs</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-list fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Orders Table -->
   <div class="card shadow mb-4">
     <div class="card-body" id="order-detail-table-card">
@@ -57,7 +136,7 @@
               <td data-sort="<?= strtotime($order['order_deadline']); ?>">
                 <?= date('d/m/Y', strtotime($order['order_deadline'])); ?>
               </td>
-              <td>
+              <td <?= date('m', strtotime($order['received_date'])) == date('m') ? 'class="order-status-col"' : ''; ?>>
                 <?= $order['process_status']; ?>
               </td>
               <td>
@@ -228,6 +307,24 @@
 <script>
   const orderDetailCard = document.querySelector('#order-detail-table-card');
   const productionType = document.querySelector('#spec-modal #production-type');
+
+  const orderStatusCol = document.querySelectorAll('.order-status-col');
+  const orderStatusArray = Array.from(orderStatusCol);
+
+  let completeOrder = 0;
+  let activeOrder = 0;
+
+  for (let i = 0; i < orderStatusArray.length; i++) {
+    if (orderStatusArray[i].innerText === 'Selesai') {
+      completeOrder++;
+    }
+    if (orderStatusArray[i].innerText !== 'Selesai') {
+      activeOrder++;
+    }
+  }
+
+  document.querySelector('#complete-order-qty').innerHTML = completeOrder;
+  document.querySelector('#active-order-qty').innerHTML = activeOrder;
 
   orderDetailCard.addEventListener('click', (e) => {
 
