@@ -9,13 +9,14 @@ class Pelanggan extends CI_Controller
         parent::__construct();
 
         $this->load->model('pelanggan_model');
+        $this->load->helper('text');
     }
 
     public function semua()
     {
 
         $data['title'] = 'Semua Pelanggan';
-        
+
         $data['customers'] = $this->pelanggan_model->list_all_customers();
 
         $data['content'] = $this->load->view('dashboard/customer/customer-index', $data, TRUE);
@@ -24,5 +25,4 @@ class Pelanggan extends CI_Controller
 
         $this->load->view('layout/dashboard', $data);
     }
-
 }

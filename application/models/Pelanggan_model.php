@@ -114,6 +114,120 @@ class Pelanggan_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
+	public function get_total_customer()
+	{
+		$query = $this->db->query("SELECT COUNT(customer_id) AS total_customer FROM customer");
+		$result = $query->row_array();
+
+		return $result['total_customer'];
+	}
+
+	public function get_most_order_by_month($month)
+	{
+		$query = $this->db->query("SELECT 
+									customer.name,
+									SUM(`order`.quantity) AS total_order
+							FROM
+									embryo.`order`
+							JOIN
+								customer ON `order`.customer_id = customer.customer_id
+							WHERE MONTH(`order`.received_date) = {$month}
+							GROUP BY customer.name
+							ORDER BY total_order DESC
+							LIMIT 1
+		");
+
+		$result = $query->row_array();
+
+		return $result['name'];
+	}
+
+	public function get_most_buy_by_month($month)
+	{
+		$query = $this->db->query("SELECT 
+									customer.name, SUM(product_sale.quantity) AS total_buy
+							FROM
+									invoice
+											JOIN
+									product_sale ON invoice.invoice_id = product_sale.invoice_id
+											JOIN
+									customer ON product_sale.customer_id = customer.customer_id
+							WHERE
+									MONTH(invoice.invoice_date) = {$month}
+							GROUP BY customer.name
+							ORDER BY total_buy DESC
+							LIMIT 1
+		");
+
+		$result = $query->row_array();
+
+		return $result['name'];
+	}
+
+	public function get_order_value_per_customer_by_month($month)
+	{
+		$query = $this->db->query("SELECT 
+									`customer`.`name` AS `customer_name`,
+									IFNULL(SUM(`order`.quantity * `order`.price),0) AS order_sale
+							FROM
+									`invoice`
+											LEFT JOIN
+									`customer` ON `invoice`.`customer_id` = `customer`.`customer_id`
+											LEFT JOIN
+									`order` ON invoice.invoice_id = `order`.invoice_id
+							WHERE
+									MONTH(invoice.invoice_date) = {$month}
+							GROUP BY customer.name");
+
+		return $query->result_array();
+	}
+
+	public function get_product_sale_value_per_customer_by_month($month)
+	{
+		$query = $this->db->query("SELECT 
+									`customer`.`name` AS `customer_name`,
+									IFNULL(SUM(product_sale.quantity * product_sale.price),0) AS product_sale
+							FROM
+									`invoice`
+											LEFT JOIN
+									`customer` ON `invoice`.`customer_id` = `customer`.`customer_id`
+											LEFT JOIN
+									product_sale ON invoice.invoice_id = product_sale.invoice_id
+							WHERE
+									MONTH(invoice.invoice_date) = {$month}
+							GROUP BY customer.name");
+
+		return $query->result_array();
+	}
+
+	public function get_most_valueable_by_month($month)
+	{
+		$order_sale = $this->get_order_value_per_customer_by_month($month);
+		$product_sale = $this->get_product_sale_value_per_customer_by_month($month);
+
+		function calculate_total_sale($order_sale, $product_sale)
+		{
+			$total[$order_sale['customer_name']] = $order_sale['order_sale'] + $product_sale['product_sale'];
+
+			return $total;
+		}
+
+		$raw = array_map("calculate_total_sale", $order_sale, $product_sale);
+
+		$ready = [];
+		foreach ($raw as $r) {
+			foreach ($r as $key => $value) {
+				$ready[$key] = $value;
+			}
+		}
+
+		arsort($ready);
+
+		$key = array_keys($ready);
+
+		return $key[0];
+	}
+
 	public function siapkan_data($customer)
 	{
 		$customer_db_data = [];
