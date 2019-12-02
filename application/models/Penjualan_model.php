@@ -40,7 +40,7 @@ class Penjualan_model extends CI_Model
   public function get_total_sale_by_month($month)
   {
     $query = $this->db->query("SELECT 
-          SUM(product_sale.quantity * product_sale.price) AS total_sale
+          IFNULL(SUM(product_sale.quantity * product_sale.price),0) AS total_sale
       FROM
           product_sale
               JOIN
@@ -56,7 +56,7 @@ class Penjualan_model extends CI_Model
   public function get_total_sold_by_month($month)
   {
     $query = $this->db->query("SELECT 
-          SUM(product_sale.quantity) AS total_sold
+          IFNULL(SUM(product_sale.quantity),0) AS total_sold
       FROM
           product_sale
               JOIN

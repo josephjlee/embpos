@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <!-- Active Order -->
+    <!-- Total Sale -->
 
     <?php $total_sale = $this->penjualan_model->get_total_sale_by_month(date('m')); ?>
 
