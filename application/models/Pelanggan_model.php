@@ -214,6 +214,10 @@ class Pelanggan_model extends CI_Model
 
 		$raw = array_map("calculate_total_sale", $order_sale, $product_sale);
 
+		if (empty($raw)) {
+			return '-';
+		}
+
 		$ready = [];
 		foreach ($raw as $r) {
 			foreach ($r as $key => $value) {
