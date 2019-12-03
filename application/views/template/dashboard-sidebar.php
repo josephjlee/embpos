@@ -14,7 +14,7 @@
 
   <!-- Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
@@ -41,12 +41,12 @@
       </a>
 
       <?php
-      $this->db->where('menu_id', $menu['menu_id']);
-      $this->db->where('is_visible', 1);
-      $this->db->order_by('sidebar_order', 'ASC');
-      $query_page = $this->db->get('page');
-      $pages = $query_page->result_array();
-      ?>
+        $this->db->where('menu_id', $menu['menu_id']);
+        $this->db->where('is_visible', 1);
+        $this->db->order_by('sidebar_order', 'ASC');
+        $query_page = $this->db->get('page');
+        $pages = $query_page->result_array();
+        ?>
 
       <div id="collapse-<?= $menu['name']; ?>" class="collapse <?= strtolower($menu['name']) == $this->uri->segment(1) ? 'show' : ''; ?>" data-parent="#accordionSidebar">
         <div class="py-2 collapse-inner">
