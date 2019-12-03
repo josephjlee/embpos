@@ -83,7 +83,7 @@ class Pesanan_pcsr extends CI_Controller
 
         $this->pesanan_model->hapus($order);
 
-        redirect(base_url('pesanan/semua'));
+        redirect(base_url('pesanan/daftar'));
     }
 
 
