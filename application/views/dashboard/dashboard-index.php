@@ -15,8 +15,8 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Rata-Rata Omzet Invoice</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp40,000</div>
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Rata-Rata Nilai Invoice</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($data_card['monthly_invoice_rev_avg']); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -33,7 +33,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Rata-rata pesanan</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">215,000pcs</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= moneyStrDot($data_card['monthly_order_qty_avg']); ?>pcs</div>
             </div>
             <div class="col-auto">
               <i class="fas fa-box-open fa-2x text-gray-300"></i>
@@ -50,7 +50,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Rata-rata penjualan</div>
-              <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">250pcs</div>
+              <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= moneyStrDot($data_card['monthly_product_sale_avg']); ?>pcs</div>
             </div>
             <div class="col-auto">
               <i class="fas fa-gift fa-2x text-gray-300"></i>
@@ -67,7 +67,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Piutang</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp6.325.000</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">R<?= moneyStrDot($data_card['total_receivable']); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-comment-dollar fa-2x text-gray-300"></i>
