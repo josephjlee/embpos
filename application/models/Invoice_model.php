@@ -397,11 +397,7 @@ class Invoice_model extends CI_Model
 
         $monthly_average = array_sum($monthly_invoice_revenue) / count($monthly_invoice_revenue);
 
-<<<<<<< HEAD
-        return $monthly_average;
-=======
         return round($monthly_average);
->>>>>>> dashboard
     }
 
     public function get_monthly_receivable_sum()
