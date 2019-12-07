@@ -69,6 +69,28 @@ class Penjualan_model extends CI_Model
     return $result['total_sold'];
   }
 
+  public function get_monthly_product_sale_avg()
+  {
+    $query = $this->db->query("SELECT 
+                  SUM(IFNULL(product_sale.quantity,0)) AS total_qty
+              FROM
+                  invoice
+                      LEFT JOIN
+                  product_sale ON invoice.invoice_id = product_sale.invoice_id
+              GROUP BY MONTH(invoice.invoice_date)
+              ");
+
+    $result = [];
+
+    foreach ($query->result_array() as $qty_sum) {
+      array_push($result, $qty_sum['total_qty']);
+    }
+
+    $product_sale_avg = round((array_sum($result) / count($result)));
+
+    return $product_sale_avg;
+  }
+
   public function hapus($product_sale)
   {
     $this->db->where('product_sale_id', $product_sale['product_sale_id']);

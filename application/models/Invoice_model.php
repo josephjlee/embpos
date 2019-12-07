@@ -358,6 +358,147 @@ class Invoice_model extends CI_Model
         return $result['total_paid'];
     }
 
+    public function get_monthly_invoice_revenue()
+    {
+        $query = $this->db->query("SELECT
+                    ANY_VALUE((COALESCE(orderRevenue,0) + COALESCE(productRevenue,0) - SUM(invoice.discount))) AS revenue
+                FROM invoice
+                LEFT JOIN (
+                    SELECT 
+                        MONTH(invoice.invoice_date) AS monthNum,
+                        SUM(`order`.price*`order`.quantity) AS orderRevenue
+                    FROM invoice
+                    LEFT JOIN `order` ON invoice.invoice_id = `order`.invoice_id
+                    GROUP BY monthNum
+                ) AS orderRevenue ON MONTH(invoice.invoice_date) = orderRevenue.monthNum
+                LEFT JOIN (
+                    SELECT 
+                        MONTH(invoice.invoice_date) AS monthNum,
+                        SUM(product_sale.price*product_sale.quantity) AS productRevenue
+                    FROM invoice
+                        LEFT JOIN product_sale ON invoice.invoice_id = product_sale.invoice_id
+                        GROUP BY monthNum
+                ) AS productRevenue ON MONTH(invoice.invoice_date) = productRevenue.monthNum
+                GROUP BY MONTH(invoice.invoice_date)
+                ORDER BY MONTH(invoice.invoice_date)
+        ");
+
+        $result =  [];
+        foreach ($query->result_array() as $revenue) {
+            array_push($result, $revenue['revenue']);
+        }
+
+        return $result;
+    }
+
+    public function get_monthly_invoice_revenue_average()
+    {
+        $monthly_invoice_revenue = $this->get_monthly_invoice_revenue();
+
+        $monthly_average = array_sum($monthly_invoice_revenue) / count($monthly_invoice_revenue);
+
+        return round($monthly_average);
+    }
+
+    public function get_monthly_receivable_sum()
+    {
+        $query = $this->db->query("SELECT
+                    ANY_VALUE(COALESCE(orderRevenue,0) + COALESCE(productRevenue,0) - COALESCE(totalPaid,0) - SUM(invoice.discount)) AS receivable
+                FROM invoice
+                LEFT JOIN (
+                    SELECT 
+                        MONTH(invoice.invoice_date) AS monthNum,
+                        SUM(`order`.price*`order`.quantity) AS orderRevenue
+                    FROM invoice
+                    LEFT JOIN `order` ON invoice.invoice_id = `order`.invoice_id
+                    GROUP BY monthNum
+                ) AS orderRevenue ON MONTH(invoice.invoice_date) = orderRevenue.monthNum
+                LEFT JOIN (
+                    SELECT 
+                        MONTH(invoice.invoice_date) AS monthNum,
+                        SUM(product_sale.price*product_sale.quantity) AS productRevenue
+                    FROM invoice
+                        LEFT JOIN product_sale ON invoice.invoice_id = product_sale.invoice_id
+                        GROUP BY monthNum
+                ) AS productRevenue ON MONTH(invoice.invoice_date) = productRevenue.monthNum
+                LEFT JOIN (
+                    SELECT 
+                        MONTH(invoice.invoice_date) AS monthNum,
+                        SUM(payment.amount) AS totalPaid
+                    FROM invoice
+                        LEFT JOIN payment ON invoice.invoice_id = payment.invoice_id
+                        GROUP BY monthNum
+                ) AS totalPaid ON MONTH(invoice.invoice_date) = totalPaid.monthNum
+                GROUP BY MONTH(invoice.invoice_date)
+                ORDER BY MONTH(invoice.invoice_date)");
+
+        $result = [];
+
+        foreach ($query->result_array() as $monthly_receivable) {
+            array_push($result, $monthly_receivable['receivable']);
+        }
+
+        return $result;
+    }
+
+    public function get_monthly_receivable_avg()
+    {
+        $receivable_by_month = $this->get_monthly_receivable_sum();
+        $monthly_receivable_avg = array_sum($receivable_by_month) / count($receivable_by_month);
+        return $monthly_receivable_avg;
+    }
+
+    public function list_invoice_index()
+    {
+        $query = $this->db->query("SELECT
+                    (
+                        SELECT 
+                            IFNULL(SUM(`order`.quantity * `order`.price), 0)
+                        FROM
+                            `order`
+                        WHERE
+                            `order`.invoice_id = invoice.invoice_id
+                    ) AS order_sale,
+                    (
+                        SELECT 
+                            IFNULL(SUM(product_sale.quantity * product_sale.price),0)
+                        FROM
+                            product_sale
+                        WHERE
+                            product_sale.invoice_id = invoice.invoice_id
+                    ) AS product_sale,
+                    invoice.discount,
+                    (
+                        SELECT 
+                            IFNULL(SUM(payment.amount),0)
+                        FROM
+                            payment
+                        WHERE
+                            payment.invoice_id = invoice.invoice_id
+                    ) AS paid
+                FROM
+                    invoice
+                        JOIN
+                    customer ON invoice.customer_id = customer.customer_id
+                GROUP BY invoice.invoice_id
+                ORDER BY invoice.number");
+
+        $result = [];
+
+        foreach ($query->result_array() as $invoice) {
+            $invoice_due = $invoice['order_sale'] + $invoice['product_sale'] - $invoice['discount'] - $invoice['paid'];
+            array_push($result, $invoice_due);
+        }
+
+        return $result;
+    }
+
+    public function get_total_receivable()
+    {
+        $invoice_due = $this->list_invoice_index();
+        return array_sum($invoice_due);
+    }
+
     public function siapkan_data($product)
     {
 

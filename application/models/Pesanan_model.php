@@ -554,6 +554,20 @@ class Pesanan_model extends CI_Model
         return $last_order_number + 1;
     }
 
+    public function get_monthly_order_quantity_average()
+    {
+        $query = $this->db->query("SELECT SUM(quantity) AS order_sum FROM `order` GROUP BY MONTH(received_date)");
+
+        $result = [];
+        foreach ($query->result_array() as $order_sum) {
+            array_push($result, $order_sum['order_sum']);
+        }
+
+        $order_qty_avg = round((array_sum($result) / count($result)));
+
+        return $order_qty_avg;
+    }
+
     public function siapkan_data($order)
     {
 
