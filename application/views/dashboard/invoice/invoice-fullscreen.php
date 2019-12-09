@@ -213,7 +213,7 @@
 
             <div class="col text-right">
               <p><small><strong>BCA:</strong> 125-06-222-83</small></p>
-              <p><small><strong>BRI:</strong> 0044-0102-120-5530</small></p>
+              <p><small><strong>BTPN:</strong> 90011014473</small></p>
               <p><small><strong>Mandiri:</strong> 143-00-189189-10</small></p>
             </div>
 
