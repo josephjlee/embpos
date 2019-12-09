@@ -12,6 +12,7 @@ class Dashboard extends CI_Controller
   }
   public function index()
   {
+
     $data['title'] = 'Dashboard';
 
     $data['data_card'] = [
@@ -20,6 +21,8 @@ class Dashboard extends CI_Controller
       'monthly_product_sale_avg' => $this->penjualan_model->get_monthly_product_sale_avg(),
       'total_receivable' => $this->invoice_model->get_total_receivable()
     ];
+
+    $data['unpaid_invoices'] = $this->invoice_model->get_unpaid_invoice();
 
     $data['content'] = $this->load->view('dashboard/dashboard-index.php', $data, TRUE);
 

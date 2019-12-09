@@ -168,7 +168,7 @@
   </div>
 
   <!-- Debitor, Order, dll Row -->
-  <div class="row mb-4">
+  <div class="row mb-4 three-table-card">
 
     <!-- Receivable Invoice -->
     <div class="col-lg-4">
@@ -178,44 +178,22 @@
           <h6 class="m-0 font-weight-bold text-primary">Piutang Invoice</h6>
         </div>
         <div class="card-body">
-          <table class="table">
+          <table class="table" id="unpaid-invoice-table">
+            <thead class="thead-light d-none">
+              <tr>
+                <th scope="col">Invoice</th>
+                <th scope="col">Piutang</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr>
-                <td class="px-0">INV-2163</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">Rp5.750.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">INV-2271</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-success">Rp5.275.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">INV-2200</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-danger">Rp4.500.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">INV-1924</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">Rp4.000.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">INV-2345</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">Rp3.395.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">INV-2500</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-warning">Rp2.119.000</span>
-                </td>
-              </tr>
+              <?php foreach ($unpaid_invoices as $unpaid_invoice) : ?>
+                <tr>
+                  <td class="px-0"><a href="<?= base_url('invoice/sunting/') . $unpaid_invoice['INV']; ?>">INV-<?= $unpaid_invoice['INV'] ?></a></td>
+                  <td class="text-right px-0">
+                    <span class="badge badge-<?= moneyBadge($unpaid_invoice['amount']); ?>">Rp<?= moneyStrDot($unpaid_invoice['amount']); ?></span>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
@@ -231,7 +209,13 @@
           <h6 class="m-0 font-weight-bold text-primary">Daftar Hutang</h6>
         </div>
         <div class="card-body">
-          <table class="table">
+          <table class="table" id="unpaid-debt-table">
+            <thead class="thead-light d-none">
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
                 <td class="px-0">Token Mesin</td>
@@ -284,7 +268,13 @@
           <h6 class="m-0 font-weight-bold text-primary">Pesanan Mendekati Deadline</h6>
         </div>
         <div class="card-body">
-          <table class="table">
+          <table class="table" id="order-deadline-table">
+            <thead class="thead-light d-none">
+              <tr>
+                <th scope="col">Pesanan</th>
+                <th scope="col">Deadline</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
                 <td class="px-0">PSN-202</td>

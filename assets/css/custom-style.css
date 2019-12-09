@@ -458,3 +458,16 @@ table a {
 #order-detail-table-card th {
 	vertical-align: middle !important;
 } */
+
+.three-table-card .dataTables_length,
+.three-table-card .dataTables_filter {
+	display: none;
+}
+
+.three-table-card .dataTables_info {
+	visibility: hidden;
+}
+
+.three-table-card .dataTables_paginate {
+	font-size: smaller;
+}

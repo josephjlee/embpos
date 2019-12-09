@@ -499,6 +499,49 @@ class Invoice_model extends CI_Model
         return array_sum($invoice_due);
     }
 
+    public function get_unpaid_invoice()
+    {
+        $query = $this->db->query("SELECT 
+                invoice.number AS INV,
+                customer.name,
+                (
+                    (
+                        SELECT 
+                            IFNULL(SUM(`order`.quantity * `order`.price), 0)
+                        FROM
+                            `order`
+                        WHERE
+                            `order`.invoice_id = invoice.invoice_id
+                    ) +
+                    (
+                        SELECT 
+                            IFNULL(SUM(product_sale.quantity * product_sale.price),0)
+                        FROM
+                            product_sale
+                        WHERE
+                            product_sale.invoice_id = invoice.invoice_id
+                    ) -
+                    invoice.discount -
+                    (
+                        SELECT 
+                            IFNULL(SUM(payment.amount),0)
+                        FROM
+                            payment
+                        WHERE
+                            payment.invoice_id = invoice.invoice_id
+                    )
+                ) AS amount
+            FROM
+                invoice
+                    JOIN
+                customer ON invoice.customer_id = customer.customer_id
+            GROUP BY invoice.invoice_id
+            HAVING amount > 0
+            ORDER BY invoice.number");
+
+        return $query->result_array();
+    }
+
     public function siapkan_data($product)
     {
 
