@@ -568,6 +568,19 @@ class Pesanan_model extends CI_Model
         return $order_qty_avg;
     }
 
+    public function get_near_deadline_order()
+    {
+        $query = $this->db->query("SELECT 
+                    number,
+                    order_id,
+                    required_date AS deadline,
+                    DATEDIFF(required_date, CURDATE()) AS countdown
+                FROM `order`
+                WHERE DATEDIFF(required_date, CURDATE()) <= 5 AND process_status_id < 5");
+
+        return $query->result_array();
+    }
+
     public function siapkan_data($order)
     {
 
