@@ -203,11 +203,18 @@
           <!-- Invoice Footer -->
           <div class="row">
 
-            <div class="col text-center">
+            <div class="col">
 
-              <small class="mb-2">Jika terdapat informasi yang kuras jelas, silakan hubungi/kunjungi Kami di:</small>
-              <small><?= $company_profile['mobile']; ?> | <?= $company_profile['email']; ?> | Jl. Juwet, Lumajang, Jawa Timur</small>
+              <p><small><i class="fas fa-fw fa-mobile-alt"></i> <?= $company_profile['mobile']; ?></small></p>
+              <p><small><i class="fas fa-fw fa-envelope"></i> <?= $company_profile['email']; ?></small></p>
+              <p><small><i class="fas fa-fw fa-building"></i> Jl. Juwet, Lumajang, Jawa Timur</small></p>
 
+            </div>
+
+            <div class="col text-right">
+              <p><small><strong>BCA:</strong> 125-06-222-83</small></p>
+              <p><small><strong>BRI:</strong> 0044-0102-120-5530</small></p>
+              <p><small><strong>Mandiri:</strong> 143-00-189189-10</small></p>
             </div>
 
           </div>
