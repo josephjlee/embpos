@@ -3,22 +3,44 @@
 function pretty_print($data)
 {
     echo '<pre>';
-        print_r($data);
+    print_r($data);
     echo '</pre>';
 }
 
-function moneyStr($num) {
+function moneyStr($num)
+{
     $money_formatted_string =  preg_replace("/\B(?=(\d{3})+(?!\d))/", ",", $num);
     return $money_formatted_string;
 }
 
-function moneyStrDot($num) {
+function moneyStrDot($num)
+{
     $money_formatted_string =  preg_replace("/\B(?=(\d{3})+(?!\d))/", ".", $num);
     return $money_formatted_string;
 }
 
-function activate_page_css($page_url) {
-    
+function moneyBadge($num)
+{
+    $badge_color = 'default';
+
+    switch (true) {
+        case $num >= 1000000:
+            $badge_color = 'danger';
+            break;
+        case $num >= 500000:
+            $badge_color = 'warning';
+            break;
+        case $num >= 150000:
+            $badge_color = 'info';
+            break;
+    }
+
+    return $badge_color;
+}
+
+function activate_page_css($page_url)
+{
+
     $ci = get_instance();
 
     $ci->db->select('plugin_assets.src');
@@ -30,11 +52,11 @@ function activate_page_css($page_url) {
 
     $active_css_query = $ci->db->get();
     return $active_css_query->result_array();
-
 }
 
-function activate_page_js($page_url) {
-    
+function activate_page_js($page_url)
+{
+
     $ci = get_instance();
 
     $ci->db->select('plugin_assets.src');
@@ -46,11 +68,4 @@ function activate_page_js($page_url) {
 
     $active_css_query = $ci->db->get();
     return $active_css_query->result_array();
-
 }
-
-// vendors/jquery/jquery.min.js
-// vendors/popper.js/dist/umd/popper.min.js
-// vendors/bootstrap/js/bootstrap.bundle.min.js
-// vendors/jquery-easing/jquery.easing.min.js
-// vendors/sb-admin-2/js/sb-admin-2.min.js

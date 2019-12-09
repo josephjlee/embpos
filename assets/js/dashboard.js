@@ -184,3 +184,18 @@ var myPieChart = new Chart(ctx, {
     cutoutPercentage: 80,
   },
 });
+
+// Unpaid Invoice Table
+$('#unpaid-invoice-table').DataTable({
+  "lengthMenu": [5, 15, 30]
+});
+
+// Unpaid Debt Table
+$('#unpaid-debt-table').DataTable({
+  "lengthMenu": [5, 15, 30]
+});
+
+// Order Deadline Table
+$('#order-deadline-table').DataTable({
+  "lengthMenu": [5, 15, 30]
+});
