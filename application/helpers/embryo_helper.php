@@ -38,6 +38,25 @@ function moneyBadge($num)
     return $badge_color;
 }
 
+function deadlineBadge($day)
+{
+    $badge_color = 'default';
+
+    switch (true) {
+        case $day < 0:
+            $badge_color = 'danger';
+            break;
+        case $day < 5 && $day > 0:
+            $badge_color = 'info';
+            break;
+        case $day < 3 && $day > 0:
+            $badge_color = 'warning';
+            break;
+    }
+
+    return $badge_color;
+}
+
 function activate_page_css($page_url)
 {
 

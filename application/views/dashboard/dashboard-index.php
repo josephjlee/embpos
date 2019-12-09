@@ -276,42 +276,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="px-0">PSN-202</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">02 Desember 2019</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">PSN-212</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">04 Desember 2019</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">PSN-222</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">04 Desember 2019</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">PSN-207</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">06 Desember 2019</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">PSN-252</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">07 Desember 2019</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">PSN-241</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">07 Desember 2019</span>
-                </td>
-              </tr>
+              <?php foreach ($near_deadline_orders as $near_deadline) : ?>
+                <tr>
+                  <td class="px-0"><a href="<?= base_url('pesanan/sunting') . $near_deadline['order_id']; ?>">PSN-<?= $near_deadline['number']; ?></a></td>
+                  <td class="text-right px-0">
+                    <span class="badge badge-<?= deadlineBadge($near_deadline['countdown']); ?>"><?= $near_deadline['countdown'] < 0 ? 'Lewat ' . abs($near_deadline['countdown']) . ' hari' : 'Kurang ' . abs($near_deadline['countdown']) . ' hari'; ?></span>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>

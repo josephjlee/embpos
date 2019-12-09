@@ -24,6 +24,8 @@ class Dashboard extends CI_Controller
 
     $data['unpaid_invoices'] = $this->invoice_model->get_unpaid_invoice();
 
+    $data['near_deadline_orders'] = $this->pesanan_model->get_near_deadline_order();
+
     $data['content'] = $this->load->view('dashboard/dashboard-index.php', $data, TRUE);
 
     $data['view_script'] = 'dashboard.js';
