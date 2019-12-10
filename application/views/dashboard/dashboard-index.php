@@ -67,7 +67,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Piutang</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">R<?= moneyStrDot($data_card['total_receivable']); ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($data_card['total_receivable']); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-comment-dollar fa-2x text-gray-300"></i>
@@ -87,7 +87,7 @@
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Tren Pemasukan Invoice</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Grafik Pembayaran</h6>
           <div class="dropdown no-arrow">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -123,7 +123,7 @@
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Metode Pembayaran</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Pembayaran per Metode</h6>
           <div class="dropdown no-arrow">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -204,7 +204,7 @@
     <!-- Debt List -->
     <div class="col-lg-4">
 
-      <div class="card shadow">
+      <div class="card shadow h-100">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Daftar Hutang</h6>
         </div>
@@ -263,7 +263,7 @@
     <!-- Order Deadline -->
     <div class="col-lg-4">
 
-      <div class="card shadow">
+      <div class="card shadow h-100">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Pesanan Mendekati Deadline</h6>
         </div>
