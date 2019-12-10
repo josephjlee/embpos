@@ -128,37 +128,50 @@ $.ajax({
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-// Pie Chart Example
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, {
-  type: 'doughnut',
-  data: {
-    labels: ["Direct", "Referral", "Social"],
-    datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-      hoverBorderColor: "rgba(234, 236, 244, 1)",
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-    },
-    legend: {
-      display: false
-    },
-    cutoutPercentage: 80,
-  },
-});
+// Payment by Method
+$.ajax({
+  url: `${window.location.origin}/ajax/pembayaran_ajax/get_payment_amount_per_method`,
+  method: 'GET',
+  success: function (data) {
+    var ctx = document.getElementById("myPieChart");
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: data.methodLabel,
+        datasets: [{
+          data: data.percentage,
+          backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+          hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+          hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: '#dddfeb',
+          borderWidth: 1,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var currentValue = dataset.data[tooltipItem.index];
+              return data.labels[tooltipItem.index] + ' (' + currentValue + '%)';
+            }
+          }
+        },
+        legend: {
+          display: false
+        },
+        cutoutPercentage: 80,
+      },
+    });
+  }
+})
 
 // Expense Chart
 var ctx = document.getElementById("expenseChart");

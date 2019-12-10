@@ -82,7 +82,7 @@
 
   <div class="row">
 
-    <!-- Area Chart -->
+    <!-- Payment Chart -->
     <div class="col-xl-8 col-lg-7">
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
@@ -102,7 +102,7 @@
           </div>
         </div>
         <!-- Card Body -->
-        <div class="card-body">
+        <div class="card-body" style="padding-top:1.85rem!important;padding-bottom:1.85rem!important">
           <div class="chart-area">
             <div class="chartjs-size-monitor">
               <div class="chartjs-size-monitor-expand">
@@ -118,7 +118,7 @@
       </div>
     </div>
 
-    <!-- Pie Chart -->
+    <!-- Payment per method Chart -->
     <div class="col-xl-4 col-lg-5">
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
@@ -152,13 +152,17 @@
           </div>
           <div class="mt-4 text-center small">
             <span class="mr-2">
-              <i class="fas fa-circle text-primary"></i> Direct
+              <i class="fas fa-circle text-primary"></i> Bayar Tunai
             </span>
             <span class="mr-2">
-              <i class="fas fa-circle text-success"></i> Social
+              <i class="fas fa-circle text-success"></i> Giro Maybank
+            </span>
+            <br>
+            <span class="mr-2">
+              <i class="fas fa-circle text-info"></i> BCA
             </span>
             <span class="mr-2">
-              <i class="fas fa-circle text-info"></i> Referral
+              <i class="fas fa-circle" style="color:#e5e5e5"></i> Mandiri
             </span>
           </div>
         </div>

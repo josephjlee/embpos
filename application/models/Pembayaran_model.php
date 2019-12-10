@@ -146,6 +146,18 @@ class Pembayaran_model extends CI_Model
     return $query->result_array();
   }
 
+  public function get_payment_amount_per_method()
+  {
+    $query = $this->db->query("SELECT 
+              payment_method.name AS method,
+                SUM(amount) AS amount
+            FROM payment
+            JOIN payment_method ON payment.payment_method_id = payment_method.payment_method_id
+            GROUP BY method");
+
+    return $query->result_array();
+  }
+
   public function siapkan_data($payment)
   {
 
