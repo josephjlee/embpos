@@ -132,6 +132,20 @@ class Pembayaran_model extends CI_Model
     return $result['total_payment'];
   }
 
+  public function get_monthly_payment()
+  {
+
+    $query = $this->db->query("SELECT 
+                YEAR(payment_date) AS tahun,
+                  MONTHNAME(payment_date) AS monthName,
+                  SUM(amount) AS amount
+              FROM payment
+              GROUP BY tahun, monthName, MONTH(payment_date)
+              ORDER BY MONTH(payment_date)");
+
+    return $query->result_array();
+  }
+
   public function siapkan_data($payment)
   {
 
