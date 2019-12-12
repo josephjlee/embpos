@@ -471,3 +471,7 @@ table a {
 .three-table-card .dataTables_paginate {
 	font-size: smaller;
 }
+
+.dataTable tr {
+	font-size: 14px;
+}

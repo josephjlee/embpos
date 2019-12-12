@@ -39,40 +39,49 @@ class Keuangan_model extends CI_Model
   public function list_all_debts()
   {
 
-    $this->db->select('
-      debt.debt_id,
-      debt.amount,
-      debt.term,
-      debt.transaction_date,
-      debt.payment_date,
-      creditor.name
-    ');
-    $this->db->from('debt');
-    $this->db->join('creditor', 'debt.creditor_id = creditor.creditor_id');
+    $query = $this->db->query("SELECT 
+                  creditor.name AS creditor,
+                  debt.debt_id,
+                  debt.description,
+                  debt.amount,
+                  debt.transaction_date,
+                  debt.payment_date,
+                  debt.term,
+                  debt.note,
+                  (
+                    SELECT IFNULL(SUM(debt_payment.amount),0)
+                    FROM debt_payment
+                    WHERE debt_payment.debt_id = debt.debt_id
+                  ) AS paid
+              FROM debt
+              JOIN creditor ON debt.creditor_id = creditor.creditor_id");
 
-    return $this->db->get()->result_array();
+    return $query->result_array();
   }
 
   public function get_debt_by_debt_id($debt_id)
   {
 
-    $this->db->select('
-      debt.debt_id,
-      debt.image,
-      debt.sku,
-      debt.title,
-      debt.description,
-      debt.item_id,
-      item.name AS item_name,
-      debt.stock,
-      debt.base_price,
-      debt.sell_price
-    ');
+    $query = $this->db->query("SELECT 
+                  creditor.name AS creditor,
+                  creditor.creditor_id,
+                  debt.debt_id,
+                  debt.description,
+                  debt.amount,
+                  debt.transaction_date,
+                  debt.payment_date,
+                  debt.term,
+                  debt.note,
+                  (
+                    SELECT IFNULL(SUM(debt_payment.amount),0)
+                    FROM debt_payment
+                    WHERE debt_payment.debt_id = debt.debt_id
+                  ) AS paid
+              FROM debt
+              JOIN creditor ON debt.creditor_id = creditor.creditor_id
+              WHERE debt.debt_id = {$debt_id}");
 
-    $this->db->join('item', 'debt.item_id = item.item_id');
-    $this->db->where('debt_id', $debt_id);
-
-    return $this->db->get('debt')->row_array();
+    return $query->row_array();
   }
 
   public function get_debt_category()
@@ -97,65 +106,5 @@ class Keuangan_model extends CI_Model
     }
 
     return $debt_db_data;
-  }
-
-  public function get_stock_by_debt_id($debt_id)
-  {
-    $this->db->select('stock');
-    $this->db->from('debt');
-    $this->db->where('debt_id', $debt_id);
-
-    return $this->db->get()->row_array()['stock'];
-  }
-
-  public function get_debt_sale_qty_by_id($debt_sale_id)
-  {
-    $this->db->select('quantity');
-    $this->db->from('debt_sale');
-    $this->db->where('debt_sale_id', $debt_sale_id);
-
-    return $this->db->get()->row_array()['quantity'];
-  }
-
-  public function update_stock_on_purchase($debt_solds)
-  {
-    $data = [];
-
-    $i = 0;
-
-    foreach ($debt_solds as $debts) {
-      $data[$i]['debt_id'] = $debts['debt_id'];
-      $data[$i]['stock'] = $this->get_stock_by_debt_id($debts['debt_id']) - $debts['quantity'];
-      $i++;
-    }
-
-    $this->db->update_batch('debt', $data, 'debt_id');
-  }
-
-  public function update_stock_on_update($debt_solds)
-  {
-    $data = [];
-
-    $i = 0;
-
-    foreach ($debt_solds as $debts) {
-      $data[$i]['debt_id'] = $debts['debt_id'];
-      $data[$i]['stock'] = $this->get_stock_by_debt_id($debts['debt_id']) + $this->get_debt_sale_qty_by_id($debts['debt_sale_id']) - $debts['quantity'];
-      $i++;
-    }
-
-    $this->db->update_batch('debt', $data, 'debt_id');
-  }
-
-  public function get_stock_data()
-  {
-    $this->db->select('
-      SUM(stock*sell_price) AS value,
-      SUM(stock) AS quantity
-    ');
-
-    $this->db->from('debt');
-
-    return $this->db->get()->row_array();
   }
 }

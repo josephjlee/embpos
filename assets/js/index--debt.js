@@ -1,43 +1,91 @@
-// const inputCustTrigger = document.querySelector('#input-cust-trigger');
-// const customerTable = document.querySelector('#customer-table-card #dataTable');
+$(document).ready(function () {
 
-// inputCustTrigger.addEventListener('click', function (e) {
+	let table = $('#dataTable').DataTable({
+		"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_debts`,
+		"columns": [
+			{ "data": "debt_id" },
+			{ "data": "creditor" },
+			{ "data": "description" },
+			{
+				"data": {
+					"_": "amount.display",
+					"sort": "amount.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "transaction_date.display",
+					"sort": "transaction_date.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "payment_date.display",
+					"sort": "payment_date.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "paid.display",
+					"sort": "paid.raw"
+				}
+			},
+			{
+				"data": "debt_id"
+			}
+		],
+		"createdRow": function (row, data, dataIndex) {
+			$(row).attr('data-debt-id', data.debt_id);
+		},
+		"columnDefs": [
+			{
+				"targets": 0,
+				"createdCell": function (td, cellData, rowData, row, col) {
+					$(td).html(`HTG-${cellData}`);
+				}
+			},
+			{
+				"targets": -1,
+				"createdCell": function (td, cellData, rowData, row, col) {
+					console.log(rowData);
 
-// 	document.querySelector('#customerForm').reset();
+					let actionBtn = `
+					<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
+						<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+					</a>
 
-// });
+					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-// customerTable.addEventListener('click', function (e) {
+						<a class="dropdown-item" href="${window.location.origin}/keuangan/detail_hutang/${rowData.debt_id}">Detail/Sunting</a>
 
-// 	e.preventDefault();
+						<a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#delDebtModal">Hapus Hutang</a>
 
-// 	let clickedEl = e.target;
-// 	let currentRow = clickedEl.closest('tr');
+					</div>`;
 
-// 	if (clickedEl.matches('.edit-modal-trigger')) {
+					$(td).html(actionBtn);
+				}
+			}
+		]
+	});
 
-// 		document.querySelector('#addCustomerModal #cust_id').value = currentRow.dataset.id;
-// 		console.log(currentRow.dataset.id);
+	$('#debtForm').submit(function (event) {
 
-// 		document.querySelector('#cust_name').value = currentRow.dataset.name;
-// 		document.querySelector('#cust_company').value = currentRow.dataset.company;
-// 		document.querySelector('#cust_address').value = currentRow.dataset.address;
-// 		document.querySelector('#cust_phone').value = currentRow.dataset.phone;
-// 		document.querySelector('#cust_email').value = currentRow.dataset.email;
+		event.preventDefault();
 
-// 	}
+		let formData = $(this).serialize();
+		let saveDebt = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/tambah_hutang`,
+			formData
+		);
 
-// 	if (clickedEl.matches('.del-modal-trigger')) {
+		saveDebt.done(function (data) {
+			table.ajax.reload();
+		});
 
-// 		document.querySelector('#delCustomerModal #cust_id').value = currentRow.dataset.id;
-// 		console.log(document.querySelector('#delCustomerModal #cust_id').value);
+		$('#addDebtModal').modal('hide');
 
-// 	}
+	});
 
-// });
 
-$('#dataTable').DataTable({
-	"order": [
-		[3, "asc"]
-	]
 });
+
