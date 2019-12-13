@@ -6,7 +6,7 @@
     <div class="col d-flex justify-content-between align-items-center">
       <h1 class="h3 text-gray-800 mr-auto"><?= $title; ?></h1>
       <a href="" class="badge badge-primary py-2 px-3 text-uppercase mr-2 shadow" id="input-cust-trigger" data-toggle="modal" data-target="#addCreditorModal">Tambah Kreditur</a>
-      <a href="" class="badge badge-danger py-2 px-3 text-uppercase shadow" id="input-cust-trigger" data-toggle="modal" data-target="#addDebtModal">Catat Hutang</a>
+      <a href="" class="badge badge-danger py-2 px-3 text-uppercase shadow" id="add-debt-trigger" data-toggle="modal" data-target="#debtEditorModal">Catat Hutang</a>
     </div>
   </div>
 
@@ -114,7 +114,7 @@
     </div>
   </div>
 
-  <!-- Add/Update Creditor Modal -->
+  <!-- Creditor Editor Modal -->
   <div class="modal fade" id="addCreditorModal" tabindex="-1" role="dialog">
 
     <div class="modal-dialog" role="document">
@@ -163,8 +163,8 @@
     </div>
   </div>
 
-  <!-- Add Debt Modal -->
-  <div class="modal fade" id="addDebtModal" tabindex="-1" role="dialog">
+  <!-- Debt Editor Modal -->
+  <div class="modal fade" id="debtEditorModal" tabindex="-1" role="dialog">
 
     <div class="modal-dialog" role="document">
 

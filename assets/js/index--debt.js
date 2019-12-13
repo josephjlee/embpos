@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+	/**
+	 * Debt dataTable Initialization
+	 */
+
 	let table = $('#dataTable').DataTable({
 		"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_debts`,
 		"columns": [
@@ -56,7 +60,11 @@ $(document).ready(function () {
 
 					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-						<a class="dropdown-item" href="${window.location.origin}/keuangan/detail_hutang/${rowData.debt_id}">Detail/Sunting</a>
+						<a class="dropdown-item edit-debt-trigger" href="#" data-toggle="modal" data-target="#debtEditorModal">Sunting Detail</a>
+
+						<a class="dropdown-item save-payment-trigger" href="#" data-toggle="modal" data-target="#paymentEditorModal">Rekam Pembayaran</a>
+
+						<a class="dropdown-item save-payment-trigger" href="#" data-toggle="modal" data-target="#paymentHistoryModal">Riwayat Pembayaran</a>
 
 						<a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#delDebtModal">Hapus Hutang</a>
 
@@ -67,6 +75,10 @@ $(document).ready(function () {
 			}
 		]
 	});
+
+	/**
+	 * Debt entry submission
+	 */
 
 	$('#debtForm').submit(function (event) {
 
@@ -85,6 +97,12 @@ $(document).ready(function () {
 		$('#addDebtModal').modal('hide');
 
 	});
+
+	/**
+	 * Debt Entry Ajax Edit
+	 */
+
+
 
 
 });
