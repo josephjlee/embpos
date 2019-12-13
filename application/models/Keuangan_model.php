@@ -41,6 +41,7 @@ class Keuangan_model extends CI_Model
 
     $query = $this->db->query("SELECT 
                   creditor.name AS creditor,
+                  creditor.creditor_id,
                   debt.debt_id,
                   debt.description,
                   debt.amount,

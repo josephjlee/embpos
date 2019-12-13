@@ -12,7 +12,7 @@ class Keuangan_ajax extends CI_Controller
     $this->load->model('keuangan_model');
   }
 
-  public function tambah_hutang()
+  public function simpan_hutang()
   {
     $debt = $this->input->post('debt');
 
@@ -39,12 +39,14 @@ class Keuangan_ajax extends CI_Controller
 
       $debt['transaction_date'] = [
         'display' => date('d/m/Y', strtotime($debt['transaction_date'])),
-        'raw'    => strtotime($debt['transaction_date'])
+        'raw'     => strtotime($debt['transaction_date']),
+        'input'   => date('Y-m-d', strtotime($debt['transaction_date']))
       ];
 
       $debt['payment_date'] = [
         'display' => date('d/m/Y', strtotime($debt['payment_date'])),
-        'raw'    => strtotime($debt['payment_date'])
+        'raw'    => strtotime($debt['payment_date']),
+        'input'   => date('Y-m-d', strtotime($debt['payment_date']))
       ];
 
       array_push($debts['data'], $debt);

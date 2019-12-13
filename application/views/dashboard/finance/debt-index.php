@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <div class="row mb-2">
+  <div class=" row mb-2">
     <div class="col d-flex justify-content-between align-items-center">
       <h1 class="h3 text-gray-800 mr-auto"><?= $title; ?></h1>
       <a href="" class="badge badge-primary py-2 px-3 text-uppercase mr-2 shadow" id="input-cust-trigger" data-toggle="modal" data-target="#addCreditorModal">Tambah Kreditur</a>
@@ -97,7 +97,7 @@
   <!-- Debt Table -->
   <div class="card shadow mb-4" id="debt-table-card">
     <div class="card-body">
-      <table class="table table-hover" id="dataTable">
+      <table class="table table-hover" id="debtDataTable">
         <thead class="thead-light">
           <tr>
             <th scope="col">ID</th>
@@ -170,13 +170,13 @@
 
       <div class="modal-content">
 
-        <form id="debtForm">
+        <form id="debtForm" action="">
 
           <input type="hidden" name="request-source" id="req-src" value="<?= $this->uri->uri_string() ?>">
           <input type="hidden" name="debt[debt_id]" id="debt-id" value="">
 
           <div class="modal-header">
-            <h5 class="modal-title">Catat Hutang Baru</h5>
+            <h5 class="modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -193,7 +193,7 @@
 
               <div class="form-group col">
                 <label for="debt-date"><small>Tanggal transaksi</small></label>
-                <input type="date" name="debt[transaction_date]" id="debt-date" class="form-control" value="<?= isset($debt_detail['transaction_date']) ? date('Y-m-d', strtotime($debt_detail['transaction_date'])) : ''; ?>">
+                <input type="date" name="debt[transaction_date]" id="transaction-date" class="form-control" value="<?= isset($debt_detail['transaction_date']) ? date('Y-m-d', strtotime($debt_detail['transaction_date'])) : ''; ?>">
               </div>
 
               <div class="form-group col">
@@ -207,7 +207,7 @@
 
             <div class="form-row">
               <div class="form-group col">
-                <label for="creditors"><small>Judul</small></label>
+                <label for="creditors"><small>Kreditur</small></label>
                 <select name="debt[creditor_id]" id="creditors" class="custom-select">
                   <option value="">Pilih Kreditur</option>
 

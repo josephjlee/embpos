@@ -4,7 +4,7 @@ $(document).ready(function () {
 	 * Debt dataTable Initialization
 	 */
 
-	let table = $('#dataTable').DataTable({
+	let table = $('#debtDataTable').DataTable({
 		"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_debts`,
 		"columns": [
 			{ "data": "debt_id" },
@@ -40,6 +40,12 @@ $(document).ready(function () {
 		],
 		"createdRow": function (row, data, dataIndex) {
 			$(row).attr('data-debt-id', data.debt_id);
+			$(row).attr('data-creditor-id', data.creditor_id);
+			$(row).attr('data-description', data.description);
+			$(row).attr('data-transaction-date', data.transaction_date.input);
+			$(row).attr('data-payment-date', data.payment_date.input);
+			$(row).attr('data-amount', data.amount.raw);
+			$(row).attr('data-note', data.note);
 		},
 		"columnDefs": [
 			{
@@ -51,7 +57,6 @@ $(document).ready(function () {
 			{
 				"targets": -1,
 				"createdCell": function (td, cellData, rowData, row, col) {
-					console.log(rowData);
 
 					let actionBtn = `
 					<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
@@ -85,8 +90,9 @@ $(document).ready(function () {
 		event.preventDefault();
 
 		let formData = $(this).serialize();
+
 		let saveDebt = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/tambah_hutang`,
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_hutang`,
 			formData
 		);
 
@@ -94,7 +100,9 @@ $(document).ready(function () {
 			table.ajax.reload();
 		});
 
-		$('#addDebtModal').modal('hide');
+		$('#debtEditorModal').modal('hide');
+
+		// $('.toast').toast('show');
 
 	});
 
@@ -102,8 +110,39 @@ $(document).ready(function () {
 	 * Debt Entry Ajax Edit
 	 */
 
+	$('#add-debt-trigger').click(function (event) {
 
+		// Add title to the modal
+		$('#debtEditorModal .modal-title').html('Catat Hutang Baru');
 
+		$('#debtForm')[0].reset();
+
+	});
+
+	$('#debtDataTable').on('click', '.edit-debt-trigger', function (event) {
+
+		// Add title to the modal
+		$('#debtEditorModal .modal-title').html('Sunting Detail');
+
+		// Grab Entry Data
+		let entryRow = $(this).parents('tr');
+		let debtId = entryRow.data('debt-id');
+		let creditorId = entryRow.data('creditor-id');
+		let amount = entryRow.data('amount');
+		let note = entryRow.data('note');
+		let description = entryRow.data('description');
+		let transactionDate = entryRow.data('transaction-date');
+		let paymentDate = entryRow.data('payment-date');
+
+		// Fill form with the data
+		$('#debtForm #debt-id').val(debtId);
+		$('#debtForm #creditors').val(creditorId);
+		$('#debtForm #amount').val(amount);
+		$('#debtForm #note').val(note);
+		$('#debtForm #description').val(description);
+		$('#debtForm #transaction-date').val(transactionDate);
+		$('#debtForm #payment-date').val(paymentDate);
+
+	});
 
 });
-
