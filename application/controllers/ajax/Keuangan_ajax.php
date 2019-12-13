@@ -10,6 +10,7 @@ class Keuangan_ajax extends CI_Controller
     parent::__construct();
 
     $this->load->model('keuangan_model');
+    $this->load->model('kreditur_model');
   }
 
   public function simpan_hutang()
@@ -54,5 +55,41 @@ class Keuangan_ajax extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($debts);
+  }
+
+  public function tambah_kreditur()
+  {
+
+    // Insert creditor data into table
+    $creditor = $this->input->post('creditor');
+    $this->kreditur_model->tambah($creditor);
+    $new_creditor_id = $this->db->insert_id();
+
+    // Store the inserted creditor data into variable
+    $new_creditor_data = $this->kreditur_model->get_creditor_by_id($new_creditor_id);
+    $new_creditor = [
+      'id' => $new_creditor_data['creditor_id'],
+      'text' => $new_creditor_data['name']
+    ];
+
+    // Compose notification alert
+    $alert = '<div class="row mb-2">
+                <div class="col">
+                  <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                    <strong class="alert-content">Kreditur baru berhasil ditambahkan</strong>
+                    <button type="button" class="close" data-dismiss="alert">
+                      <span>&times;</span>
+                    </button>
+                  </div>
+                </div>
+              </div>';
+
+    $response = [
+      'newCreditor' => $new_creditor,
+      'alert'       => $alert
+    ];
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
   }
 }

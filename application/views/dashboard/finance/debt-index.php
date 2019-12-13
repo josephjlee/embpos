@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" id="debt-index">
 
   <!-- Page Heading -->
   <div class=" row mb-2">
@@ -10,13 +10,13 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mb-4">
 
     <!-- Total Hutang -->
 
     <?php $most_buy = $this->pelanggan_model->get_most_buy_by_month(date('m')); ?>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6">
       <div class="card border-left-info shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -36,7 +36,7 @@
 
     <?php $total_customer = $this->pelanggan_model->get_total_customer(); ?>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6">
       <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -56,7 +56,7 @@
 
     <?php $most_order = $this->pelanggan_model->get_most_order_by_month(date('m')); ?>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6">
       <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -76,7 +76,7 @@
 
     <?php $the_most_valuable = $this->pelanggan_model->get_most_valueable_by_month(date('m')); ?>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6">
       <div class="card border-left-warning shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -121,7 +121,7 @@
 
       <div class="modal-content">
 
-        <form action="<?= base_url('processor/ajax/keuangan_ajax/tambah_kreditur'); ?>" method="post" id="creditorForm">
+        <form id="creditorForm">
 
           <input type="hidden" name="request-source" id="req-src" value="<?= $this->uri->uri_string() ?>">
           <input type="hidden" name="creditor[creditor_id]" id="cust_id" value="">

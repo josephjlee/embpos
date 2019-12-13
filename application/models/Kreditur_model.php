@@ -42,36 +42,9 @@ class Kreditur_model extends CI_Model
 		return $this->db->get('creditor')->result_array();
 	}
 
-	public function get_all_creditors()
-	{
-
-		$this->db->select("
-			creditor_id, 
-			IF(
-				company != '', 
-					CONCAT(name, ' (', UPPER(company), ')'),
-					CONCAT(name, ' ', UPPER(address))
-			) AS creditor_name
-		");
-		$creditor_query = $this->db->get('creditor');
-
-		return $creditor_query->result_array();
-	}
-
 	public function get_creditor_by_id($creditor_id)
 	{
-
-		$this->db->select('
-            creditor_id,
-            UPPER(company) AS creditor_company,
-            name AS creditor_name,
-            address AS creditor_address,
-            phone AS creditor_phone            
-        ');
-		$this->db->from('creditor');
-		$this->db->where('creditor_id', $creditor_id);
-
-		return $this->db->get()->row_array();
+		return $this->db->get_where('creditor', ['creditor_id' => $creditor_id])->row_array();
 	}
 
 	public function get_total_creditor()

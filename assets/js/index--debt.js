@@ -82,32 +82,7 @@ $(document).ready(function () {
 	});
 
 	/**
-	 * Debt entry submission
-	 */
-
-	$('#debtForm').submit(function (event) {
-
-		event.preventDefault();
-
-		let formData = $(this).serialize();
-
-		let saveDebt = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/simpan_hutang`,
-			formData
-		);
-
-		saveDebt.done(function (data) {
-			table.ajax.reload();
-		});
-
-		$('#debtEditorModal').modal('hide');
-
-		// $('.toast').toast('show');
-
-	});
-
-	/**
-	 * Debt Entry Ajax Edit
+	 * debtEditor Modal Trigger
 	 */
 
 	$('#add-debt-trigger').click(function (event) {
@@ -144,5 +119,62 @@ $(document).ready(function () {
 		$('#debtForm #payment-date').val(paymentDate);
 
 	});
+
+	/**
+	 * Debt entry submission
+	 */
+
+	$('#debtForm').submit(function (event) {
+
+		event.preventDefault();
+
+		let formData = $(this).serialize();
+
+		let saveDebt = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_hutang`,
+			formData
+		);
+
+		saveDebt.done(function (data) {
+			table.ajax.reload();
+		});
+
+		$('#debtEditorModal').modal('hide');
+
+	});
+
+	/**
+	 * New creditor creation
+	 */
+
+	$('#creditorForm').submit(function (event) {
+
+		event.preventDefault();
+
+		let creditorData = $(this).serialize();
+
+		let saveCreditor = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/tambah_kreditur`,
+			creditorData
+		)
+
+		saveCreditor.done(function (data) {
+
+			console.log(data);
+
+			// Prepend alert into main page container
+			$('#debt-index').prepend(data.alert);
+
+			// Append newCreditor into creditor-select
+			let newCreditorOptions = `<option value="${data.newCreditor.id}">${data.newCreditor.text}</option>`;;
+			$('#creditors').append(newCreditorOptions);
+
+		});
+
+		// Hide the modal
+		$('#addCreditorModal').modal('hide');
+
+	})
+
 
 });
