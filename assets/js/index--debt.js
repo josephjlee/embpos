@@ -142,7 +142,13 @@ $(document).ready(function () {
 		);
 
 		saveDebt.done(function (data) {
+
+			// Prepend success notif into main page container
+			$('#debt-index').prepend(data);
+
+			// Reload debt table to show the new data
 			table.ajax.reload();
+
 		});
 
 		$('#debtEditorModal').modal('hide');
@@ -166,7 +172,7 @@ $(document).ready(function () {
 
 		saveCreditor.done(function (data) {
 
-			// Prepend alert into main page container
+			// Prepend success notif into main page container
 			$('#debt-index').prepend(data.alert);
 
 			// Append newCreditor into creditor-select
