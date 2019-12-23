@@ -137,7 +137,7 @@
 
             <div class="form-group">
               <label for="creditor_name">Nama lengkap</label>
-              <input type="text" name="creditor[name]" id="creditor_name" class="form-control mb-2">
+              <input type="text" name="creditor[name]" id="creditor_name" class="form-control mb-2" required>
             </div>
 
             <div class="form-row">
@@ -145,9 +145,10 @@
                 <label for="creditor_address">Alamat</label>
                 <input type="text" name="creditor[address]" id="creditor_address" class="form-control">
               </div>
+
               <div class="form-group col">
                 <label for="creditor_phone">Ponsel</label>
-                <input type="tel" name="creditor[phone]" id="creditor_phone" class="form-control">
+                <input type="tel" name="creditor[phone]" id="creditor_phone" class="form-control" required>
               </div>
             </div>
 
@@ -186,19 +187,19 @@
 
             <div class="form-group">
               <label for="description"><small>Judul</small></label>
-              <input type="text" name="debt[description]" id="description" class="form-control description" value="<?= $debt['description'] ?? '' ?>">
+              <input type="text" name="debt[description]" id="description" class="form-control description" value="<?= $debt['description'] ?? '' ?>" required>
             </div>
 
             <div class="form-row">
 
               <div class="form-group col">
                 <label for="debt-date"><small>Tanggal transaksi</small></label>
-                <input type="date" name="debt[transaction_date]" id="transaction-date" class="form-control" value="<?= isset($debt_detail['transaction_date']) ? date('Y-m-d', strtotime($debt_detail['transaction_date'])) : ''; ?>">
+                <input type="date" name="debt[transaction_date]" id="transaction-date" class="form-control" value="<?= isset($debt_detail['transaction_date']) ? date('Y-m-d', strtotime($debt_detail['transaction_date'])) : ''; ?>" required>
               </div>
 
               <div class="form-group col">
                 <label for="payment-date"><small>Tanggal pembayaran</small></label>
-                <input type="date" name="debt[payment_date]" id="payment-date" class="form-control" value="<?= isset($debt_detail['payment_date']) ? date('Y-m-d', strtotime($debt_detail['payment_date'])) : ''; ?>">
+                <input type="date" name="debt[payment_date]" id="payment-date" class="form-control" value="<?= isset($debt_detail['payment_date']) ? date('Y-m-d', strtotime($debt_detail['payment_date'])) : ''; ?>" required>
               </div>
 
             </div>
@@ -208,7 +209,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label for="creditors"><small>Kreditur</small></label>
-                <select name="debt[creditor_id]" id="creditors">
+                <select name="debt[creditor_id]" id="creditors" required>
                   <option value="">Pilih Kreditur</option>
 
                   <?php if (isset($debt_detail['creditor_id'])) : ?>
@@ -228,7 +229,7 @@
               </div>
               <div class="form-group col">
                 <label for="amount"><small>Nominal</small></label>
-                <input type="number" name="debt[amount]" id="amount" class="form-control amount" value="<?= $debt['amount'] ?? '' ?>">
+                <input type="number" name="debt[amount]" id="amount" class="form-control amount" value="<?= $debt['amount'] ?? '' ?>" required>
               </div>
             </div>
 
