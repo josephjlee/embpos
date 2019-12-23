@@ -164,7 +164,7 @@
   </div>
 
   <!-- Debt Editor Modal -->
-  <div class="modal fade" id="debtEditorModal" tabindex="-1" role="dialog">
+  <div class="modal fade" id="debtEditorModal" role="dialog">
 
     <div class="modal-dialog" role="document">
 
@@ -208,7 +208,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label for="creditors"><small>Kreditur</small></label>
-                <select name="debt[creditor_id]" id="creditors" class="custom-select">
+                <select name="debt[creditor_id]" id="creditors">
                   <option value="">Pilih Kreditur</option>
 
                   <?php if (isset($debt_detail['creditor_id'])) : ?>

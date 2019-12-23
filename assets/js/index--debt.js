@@ -1,9 +1,15 @@
 $(document).ready(function () {
 
+	let creditorSelect = $('#creditors');
+
 	/**
-	 * Debt dataTable Initialization
+	 * Initialize Plugin
 	 */
 
+	// Select2
+	creditorSelect.select2();
+
+	// DataTable
 	let table = $('#debtDataTable').DataTable({
 		"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_debts`,
 		"columns": [
@@ -160,14 +166,15 @@ $(document).ready(function () {
 
 		saveCreditor.done(function (data) {
 
-			console.log(data);
-
 			// Prepend alert into main page container
 			$('#debt-index').prepend(data.alert);
 
 			// Append newCreditor into creditor-select
 			let newCreditorOptions = `<option value="${data.newCreditor.id}">${data.newCreditor.text}</option>`;;
-			$('#creditors').append(newCreditorOptions);
+			creditorSelect.append(newCreditorOptions);
+
+			// Transform creditorSelect into select2
+			creditorSelect.select2();
 
 		});
 
