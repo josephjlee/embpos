@@ -36,8 +36,8 @@ $(document).ready(function () {
 			},
 			{
 				"data": {
-					"_": "paid.display",
-					"sort": "paid.raw"
+					"_": "due.display",
+					"sort": "due.raw"
 				}
 			},
 			{
@@ -51,6 +51,8 @@ $(document).ready(function () {
 			$(row).attr('data-transaction-date', data.transaction_date.input);
 			$(row).attr('data-payment-date', data.payment_date.input);
 			$(row).attr('data-amount', data.amount.raw);
+			$(row).attr('data-paid', data.paid.raw);
+			$(row).attr('data-due', data.due.raw);
 			$(row).attr('data-note', data.note);
 		},
 		"columnDefs": [
@@ -73,7 +75,7 @@ $(document).ready(function () {
 
 						<a class="dropdown-item edit-debt-trigger" href="#" data-toggle="modal" data-target="#debtEditorModal">Sunting Detail</a>
 
-						<a class="dropdown-item save-payment-trigger" href="#" data-toggle="modal" data-target="#paymentEditorModal">Rekam Pembayaran</a>
+						<a class="dropdown-item add-payment-trigger" href="#" data-toggle="modal" data-target="#debtPaymentModal">Rekam Pembayaran</a>
 
 						<a class="dropdown-item save-payment-trigger" href="#" data-toggle="modal" data-target="#paymentHistoryModal">Riwayat Pembayaran</a>
 
@@ -137,6 +139,23 @@ $(document).ready(function () {
 		$('#delete-debt-form #debt-id').val(debtId);
 
 	});
+
+	// Add Payment Trigger
+	$('#debtDataTable').on('click', '.add-payment-trigger', function (event) {
+
+		// Reset previous input
+		$('#debt-payment-form')[0].reset();
+
+		let entryRow = $(this).parents('tr');
+		let debtId = entryRow.data('debt-id');
+		let creditorId = entryRow.data('creditor-id');
+		let debtAmount = entryRow.data('amount');
+
+		$('#debt-payment-form #debt-payment-id').val(debtId);
+		$('#debt-payment-form #debt-payment-amount').attr('max', debtAmount);
+		$('#debt-payment-form #creditor-id').val(creditorId);
+
+	})
 
 	/**
 	 * Debt entry submission
@@ -230,7 +249,33 @@ $(document).ready(function () {
 
 	});
 
+	/**
+	 * Debt Payment Submission
+	 */
 
+	$('#debt-payment-form').submit(function (event) {
 
+		event.preventDefault();
+
+		let debtPaymentData = $(this).serialize();
+
+		let payDebt = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/bayar_hutang`,
+			debtPaymentData
+		)
+
+		payDebt.done(function (data) {
+
+			// Prepend delete success notif into main page container
+			$('#debt-index').prepend(data.alert);
+
+			// Reload debt table to show the new data
+			table.ajax.reload();
+
+		});
+
+		$('#debtPaymentModal').modal('hide');
+
+	})
 
 });

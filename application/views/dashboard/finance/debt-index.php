@@ -106,7 +106,7 @@
             <th scope="col">Nominal</th>
             <th scope="col">Dimulai</th>
             <th scope="col">Tenggat</th>
-            <th scope="col">Terbayar</th>
+            <th scope="col">Tagihan</th>
             <th scope="col" style="width: 6px !important">#</th>
           </tr>
         </thead>
@@ -269,6 +269,47 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Input Payment Modal -->
+  <div class="modal fade" id="debtPaymentModal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+
+      <form action="" method="post" id="debt-payment-form">
+
+        <input type="hidden" name="debt_payment[debt_id]" id="debt-payment-id" value="">
+        <input type="hidden" name="debt_payment[creditor_id]" id="creditor-id" value="">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Catat Pembayaran Hutang</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="modal-payment-amount"><small>Nominal</small></label>
+              <input type="number" max="" name="debt_payment[amount]" id="debt-payment-amount" class="form-control" placeholder="0" value="">
+            </div>
+
+            <div class="form-group">
+              <label for="modal-debt-payment-date"><small>Tanggal</small></label>
+              <input type="date" name="debt_payment[payment_date]" id="debt-payment-date" class="form-control">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary" id="save-debt-payment-btn">Simpan data</button>
+          </div>
+        </div>
+      </form>
+
     </div>
   </div>
 

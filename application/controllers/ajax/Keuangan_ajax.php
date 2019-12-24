@@ -57,6 +57,28 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($response);
   }
 
+  public function bayar_hutang()
+  {
+
+    $debt_payment = $this->input->post('debt_payment');
+
+    $this->keuangan_model->bayar_hutang($debt_payment);
+
+    $response['alert'] = '<div class="row mb-2">
+                            <div class="col">
+                              <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                                <strong class="alert-content">Pembayaran Hutang berhasil dicatat</strong>
+                                <button type="button" class="close" data-dismiss="alert">
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
   public function list_all_debts()
   {
     $debts = [
@@ -73,6 +95,11 @@ class Keuangan_ajax extends CI_Controller
       $debt['paid'] = [
         'display' => moneyStrDot($debt['paid']) . ',00',
         'raw'    => $debt['paid']
+      ];
+
+      $debt['due'] = [
+        'display' => moneyStrDot($debt['due']) . ',00',
+        'raw'    => $debt['due']
       ];
 
       $debt['transaction_date'] = [

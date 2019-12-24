@@ -36,6 +36,13 @@ class Keuangan_model extends CI_Model
     return $this->db->delete('debt');
   }
 
+  public function bayar_hutang($debt_payment)
+  {
+    $debt_payment_data = $this->siapkan_data($debt_payment);
+
+    return $this->db->insert('debt_payment', $debt_payment_data);
+  }
+
   public function list_all_debts()
   {
 
@@ -53,7 +60,12 @@ class Keuangan_model extends CI_Model
                     SELECT IFNULL(SUM(debt_payment.amount),0)
                     FROM debt_payment
                     WHERE debt_payment.debt_id = debt.debt_id
-                  ) AS paid
+                  ) AS paid,
+                  debt.amount - (
+                    SELECT IFNULL(SUM(debt_payment.amount),0)
+                    FROM debt_payment
+                    WHERE debt_payment.debt_id = debt.debt_id
+                  ) AS due
               FROM debt
               JOIN creditor ON debt.creditor_id = creditor.creditor_id");
 
