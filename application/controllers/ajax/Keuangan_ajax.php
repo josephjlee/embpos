@@ -121,6 +121,47 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($debts);
   }
 
+  public function list_debt_payment_by_debt_id()
+  {
+
+    // Grab debt-id from the submitted form
+    $debt_id = $this->input->post('debt-id');
+
+    // Query payment history for the debt_id
+    $response['payment_history'] = $this->keuangan_model->get_debt_payment_history_by_debt_id($debt_id);
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
+  public function bulk_edit_debt_payment()
+  {
+
+    // Grab debt_payment data sent by ajax-powered form
+    $debt_payment_data = $this->input->post('debt_payment');
+
+    // Batch update the debt_payment table
+    $this->db->update_batch('debt_payment', $debt_payment_data, 'debt_payment_id');
+
+    // Compose notification alert
+    $response['alert'] = '
+      <div class="row mb-2">
+        <div class="col">
+          <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+            <strong class="alert-content">Riwayat pembayaran hutang berhasil diperbarui</strong>
+            <button type="button" class="close" data-dismiss="alert">
+              <span>&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    ';
+
+    // Sent the response as json
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
   public function tambah_kreditur()
   {
 

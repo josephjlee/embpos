@@ -313,5 +313,35 @@
     </div>
   </div>
 
+  <!-- Payment History Modal -->
+  <div class="modal fade" id="paymentHistoryModal" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+
+      <form action="" method="post" id="payment-history-form">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Riwayat Pembayaran Hutang</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary" id="save-debt-payment-btn">Simpan data</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
 </div>
 <!-- /.container-fluid -->

@@ -77,7 +77,7 @@ $(document).ready(function () {
 
 						<a class="dropdown-item add-payment-trigger" href="#" data-toggle="modal" data-target="#debtPaymentModal">Rekam Pembayaran</a>
 
-						<a class="dropdown-item save-payment-trigger" href="#" data-toggle="modal" data-target="#paymentHistoryModal">Riwayat Pembayaran</a>
+						<a class="dropdown-item show-payment-trigger" href="#" data-toggle="modal" data-target="#paymentHistoryModal">Riwayat Pembayaran</a>
 
 						<a class="dropdown-item del-debt-trigger" href="#" data-toggle="modal" data-target="#delDebtModal">Hapus Hutang</a>
 
@@ -140,6 +140,27 @@ $(document).ready(function () {
 
 	});
 
+	function paymentListTemplate(index, debt_payment_id, amount, date) {
+
+		let paymentHistory = `
+				<div class="form-row">
+					<input type="hidden" name="debt_payment[${index}][debt_payment_id]" id="debt-payment-id" value="${debt_payment_id}">
+					<div class="form-group col-2">
+						<input type="text" class="form-control text-center" value="${index + 1}">
+					</div>
+					<div class="form-group col-5">
+						<input type="number" name="debt_payment[${index}][amount]" class="form-control debt-payment-amount" value="${amount}">
+					</div>
+					<div class="form-group col-5">
+						<input type="date" name="debt_payment[${index}][payment_date]" class="form-control debt-payment-date" value="${date}">
+					</div>
+				</div>
+		`;
+
+		return paymentHistory;
+
+	}
+
 	// Add Payment Trigger
 	$('#debtDataTable').on('click', '.add-payment-trigger', function (event) {
 
@@ -155,7 +176,33 @@ $(document).ready(function () {
 		$('#debt-payment-form #debt-payment-amount').attr('max', debtAmount);
 		$('#debt-payment-form #creditor-id').val(creditorId);
 
-	})
+	});
+
+	// Show Payment History Trigger
+	$('#debtDataTable').on('click', '.show-payment-trigger', function (event) {
+
+		// Clear previous list
+		$('#paymentHistoryModal .modal-body').html('');
+
+		let entryRow = $(this).parents('tr');
+		let debtId = entryRow.data('debt-id');
+
+		let reqPaymentHistory = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/list_debt_payment_by_debt_id`,
+			{ "debt-id": debtId }
+		);
+
+		reqPaymentHistory.done(function (data) {
+
+			// Populate the modal body with payment history data
+			$.each(data.payment_history, function (index, payment) {
+				let paymentList = paymentListTemplate(index, payment.debt_payment_id, payment.amount, payment.payment_date);
+				$('#paymentHistoryModal .modal-body').append(paymentList);
+			});
+
+		});
+
+	});
 
 	/**
 	 * Debt entry submission
@@ -276,6 +323,35 @@ $(document).ready(function () {
 
 		$('#debtPaymentModal').modal('hide');
 
-	})
+	});
+
+	/**
+	 * Payment History Edit
+	 */
+
+	$('#payment-history-form').submit(function (event) {
+
+		event.preventDefault();
+
+		let debtPaymentData = $(this).serialize();
+
+		let editDebt = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/bulk_edit_debt_payment`,
+			debtPaymentData
+		)
+
+		editDebt.done(function (data) {
+
+			// Prepend delete success notif into main page container
+			$('#debt-index').prepend(data.alert);
+
+			// Reload debt table to show the new data
+			table.ajax.reload();
+
+		});
+
+		$('#paymentHistoryModal').modal('hide');
+
+	});
 
 });

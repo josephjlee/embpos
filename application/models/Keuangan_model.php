@@ -105,6 +105,15 @@ class Keuangan_model extends CI_Model
     return $this->db->get()->result_array();
   }
 
+  public function get_debt_payment_history_by_debt_id($debt_id)
+  {
+    $query = $this->db->query("SELECT debt_payment_id, amount, DATE_FORMAT(payment_date, '%Y-%m-%d') AS payment_date 
+      FROM debt_payment 
+      WHERE debt_id = {$debt_id}");
+
+    return $query->result_array();
+  }
+
   public function siapkan_data($debt)
   {
 
