@@ -34,6 +34,29 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($alert);
   }
 
+  public function hapus_hutang()
+  {
+
+    $debt = $this->input->post('debt');
+
+    $this->db->where('debt_id', $debt['debt_id']);
+    $this->db->delete('debt');
+
+    $response['alert'] = '<div class="row mb-2">
+                            <div class="col">
+                              <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                                <strong class="alert-content">Hutang telah berhasil dihapus</strong>
+                                <button type="button" class="close" data-dismiss="alert">
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
   public function list_all_debts()
   {
     $debts = [

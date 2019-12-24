@@ -253,8 +253,8 @@
   <!-- Delete Debt Modal -->
   <div class="modal fade" id="delDebtModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/pelanggan_pcsr/hapus_data'); ?>" method="post" id="delete-order-form">
-        <input type="hidden" name="customer[customer_id]" id="cust_id" value="">
+      <form action="" method="post" id="delete-debt-form">
+        <input type="hidden" name="debt[debt_id]" id="debt-id" value="">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Yakin akan menghapus?</h5>
@@ -262,7 +262,7 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Menghapus data pelanggan juga akan menghapus seluruh data pesanan yang pernah dibuatnya.</div>
+          <div class="modal-body">Hutang ini akan dihapus dari database.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary">Hapus</button>

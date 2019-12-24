@@ -77,7 +77,7 @@ $(document).ready(function () {
 
 						<a class="dropdown-item save-payment-trigger" href="#" data-toggle="modal" data-target="#paymentHistoryModal">Riwayat Pembayaran</a>
 
-						<a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#delDebtModal">Hapus Hutang</a>
+						<a class="dropdown-item del-debt-trigger" href="#" data-toggle="modal" data-target="#delDebtModal">Hapus Hutang</a>
 
 					</div>`;
 
@@ -88,9 +88,10 @@ $(document).ready(function () {
 	});
 
 	/**
-	 * debtEditor Modal Trigger
+	 * Modal Action Trigger
 	 */
 
+	// Add Debt Trigger
 	$('#add-debt-trigger').click(function (event) {
 
 		// Add title to the modal
@@ -100,6 +101,7 @@ $(document).ready(function () {
 
 	});
 
+	// Edit Debt Trigger
 	$('#debtDataTable').on('click', '.edit-debt-trigger', function (event) {
 
 		// Add title to the modal
@@ -123,6 +125,16 @@ $(document).ready(function () {
 		$('#debtForm #description').val(description);
 		$('#debtForm #transaction-date').val(transactionDate);
 		$('#debtForm #payment-date').val(paymentDate);
+
+	});
+
+	// Delete Debt Modal Trigger
+	$('#debtDataTable').on('click', '.del-debt-trigger', function (event) {
+
+		let entryRow = $(this).parents('tr');
+		let debtId = entryRow.data('debt-id');
+
+		$('#delete-debt-form #debt-id').val(debtId);
 
 	});
 
@@ -152,6 +164,35 @@ $(document).ready(function () {
 		});
 
 		$('#debtEditorModal').modal('hide');
+
+	});
+
+	/**
+	 * Debt deletion 
+	 */
+
+	$('#delete-debt-form').submit(function (e) {
+
+		e.preventDefault();
+
+		let debtData = $(this).serialize();
+
+		let deleteDebt = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/hapus_hutang`,
+			debtData
+		)
+
+		deleteDebt.done(function (data) {
+
+			// Prepend delete success notif into main page container
+			$('#debt-index').prepend(data.alert);
+
+			// Reload debt table to show the new data
+			table.ajax.reload();
+
+		});
+
+		$('#delDebtModal').modal('hide');
 
 	});
 
@@ -187,7 +228,9 @@ $(document).ready(function () {
 		// Hide the modal
 		$('#addCreditorModal').modal('hide');
 
-	})
+	});
+
+
 
 
 });
