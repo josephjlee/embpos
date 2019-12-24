@@ -151,8 +151,9 @@ $(document).ready(function () {
 					<div class="form-group col-5">
 						<input type="number" name="debt_payment[${index}][amount]" class="form-control debt-payment-amount" value="${amount}">
 					</div>
-					<div class="form-group col-5">
+					<div class="form-group col-5 d-flex align-items-center">
 						<input type="date" name="debt_payment[${index}][payment_date]" class="form-control debt-payment-date" value="${date}">
+						<a href="#" class="text-danger ml-3 del-payment-trigger"><i class="fas fa-trash fa-lg"></i></a>
 					</div>
 				</div>
 		`;
@@ -203,6 +204,29 @@ $(document).ready(function () {
 		});
 
 	});
+
+	// Delete Payment History Trigger
+	$('#paymentHistoryModal').on('click', '.del-payment-trigger', function (event) {
+
+		event.preventDefault();
+
+		let selectedRow = $(this).parents('.form-row');
+		let debtPaymentId = selectedRow.children('#debt-payment-id').val();
+
+		let deletePayment = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/delete_debt_payment_by_id`,
+			{ "debt-payment-id": debtPaymentId }
+		);
+
+		deletePayment.done(function (data) {
+
+			selectedRow.remove();
+			$('#paymentHistoryModal .modal-body').prepend(data.alert);
+
+		});
+
+
+	})
 
 	/**
 	 * Debt entry submission

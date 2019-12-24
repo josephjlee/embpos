@@ -162,6 +162,28 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($response);
   }
 
+  public function delete_debt_payment_by_id()
+  {
+    $debt_payment_id = $this->input->post('debt-payment-id');
+
+    $this->db->where('debt_payment_id', $debt_payment_id);
+    $this->db->delete('debt_payment');
+
+    $response['alert'] = '<div class="row mb-2">
+                            <div class="col">
+                              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong class="alert-content">Riwayat pembayaran berhasil dihapus</strong>
+                                <button type="button" class="close" data-dismiss="alert">
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
   public function tambah_kreditur()
   {
 
