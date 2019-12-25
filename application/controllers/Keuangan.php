@@ -28,17 +28,6 @@ class Keuangan extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
-    public function catat_hutang()
-    {
-        $data['title'] = 'Catat Hutang';
-
-        $data['content'] = $this->load->view('dashboard/finance/debt-editor', $data, TRUE);
-
-        // $data['view_script'] = 'editor--debt.js';
-
-        $this->load->view('layout/dashboard', $data);
-    }
-
     public function detail_hutang($debt_id)
     {
         $data['title'] = "Detail Hutang HTG-{$debt_id}";
