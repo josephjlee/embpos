@@ -192,7 +192,7 @@
             <tbody>
               <?php foreach ($unpaid_invoices as $unpaid_invoice) : ?>
                 <tr>
-                  <td class="px-0"><a href="<?= base_url('invoice/sunting/') . $unpaid_invoice['INV']; ?>">INV-<?= $unpaid_invoice['INV'] ?></a></td>
+                  <td class="px-0"><a href="<?= base_url('invoice/sunting/') . $unpaid_invoice['INV']; ?>">INV-<?= $unpaid_invoice['INV'] ?> (<?= $unpaid_invoice['name'] ?>)</a></td>
                   <td class="text-right px-0">
                     <span class="badge badge-<?= moneyBadge($unpaid_invoice['amount']); ?>">Rp<?= moneyStrDot($unpaid_invoice['amount']); ?></span>
                   </td>
