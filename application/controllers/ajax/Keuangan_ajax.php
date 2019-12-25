@@ -21,9 +21,11 @@ class Keuangan_ajax extends CI_Controller
 
     $message = $debt['debt_id'] ? 'Detail hutang berhasil diperbarui' : 'Hutang baru berhasil dicatat';
 
-    $alert = "<div class='row mb-2'>
+    $response['action'] = $debt['debt_id'] ? 'update' : 'create';
+
+    $response['alert'] = "<div class='row'>
                 <div class='col'>
-                  <div class='alert alert-warning alert-dismissible fade show shadow' role='alert'>
+                  <div class='alert alert-warning alert-dismissible fade show' role='alert'>
                     <strong class='alert-content'>{$message}</strong>
                     <button type='button' class='close' data-dismiss='alert'>
                       <span>&times;</span>
@@ -33,7 +35,7 @@ class Keuangan_ajax extends CI_Controller
               </div>";
 
     header('Content-Type: application/json');
-    echo json_encode($alert);
+    echo json_encode($response);
   }
 
   public function hapus_hutang()
@@ -66,9 +68,9 @@ class Keuangan_ajax extends CI_Controller
 
     $this->keuangan_model->bayar_hutang($debt_payment);
 
-    $response['alert'] = '<div class="row mb-2">
+    $response['alert'] = '<div class="row">
                             <div class="col">
-                              <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                              <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 <strong class="alert-content">Pembayaran Hutang berhasil dicatat</strong>
                                 <button type="button" class="close" data-dismiss="alert">
                                   <span>&times;</span>

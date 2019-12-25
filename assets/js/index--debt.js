@@ -258,14 +258,19 @@ $(document).ready(function () {
 		saveDebt.done(function (data) {
 
 			// Prepend success notif into main page container
-			$('#debt-index').prepend(data);
+			$('#debtEditorModal .modal-body').prepend(data.alert);
+
+			if (data.action == 'create') {
+				// Reset previous value
+				$('#debtForm')[0].reset();
+				$('#debtForm #debt-id').val(null);
+				$('#debtForm #creditors').val(null).trigger('change');
+			}
 
 			// Reload debt table to show the new data
 			table.ajax.reload();
 
 		});
-
-		$('#debtEditorModal').modal('hide');
 
 	});
 
@@ -349,15 +354,16 @@ $(document).ready(function () {
 
 		payDebt.done(function (data) {
 
-			// Prepend delete success notif into main page container
-			$('#debt-index').prepend(data.alert);
+			// Prepend delete success notif into the modal
+			$('#debtPaymentModal .modal-body').prepend(data.alert);
+
+			// Reset previous value
+			$('#debt-payment-form')[0].reset();
 
 			// Reload debt table to show the new data
 			table.ajax.reload();
 
 		});
-
-		$('#debtPaymentModal').modal('hide');
 
 	});
 
