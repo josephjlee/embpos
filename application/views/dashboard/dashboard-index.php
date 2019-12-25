@@ -177,7 +177,7 @@
     <!-- Receivable Invoice -->
     <div class="col-lg-4">
 
-      <div class="card shadow">
+      <div class="card shadow h-100">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Piutang Invoice</h6>
         </div>
