@@ -72,6 +72,20 @@ class Keuangan_model extends CI_Model
     return $query->result_array();
   }
 
+  public function list_unpaid_debts()
+  {
+    $debts = $this->list_all_debts();
+
+    function filter_unpaid($debt)
+    {
+      return $debt['due'] != 0;
+    }
+
+    $unpaid_debt = array_filter($debts, "filter_unpaid");
+
+    return $unpaid_debt;
+  }
+
   public function get_debt_by_debt_id($debt_id)
   {
 
