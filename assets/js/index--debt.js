@@ -195,8 +195,15 @@ $(document).ready(function () {
 
 		reqPaymentHistory.done(function (data) {
 
+			let paymentHistoryData = data.payment_history;
+
+			// if there is no payment history then bailed out
+			if (paymentHistoryData.length < 1) {
+				$('#paymentHistoryModal .modal-body').append(`<p>Belum ada pembayaran.</p>`);
+			}
+
 			// Populate the modal body with payment history data
-			$.each(data.payment_history, function (index, payment) {
+			$.each(paymentHistoryData, function (index, payment) {
 				let paymentList = paymentListTemplate(index, payment.debt_payment_id, payment.amount, payment.payment_date);
 				$('#paymentHistoryModal .modal-body').append(paymentList);
 			});
