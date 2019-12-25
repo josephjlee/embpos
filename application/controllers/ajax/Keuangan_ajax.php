@@ -19,16 +19,18 @@ class Keuangan_ajax extends CI_Controller
 
     $this->keuangan_model->simpan($debt);
 
-    $alert = '<div class="row mb-2">
-                <div class="col">
-                  <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
-                    <strong class="alert-content">Hutang baru berhasil dicatat</strong>
-                    <button type="button" class="close" data-dismiss="alert">
+    $message = $debt['debt_id'] ? 'Detail hutang berhasil diperbarui' : 'Hutang baru berhasil dicatat';
+
+    $alert = "<div class='row mb-2'>
+                <div class='col'>
+                  <div class='alert alert-warning alert-dismissible fade show shadow' role='alert'>
+                    <strong class='alert-content'>{$message}</strong>
+                    <button type='button' class='close' data-dismiss='alert'>
                       <span>&times;</span>
                     </button>
                   </div>
                 </div>
-              </div>';
+              </div>";
 
     header('Content-Type: application/json');
     echo json_encode($alert);
