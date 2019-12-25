@@ -43,8 +43,13 @@ class Keuangan_ajax extends CI_Controller
 
     $debt = $this->input->post('debt');
 
+    // Delete debt table entry by the received debt_id
     $this->db->where('debt_id', $debt['debt_id']);
     $this->db->delete('debt');
+
+    // Delete debt_payment table entry by the received debt_id
+    $this->db->where('debt_id', $debt['debt_id']);
+    $this->db->delete('debt_payment');
 
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
