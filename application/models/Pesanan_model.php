@@ -573,6 +573,7 @@ class Pesanan_model extends CI_Model
         $query = $this->db->query("SELECT 
                     number,
                     order_id,
+                    description,
                     required_date AS deadline,
                     DATEDIFF(required_date, CURDATE()) AS countdown
                 FROM `order`
