@@ -27,6 +27,8 @@ class Dashboard extends CI_Controller
 
     $data['unpaid_debts'] = $this->keuangan_model->list_unpaid_debts();
 
+    $data['unpaid_payables'] = $this->keuangan_model->get_top_five_creditor();
+
     $data['near_deadline_orders'] = $this->pesanan_model->get_near_deadline_order();
 
     $data['content'] = $this->load->view('dashboard/dashboard-index.php', $data, TRUE);

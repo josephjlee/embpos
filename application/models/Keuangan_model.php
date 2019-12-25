@@ -174,6 +174,27 @@ class Keuangan_model extends CI_Model
     return $query->result_array();
   }
 
+  public function get_top_five_creditor()
+  {
+    $creditors_payable = $this->get_debt_value_per_creditor();
+
+    $top_four = array_slice($creditors_payable, 0, 4);
+
+    $the_rest = ['debt_value' => 0, 'total_paid' => 0];
+
+    foreach (array_slice($creditors_payable, 4) as $payable) {
+      $the_rest['debt_value'] += $payable['debt_value'];
+      $the_rest['total_paid'] += $payable['total_paid'];
+    }
+
+    $output = [
+      'top_four' => $top_four,
+      'the_rest' => $the_rest
+    ];
+
+    return $output;
+  }
+
   public function count_active_creditor()
   {
     $active_creditors = 0;
