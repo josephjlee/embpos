@@ -14,7 +14,7 @@
 
     <!-- Total Hutang -->
 
-    <?php $most_buy = $this->pelanggan_model->get_most_buy_by_month(date('m')); ?>
+    <?php $total_debt_due = $this->keuangan_model->get_total_debt_due(); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-info shadow h-100 py-2">
@@ -22,7 +22,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Hutang (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= '35.000.000'; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_debt_due); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i>
@@ -34,7 +34,7 @@
 
     <!-- Total Creditor -->
 
-    <?php $total_customer = $this->pelanggan_model->get_total_customer(); ?>
+    <?php $active_creditors = $this->keuangan_model->count_active_creditor(); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-primary shadow h-100 py-2">
@@ -42,7 +42,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Kreditur Aktif (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= '7'; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $active_creditors; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-user-tie fa-2x text-gray-300"></i>
@@ -54,7 +54,7 @@
 
     <!-- Kreditur Terbesar -->
 
-    <?php $most_order = $this->pelanggan_model->get_most_order_by_month(date('m')); ?>
+    <?php $biggest_creditor = $this->keuangan_model->get_the_biggest_creditor(); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-success shadow h-100 py-2">
@@ -62,7 +62,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kreditur Terbesar (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= 'BRI'; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_creditor; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-user-secret fa-2x text-gray-300"></i>
@@ -74,15 +74,16 @@
 
     <!-- Tenggat Terdekat -->
 
-    <?php $the_most_valuable = $this->pelanggan_model->get_most_valueable_by_month(date('m')); ?>
+    <?php $the_nearest_due = $this->keuangan_model->get_the_nearest_debt_due(); ?>
+    <?php $the_nearest_due['payment_date'] = date('d-M-y', strtotime($the_nearest_due['payment_date'])); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-warning shadow h-100 py-2">
-        <div class="card-body">
+        <div class="card-body" data-toggle="tooltip" data-placement="top" title="<?= "{$the_nearest_due['description']} | {$the_nearest_due['payment_date']}"; ?>">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tenggat Terdekat (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= '275.000'; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($the_nearest_due['amount']); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>

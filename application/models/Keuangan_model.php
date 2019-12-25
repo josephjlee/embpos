@@ -114,6 +114,86 @@ class Keuangan_model extends CI_Model
     return $query->result_array();
   }
 
+  public function get_total_debt()
+  {
+    $query = $this->db->query("SELECT SUM(amount) AS total_amount FROM debt");
+    return $query->row_array()['total_amount'];
+  }
+
+  public function get_total_debt_payment()
+  {
+    $query = $this->db->query("SELECT SUM(amount) AS total_amount FROM debt_payment WHERE debt_id IS NOT NULL");
+    return $query->row_array()['total_amount'];
+  }
+
+  public function get_total_debt_due()
+  {
+    $total_debt = $this->get_total_debt();
+    $total_debt_payment = $this->get_total_debt_payment();
+    $total_debt_due = $total_debt - $total_debt_payment;
+
+    return $total_debt_due;
+  }
+
+  public function get_debt_value_per_creditor()
+  {
+    $query = $this->db->query("SELECT 
+                  debt.creditor_id,
+                  creditor.name AS creditor_name, 
+                  SUM(debt.amount) AS debt_value,
+                  ANY_VALUE(COALESCE(paid,0)) AS total_paid
+              FROM
+                  debt
+              LEFT JOIN 
+                  creditor ON debt.creditor_id = creditor.creditor_id
+              LEFT JOIN
+                  (
+                  SELECT 
+                    debt_payment.creditor_id, 
+                    SUM(debt_payment.amount) AS paid
+                  FROM
+                    debt_payment
+                  GROUP BY debt_payment.creditor_id
+                ) AS payment_table ON debt.creditor_id = payment_table.creditor_id
+              GROUP BY debt.creditor_id
+              ORDER BY debt_value DESC");
+    return $query->result_array();
+  }
+
+  public function count_active_creditor()
+  {
+    $active_creditors = 0;
+
+    foreach ($this->get_debt_value_per_creditor() as $credtior) {
+      if ($credtior['debt_value'] != $credtior['total_paid']) {
+        $active_creditors += 1;
+      }
+    }
+
+    return $active_creditors;
+  }
+
+  public function get_the_biggest_creditor()
+  {
+    return $this->get_debt_value_per_creditor()[0]['creditor_name'];
+  }
+
+  public function get_the_nearest_debt_due()
+  {
+    $query = $this->db->query("SELECT 
+              creditor.name AS creditor_name,
+              description,
+                payment_date,
+                amount
+            FROM
+                debt
+            JOIN creditor ON debt.creditor_id = creditor.creditor_id
+            ORDER BY payment_date
+            LIMIT 1");
+
+    return $query->row_array();
+  }
+
   public function siapkan_data($debt)
   {
 
