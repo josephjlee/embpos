@@ -99,7 +99,10 @@ $(document).ready(function () {
 		// Add title to the modal
 		$('#debtEditorModal .modal-title').html('Catat Hutang Baru');
 
+		// Reset previous value
 		$('#debtForm')[0].reset();
+		$('#debtForm #debt-id').val(null);
+		$('#debtForm #creditors').val(null).trigger('change');
 
 	});
 
