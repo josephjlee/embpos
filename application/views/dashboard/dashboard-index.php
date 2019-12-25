@@ -221,42 +221,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="px-0">Token Mesin</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">Rp202.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">Benang TOP Hitam 1lsn</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-success">Rp170.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">Kain Keras 60G</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-danger">Rp107.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">Spul 2kg</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">Rp90.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">Token Lampu</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-default">Rp202.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-0">Roti & Susu</td>
-                <td class="text-right px-0">
-                  <span class="badge badge-warning">Rp150.000</span>
-                </td>
-              </tr>
+              <?php foreach ($unpaid_debts as $debt) : ?>
+                <tr>
+                  <td class="px-0"><?= $debt['description']; ?></td>
+                  <td class="text-right px-0">
+                    <span class="badge badge-<?= moneyBadge($debt['due']); ?>">Rp<?= moneyStrDot($debt['due']); ?></span>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>

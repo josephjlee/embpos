@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller
     $this->load->model('invoice_model');
     $this->load->model('pesanan_model');
     $this->load->model('penjualan_model');
+    $this->load->model('keuangan_model');
   }
   public function index()
   {
@@ -23,6 +24,8 @@ class Dashboard extends CI_Controller
     ];
 
     $data['unpaid_invoices'] = $this->invoice_model->get_unpaid_invoice();
+
+    $data['unpaid_debts'] = $this->keuangan_model->list_unpaid_debts();
 
     $data['near_deadline_orders'] = $this->pesanan_model->get_near_deadline_order();
 
