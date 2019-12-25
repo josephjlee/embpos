@@ -121,12 +121,14 @@ $(document).ready(function () {
 
 		// Fill form with the data
 		$('#debtForm #debt-id').val(debtId);
-		$('#debtForm #creditors').val(creditorId);
 		$('#debtForm #amount').val(amount);
 		$('#debtForm #note').val(note);
 		$('#debtForm #description').val(description);
 		$('#debtForm #transaction-date').val(transactionDate);
 		$('#debtForm #payment-date').val(paymentDate);
+
+		$('#debtForm #creditors').val(creditorId);
+		$('#debtForm #creditors').trigger('change');
 
 	});
 
