@@ -74,16 +74,27 @@
 
     <!-- Tenggat Terdekat -->
 
-    <?php $the_nearest_due = $this->keuangan_model->get_the_nearest_debt_due(); ?>
-    <?php $the_nearest_due['payment_date'] = date('d-M-y', strtotime($the_nearest_due['payment_date'])); ?>
+    <?php
+
+    $the_nearest_due = $this->keuangan_model->get_the_nearest_debt_due();
+
+    if ($the_nearest_due != '-') {
+      $the_nearest_due['payment_date'] = date('d-M-y', strtotime($the_nearest_due['payment_date']));
+    }
+
+    ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-warning shadow h-100 py-2">
-        <div class="card-body" data-toggle="tooltip" data-placement="top" title="<?= "{$the_nearest_due['description']} | {$the_nearest_due['payment_date']}"; ?>">
+        <div class="card-body">
           <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
+            <div class="col mr-2" data-toggle="tooltip">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tenggat Terdekat (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($the_nearest_due['amount']); ?></div>
+              <?php if ($the_nearest_due != '-') : ?>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" data-placement="top" title="<?= "{$the_nearest_due['description']} | {$the_nearest_due['payment_date']}"; ?>">Rp<?= moneyStrDot($the_nearest_due['amount']); ?></div>
+              <?php else : ?>
+                <h5>-</h5>
+              <?php endif; ?>
             </div>
             <div class="col-auto">
               <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>

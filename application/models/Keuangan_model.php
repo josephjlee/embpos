@@ -210,6 +210,10 @@ class Keuangan_model extends CI_Model
 
   public function get_the_biggest_creditor()
   {
+    if (empty($this->get_debt_value_per_creditor())) {
+      return "-";
+    }
+
     return $this->get_debt_value_per_creditor()[0]['creditor_name'];
   }
 
@@ -225,6 +229,10 @@ class Keuangan_model extends CI_Model
             JOIN creditor ON debt.creditor_id = creditor.creditor_id
             ORDER BY payment_date
             LIMIT 1");
+
+    if (empty($query->row_array())) {
+      return '-';
+    }
 
     return $query->row_array();
   }

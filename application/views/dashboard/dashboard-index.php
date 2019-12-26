@@ -282,23 +282,39 @@
 
         <div class="card-body" style="padding-top:2rem!important;padding-bottom:2rem!important">
 
-          <?php foreach ($unpaid_payables['top_four'] as $payable) : ?>
-            <?php $progress = round(($payable['total_paid'] / $payable['debt_value']) * 100); ?>
-            <?php $formatted_total_paid = moneyStrDot($payable['total_paid']); ?>
-            <?php $formatted_debt_value = moneyStrDot($payable['debt_value']); ?>
-            <h4 class="small font-weight-bold"><?= $payable['creditor_name']; ?> <span class="float-right"><?= $progress; ?>%</span></h4>
-            <div class="progress mb-4">
-              <div class="progress-bar bg-danger" role="progressbar" data-toggle="tooltip" data-placement="top" title="<?= "Rp{$formatted_total_paid} dari Rp{$formatted_debt_value}"; ?>" <?= "style='width: {$progress}%'" ?>></div>
-            </div>
-          <?php endforeach; ?>
+          <?php if ($unpaid_payables['top_four']) : ?>
 
-          <?php $the_rest_progress = round(($unpaid_payables['the_rest']['total_paid'] / $unpaid_payables['the_rest']['debt_value']) * 100); ?>
-          <?php $formatted_total_paid2 = moneyStrDot($unpaid_payables['the_rest']['total_paid']); ?>
-          <?php $formatted_debt_value2 = moneyStrDot($unpaid_payables['the_rest']['debt_value']); ?>
-          <h4 class="small font-weight-bold">Lain-lain <span class="float-right"><?= $the_rest_progress; ?>%</span></h4>
-          <div class="progress">
-            <div class="progress-bar bg-danger" role="progressbar" data-toggle="tooltip" data-placement="top" title="<?= "Rp{$formatted_total_paid2} dari Rp{$formatted_debt_value2}"; ?>" <?= "style='width: {$the_rest_progress}%'" ?>></div>
-          </div>
+            <?php foreach ($unpaid_payables['top_four'] as $payable) : ?>
+              <?php $progress = round(($payable['total_paid'] / $payable['debt_value']) * 100); ?>
+              <?php $formatted_total_paid = moneyStrDot($payable['total_paid']); ?>
+              <?php $formatted_debt_value = moneyStrDot($payable['debt_value']); ?>
+              <h4 class="small font-weight-bold"><?= $payable['creditor_name']; ?> <span class="float-right"><?= $progress; ?>%</span></h4>
+              <div class="progress mb-4">
+                <div class="progress-bar bg-danger" role="progressbar" data-toggle="tooltip" data-placement="top" title="<?= "Rp{$formatted_total_paid} dari Rp{$formatted_debt_value}"; ?>" <?= "style='width: {$progress}%'" ?>></div>
+              </div>
+            <?php endforeach; ?>
+
+            <?php if ($unpaid_payables['the_rest']['debt_value'] != 0) : ?>
+
+              <?php $the_rest_progress = round(($unpaid_payables['the_rest']['total_paid'] / $unpaid_payables['the_rest']['debt_value']) * 100); ?>
+              <?php $formatted_total_paid2 = moneyStrDot($unpaid_payables['the_rest']['total_paid']); ?>
+              <?php $formatted_debt_value2 = moneyStrDot($unpaid_payables['the_rest']['debt_value']); ?>
+
+              <h4 class="small font-weight-bold">Lain-lain <span class="float-right"><?= $the_rest_progress; ?>%</span></h4>
+              <div class="progress">
+                <div class="progress-bar bg-danger" role="progressbar" data-toggle="tooltip" data-placement="top" title="<?= "Rp{$formatted_total_paid2} dari Rp{$formatted_debt_value2}"; ?>" <?= "style='width: {$the_rest_progress}%'" ?>></div>
+              </div>
+
+            <?php endif; ?>
+
+          <?php else : ?>
+
+            <div class="d-flex flex-column justify-content-center align-items-center h-100">
+              <div class="mb-4 text-primary"><i class="fas fa-thumbs-up fa-5x"></i></div>
+              <h4 class="text-primary">Anda bersih dari cicilan</h4>
+            </div>
+
+          <?php endif; ?>
 
         </div>
 
