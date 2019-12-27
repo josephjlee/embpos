@@ -265,4 +265,55 @@ class Keuangan_ajax extends CI_Controller
     header('Content-Type: application/json');
     echo json_encode($response);
   }
+
+  public function simpan_pengeluaran()
+  {
+    $expense = $this->input->post('expense');
+
+    $this->keuangan_model->simpan_pengeluaran($expense);
+
+    $message = $expense['expense_id'] ? 'Detail pengeluaran berhasil diperbarui' : 'Pengeluaran baru berhasil dicatat';
+
+    $response['action'] = $expense['expense_id'] ? 'update' : 'create';
+
+    $response['alert'] = "<div class='row'>
+                            <div class='col'>
+                              <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                                <strong class='alert-content'>{$message}</strong>
+                                <button type='button' class='close' data-dismiss='alert'>
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>";
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
+  public function list_all_expenses()
+  {
+    $expenses = [
+      'data' => []
+    ];
+
+    foreach ($this->keuangan_model->list_all_expenses() as $expense) {
+
+      $expense['amount'] = [
+        'display' => moneyStrDot($expense['amount']) . ',00',
+        'raw'    => $expense['amount']
+      ];
+
+      $expense['transaction_date'] = [
+        'display' => date('d/m/Y', strtotime($expense['transaction_date'])),
+        'raw'     => strtotime($expense['transaction_date']),
+        'input'   => date('Y-m-d', strtotime($expense['transaction_date']))
+      ];
+
+      array_push($expenses['data'], $expense);
+    };
+
+    header('Content-Type: application/json');
+    echo json_encode($expenses);
+  }
 }

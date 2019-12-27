@@ -228,6 +228,59 @@ class Keuangan_model extends CI_Model
     return $query->row_array();
   }
 
+  public function simpan_pengeluaran($expense)
+  {
+
+    if (!empty($expense['expense_id'])) {
+      return $this->perbarui_pengeluaran($expense);
+    }
+
+    return $this->tambah_pengeluaran($expense);
+  }
+
+  public function tambah_pengeluaran($expense)
+  {
+
+    $expense_data = $this->siapkan_data($expense);
+
+    return $this->db->insert('expense', $expense_data);
+  }
+
+  public function perbarui_pengeluaran($expense)
+  {
+    $expense_data = $this->siapkan_data($expense);
+
+    $this->db->where('expense_id', $expense['expense_id']);
+
+    return $this->db->update('expense', $expense_data);
+  }
+
+  public function hapus_pengeluaran($expense)
+  {
+    $this->db->where('expense_id', $expense['expense_id']);
+    return $this->db->delete('expense');
+  }
+
+  public function list_all_expenses()
+  {
+
+    $query = $this->db->query("SELECT 
+                  vendor.name AS vendor,
+                  vendor.vendor_id,
+                  expense_category.name AS category,
+                  expense_category.expense_category_id,
+                  expense.expense_id,
+                  expense.description,
+                  expense.amount,
+                  expense.transaction_date,
+                  expense.note
+              FROM expense
+              JOIN vendor ON expense.vendor_id = vendor.vendor_id
+              JOIN expense_category ON expense.expense_category_id = expense_category.expense_category_id");
+
+    return $query->result_array();
+  }
+
   public function list_all_expense_categories()
   {
     $query = $this->db->query("SELECT expense_category_id, name FROM expense_category");

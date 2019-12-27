@@ -11,85 +11,66 @@ let categorySelect = $('#categories');
 vendorSelect.select2();
 categorySelect.select2();
 
-// 	// DataTable
-// 	let table = $('#debtDataTable').DataTable({
-// 		"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_debts`,
-// 		"columns": [
-// 			{ "data": "debt_id" },
-// 			{ "data": "creditor" },
-// 			{ "data": "description" },
-// 			{
-// 				"data": {
-// 					"_": "amount.display",
-// 					"sort": "amount.raw"
-// 				}
-// 			},
-// 			{
-// 				"data": {
-// 					"_": "transaction_date.display",
-// 					"sort": "transaction_date.raw"
-// 				}
-// 			},
-// 			{
-// 				"data": {
-// 					"_": "payment_date.display",
-// 					"sort": "payment_date.raw"
-// 				}
-// 			},
-// 			{
-// 				"data": {
-// 					"_": "due.display",
-// 					"sort": "due.raw"
-// 				}
-// 			},
-// 			{
-// 				"data": "debt_id"
-// 			}
-// 		],
-// 		"createdRow": function (row, data, dataIndex) {
-// 			$(row).attr('data-debt-id', data.debt_id);
-// 			$(row).attr('data-creditor-id', data.creditor_id);
-// 			$(row).attr('data-description', data.description);
-// 			$(row).attr('data-transaction-date', data.transaction_date.input);
-// 			$(row).attr('data-payment-date', data.payment_date.input);
-// 			$(row).attr('data-amount', data.amount.raw);
-// 			$(row).attr('data-paid', data.paid.raw);
-// 			$(row).attr('data-due', data.due.raw);
-// 			$(row).attr('data-note', data.note);
-// 		},
-// 		"columnDefs": [
-// 			{
-// 				"targets": 0,
-// 				"createdCell": function (td, cellData, rowData, row, col) {
-// 					$(td).html(`HTG-${cellData}`);
-// 				}
-// 			},
-// 			{
-// 				"targets": -1,
-// 				"createdCell": function (td, cellData, rowData, row, col) {
+// DataTable
+let table = $('#expenseDataTable').DataTable({
+	"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_expenses`,
+	"columns": [
+		{ "data": "expense_id" },
+		{
+			"data": {
+				"_": "transaction_date.display",
+				"sort": "transaction_date.raw"
+			}
+		},
+		{ "data": "description" },
+		{ "data": "category" },
+		{
+			"data": {
+				"_": "amount.display",
+				"sort": "amount.raw"
+			}
+		},
+		{ "data": "vendor" },
+		{ "data": "expense_id" }
+	],
+	"createdRow": function (row, data, dataIndex) {
+		$(row).attr('data-expense-id', data.expense_id);
+		$(row).attr('data-vendor-id', data.vendor_id);
+		$(row).attr('data-category-id', data.expense_category_id);
+		$(row).attr('data-description', data.description);
+		$(row).attr('data-transaction-date', data.transaction_date.input);
+		$(row).attr('data-amount', data.amount.raw);
+		$(row).attr('data-note', data.note);
+	},
+	"columnDefs": [
+		{
+			"targets": 0,
+			"createdCell": function (td, cellData, rowData, row, col) {
+				$(td).html(`HTG-${cellData}`);
+			}
+		},
+		{
+			"targets": -1,
+			"createdCell": function (td, cellData, rowData, row, col) {
 
-// 					let actionBtn = `
-// 					<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
-// 						<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-// 					</a>
+				let actionBtn = `
+					<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
+						<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+					</a>
 
-// 					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-// 						<a class="dropdown-item edit-debt-trigger" href="#" data-toggle="modal" data-target="#expenseEditorModal">Sunting Detail</a>
+						<a class="dropdown-item edit-expense-trigger" href="#" data-toggle="modal" data-target="#expenseEditorModal">Sunting Detail</a>
 
-// 						<a class="dropdown-item add-payment-trigger" href="#" data-toggle="modal" data-target="#debtPaymentModal">Rekam Pembayaran</a>
+						<a class="dropdown-item del-expense-trigger" href="#" data-toggle="modal" data-target="#delExpenseModal">Hapus Pengeluaran</a>
 
-// 						<a class="dropdown-item show-payment-trigger" href="#" data-toggle="modal" data-target="#paymentHistoryModal">Riwayat Pembayaran</a>
+					</div>`;
 
-// 						<a class="dropdown-item del-debt-trigger" href="#" data-toggle="modal" data-target="#delDebtModal">Hapus Hutang</a>
-
-// 					</div>`;
-
-// 					$(td).html(actionBtn);
-// 				}
-// 			}
-// 		]
-// 	});
+				$(td).html(actionBtn);
+			}
+		}
+	]
+});
 
 /**
  * Modal Action Trigger
@@ -243,39 +224,40 @@ $('#add-expense-trigger').click(function (event) {
 
 // 	})
 
-// 	/**
-// 	 * Debt entry submission
-// 	 */
+/**
+ * Expense entry submission
+ */
 
-// 	$('#expenseForm').submit(function (event) {
+$('#expenseForm').submit(function (event) {
 
-// 		event.preventDefault();
+	event.preventDefault();
 
-// 		let formData = $(this).serialize();
+	let formData = $(this).serialize();
 
-// 		let saveDebt = sendAjax(
-// 			`${window.location.origin}/ajax/keuangan_ajax/simpan_hutang`,
-// 			formData
-// 		);
+	let saveExpense = sendAjax(
+		`${window.location.origin}/ajax/keuangan_ajax/simpan_pengeluaran`,
+		formData
+	);
 
-// 		saveDebt.done(function (data) {
+	saveExpense.done(function (data) {
 
-// 			// Prepend success notif into main page container
-// 			$('#expenseEditorModal .modal-body').prepend(data.alert);
+		// Prepend success notif into main page container
+		$('#expenseEditorModal .modal-body').prepend(data.alert);
 
-// 			if (data.action == 'create') {
-// 				// Reset previous value
-// 				$('#expenseForm')[0].reset();
-// 				$('#expenseForm #debt-id').val(null);
-// 				$('#expenseForm #creditors').val(null).trigger('change');
-// 			}
+		if (data.action == 'create') {
+			// Reset previous value
+			$('#expenseForm')[0].reset();
+			$('#expenseForm #expense-id').val(null);
+			$('#expenseForm #vendors').val(null).trigger('change');
+			$('#expenseForm #categories').val(null).trigger('change');
+		}
 
-// 			// Reload debt table to show the new data
-// 			table.ajax.reload();
+		// Reload expense table to show the new data
+		table.ajax.reload();
 
-// 		});
+	});
 
-// 	});
+});
 
 // 	/**
 // 	 * Debt deletion 

@@ -109,7 +109,7 @@
   <!-- Debt Table -->
   <div class="card shadow mb-4" id="debt-table-card">
     <div class="card-body">
-      <table class="table table-hover" id="debtDataTable">
+      <table class="table table-hover" id="expenseDataTable">
         <thead class="thead-light">
           <tr>
             <th scope="col">ID</th>
@@ -181,9 +181,8 @@
 
       <div class="modal-content">
 
-        <form id="expenseForm" action="">
+        <form id="expenseForm">
 
-          <input type="hidden" name="request-source" id="req-src" value="<?= $this->uri->uri_string() ?>">
           <input type="hidden" name="expense[expense_id]" id="expense-id" value="">
 
           <div class="modal-header">
@@ -206,7 +205,7 @@
 
               <div class="form-group col">
                 <label for="categories"><small>Kategori</small></label>
-                <select name="expense[category_id]" id="categories" required>
+                <select name="expense[expense_category_id]" id="categories" required>
                   <option value="">Pilih Kategori</option>
 
                   <?php if (isset($expense_detail['category_id'])) : ?>
@@ -226,8 +225,8 @@
               </div>
 
               <div class="form-group col">
-                <label for="payment-date"><small>Tanggal transaksi</small></label>
-                <input type="date" name="expense[payment_date]" id="payment-date" class="form-control" value="<?= isset($expense_detail['payment_date']) ? date('Y-m-d', strtotime($expense_detail['payment_date'])) : ''; ?>" required>
+                <label for="transaction-date"><small>Tanggal transaksi</small></label>
+                <input type="date" name="expense[transaction_date]" id="transaction-date" class="form-control" value="<?= isset($expense_detail['transaction_date']) ? date('Y-m-d', strtotime($expense_detail['transaction_date'])) : ''; ?>" required>
               </div>
 
             </div>
