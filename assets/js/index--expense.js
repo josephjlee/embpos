@@ -306,39 +306,39 @@ $('#add-expense-trigger').click(function (event) {
 
 // 	});
 
-// 	/**
-// 	 * New creditor creation
-// 	 */
+/**
+ * New vendor creation
+ */
 
-// 	$('#creditorForm').submit(function (event) {
+$('#vendorForm').submit(function (event) {
 
-// 		event.preventDefault();
+	event.preventDefault();
 
-// 		let creditorData = $(this).serialize();
+	let vendorData = $(this).serialize();
 
-// 		let saveCreditor = sendAjax(
-// 			`${window.location.origin}/ajax/keuangan_ajax/tambah_kreditur`,
-// 			creditorData
-// 		)
+	let saveVendor = sendAjax(
+		`${window.location.origin}/ajax/keuangan_ajax/tambah_vendor`,
+		vendorData
+	);
 
-// 		saveCreditor.done(function (data) {
+	saveVendor.done(function (data) {
 
-// 			// Prepend success notif into main page container
-// 			$('#debt-index').prepend(data.alert);
+		// Prepend success notif into main page container
+		$('#debt-index').prepend(data.alert);
 
-// 			// Append newCreditor into creditor-select
-// 			let newCreditorOptions = `<option value="${data.newCreditor.id}">${data.newCreditor.text}</option>`;;
-// 			creditorSelect.append(newCreditorOptions);
+		// Append newVendor into Vendor-select
+		let newVendorOptions = `<option value="${data.newVendor.id}">${data.newVendor.text}</option>`;;
+		vendorSelect.append(newVendorOptions);
 
-// 			// Transform creditorSelect into select2
-// 			creditorSelect.select2();
+		// Transform vendorSelect into select2
+		vendorSelect.select2();
 
-// 		});
+	});
 
-// 		// Hide the modal
-// 		$('#addCreditorModal').modal('hide');
+	// Hide the modal
+	$('#addVendorModal').modal('hide');
 
-// 	});
+});
 
 // 	/**
 // 	 * Debt Payment Submission

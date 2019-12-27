@@ -134,8 +134,7 @@
 
         <form id="vendorForm">
 
-          <input type="hidden" name="request-source" id="req-src" value="<?= $this->uri->uri_string() ?>">
-          <input type="hidden" name="vendor[vendor_id]" id="cust_id" value="">
+          <input type="hidden" name="vendor[vendor_id]" id="vendor_id" value="">
 
           <div class="modal-header">
             <h5 class="modal-title">Tambah Vendor Baru</h5>

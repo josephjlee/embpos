@@ -10,7 +10,7 @@ class Keuangan_ajax extends CI_Controller
     parent::__construct();
 
     $this->load->model('keuangan_model');
-    $this->load->model('kreditur_model');
+    $this->load->model('vendor_model');
   }
 
   public function simpan_hutang()
@@ -224,6 +224,43 @@ class Keuangan_ajax extends CI_Controller
       'newCreditor' => $new_creditor,
       'alert'       => $alert
     ];
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
+  public function tambah_vendor()
+  {
+
+    // Insert vendor data into table
+    $vendor = $this->input->post('vendor');
+
+    // Run add vendor query
+    $this->vendor_model->tambah($vendor);
+
+    // Grab the newly created vendor_id
+    $new_vendor_id = $this->db->insert_id();
+
+    // Query the newly created vendor 
+    $new_vendor_data = $this->vendor_model->get_vendor_by_id($new_vendor_id);
+
+    // Pack new_vendor_data into $response
+    $response['newVendor'] = [
+      'id' => $new_vendor_data['vendor_id'],
+      'text' => $new_vendor_data['name']
+    ];
+
+    // Compose notification alert and pack into $response
+    $response['alert'] = '<div class="row mb-2">
+                <div class="col">
+                  <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                    <strong class="alert-content">Vendor baru berhasil ditambahkan</strong>
+                    <button type="button" class="close" data-dismiss="alert">
+                      <span>&times;</span>
+                    </button>
+                  </div>
+                </div>
+              </div>';
 
     header('Content-Type: application/json');
     echo json_encode($response);
