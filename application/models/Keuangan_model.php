@@ -54,7 +54,6 @@ class Keuangan_model extends CI_Model
                   debt.amount,
                   debt.transaction_date,
                   debt.payment_date,
-                  debt.term,
                   debt.note,
                   (
                     SELECT IFNULL(SUM(debt_payment.amount),0)
@@ -109,14 +108,6 @@ class Keuangan_model extends CI_Model
               WHERE debt.debt_id = {$debt_id}");
 
     return $query->row_array();
-  }
-
-  public function get_debt_category()
-  {
-    $this->db->select('item_id, name');
-    $this->db->from('item');
-    $this->db->where('for_debt', 1);
-    return $this->db->get()->result_array();
   }
 
   public function get_debt_payment_history_by_debt_id($debt_id)
@@ -235,6 +226,12 @@ class Keuangan_model extends CI_Model
     }
 
     return $query->row_array();
+  }
+
+  public function list_all_expense_categories()
+  {
+    $query = $this->db->query("SELECT expense_category_id, name FROM expense_category");
+    return $query->result_array();
   }
 
   public function siapkan_data($debt)

@@ -10,8 +10,20 @@ class Keuangan extends CI_Controller
 
         $this->load->model('keuangan_model');
         $this->load->model('kreditur_model');
+        $this->load->model('vendor_model');
+    }
 
-        $this->load->model('pelanggan_model');
+    public function pengeluaran()
+    {
+        $data['title'] = 'Pengeluaran';
+
+        $data['debts'] = $this->keuangan_model->list_all_debts();
+
+        $data['content'] = $this->load->view('dashboard/finance/expense-index', $data, TRUE);
+
+        $data['view_script'] = 'index--expense.js';
+
+        $this->load->view('layout/dashboard', $data);
     }
 
     public function daftar_hutang()
