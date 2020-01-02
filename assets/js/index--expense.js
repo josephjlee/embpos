@@ -46,7 +46,7 @@ let table = $('#expenseDataTable').DataTable({
 		{
 			"targets": 0,
 			"createdCell": function (td, cellData, rowData, row, col) {
-				$(td).html(`HTG-${cellData}`);
+				$(td).html(`PGL-${cellData}`);
 			}
 		},
 		{
@@ -90,34 +90,36 @@ $('#add-expense-trigger').click(function (event) {
 
 });
 
-// 	// Edit Debt Trigger
-// 	$('#debtDataTable').on('click', '.edit-debt-trigger', function (event) {
+// Edit Debt Trigger
+$('#expenseDataTable').on('click', '.edit-expense-trigger', function (event) {
 
-// 		// Add title to the modal
-// 		$('#expenseEditorModal .modal-title').html('Sunting Detail');
+	// Add title to the modal
+	$('#expenseEditorModal .modal-title').html('Sunting Detail');
 
-// 		// Grab Entry Data
-// 		let entryRow = $(this).parents('tr');
-// 		let debtId = entryRow.data('debt-id');
-// 		let creditorId = entryRow.data('creditor-id');
-// 		let amount = entryRow.data('amount');
-// 		let note = entryRow.data('note');
-// 		let description = entryRow.data('description');
-// 		let transactionDate = entryRow.data('transaction-date');
-// 		let paymentDate = entryRow.data('payment-date');
+	// Grab Entry Data
+	let entryRow = $(this).parents('tr');
+	let expenseId = entryRow.data('expense-id');
+	let vendorId = entryRow.data('vendor-id');
+	let categoryId = entryRow.data('category-id');
+	let amount = entryRow.data('amount');
+	let description = entryRow.data('description');
+	let transactionDate = entryRow.data('transaction-date');
+	let note = entryRow.data('note');
 
-// 		// Fill form with the data
-// 		$('#expenseForm #debt-id').val(debtId);
-// 		$('#expenseForm #amount').val(amount);
-// 		$('#expenseForm #note').val(note);
-// 		$('#expenseForm #description').val(description);
-// 		$('#expenseForm #transaction-date').val(transactionDate);
-// 		$('#expenseForm #payment-date').val(paymentDate);
+	// Fill form with the data
+	$('#expenseForm #expense-id').val(expenseId);
+	$('#expenseForm #amount').val(amount);
+	$('#expenseForm #description').val(description);
+	$('#expenseForm #transaction-date').val(transactionDate);
+	$('#expenseForm #note').val(note);
 
-// 		$('#expenseForm #creditors').val(creditorId);
-// 		$('#expenseForm #creditors').trigger('change');
+	$('#expenseForm #vendors').val(vendorId);
+	$('#expenseForm #vendors').trigger('change');
 
-// 	});
+	$('#expenseForm #categories').val(categoryId);
+	$('#expenseForm #categories').trigger('change');
+
+});
 
 // 	// Delete Debt Modal Trigger
 // 	$('#debtDataTable').on('click', '.del-debt-trigger', function (event) {
