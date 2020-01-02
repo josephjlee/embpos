@@ -316,4 +316,28 @@ class Keuangan_ajax extends CI_Controller
     header('Content-Type: application/json');
     echo json_encode($expenses);
   }
+
+  public function hapus_pengeluaran()
+  {
+
+    $expense = $this->input->post('expense');
+
+    // Delete expense table entry by the received expense_id
+    $this->db->where('expense_id', $expense['expense_id']);
+    $this->db->delete('expense');
+
+    $response['alert'] = '<div class="row mb-2">
+                            <div class="col">
+                              <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                                <strong class="alert-content">Pengeluaran berhasil dihapus</strong>
+                                <button type="button" class="close" data-dismiss="alert">
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
 }

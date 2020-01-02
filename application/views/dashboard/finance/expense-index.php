@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div class="container-fluid" id="debt-index">
+<div class="container-fluid" id="expense-index">
 
   <!-- Page Heading -->
   <div class=" row mb-2">
@@ -277,11 +277,11 @@
     </div>
   </div>
 
-  <!-- Delete Debt Modal -->
-  <div class="modal fade" id="delDebtModal" tabindex="-1" role="dialog">
+  <!-- Delete Expense Modal -->
+  <div class="modal fade" id="delExpenseModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="" method="post" id="delete-debt-form">
-        <input type="hidden" name="debt[debt_id]" id="debt-id" value="">
+      <form action="" method="post" id="delete-expense-form">
+        <input type="hidden" name="expense[expense_id]" id="expense-id" value="">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Yakin akan menghapus?</h5>
@@ -289,7 +289,7 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Hutang ini akan dihapus dari database.</div>
+          <div class="modal-body">Pengeluaran ini akan dihapus dari database.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary">Hapus</button>

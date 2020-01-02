@@ -90,7 +90,7 @@ $('#add-expense-trigger').click(function (event) {
 
 });
 
-// Edit Debt Trigger
+// Edit Expense Trigger
 $('#expenseDataTable').on('click', '.edit-expense-trigger', function (event) {
 
 	// Add title to the modal
@@ -121,15 +121,15 @@ $('#expenseDataTable').on('click', '.edit-expense-trigger', function (event) {
 
 });
 
-// 	// Delete Debt Modal Trigger
-// 	$('#debtDataTable').on('click', '.del-debt-trigger', function (event) {
+// Delete Expense Modal Trigger
+$('#expenseDataTable').on('click', '.del-expense-trigger', function (event) {
 
-// 		let entryRow = $(this).parents('tr');
-// 		let debtId = entryRow.data('debt-id');
+	let entryRow = $(this).parents('tr');
+	let expenseId = entryRow.data('expense-id');
 
-// 		$('#delete-debt-form #debt-id').val(debtId);
+	$('#delete-expense-form #expense-id').val(expenseId);
 
-// 	});
+});
 
 // 	function paymentListTemplate(index, debt_payment_id, amount, date) {
 
@@ -261,34 +261,34 @@ $('#expenseForm').submit(function (event) {
 
 });
 
-// 	/**
-// 	 * Debt deletion 
-// 	 */
+/**
+ * Expense deletion 
+ */
 
-// 	$('#delete-debt-form').submit(function (e) {
+$('#delete-expense-form').submit(function (e) {
 
-// 		e.preventDefault();
+	e.preventDefault();
 
-// 		let debtData = $(this).serialize();
+	let expenseData = $(this).serialize();
 
-// 		let deleteDebt = sendAjax(
-// 			`${window.location.origin}/ajax/keuangan_ajax/hapus_hutang`,
-// 			debtData
-// 		)
+	let deleteExpense = sendAjax(
+		`${window.location.origin}/ajax/keuangan_ajax/hapus_pengeluaran`,
+		expenseData
+	)
 
-// 		deleteDebt.done(function (data) {
+	deleteExpense.done(function (data) {
 
-// 			// Prepend delete success notif into main page container
-// 			$('#debt-index').prepend(data.alert);
+		// Prepend delete success notif into main page container
+		$('#expense-index').prepend(data.alert);
 
-// 			// Reload debt table to show the new data
-// 			table.ajax.reload();
+		// Reload expense table to show the new data
+		table.ajax.reload();
 
-// 		});
+	});
 
-// 		$('#delDebtModal').modal('hide');
+	$('#delExpenseModal').modal('hide');
 
-// 	});
+});
 
 /**
  * New vendor creation
