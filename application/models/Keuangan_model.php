@@ -287,6 +287,19 @@ class Keuangan_model extends CI_Model
     return $query->result_array();
   }
 
+  public function list_expense_by_category()
+  {
+    $query = $this->db->query("SELECT 
+            expense_category.name AS category,
+            SUM(expense.amount) AS amount
+        FROM expense
+        JOIN expense_category ON expense.expense_category_id = expense_category.expense_category_id
+        GROUP BY expense.expense_category_id
+    ");
+
+    return $query->result_array();
+  }
+
   public function siapkan_data($debt)
   {
 

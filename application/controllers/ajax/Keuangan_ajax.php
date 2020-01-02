@@ -340,4 +340,12 @@ class Keuangan_ajax extends CI_Controller
     header('Content-Type: application/json');
     echo json_encode($response);
   }
+
+  public function get_expense_per_category()
+  {
+    $data = $this->keuangan_model->list_expense_by_category();
+
+    header('Content-Type: application/json');
+    echo json_encode($data);
+  }
 }

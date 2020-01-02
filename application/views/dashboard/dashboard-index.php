@@ -353,17 +353,6 @@
             </div>
             <canvas id="expenseChart" style="display: block; width: 302px; height: 245px;" width="302" height="245" class="chartjs-render-monitor"></canvas>
           </div>
-          <div class="mt-4 text-center small">
-            <span class="mr-2">
-              <i class="fas fa-circle text-primary"></i> Gaji
-            </span>
-            <span class="mr-2">
-              <i class="fas fa-circle text-success"></i> Bayar Hutang
-            </span>
-            <span class="mr-2">
-              <i class="fas fa-circle text-info"></i> Operasional
-            </span>
-          </div>
         </div>
       </div>
     </div>
