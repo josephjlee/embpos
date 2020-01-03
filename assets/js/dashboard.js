@@ -27,7 +27,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-// Monthly Payment Chart
+// Monthly Payment Chart - Area
 $.ajax({
   url: `${window.location.origin}/ajax/pembayaran_ajax/get_monthly_payment`,
   method: 'GET',
@@ -121,13 +121,9 @@ $.ajax({
       }
     });
   }
-})
+});
 
-// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
-
-// Payment by Method
+// Payment by Method Chart - Doughnut
 $.ajax({
   url: `${window.location.origin}/ajax/pembayaran_ajax/get_payment_amount_per_method`,
   method: 'GET',
@@ -172,9 +168,7 @@ $.ajax({
   }
 });
 
-
-
-// Expense Chart
+// Expense Chart - Doughut
 $.ajax({
   url: `${window.location.origin}/ajax/keuangan_ajax/get_expense_per_category`,
   method: 'GET',
