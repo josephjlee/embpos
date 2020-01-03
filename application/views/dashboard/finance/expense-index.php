@@ -22,7 +22,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Pengeluaran (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_expense['amount']); ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= empty($total_expense) ? 0 : moneyStrDot($total_expense['amount']); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-comment-dollar fa-2x text-gray-300"></i>
@@ -42,7 +42,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pos Terbesar (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_expense_category; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_expense_category ?? '-'; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -62,7 +62,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Belanja Terbesar (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_expense; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_expense ?? '-'; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-cart-plus fa-2x text-gray-300"></i>
@@ -82,7 +82,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2" data-toggle="tooltip">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Belanja Tersering (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $the_most_frequent; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $the_most_frequent ?? '-'; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-star fa-2x text-gray-300"></i>
