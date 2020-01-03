@@ -295,6 +295,7 @@ class Keuangan_model extends CI_Model
         FROM expense
         JOIN expense_category ON expense.expense_category_id = expense_category.expense_category_id
         GROUP BY expense.expense_category_id
+        ORDER BY amount DESC
     ");
 
     return $query->result_array();
@@ -314,5 +315,58 @@ class Keuangan_model extends CI_Model
     }
 
     return $debt_db_data;
+  }
+
+  public function get_total_expense_by_month($month)
+  {
+    $query = $this->db->query("SELECT 
+                  SUM(expense.amount) AS amount
+              FROM expense
+              WHERE MONTH(transaction_date) = {$month} AND YEAR(transaction_date) = YEAR(curdate())
+              GROUP BY MONTH(transaction_date)");
+    return $query->row_array();
+  }
+
+  public function get_the_biggest_expense_category_by_month($month)
+  {
+    $query = $this->db->query("SELECT 
+            expense_category.name AS category,
+            SUM(expense.amount) AS amount
+        FROM expense
+        JOIN expense_category ON expense.expense_category_id = expense_category.expense_category_id
+        WHERE MONTH(transaction_date) = {$month} AND YEAR(transaction_date) = YEAR(curdate())
+        GROUP BY expense.expense_category_id
+        ORDER BY amount DESC
+        LIMIT 1
+    ");
+    return $query->row_array()['category'];
+  }
+
+  public function get_the_biggest_expense_by_month($month)
+  {
+    $query = $this->db->query("SELECT amount, description
+        FROM expense
+        WHERE MONTH(transaction_date) = {$month} AND YEAR(transaction_date) = YEAR(curdate())
+        ORDER BY amount DESC
+        LIMIT 1
+    ");
+    return $query->row_array()['description'];
+  }
+
+  public function get_the_most_frequent_buy($month)
+  {
+    $query = $this->db->query("SELECT 
+                expense_category.name AS category,
+                COUNT(expense.expense_category_id) AS times
+            FROM
+                expense
+            JOIN expense_category ON expense.expense_category_id = expense_category.expense_category_id
+            WHERE
+                MONTH(transaction_date) = {$month}
+                    AND YEAR(transaction_date) = YEAR(CURDATE())
+            GROUP BY expense.expense_category_id
+            ORDER BY times DESC
+            LIMIT 1");
+    return $query->row_array()['category'];
   }
 }

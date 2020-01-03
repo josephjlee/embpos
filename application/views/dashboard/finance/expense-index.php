@@ -12,9 +12,9 @@
 
   <div class="row mb-4">
 
-    <!-- Total Hutang -->
+    <!-- Total Pengeluaran Bulan Ini -->
 
-    <?php $total_debt_due = $this->keuangan_model->get_total_debt_due(); ?>
+    <?php $total_expense = $this->keuangan_model->get_total_expense_by_month(date('m')); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-info shadow h-100 py-2">
@@ -22,7 +22,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Pengeluaran (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_debt_due); ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_expense['amount']); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-comment-dollar fa-2x text-gray-300"></i>
@@ -32,9 +32,9 @@
       </div>
     </div>
 
-    <!-- Total Creditor -->
+    <!-- Kategori Pengeluaran Terbesar -->
 
-    <?php $active_creditors = $this->keuangan_model->count_active_creditor(); ?>
+    <?php $biggest_expense_category = $this->keuangan_model->get_the_biggest_expense_category_by_month(date('m')); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-primary shadow h-100 py-2">
@@ -42,7 +42,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pos Terbesar (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Gaji</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_expense_category; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -52,9 +52,9 @@
       </div>
     </div>
 
-    <!-- Kreditur Terbesar -->
+    <!-- Pengeluaran Terbesar -->
 
-    <?php $biggest_creditor = $this->keuangan_model->get_the_biggest_creditor(); ?>
+    <?php $biggest_expense = $this->keuangan_model->get_the_biggest_expense_by_month(date('m')); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-success shadow h-100 py-2">
@@ -62,7 +62,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Belanja Terbesar (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Kain Kapas 50N</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_expense; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-cart-plus fa-2x text-gray-300"></i>
@@ -72,17 +72,9 @@
       </div>
     </div>
 
-    <!-- Tenggat Terdekat -->
+    <!-- Kategori Pengeluaran Tersering -->
 
-    <?php
-
-    $the_nearest_due = $this->keuangan_model->get_the_nearest_debt_due();
-
-    if ($the_nearest_due != '-') {
-      $the_nearest_due['payment_date'] = date('d-M-y', strtotime($the_nearest_due['payment_date']));
-    }
-
-    ?>
+    <?php $the_most_frequent = $this->keuangan_model->get_the_most_frequent_buy(date('m')); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-warning shadow h-100 py-2">
@@ -90,11 +82,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2" data-toggle="tooltip">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Belanja Tersering (<?= date('M') ?>)</div>
-              <?php if ($the_nearest_due != '-') : ?>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">Double Tape</div>
-              <?php else : ?>
-                <h5>-</h5>
-              <?php endif; ?>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $the_most_frequent; ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-star fa-2x text-gray-300"></i>
