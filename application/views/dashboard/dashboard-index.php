@@ -310,7 +310,7 @@
           <?php else : ?>
 
             <div class="d-flex flex-column justify-content-center align-items-center h-100">
-              <div class="mb-4 text-primary"><i class="fas fa-thumbs-up fa-5x"></i></div>
+              <div class="mb-4 text-primary"><i class="fas fa-thumbs-up fa-4x"></i></div>
               <h4 class="text-primary">Anda bersih dari cicilan</h4>
             </div>
 
@@ -323,7 +323,7 @@
 
     <!-- Expense Chart -->
     <div class="col-lg-6">
-      <div class="card shadow">
+      <div class="card shadow h-100" id="expense-card">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Pengeluaran</h6>

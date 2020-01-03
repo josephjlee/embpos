@@ -174,6 +174,17 @@ $.ajax({
   method: 'GET',
   success: function (data) {
 
+    if (data.length < 1) {
+      const expenseFreeTemplate = `
+        <div class="d-flex flex-column justify-content-center align-items-center h-100">
+          <div class="mb-4 text-primary"><i class="fas fa-magic fa-4x"></i></i></div>
+          <h4 class="text-primary">Belum ada pengeluaran</h4>
+        </div>
+      `;
+      $('#expense-card .card-body').html(expenseFreeTemplate);
+      return;
+    }
+
     const expenseLabels = [];
     const expenseData = [];
 
