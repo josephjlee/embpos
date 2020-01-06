@@ -229,26 +229,31 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($response);
   }
 
-  public function tambah_vendor()
+  public function simpan_vendor()
   {
 
     // Insert vendor data into table
     $vendor = $this->input->post('vendor');
 
     // Run add vendor query
-    $this->vendor_model->tambah($vendor);
+    $this->vendor_model->simpan($vendor);
+
+    // Check whether it's a create or an update operation
+    $message = $vendor['vendor_id'] ? 'Detail vendor berhasil diperbarui' : 'Vendor baru berhasil ditambahkan';
+
+    $response['action'] = $vendor['vendor_id'] ? 'update' : 'create';
 
     // Compose notification alert and pack into $response
-    $response['alert'] = '<div class="row mb-2">
-                <div class="col">
-                  <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
-                    <strong class="alert-content">Vendor baru berhasil ditambahkan</strong>
-                    <button type="button" class="close" data-dismiss="alert">
+    $response['alert'] = "<div class='row'>
+                <div class='col'>
+                  <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    <strong class='alert-content'>{$message}</strong>
+                    <button type='button' class='close' data-dismiss='alert'>
                       <span>&times;</span>
                     </button>
                   </div>
                 </div>
-              </div>';
+              </div>";
 
     header('Content-Type: application/json');
     echo json_encode($response);
@@ -266,8 +271,6 @@ class Keuangan_ajax extends CI_Controller
         'display' => moneyStrDot($vendor['value']) . ',00',
         'raw'    => $vendor['value']
       ];
-
-      $vendor['email'] = !empty($vendor['email']) ? $vendor['email'] : 'tidak diketahui';
 
       array_push($vendors['data'], $vendor);
     };

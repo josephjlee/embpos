@@ -23,10 +23,11 @@ $(document).ready(function () {
 		],
 		"createdRow": function (row, data, dataIndex) {
 			$(row).attr('data-vendor-id', data.vendor_id);
+			$(row).attr('data-name', data.name);
 			$(row).attr('data-phone', data.phone);
 			$(row).attr('data-email', data.email);
 			$(row).attr('data-address', data.address);
-			$(row).attr('data-address', data.selling);
+			$(row).attr('data-selling', data.selling);
 			$(row).attr('data-value', data.value.raw);
 		},
 		"columnDefs": [
@@ -69,46 +70,40 @@ $(document).ready(function () {
 
 	});
 
-	// // Edit Expense Trigger
-	// $('#expenseDataTable').on('click', '.edit-expense-trigger', function (event) {
+	// Edit Vendor Trigger
+	$('#vendorDataTable').on('click', '.edit-vendor-trigger', function (event) {
 
-	// 	// Add title to the modal
-	// 	$('#expenseEditorModal .modal-title').html('Sunting Detail');
+		// Add title to the modal
+		$('#vendorEditorModal .modal-title').html('Sunting Detail');
 
-	// 	// Grab Entry Data
-	// 	let entryRow = $(this).parents('tr');
-	// 	let expenseId = entryRow.data('expense-id');
-	// 	let vendorId = entryRow.data('vendor-id');
-	// 	let categoryId = entryRow.data('category-id');
-	// 	let amount = entryRow.data('amount');
-	// 	let description = entryRow.data('description');
-	// 	let transactionDate = entryRow.data('transaction-date');
-	// 	let note = entryRow.data('note');
+		// Grab Entry Data
+		let entryRow = $(this).parents('tr');
+		let vendorId = entryRow.data('vendor-id');
+		let name = entryRow.data('name');
+		let phone = entryRow.data('phone');
+		let email = entryRow.data('email');
+		let address = entryRow.data('address');
+		let selling = entryRow.data('selling');
 
-	// 	// Fill form with the data
-	// 	$('#expenseForm #expense-id').val(expenseId);
-	// 	$('#expenseForm #amount').val(amount);
-	// 	$('#expenseForm #description').val(description);
-	// 	$('#expenseForm #transaction-date').val(transactionDate);
-	// 	$('#expenseForm #note').val(note);
+		// Fill form with the data
+		$('#vendorForm #vendor-id').val(vendorId);
+		$('#vendorForm #name').val(name);
+		$('#vendorForm #selling').val(selling);
+		$('#vendorForm #address').val(address);
+		$('#vendorForm #phone').val(phone);
+		$('#vendorForm #email').val(email);
 
-	// 	$('#expenseForm #vendors').val(vendorId);
-	// 	$('#expenseForm #vendors').trigger('change');
+	});
 
-	// 	$('#expenseForm #categories').val(categoryId);
-	// 	$('#expenseForm #categories').trigger('change');
+	// Delete Expense Modal Trigger
+	$('#expenseDataTable').on('click', '.del-expense-trigger', function (event) {
 
-	// });
+		let entryRow = $(this).parents('tr');
+		let expenseId = entryRow.data('expense-id');
 
-	// // Delete Expense Modal Trigger
-	// $('#expenseDataTable').on('click', '.del-expense-trigger', function (event) {
+		$('#delete-expense-form #expense-id').val(expenseId);
 
-	// 	let entryRow = $(this).parents('tr');
-	// 	let expenseId = entryRow.data('expense-id');
-
-	// 	$('#delete-expense-form #expense-id').val(expenseId);
-
-	// });
+	});
 
 	/**
 	 * Vendor entry submission
@@ -121,7 +116,7 @@ $(document).ready(function () {
 		let formData = $(this).serialize();
 
 		let saveVendor = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/tambah_vendor`,
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_vendor`,
 			formData
 		);
 

@@ -124,7 +124,7 @@
 
         <form id="vendorForm">
 
-          <input type="hidden" name="vendor[vendor_id]" id="id" value="">
+          <input type="hidden" name="vendor[vendor_id]" id="vendor-id" value="">
 
           <div class="modal-header">
             <h5 class="modal-title"></h5>
