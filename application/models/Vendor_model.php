@@ -39,7 +39,20 @@ class Vendor_model extends CI_Model
 
 	public function list_all_vendors()
 	{
-		return $this->db->get('vendor')->result_array();
+		$query = $this->db->query("SELECT 
+							vendor.vendor_id,
+							vendor.name,
+							vendor.phone,
+							vendor.email,
+							vendor.address,
+							vendor.selling,
+							(
+								SELECT IFNULL(SUM(expense.amount),0)
+								FROM expense
+								WHERE	expense.vendor_id = vendor.vendor_id
+							) AS value
+							FROM vendor");
+		return $query->result_array();
 	}
 
 	public function get_vendor_by_id($vendor_id)

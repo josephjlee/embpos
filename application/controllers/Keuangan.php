@@ -26,6 +26,19 @@ class Keuangan extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
+    public function vendor()
+    {
+        $data['title'] = 'Vendor';
+
+        $data['vendors'] = $this->vendor_model->list_all_vendors();
+
+        $data['content'] = $this->load->view('dashboard/finance/vendor-index', $data, TRUE);
+
+        $data['view_script'] = 'index--vendor.js';
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
     public function daftar_hutang()
     {
 

@@ -266,6 +266,28 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($response);
   }
 
+  public function list_all_vendors()
+  {
+    $vendors = [
+      'data' => []
+    ];
+
+    foreach ($this->vendor_model->list_all_vendors() as $vendor) {
+
+      $vendor['value'] = [
+        'display' => moneyStrDot($vendor['value']) . ',00',
+        'raw'    => $vendor['value']
+      ];
+
+      $vendor['email'] = !empty($vendor['email']) ? $vendor['email'] : 'tidak diketahui';
+
+      array_push($vendors['data'], $vendor);
+    };
+
+    header('Content-Type: application/json');
+    echo json_encode($vendors);
+  }
+
   public function simpan_pengeluaran()
   {
     $expense = $this->input->post('expense');
