@@ -238,18 +238,6 @@ class Keuangan_ajax extends CI_Controller
     // Run add vendor query
     $this->vendor_model->tambah($vendor);
 
-    // Grab the newly created vendor_id
-    $new_vendor_id = $this->db->insert_id();
-
-    // Query the newly created vendor 
-    $new_vendor_data = $this->vendor_model->get_vendor_by_id($new_vendor_id);
-
-    // Pack new_vendor_data into $response
-    $response['newVendor'] = [
-      'id' => $new_vendor_data['vendor_id'],
-      'text' => $new_vendor_data['name']
-    ];
-
     // Compose notification alert and pack into $response
     $response['alert'] = '<div class="row mb-2">
                 <div class="col">

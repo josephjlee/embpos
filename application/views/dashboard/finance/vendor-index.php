@@ -5,7 +5,7 @@
   <div class="row mb-2">
     <div class="col d-flex justify-content-between align-items-center">
       <h1 class="h3 text-gray-800"><?= $title; ?></h1>
-      <a href="" class="badge badge-primary py-2 px-3 text-uppercase" id="input-cust-trigger" data-toggle="modal" data-target="#vendorEditorModal">+ Vendor</a>
+      <a href="" class="badge badge-primary py-2 px-3 text-uppercase" id="add-vendor-trigger" data-toggle="modal" data-target="#vendorEditorModal">+ Vendor</a>
     </div>
   </div>
 

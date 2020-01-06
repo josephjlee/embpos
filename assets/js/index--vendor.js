@@ -57,19 +57,17 @@ $(document).ready(function () {
 	//  * Modal Action Trigger
 	//  */
 
-	// // Add Expense Trigger
-	// $('#add-expense-trigger').click(function (event) {
+	// Add Vendor Trigger
+	$('#add-vendor-trigger').click(function (event) {
 
-	// 	// Add title to the modal
-	// 	$('#expenseEditorModal .modal-title').html('Catat Pengeluaran Baru');
+		// Add title to the modal
+		$('#vendorEditorModal .modal-title').html('Tambah Vendor Baru');
 
-	// 	// Reset previous value
-	// 	$('#expenseForm')[0].reset();
-	// 	$('#expenseForm #expense-id').val(null);
-	// 	$('#expenseForm #vendors').val(null).trigger('change');
-	// 	$('#expenseForm #categories').val(null).trigger('change');
+		// Reset previous value
+		$('#vendorForm')[0].reset();
+		$('#vendorForm #vendor-id').val(null);
 
-	// });
+	});
 
 	// // Edit Expense Trigger
 	// $('#expenseDataTable').on('click', '.edit-expense-trigger', function (event) {
@@ -112,40 +110,38 @@ $(document).ready(function () {
 
 	// });
 
-	// /**
-	//  * Expense entry submission
-	//  */
+	/**
+	 * Vendor entry submission
+	 */
 
-	// $('#expenseForm').submit(function (event) {
+	$('#vendorForm').submit(function (event) {
 
-	// 	event.preventDefault();
+		event.preventDefault();
 
-	// 	let formData = $(this).serialize();
+		let formData = $(this).serialize();
 
-	// 	let saveExpense = sendAjax(
-	// 		`${window.location.origin}/ajax/keuangan_ajax/simpan_pengeluaran`,
-	// 		formData
-	// 	);
+		let saveVendor = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/tambah_vendor`,
+			formData
+		);
 
-	// 	saveExpense.done(function (data) {
+		saveVendor.done(function (data) {
 
-	// 		// Prepend success notif into main page container
-	// 		$('#expenseEditorModal .modal-body').prepend(data.alert);
+			// Prepend success notif into main page container
+			$('#vendorEditorModal .modal-body').prepend(data.alert);
 
-	// 		if (data.action == 'create') {
-	// 			// Reset previous value
-	// 			$('#expenseForm')[0].reset();
-	// 			$('#expenseForm #expense-id').val(null);
-	// 			$('#expenseForm #vendors').val(null).trigger('change');
-	// 			$('#expenseForm #categories').val(null).trigger('change');
-	// 		}
+			if (data.action == 'create') {
+				// Reset previous value
+				$('#vendorForm')[0].reset();
+				$('#vendorForm #vendor-id').val(null);
+			}
 
-	// 		// Reload expense table to show the new data
-	// 		table.ajax.reload();
+			// Reload vendor table to show the new data
+			table.ajax.reload();
 
-	// 	});
+		});
 
-	// });
+	});
 
 	// /**
 	//  * Expense deletion 
