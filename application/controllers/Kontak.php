@@ -21,7 +21,7 @@ class Kontak extends CI_Controller
 
         $data['customers'] = $this->pelanggan_model->list_all_customers();
 
-        $data['content'] = $this->load->view('dashboard/customer/customer-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/contact/customer-index', $data, TRUE);
 
         $data['view_script'] = 'index--customer.js';
 
@@ -35,7 +35,7 @@ class Kontak extends CI_Controller
 
         $data['creditors'] = $this->kreditur_model->list_all_creditors();
 
-        $data['content'] = $this->load->view('dashboard/finance/creditor-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/contact/creditor-index', $data, TRUE);
 
         $data['view_script'] = 'index--creditor.js';
 
@@ -48,7 +48,7 @@ class Kontak extends CI_Controller
 
         $data['vendors'] = $this->vendor_model->list_all_vendors();
 
-        $data['content'] = $this->load->view('dashboard/finance/vendor-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/contact/vendor-index', $data, TRUE);
 
         $data['view_script'] = 'index--vendor.js';
 
