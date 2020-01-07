@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" id="vendor-index">
 
   <!-- Page Heading -->
   <div class="row mb-2">
@@ -9,8 +9,8 @@
     </div>
   </div>
 
-  <!-- Customer Table -->
-  <div class="card shadow mb-4" id="customer-table-card">
+  <!-- Vendor Table -->
+  <div class="card shadow mb-4" id="vendor-table-card">
     <div class="card-body">
       <table class="table table-hover" id="vendorDataTable">
         <thead class="thead-light">
@@ -89,7 +89,7 @@
   <div class="modal fade" id="delVendorModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <form id="del-vendor-form">
-        <input type="hidden" name="customer[customer_id]" id="cust_id" value="">
+        <input type="hidden" name="vendor[vendor_id]" id="vendor-id" value="">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Yakin akan menghapus?</h5>

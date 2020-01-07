@@ -54,9 +54,9 @@ $(document).ready(function () {
 		]
 	});
 
-	// /**
-	//  * Modal Action Trigger
-	//  */
+	/**
+	 * Modal Action Trigger
+	 */
 
 	// Add Vendor Trigger
 	$('#add-vendor-trigger').click(function (event) {
@@ -95,13 +95,13 @@ $(document).ready(function () {
 
 	});
 
-	// Delete Expense Modal Trigger
-	$('#expenseDataTable').on('click', '.del-expense-trigger', function (event) {
+	// Delete Vendor Trigger
+	$('#vendorDataTable').on('click', '.del-vendor-trigger', function (event) {
 
 		let entryRow = $(this).parents('tr');
-		let expenseId = entryRow.data('expense-id');
+		let vendorId = entryRow.data('vendor-id');
 
-		$('#delete-expense-form #expense-id').val(expenseId);
+		$('#del-vendor-form #vendor-id').val(vendorId);
 
 	});
 
@@ -138,65 +138,33 @@ $(document).ready(function () {
 
 	});
 
-	// /**
-	//  * Expense deletion 
-	//  */
+	/**
+	 * Vendor deletion 
+	 */
 
-	// $('#delete-expense-form').submit(function (e) {
+	$('#del-vendor-form').submit(function (e) {
 
-	// 	e.preventDefault();
+		e.preventDefault();
 
-	// 	let expenseData = $(this).serialize();
+		let vendorData = $(this).serialize();
 
-	// 	let deleteExpense = sendAjax(
-	// 		`${window.location.origin}/ajax/keuangan_ajax/hapus_pengeluaran`,
-	// 		expenseData
-	// 	)
+		let deleteVendor = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/hapus_vendor`,
+			vendorData
+		)
 
-	// 	deleteExpense.done(function (data) {
+		deleteVendor.done(function (data) {
 
-	// 		// Prepend delete success notif into main page container
-	// 		$('#expense-index').prepend(data.alert);
+			// Prepend delete success notif into main page container
+			$('#vendor-index').prepend(data.alert);
 
-	// 		// Reload expense table to show the new data
-	// 		table.ajax.reload();
+			// Reload vendor table to show the new data
+			table.ajax.reload();
 
-	// 	});
+		});
 
-	// 	$('#delExpenseModal').modal('hide');
+		$('#delVendorModal').modal('hide');
 
-	// });
-
-	// /**
-	//  * New vendor creation
-	//  */
-
-	// $('#vendorForm').submit(function (event) {
-
-	// 	event.preventDefault();
-
-	// 	let vendorData = $(this).serialize();
-
-	// 	let saveVendor = sendAjax(
-	// 		`${window.location.origin}/ajax/keuangan_ajax/tambah_vendor`,
-	// 		vendorData
-	// 	);
-
-	// 	saveVendor.done(function (data) {
-
-	// 		// Prepend success notif into main page container
-	// 		$('#debt-index').prepend(data.alert);
-
-	// 		// Append newVendor into Vendor-select
-	// 		let newVendorOptions = `<option value="${data.newVendor.id}">${data.newVendor.text}</option>`;;
-	// 		vendorSelect.append(newVendorOptions);
-
-	// 		// Transform vendorSelect into select2
-	// 		vendorSelect.select2();
-
-	// 	});
-
-	// 	// Hide the modal
-	// 	$('#addVendorModal').modal('hide');
+	});
 
 });
