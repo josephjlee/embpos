@@ -194,37 +194,30 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($response);
   }
 
-  public function tambah_kreditur()
+  public function simpan_kreditur()
   {
-
     // Insert creditor data into table
     $creditor = $this->input->post('creditor');
-    $this->kreditur_model->tambah($creditor);
-    $new_creditor_id = $this->db->insert_id();
 
-    // Store the inserted creditor data into variable
-    $new_creditor_data = $this->kreditur_model->get_creditor_by_id($new_creditor_id);
-    $new_creditor = [
-      'id' => $new_creditor_data['creditor_id'],
-      'text' => $new_creditor_data['name']
-    ];
+    // Run simpan kreditur query
+    $this->kreditur_model->simpan($creditor);
+
+    // Check whether it's a create or an update operation
+    $message = $creditor['creditor_id'] ? 'Detail kreditur berhasil diperbarui' : 'Kreditur baru berhasil ditambahkan';
+
+    $response['action'] = $creditor['creditor_id'] ? 'update' : 'create';
 
     // Compose notification alert
-    $alert = '<div class="row mb-2">
-                <div class="col">
-                  <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
-                    <strong class="alert-content">Kreditur baru berhasil ditambahkan</strong>
-                    <button type="button" class="close" data-dismiss="alert">
+    $response['alert'] = "<div class='row'>
+                <div class='col'>
+                  <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    <strong class='alert-content'>{$message}</strong>
+                    <button type='button' class='close' data-dismiss='alert'>
                       <span>&times;</span>
                     </button>
                   </div>
                 </div>
-              </div>';
-
-    $response = [
-      'newCreditor' => $new_creditor,
-      'alert'       => $alert
-    ];
+              </div>";
 
     header('Content-Type: application/json');
     echo json_encode($response);
@@ -258,6 +251,33 @@ class Keuangan_ajax extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($creditors);
+  }
+
+  public function hapus_kreditur()
+  {
+    $creditor = $this->input->post('creditor');
+
+    // Delete creditor table entry by the received creditor_id
+    $this->db->where('creditor_id', $creditor['creditor_id']);
+    $this->db->delete('creditor');
+
+    // Delete debt by the creditor_id
+    $this->db->where('creditor_id', $creditor['creditor_id']);
+    $this->db->delete('debt');
+
+    $response['alert'] = '<div class="row mb-2">
+                            <div class="col">
+                              <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
+                                <strong class="alert-content">Vendor berhasil dihapus</strong>
+                                <button type="button" class="close" data-dismiss="alert">
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>';
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
   }
 
   public function simpan_vendor()

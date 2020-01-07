@@ -49,15 +49,9 @@
 
           <div class="modal-body">
             <div class="mb-4">
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="name">Nama lengkap</label>
-                  <input type="text" name="creditor[name]" id="name" class="form-control mb-2">
-                </div>
-                <div class="form-group col">
-                  <label for="selling">Menyediakan</label>
-                  <input type="text" name="creditor[selling]" id="selling" class="form-control mb-2">
-                </div>
+              <div class="form-group">
+                <label for="name">Nama lengkap</label>
+                <input type="text" name="creditor[name]" id="name" class="form-control mb-2">
               </div>
               <div class="form-group">
                 <label for="address">Alamat</label>
@@ -98,7 +92,7 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Menghapus creditor juga akan menghapus seluruh data pengeluaran atas nama creditor yang bersangkutan.</div>
+          <div class="modal-body">Menghapus kreditur juga akan menghapus seluruh data hutang atas nama kreditur yang bersangkutan.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary">Hapus</button>

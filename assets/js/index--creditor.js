@@ -56,7 +56,7 @@ $(document).ready(function () {
 
 						<a class="dropdown-item edit-creditor-trigger" href="#" data-toggle="modal" data-target="#creditorEditorModal">Sunting Detail</a>
 
-						<a class="dropdown-item del-creditor-trigger" href="#" data-toggle="modal" data-target="#delCreditorModal">Hapus Creditor</a>
+						<a class="dropdown-item del-creditor-trigger" href="#" data-toggle="modal" data-target="#delCreditorModal">Hapus Kreditur</a>
 
 					</div>`;
 
@@ -74,7 +74,7 @@ $(document).ready(function () {
 	$('#add-creditor-trigger').click(function (event) {
 
 		// Add title to the modal
-		$('#creditorEditorModal .modal-title').html('Tambah Creditor Baru');
+		$('#creditorEditorModal .modal-title').html('Tambah Kreditur Baru');
 
 		// Reset previous value
 		$('#creditorForm')[0].reset();
@@ -95,12 +95,10 @@ $(document).ready(function () {
 		let phone = entryRow.data('phone');
 		let email = entryRow.data('email');
 		let address = entryRow.data('address');
-		let selling = entryRow.data('selling');
 
 		// Fill form with the data
 		$('#creditorForm #creditor-id').val(creditorId);
 		$('#creditorForm #name').val(name);
-		$('#creditorForm #selling').val(selling);
 		$('#creditorForm #address').val(address);
 		$('#creditorForm #phone').val(phone);
 		$('#creditorForm #email').val(email);
@@ -128,7 +126,7 @@ $(document).ready(function () {
 		let formData = $(this).serialize();
 
 		let saveCreditor = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/simpan_creditor`,
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_kreditur`,
 			formData
 		);
 
@@ -161,7 +159,7 @@ $(document).ready(function () {
 		let creditorData = $(this).serialize();
 
 		let deleteCreditor = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/hapus_creditor`,
+			`${window.location.origin}/ajax/keuangan_ajax/hapus_kreditur`,
 			creditorData
 		)
 

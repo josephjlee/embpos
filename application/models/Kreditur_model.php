@@ -32,7 +32,6 @@ class Kreditur_model extends CI_Model
 
 	public function hapus($creditor)
 	{
-
 		$this->db->where('creditor_id', $creditor['creditor_id']);
 		return $this->db->delete('creditor');
 	}
