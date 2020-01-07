@@ -1,87 +1,79 @@
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" id="creditor-index">
 
   <!-- Page Heading -->
   <div class="row mb-2">
     <div class="col d-flex justify-content-between align-items-center">
-      <h1 class="h3 text-gray-800 mr-auto"><?= $title; ?></h1>
-      <a href="" class="badge badge-primary py-2 px-3 text-uppercase mr-2 shadow" id="input-cust-trigger" data-toggle="modal" data-target="#addCreditorModal">Tambah Kreditur</a>
+      <h1 class="h3 text-gray-800"><?= $title; ?></h1>
+      <a href="" class="badge badge-primary py-2 px-3 text-uppercase" id="add-creditor-trigger" data-toggle="modal" data-target="#creditorEditorModal">+ Kreditur</a>
     </div>
   </div>
 
-  <!-- Creditor Card -->
-  <?php if (!$creditors) : ?>
-    <div class="row">
-      <div class="col-6">
-        <div class="card shadow h-100">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <h5 class="font-weight-bold">Belum ada kreditur</h5>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- Creditor Table -->
+  <div class="card shadow mb-4" id="creditor-table-card">
+    <div class="card-body">
+      <table class="table table-hover" id="creditorDataTable">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Nama</th>
+            <th scope="col">Telepon</th>
+            <th scope="col">Email</th>
+            <th scope="col">Alamat</th>
+            <th scope="col">Hutang</th>
+            <th scope="col">Bayar</th>
+            <th scope="col">Tagihan</th>
+            <th scope="col" style="width: 6px !important">#</th>
+          </tr>
+        </thead>
+      </table>
     </div>
-  <?php endif; ?>
-
-  <div class="row">
-    <?php foreach ($creditors as $creditor) : ?>
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="h5 font-weight-bold text-gray-800"><?= $creditor['name']; ?></div>
-                <div class="text-xs font-weight-bold"><?= $creditor['address']; ?></div>
-                <div class="text-xs font-weight-bold"><?= $creditor['phone']; ?></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-user-tie fa-4x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <?php endforeach; ?>
   </div>
 
   <!-- Add/Update Creditor Modal -->
-  <div class="modal fade" id="addCreditorModal" tabindex="-1" role="dialog">
+  <div class="modal fade" id="creditorEditorModal" tabindex="-1" role="dialog">
 
     <div class="modal-dialog" role="document">
 
       <div class="modal-content">
 
-        <form action="<?= base_url('processor/keuangan_pcsr/tambah_kreditur'); ?>" method="post" id="creditorForm">
+        <form id="creditorForm">
 
-          <input type="hidden" name="request-source" id="req-src" value="<?= $this->uri->uri_string() ?>">
-          <input type="hidden" name="creditor[creditor_id]" id="cust_id" value="">
+          <input type="hidden" name="creditor[creditor_id]" id="creditor-id" value="">
 
           <div class="modal-header">
-            <h5 class="modal-title">Tambah Kreditor Baru</h5>
+            <h5 class="modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
           <div class="modal-body">
-
-            <div class="form-group">
-              <label for="creditor_name">Nama lengkap</label>
-              <input type="text" name="creditor[name]" id="creditor_name" class="form-control mb-2">
-            </div>
-
-            <div class="form-row">
-              <div class="form-group col">
-                <label for="creditor_address">Alamat</label>
-                <input type="text" name="creditor[address]" id="creditor_address" class="form-control">
+            <div class="mb-4">
+              <div class="form-row">
+                <div class="form-group col">
+                  <label for="name">Nama lengkap</label>
+                  <input type="text" name="creditor[name]" id="name" class="form-control mb-2">
+                </div>
+                <div class="form-group col">
+                  <label for="selling">Menyediakan</label>
+                  <input type="text" name="creditor[selling]" id="selling" class="form-control mb-2">
+                </div>
               </div>
-              <div class="form-group col">
-                <label for="creditor_phone">Ponsel</label>
-                <input type="tel" name="creditor[phone]" id="creditor_phone" class="form-control">
+              <div class="form-group">
+                <label for="address">Alamat</label>
+                <input type="text" name="creditor[address]" id="address" class="form-control">
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <label for="phone">Ponsel</label>
+                  <input type="tel" name="creditor[phone]" id="phone" class="form-control">
+                </div>
+                <div class="form-group col">
+                  <label for="email">Email</label>
+                  <input type="email" name="creditor[email]" id="email" class="form-control">
+                </div>
               </div>
             </div>
-
           </div>
 
           <div class="modal-footer">
@@ -94,11 +86,11 @@
     </div>
   </div>
 
-  <!-- Delete creditor Modal -->
-  <div class="modal fade" id="delcreditorModal" tabindex="-1" role="dialog">
+  <!-- Delete Creditor Modal -->
+  <div class="modal fade" id="delCreditorModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/pelanggan_pcsr/hapus_data'); ?>" method="post" id="delete-order-form">
-        <input type="hidden" name="creditor[creditor_id]" id="cust_id" value="">
+      <form id="del-creditor-form">
+        <input type="hidden" name="creditor[creditor_id]" id="creditor-id" value="">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Yakin akan menghapus?</h5>
@@ -106,7 +98,7 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Menghapus data pelanggan juga akan menghapus seluruh data pesanan yang pernah dibuatnya.</div>
+          <div class="modal-body">Menghapus creditor juga akan menghapus seluruh data pengeluaran atas nama creditor yang bersangkutan.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary">Hapus</button>

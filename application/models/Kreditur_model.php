@@ -39,7 +39,26 @@ class Kreditur_model extends CI_Model
 
 	public function list_all_creditors()
 	{
-		return $this->db->get('creditor')->result_array();
+		$query = $this->db->query("SELECT 
+								creditor.creditor_id,
+									creditor.name,
+									creditor.address,
+									creditor.phone,
+									creditor.email,
+									(
+									SELECT IFNULL(SUM(debt.amount),0) FROM debt WHERE debt.creditor_id = creditor.creditor_id
+									) AS receivable,
+									(
+									SELECT IFNULL(SUM(debt_payment.amount),0) FROM debt_payment WHERE debt_payment.creditor_id = creditor.creditor_id
+									) AS paid,
+									(
+									(
+										SELECT IFNULL(SUM(debt.amount),0) FROM debt WHERE debt.creditor_id = creditor.creditor_id) - (SELECT IFNULL(SUM(debt_payment.amount),0) FROM debt_payment WHERE debt_payment.creditor_id = creditor.creditor_id)
+									) AS due
+							FROM
+									embryo.creditor");
+
+		return $query->result_array();
 	}
 
 	public function get_creditor_by_id($creditor_id)

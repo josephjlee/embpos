@@ -1,43 +1,182 @@
-// const inputCustTrigger = document.querySelector('#input-cust-trigger');
-// const customerTable = document.querySelector('#customer-table-card #dataTable');
+$(document).ready(function () {
 
-// inputCustTrigger.addEventListener('click', function (e) {
+	/**
+	 * Initialize Plugin
+	 */
 
-// 	document.querySelector('#customerForm').reset();
+	// DataTable
+	let table = $('#creditorDataTable').DataTable({
+		"ajax": `${window.location.origin}/ajax/keuangan_ajax/list_all_creditors`,
+		"columns": [
+			{ "data": "name" },
+			{ "data": "phone" },
+			{ "data": "email" },
+			{ "data": "address" },
+			{
+				"data": {
+					"_": "receivable.display",
+					"sort": "receivable.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "paid.display",
+					"sort": "paid.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "due.display",
+					"sort": "due.raw"
+				}
+			},
+			{ "data": "creditor_id" }
+		],
+		"createdRow": function (row, data, dataIndex) {
+			$(row).attr('data-creditor-id', data.creditor_id);
+			$(row).attr('data-name', data.name);
+			$(row).attr('data-phone', data.phone);
+			$(row).attr('data-email', data.email);
+			$(row).attr('data-address', data.address);
+			$(row).attr('data-receivable', data.receivable.raw);
+			$(row).attr('data-paid', data.paid.raw);
+			$(row).attr('data-due', data.due.raw);
+		},
+		"columnDefs": [
+			{
+				"targets": -1,
+				"createdCell": function (td, cellData, rowData, row, col) {
 
-// });
+					let actionBtn = `
+					<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
+						<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+					</a>
 
-// customerTable.addEventListener('click', function (e) {
+					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-// 	e.preventDefault();
+						<a class="dropdown-item edit-creditor-trigger" href="#" data-toggle="modal" data-target="#creditorEditorModal">Sunting Detail</a>
 
-// 	let clickedEl = e.target;
-// 	let currentRow = clickedEl.closest('tr');
+						<a class="dropdown-item del-creditor-trigger" href="#" data-toggle="modal" data-target="#delCreditorModal">Hapus Creditor</a>
 
-// 	if (clickedEl.matches('.edit-modal-trigger')) {
+					</div>`;
 
-// 		document.querySelector('#addCustomerModal #cust_id').value = currentRow.dataset.id;
-// 		console.log(currentRow.dataset.id);
+					$(td).html(actionBtn);
+				}
+			}
+		]
+	});
 
-// 		document.querySelector('#cust_name').value = currentRow.dataset.name;
-// 		document.querySelector('#cust_company').value = currentRow.dataset.company;
-// 		document.querySelector('#cust_address').value = currentRow.dataset.address;
-// 		document.querySelector('#cust_phone').value = currentRow.dataset.phone;
-// 		document.querySelector('#cust_email').value = currentRow.dataset.email;
+	/**
+	 * Modal Action Trigger
+	 */
 
-// 	}
+	// Add Creditor Trigger
+	$('#add-creditor-trigger').click(function (event) {
 
-// 	if (clickedEl.matches('.del-modal-trigger')) {
+		// Add title to the modal
+		$('#creditorEditorModal .modal-title').html('Tambah Creditor Baru');
 
-// 		document.querySelector('#delCustomerModal #cust_id').value = currentRow.dataset.id;
-// 		console.log(document.querySelector('#delCustomerModal #cust_id').value);
+		// Reset previous value
+		$('#creditorForm')[0].reset();
+		$('#creditorForm #creditor-id').val(null);
 
-// 	}
+	});
 
-// });
+	// Edit Creditor Trigger
+	$('#creditorDataTable').on('click', '.edit-creditor-trigger', function (event) {
 
-$('#dataTable').DataTable({
-	"order": [
-		[3, "asc"]
-	]
+		// Add title to the modal
+		$('#creditorEditorModal .modal-title').html('Sunting Detail');
+
+		// Grab Entry Data
+		let entryRow = $(this).parents('tr');
+		let creditorId = entryRow.data('creditor-id');
+		let name = entryRow.data('name');
+		let phone = entryRow.data('phone');
+		let email = entryRow.data('email');
+		let address = entryRow.data('address');
+		let selling = entryRow.data('selling');
+
+		// Fill form with the data
+		$('#creditorForm #creditor-id').val(creditorId);
+		$('#creditorForm #name').val(name);
+		$('#creditorForm #selling').val(selling);
+		$('#creditorForm #address').val(address);
+		$('#creditorForm #phone').val(phone);
+		$('#creditorForm #email').val(email);
+
+	});
+
+	// Delete Creditor Trigger
+	$('#creditorDataTable').on('click', '.del-creditor-trigger', function (event) {
+
+		let entryRow = $(this).parents('tr');
+		let creditorId = entryRow.data('creditor-id');
+
+		$('#del-creditor-form #creditor-id').val(creditorId);
+
+	});
+
+	/**
+	 * Creditor entry submission
+	 */
+
+	$('#creditorForm').submit(function (event) {
+
+		event.preventDefault();
+
+		let formData = $(this).serialize();
+
+		let saveCreditor = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_creditor`,
+			formData
+		);
+
+		saveCreditor.done(function (data) {
+
+			// Prepend success notif into main page container
+			$('#creditorEditorModal .modal-body').prepend(data.alert);
+
+			if (data.action == 'create') {
+				// Reset previous value
+				$('#creditorForm')[0].reset();
+				$('#creditorForm #creditor-id').val(null);
+			}
+
+			// Reload creditor table to show the new data
+			table.ajax.reload();
+
+		});
+
+	});
+
+	/**
+	 * Creditor deletion 
+	 */
+
+	$('#del-creditor-form').submit(function (e) {
+
+		e.preventDefault();
+
+		let creditorData = $(this).serialize();
+
+		let deleteCreditor = sendAjax(
+			`${window.location.origin}/ajax/keuangan_ajax/hapus_creditor`,
+			creditorData
+		)
+
+		deleteCreditor.done(function (data) {
+
+			// Prepend delete success notif into main page container
+			$('#creditor-index').prepend(data.alert);
+
+			// Reload creditor table to show the new data
+			table.ajax.reload();
+
+		});
+
+		$('#delCreditorModal').modal('hide');
+
+	});
+
 });

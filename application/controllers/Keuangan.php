@@ -66,10 +66,10 @@ class Keuangan extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
-    public function daftar_kreditur()
+    public function kreditur()
     {
 
-        $data['title'] = 'Daftar Kreditur';
+        $data['title'] = 'Kreditur';
 
         $data['creditors'] = $this->kreditur_model->list_all_creditors();
 

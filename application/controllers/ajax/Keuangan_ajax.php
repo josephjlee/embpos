@@ -11,6 +11,7 @@ class Keuangan_ajax extends CI_Controller
 
     $this->load->model('keuangan_model');
     $this->load->model('vendor_model');
+    $this->load->model('kreditur_model');
   }
 
   public function simpan_hutang()
@@ -227,6 +228,36 @@ class Keuangan_ajax extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($response);
+  }
+
+  public function list_all_creditors()
+  {
+    $creditors = [
+      'data' => []
+    ];
+
+    foreach ($this->kreditur_model->list_all_creditors() as $creditor) {
+
+      $creditor['receivable'] = [
+        'display' => moneyStrDot($creditor['receivable']) . ',00',
+        'raw'    => $creditor['receivable']
+      ];
+
+      $creditor['paid'] = [
+        'display' => moneyStrDot($creditor['paid']) . ',00',
+        'raw'    => $creditor['paid']
+      ];
+
+      $creditor['due'] = [
+        'display' => moneyStrDot($creditor['due']) . ',00',
+        'raw'    => $creditor['due']
+      ];
+
+      array_push($creditors['data'], $creditor);
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($creditors);
   }
 
   public function simpan_vendor()
