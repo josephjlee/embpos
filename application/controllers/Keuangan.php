@@ -26,19 +26,6 @@ class Keuangan extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
-    public function vendor()
-    {
-        $data['title'] = 'Vendor';
-
-        $data['vendors'] = $this->vendor_model->list_all_vendors();
-
-        $data['content'] = $this->load->view('dashboard/finance/vendor-index', $data, TRUE);
-
-        $data['view_script'] = 'index--vendor.js';
-
-        $this->load->view('layout/dashboard', $data);
-    }
-
     public function daftar_hutang()
     {
 
@@ -62,20 +49,6 @@ class Keuangan extends CI_Controller
         $data['content'] = $this->load->view('dashboard/finance/debt-editor', $data, TRUE);
 
         // $data['view_script'] = 'editor--debt.js';
-
-        $this->load->view('layout/dashboard', $data);
-    }
-
-    public function kreditur()
-    {
-
-        $data['title'] = 'Kreditur';
-
-        $data['creditors'] = $this->kreditur_model->list_all_creditors();
-
-        $data['content'] = $this->load->view('dashboard/finance/creditor-index', $data, TRUE);
-
-        $data['view_script'] = 'index--creditor.js';
 
         $this->load->view('layout/dashboard', $data);
     }
