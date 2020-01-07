@@ -338,6 +338,10 @@ class Keuangan_ajax extends CI_Controller
     $this->db->where('vendor_id', $vendor['vendor_id']);
     $this->db->delete('vendor');
 
+    // Delete expense table entry by vendor_id
+    $this->db->where('vendor_id', $vendor['vendor_id']);
+    $this->db->delete('expense');
+
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
                               <div class="alert alert-warning alert-dismissible fade show shadow" role="alert">
