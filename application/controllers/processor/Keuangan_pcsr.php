@@ -39,7 +39,7 @@ class Keuangan_pcsr extends CI_Controller
 
         $this->kreditur_model->hapus($creditor);
 
-        redirect('pelanggan/semua');
+        redirect(base_url('kontak/kreditur'));
     }
 
     public function sunting_hutang()

@@ -28,7 +28,7 @@ class Pelanggan_pcsr extends CI_Controller
 
         $this->pelanggan_model->simpan($customer);
 
-        redirect('pelanggan/semua');
+        redirect(base_url('kontak/pelanggan'));
     }
 
 
@@ -39,9 +39,6 @@ class Pelanggan_pcsr extends CI_Controller
 
         $this->pelanggan_model->hapus($customer);
 
-        redirect('pelanggan/semua');
-        
+        redirect(base_url('kontak/pelanggan'));
     }
-
-
 }
