@@ -143,7 +143,8 @@ class Pembayaran_model extends CI_Model
               FROM
                   payment
               GROUP BY tahun, monthName, MONTH(payment_date)
-              ORDER BY YEAR(payment_date), MONTH(payment_date)");
+              ORDER BY YEAR(payment_date), MONTH(payment_date)
+              LIMIT 12");
 
     return $query->result_array();
   }
