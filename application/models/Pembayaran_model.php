@@ -135,13 +135,15 @@ class Pembayaran_model extends CI_Model
   public function get_monthly_payment()
   {
 
-    $query = $this->db->query("SELECT 
-                YEAR(payment_date) AS tahun,
+    $query = $this->db->query("SELECT
+                  YEAR(payment_date) AS tahun,
                   MONTHNAME(payment_date) AS monthName,
+                  ANY_VALUE(CONCAT(DATE_FORMAT(payment_date,'%b'), ' ', DATE_FORMAT(payment_date,'%y'))) AS period,
                   SUM(amount) AS amount
-              FROM payment
+              FROM
+                  payment
               GROUP BY tahun, monthName, MONTH(payment_date)
-              ORDER BY MONTH(payment_date)");
+              ORDER BY YEAR(payment_date), MONTH(payment_date)");
 
     return $query->result_array();
   }

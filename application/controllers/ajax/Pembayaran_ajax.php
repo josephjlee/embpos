@@ -20,7 +20,7 @@ class Pembayaran_ajax extends CI_Controller
     ];
 
     foreach ($this->pembayaran_model->get_monthly_payment() as $payment_data) {
-      array_push($monthly_payment['monthLabel'], $payment_data['monthName']);
+      array_push($monthly_payment['monthLabel'], $payment_data['period']);
       array_push($monthly_payment['amount'], $payment_data['amount']);
     }
 
