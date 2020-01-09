@@ -2,15 +2,10 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <div class="d-flex align-items-center justify-content-between mb-3">
-    <h1 class="h3 text-gray-800"><?= $title; ?></h1>
-    <div>
-      <select id="filter-select" class="custom-select">
-        <option value="">semua</option>
-        <option value="lunas">lunas</option>
-        <option value="sebagian">sebagian</option>
-        <option value="kosong">kosong</option>
-      </select>
+  <div class=" row mb-2">
+    <div class="col d-flex justify-content-between align-items-center">
+      <h1 class="h3 text-gray-800 mr-auto"><?= $title; ?></h1>
+      <a href="<?= base_url('keuangan/buat_invoice') ?>" class="badge badge-primary py-2 px-3 text-uppercase shadow">Buat Invoice</a>
     </div>
   </div>
 
