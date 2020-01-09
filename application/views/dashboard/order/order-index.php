@@ -146,7 +146,7 @@
                 <?php if (empty($order['invoice_number'])) : ?>
                   <span>Belum ada</span>
                 <?php else : ?>
-                  <a href="<?= base_url('invoice/sunting/') . $order['invoice_number']; ?>" style="color:#858796">
+                  <a href="<?= base_url('keuangan/sunting_invoice/') . $order['invoice_number']; ?>" style="color:#858796">
                     INV-<?= $order['invoice_number']; ?>
                   </a>
                 <?php endif; ?>

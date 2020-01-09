@@ -18,7 +18,7 @@
 
 				<div class="ml-auto">
 
-					<a href="<?= $is_invoiced['number'] ? base_url('invoice/sunting/') . $is_invoiced['number'] : '#'; ?>"><span class="badge badge-primary py-2 px-3 text-uppercase mr-2"><?= $is_invoiced['message']; ?></span></a>
+					<a href="<?= $is_invoiced['number'] ? base_url('keuangan/sunting_invoice/') . $is_invoiced['number'] : '#'; ?>"><span class="badge badge-primary py-2 px-3 text-uppercase mr-2"><?= $is_invoiced['message']; ?></span></a>
 
 					<a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $order['process_status']; ?></span></a>
 

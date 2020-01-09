@@ -114,7 +114,7 @@
           <?php foreach ($invoices as $invoice) : ?>
             <tr data-invoice-id="<?= $invoice['invoice_id']; ?>">
               <td data-sort="<?= $invoice['number']; ?>">
-                <a style="color:#858796" href="<?= base_url('invoice/sunting/') . $invoice['number']; ?>">INV-<?= $invoice['number']; ?></a>
+                <a style="color:#858796" href="<?= base_url('keuangan/sunting_invoice/') . $invoice['number']; ?>">INV-<?= $invoice['number']; ?></a>
               </td>
               <td>
                 <?= $invoice['customer']; ?>
@@ -139,7 +139,7 @@
                   <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                  <a href="<?= base_url('invoice/sunting/') . $invoice['number']; ?>" class="dropdown-item">
+                  <a href="<?= base_url('keuangan/sunting_invoice/') . $invoice['number']; ?>" class="dropdown-item">
                     Sunting Invoice
                   </a>
                   <a href="#" data-toggle="modal" data-target="#del-invoice-modal" class="dropdown-item del-modal-trigger">

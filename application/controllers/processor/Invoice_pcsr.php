@@ -57,7 +57,7 @@ class Invoice_pcsr extends CI_Controller
 		if (!$payment['amount']) {
 
 			$invoice_number = $this->invoice_model->get_invoice_number($new_invoice_id);
-			redirect(base_url('invoice/sunting/') . $invoice_number);
+			redirect(base_url('keuangan/sunting_invoice/') . $invoice_number);
 		}
 
 		// Complete payment data using $invoice data
@@ -70,7 +70,7 @@ class Invoice_pcsr extends CI_Controller
 
 		// Redirect to its detil page using the newly created invoice_number
 		$invoice_number = $this->invoice_model->get_invoice_number($new_invoice_id);
-		redirect(base_url('invoice/sunting/') . $invoice_number);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice_number);
 	}
 
 	public function perbarui()
@@ -146,7 +146,7 @@ class Invoice_pcsr extends CI_Controller
 
 		// If empty, Redirect to current editor page 
 		if (!$payment['amount']) {
-			redirect(base_url('invoice/sunting/') . $invoice['number']);
+			redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 		}
 
 		// Complete payment data using $invoice data
@@ -156,7 +156,7 @@ class Invoice_pcsr extends CI_Controller
 		// Save $payment data
 		$this->pembayaran_model->simpan($payment);
 
-		redirect(base_url('invoice/sunting/') . $invoice['number']);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
 
 	public function hapus_invoice()
@@ -178,7 +178,7 @@ class Invoice_pcsr extends CI_Controller
 		$this->pesanan_model->detach_order($order);
 
 		// Redirect to current edit page to refresh the data
-		redirect(base_url('invoice/sunting/') . $invoice['number']);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
 
 	public function lepas_produk()
@@ -190,7 +190,7 @@ class Invoice_pcsr extends CI_Controller
 		$this->penjualan_model->hapus($product_sale);
 
 		// Redirect to current edit page to refresh the data
-		redirect(base_url('invoice/sunting/') . $invoice['number']);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
 
 	// Payment
@@ -207,7 +207,7 @@ class Invoice_pcsr extends CI_Controller
 		$this->pembayaran_model->simpan($payment);
 
 		// Redirect to current detil page to refresh the data
-		redirect(base_url('invoice/sunting/') . $invoice['number']);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
 
 	public function perbarui_pembayaran()
@@ -220,7 +220,7 @@ class Invoice_pcsr extends CI_Controller
 		$this->pembayaran_model->simpan($payment);
 
 		// Redirect to current detil page to refresh the data
-		redirect(base_url('invoice/sunting/') . $invoice['number']);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
 
 	public function hapus_pembayaran()
@@ -231,6 +231,6 @@ class Invoice_pcsr extends CI_Controller
 
 		$this->pembayaran_model->hapus($payment);
 
-		redirect(base_url('invoice/sunting/') . $invoice['number']);
+		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
 }

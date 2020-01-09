@@ -141,7 +141,7 @@
                 <?= moneyStrDot($payment['payment_amount']) . ',00'; ?>
               </td>
               <td data-sort="<?= $payment['order_number']; ?>">
-                <a href="<?= base_url('invoice/sunting/') . $payment['order_number']; ?>">INV-<?= $payment['order_number']; ?></a>
+                <a href="<?= base_url('keuangan/sunting_invoice/') . $payment['order_number']; ?>">INV-<?= $payment['order_number']; ?></a>
               </td>
             </tr>
           <?php endforeach; ?>

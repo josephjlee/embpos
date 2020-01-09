@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat' ? 'buat' : 'sunting'; ?>">
 
-  <?php $method = $this->uri->segment(2) == 'buat' ? 'simpan' : 'perbarui'; ?>
+  <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'simpan' : 'perbarui'; ?>
 
   <form action='<?= base_url("processor/invoice_pcsr/{$method}"); ?>' method="post" id="invoice-form">
 
@@ -17,9 +17,9 @@
 
         <h1 class="h3 text-gray-800 mr-2"><?= $title; ?></h1>
 
-        <?php if ($this->uri->segment(2) == 'sunting') : ?>
+        <?php if ($this->uri->segment(2) == 'sunting_invoice') : ?>
 
-          <a href="<?= base_url('invoice/tampil/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
+          <a href="<?= base_url('keuangan/lihat_invoice/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
 
           <div class="ml-auto">
             <span class="badge badge-primary mr-2 py-2 px-3 text-uppercase"><?= $invoice_detail['payment_status']; ?></span>
@@ -168,33 +168,33 @@
 
                   <?php
 
-                    function product_id_only($product)
-                    {
-                      $product_id_array = $product['product_id'];
-                      return $product_id_array;
-                    }
+                  function product_id_only($product)
+                  {
+                    $product_id_array = $product['product_id'];
+                    return $product_id_array;
+                  }
 
-                    $selected_product_id = array_map("product_id_only", $current_products);
+                  $selected_product_id = array_map("product_id_only", $current_products);
 
-                    ?>
+                  ?>
 
                   <?php
 
-                    /**
-                     * 
-                     * Item index (row index) for the product entry is relative to the order entry above
-                     * If order entry is not empty, then item index for the product entry is the continuation
-                     * If order entry is empty, then item index for the product entry start from 0
-                     * 
-                     * Meanwhile, the product index always starts from 0
-                     * 
-                     */
+                  /**
+                   * 
+                   * Item index (row index) for the product entry is relative to the order entry above
+                   * If order entry is not empty, then item index for the product entry is the continuation
+                   * If order entry is empty, then item index for the product entry start from 0
+                   * 
+                   * Meanwhile, the product index always starts from 0
+                   * 
+                   */
 
-                    $current_item_index = $item_index != 0 ? $item_index : 0;
+                  $current_item_index = $item_index != 0 ? $item_index : 0;
 
-                    $product_index = 0;
+                  $product_index = 0;
 
-                    ?>
+                  ?>
 
                   <?php foreach ($current_products as $current_product) : ?>
 
