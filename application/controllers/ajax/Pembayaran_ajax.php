@@ -51,4 +51,28 @@ class Pembayaran_ajax extends CI_Controller
     header('Content-Type: application/json');
     echo json_encode($payment_by_method);
   }
+
+  public function get_payment_amount_per_customer_category()
+  {
+    $payment_by_category = [
+      'categoryLabel' => [],
+      'percentage' => []
+    ];
+
+    $payment_amount = [];
+
+    foreach ($this->pembayaran_model->get_payment_amount_per_customer_category() as $payment_data) {
+      array_push($payment_by_category['categoryLabel'], $payment_data['category']);
+      array_push($payment_amount, $payment_data['amount']);
+    }
+
+    $payment_amount_sum = array_sum($payment_amount);
+
+    foreach ($payment_amount as $pd) {
+      array_push($payment_by_category['percentage'], round(($pd / $payment_amount_sum) * 100));
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($payment_by_category);
+  }
 }

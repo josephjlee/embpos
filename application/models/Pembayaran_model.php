@@ -158,6 +158,19 @@ class Pembayaran_model extends CI_Model
     return $query->result_array();
   }
 
+  public function get_payment_amount_per_customer_category()
+  {
+    $query = $this->db->query("SELECT 
+                ANY_VALUE(customer_category.name) AS category,
+                  SUM(payment.amount) AS amount
+              FROM embryo.payment
+              JOIN customer ON payment.customer_id = customer.customer_id
+              JOIN customer_category ON customer.customer_category_id = customer_category.customer_category_id
+              GROUP BY customer_category.name");
+
+    return $query->result_array();
+  }
+
   public function siapkan_data($payment)
   {
 

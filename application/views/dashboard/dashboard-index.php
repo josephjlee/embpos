@@ -123,7 +123,7 @@
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Pembayaran per Metode</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Sumber Pembayaran</h6>
           <div class="dropdown no-arrow">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -152,17 +152,17 @@
           </div>
           <div class="mt-4 text-center small">
             <span class="mr-2">
-              <i class="fas fa-circle text-primary"></i> Bayar Tunai
+              <i class="fas fa-circle" style="color:#4e73df"></i> End-User
             </span>
             <span class="mr-2">
-              <i class="fas fa-circle text-success"></i> Giro Maybank
+              <i class="fas fa-circle" style="color:#1cc88a"></i> Garmen
             </span>
             <br>
             <span class="mr-2">
-              <i class="fas fa-circle text-info"></i> BCA
+              <i class="fas fa-circle" style="color:#36b9cc"></i> Konveksi
             </span>
             <span class="mr-2">
-              <i class="fas fa-circle" style="color:#e5e5e5"></i> Mandiri
+              <i class="fas fa-circle" style="color:#e5e5e5"></i> Sales
             </span>
           </div>
         </div>

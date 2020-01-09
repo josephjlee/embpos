@@ -125,18 +125,18 @@ $.ajax({
 
 // Payment by Method Chart - Doughnut
 $.ajax({
-  url: `${window.location.origin}/ajax/pembayaran_ajax/get_payment_amount_per_method`,
+  url: `${window.location.origin}/ajax/pembayaran_ajax/get_payment_amount_per_customer_category`,
   method: 'GET',
   success: function (data) {
     var ctx = document.getElementById("myPieChart");
     var myPieChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: data.methodLabel,
+        labels: data.categoryLabel,
         datasets: [{
           data: data.percentage,
-          backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-          hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+          backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#e5e5e5'],
+          hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#e2e2e2'],
           hoverBorderColor: "rgba(234, 236, 244, 1)",
         }],
       },
