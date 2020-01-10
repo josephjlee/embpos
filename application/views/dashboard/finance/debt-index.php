@@ -91,7 +91,7 @@
             <div class="col mr-2" data-toggle="tooltip">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tenggat Terdekat (<?= date('M') ?>)</div>
               <?php if ($the_nearest_due != '-') : ?>
-                <div class="h5 mb-0 font-weight-bold text-gray-800" data-placement="top" title="<?= "{$the_nearest_due['description']} | {$the_nearest_due['payment_date']}"; ?>">Rp<?= moneyStrDot($the_nearest_due['amount']); ?></div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" data-placement="top" title="<?= "{$the_nearest_due['payment_date']}"; ?>"><?= $the_nearest_due['description']; ?></div>
               <?php else : ?>
                 <h5>-</h5>
               <?php endif; ?>
