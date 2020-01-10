@@ -32,7 +32,7 @@
 
     <!-- Total Pembayaran -->
 
-    <?php $active_creditors = $this->keuangan_model->count_active_creditor(); ?>
+    <?php $total_debt_payment = $this->keuangan_model->get_total_debt_payment_by_month(date('m')); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-primary shadow h-100 py-2">
@@ -40,7 +40,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Pembayaran (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $active_creditors; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($total_debt_payment); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
@@ -52,7 +52,7 @@
 
     <!-- Pembayaran Terbesar -->
 
-    <?php $biggest_creditor = $this->keuangan_model->get_the_biggest_creditor(); ?>
+    <?php $biggest_debt_payment = $this->keuangan_model->get_the_biggest_debt_payment_by_month(date('m')); ?>
 
     <div class="col-xl-3 col-md-6">
       <div class="card border-left-success shadow h-100 py-2">
@@ -60,7 +60,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pmbayaran Trbesar (<?= date('M') ?>)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $biggest_creditor; ?></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp<?= moneyStrDot($biggest_debt_payment); ?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-star fa-2x text-gray-300"></i>
@@ -89,7 +89,7 @@
             <div class="col mr-2" data-toggle="tooltip">
               <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tenggat Terdekat (<?= date('M') ?>)</div>
               <?php if ($the_nearest_due != '-') : ?>
-                <div class="h5 mb-0 font-weight-bold text-gray-800" data-placement="top" title="<?= "{$the_nearest_due['description']} | {$the_nearest_due['payment_date']}"; ?>">Rp<?= moneyStrDot($the_nearest_due['amount']); ?></div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" data-placement="top" title="<?= "{$the_nearest_due['payment_date']}"; ?>"><?= $the_nearest_due['description']; ?></div>
               <?php else : ?>
                 <h5>-</h5>
               <?php endif; ?>

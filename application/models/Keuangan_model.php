@@ -196,6 +196,30 @@ class Keuangan_model extends CI_Model
     return $query->result_array();
   }
 
+  public function get_total_debt_payment_by_month($month)
+  {
+    $query = $this->db->query("SELECT 
+                  SUM(amount) AS amount
+              FROM
+                  debt_payment
+              WHERE
+                  MONTH(payment_date) = {$month}
+                AND YEAR(payment_date) = YEAR(CURDATE())");
+    return $query->row_array()['amount'];
+  }
+
+  public function get_the_biggest_debt_payment_by_month($month)
+  {
+    $query = $this->db->query("SELECT 
+                  MAX(amount) AS max_amount
+              FROM
+                  debt_payment
+              WHERE
+                  MONTH(payment_date) = {$month}
+                AND YEAR(payment_date) = YEAR(CURDATE())");
+    return $query->row_array()['max_amount'];
+  }
+
   public function get_top_five_creditor()
   {
     $creditors_payable = $this->get_debt_value_per_creditor();
@@ -242,15 +266,15 @@ class Keuangan_model extends CI_Model
   public function get_the_nearest_debt_due()
   {
     $query = $this->db->query("SELECT 
-              creditor.name AS creditor_name,
-              description,
+                creditor.name AS creditor_name,
+                description,
                 payment_date,
                 amount
-            FROM
-                debt
-            JOIN creditor ON debt.creditor_id = creditor.creditor_id
-            ORDER BY payment_date
-            LIMIT 1");
+              FROM
+                  debt
+              JOIN creditor ON debt.creditor_id = creditor.creditor_id
+              ORDER BY payment_date
+              LIMIT 1");
 
     if (empty($query->row_array())) {
       return '-';
