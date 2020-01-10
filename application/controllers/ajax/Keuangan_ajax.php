@@ -67,28 +67,6 @@ class Keuangan_ajax extends CI_Controller
     echo json_encode($response);
   }
 
-  public function bayar_hutang()
-  {
-
-    $debt_payment = $this->input->post('debt_payment');
-
-    $this->keuangan_model->bayar_hutang($debt_payment);
-
-    $response['alert'] = '<div class="row">
-                            <div class="col">
-                              <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <strong class="alert-content">Pembayaran Hutang berhasil dicatat</strong>
-                                <button type="button" class="close" data-dismiss="alert">
-                                  <span>&times;</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>';
-
-    header('Content-Type: application/json');
-    echo json_encode($response);
-  }
-
   public function list_all_debts()
   {
     $debts = [
@@ -129,6 +107,62 @@ class Keuangan_ajax extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($debts);
+  }
+
+  public function simpan_pembayaran_hutang()
+  {
+
+    $debt_payment = $this->input->post('debt_payment');
+
+    $message = '';
+
+    if (!empty($debt_payment['debt_payment_id'])) {
+      $this->keuangan_model->perbarui_pembayaran_hutang($debt_payment);
+      $message = 'Detail pembayaran hutang telah diperbarui';
+    } else {
+      $this->keuangan_model->bayar_hutang($debt_payment);
+      $message = 'Pembayaran hutang berhasil disimpan';
+    }
+
+    $response['alert'] = "<div class='row'>
+                            <div class='col'>
+                              <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                                <strong class='alert-content'>{$message}</strong>
+                                <button type='button' class='close' data-dismiss='alert'>
+                                  <span>&times;</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>";
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+  }
+
+  public function list_all_debt_payments()
+  {
+    $debt_payments = [
+      'data' => []
+    ];
+
+    foreach ($this->keuangan_model->list_all_debt_payments() as $debt_payment) {
+
+      $debt_payment['amount'] = [
+        'display' => moneyStrDot($debt_payment['amount']) . ',00',
+        'raw'    => $debt_payment['amount']
+      ];
+
+      $debt_payment['payment_date'] = [
+        'display' => date('d/m/Y', strtotime($debt_payment['payment_date'])),
+        'raw'     => strtotime($debt_payment['payment_date']),
+        'input'   => date('Y-m-d', strtotime($debt_payment['payment_date']))
+      ];
+
+      array_push($debt_payments['data'], $debt_payment);
+    };
+
+    header('Content-Type: application/json');
+    echo json_encode($debt_payments);
   }
 
   public function list_debt_payment_by_debt_id()
@@ -182,7 +216,7 @@ class Keuangan_ajax extends CI_Controller
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
                               <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <strong class="alert-content">Riwayat pembayaran berhasil dihapus</strong>
+                                <strong class="alert-content">Riwayat pembayaran hutang berhasil dihapus</strong>
                                 <button type="button" class="close" data-dismiss="alert">
                                   <span>&times;</span>
                                 </button>
@@ -199,13 +233,38 @@ class Keuangan_ajax extends CI_Controller
     // Insert creditor data into table
     $creditor = $this->input->post('creditor');
 
-    // Run simpan kreditur query
-    $this->kreditur_model->simpan($creditor);
+    // Create message placeholder variable
+    $message = '';
 
-    // Check whether it's a create or an update operation
-    $message = $creditor['creditor_id'] ? 'Detail kreditur berhasil diperbarui' : 'Kreditur baru berhasil ditambahkan';
+    // Data processing for creditor data with creditor_id
+    if (!empty($creditor['creditor_id'])) {
+      // Run update kreditur query
+      $this->kreditur_model->perbarui($creditor);
 
-    $response['action'] = $creditor['creditor_id'] ? 'update' : 'create';
+      // FIll $message with update notification
+      $message = 'Detail kreditur berhasil diperbarui';
+
+      $response['action'] = 'update';
+    } else {
+
+      // By default run tambah kreditur query
+      $this->kreditur_model->tambah($creditor);
+
+      // Grab creditor_id of the newly created creditor
+      $new_creditor_id = $this->db->insert_id();
+
+      // Store the inserted creditor data into variable
+      $new_creditor_data = $this->kreditur_model->get_creditor_by_id($new_creditor_id);
+      $response['newCreditor'] = [
+        'id' => $new_creditor_data['creditor_id'],
+        'text' => $new_creditor_data['name']
+      ];
+
+      // FIll $message with create notification
+      $message = 'Kreditur baru berhasil ditambahkan';
+
+      $response['action'] = 'create';
+    }
 
     // Compose notification alert
     $response['alert'] = "<div class='row'>

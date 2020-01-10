@@ -43,6 +43,15 @@ class Keuangan_model extends CI_Model
     return $this->db->insert('debt_payment', $debt_payment_data);
   }
 
+  public function perbarui_pembayaran_hutang($debt_payment)
+  {
+    $debt_payment_data = $this->siapkan_data($debt_payment);
+
+    $this->db->where('debt_payment_id', $debt_payment['debt_payment_id']);
+
+    return $this->db->update('debt_payment', $debt_payment_data);
+  }
+
   public function list_all_debts()
   {
 
@@ -115,6 +124,28 @@ class Keuangan_model extends CI_Model
     $query = $this->db->query("SELECT debt_payment_id, amount, DATE_FORMAT(payment_date, '%Y-%m-%d') AS payment_date 
       FROM debt_payment 
       WHERE debt_id = {$debt_id}");
+
+    return $query->result_array();
+  }
+
+  public function list_all_debt_payments()
+  {
+    $query = $this->db->query("SELECT 
+                  debt_payment_id,
+                  debt_payment.amount,
+                  debt.description,
+                  creditor.name AS creditor,
+                  payment_method.payment_method_id AS method_id,
+                  payment_method.name AS payment_method,
+                  DATE_FORMAT(debt_payment.payment_date, '%Y-%m-%d') AS payment_date
+              FROM
+                  debt_payment
+                      JOIN
+                  debt ON debt_payment.debt_id = debt.debt_id
+                      JOIN
+                  creditor ON debt.creditor_id = creditor.creditor_id
+                      JOIN
+                  payment_method ON debt_payment.payment_method_id = payment_method.payment_method_id");
 
     return $query->result_array();
   }

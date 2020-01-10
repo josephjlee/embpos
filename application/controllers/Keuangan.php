@@ -152,7 +152,11 @@ class Keuangan extends CI_Controller
     public function pembayaran_hutang()
     {
         $data['title']    = 'Pembayaran Hutang';
-        $data['content']  = 'Halaman index riwayat pembayaran hutang';
+
+        $data['content']  = $this->load->view('dashboard/finance/debt-payment-index', $data, TRUE);
+
+        $data['view_script'] = 'index--debt-payment.js';
+
         $this->load->view('layout/dashboard', $data);
     }
 
