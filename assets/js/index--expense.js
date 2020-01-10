@@ -206,14 +206,14 @@ $(document).ready(function () {
 		let vendorData = $(this).serialize();
 
 		let saveVendor = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/tambah_vendor`,
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_vendor`,
 			vendorData
 		);
 
 		saveVendor.done(function (data) {
 
 			// Prepend success notif into main page container
-			$('#debt-index').prepend(data.alert);
+			$('#expense-index').prepend(data.alert);
 
 			// Append newVendor into Vendor-select
 			let newVendorOptions = `<option value="${data.newVendor.id}">${data.newVendor.text}</option>`;;

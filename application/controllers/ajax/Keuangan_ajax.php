@@ -345,13 +345,38 @@ class Keuangan_ajax extends CI_Controller
     // Insert vendor data into table
     $vendor = $this->input->post('vendor');
 
-    // Run add vendor query
-    $this->vendor_model->simpan($vendor);
+    // Create message placeholder variable
+    $message = '';
 
-    // Check whether it's a create or an update operation
-    $message = $vendor['vendor_id'] ? 'Detail vendor berhasil diperbarui' : 'Vendor baru berhasil ditambahkan';
+    // Data processing for vendor data with vendor_id
+    if (!empty($vendor['vendor_id'])) {
+      // Run update vendor query
+      $this->vendor_model->perbarui($vendor);
 
-    $response['action'] = $vendor['vendor_id'] ? 'update' : 'create';
+      // FIll $message with update notification
+      $message = 'Detail vendor berhasil diperbarui';
+
+      $response['action'] = 'update';
+    } else {
+
+      // By default run tambah vendor query
+      $this->vendor_model->tambah($vendor);
+
+      // Grab vendor_id of the newly created vendor
+      $new_vendor_id = $this->db->insert_id();
+
+      // Store the inserted vendor data into variable
+      $new_vendor_data = $this->vendor_model->get_vendor_by_id($new_vendor_id);
+      $response['newVendor'] = [
+        'id' => $new_vendor_data['vendor_id'],
+        'text' => $new_vendor_data['name']
+      ];
+
+      // FIll $message with create notification
+      $message = 'Vendor baru berhasil ditambahkan';
+
+      $response['action'] = 'create';
+    }
 
     // Compose notification alert and pack into $response
     $response['alert'] = "<div class='row'>

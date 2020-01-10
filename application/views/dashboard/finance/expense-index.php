@@ -133,21 +133,37 @@
 
           <div class="modal-body">
 
+            <div class="form-row">
+
+              <div class="form-group col">
+                <label for="name">Nama lengkap</label>
+                <input type="text" name="vendor[name]" id="name" class="form-control mb-2">
+              </div>
+
+              <div class="form-group col">
+                <label for="selling">Menyediakan</label>
+                <input type="text" name="vendor[selling]" id="selling" class="form-control mb-2">
+              </div>
+
+            </div>
+
             <div class="form-group">
-              <label for="vendor_name">Nama lengkap</label>
-              <input type="text" name="vendor[name]" id="vendor_name" class="form-control mb-2" required>
+              <label for="address">Alamat</label>
+              <input type="text" name="vendor[address]" id="address" class="form-control">
             </div>
 
             <div class="form-row">
+
               <div class="form-group col">
-                <label for="vendor_address">Alamat</label>
-                <input type="text" name="vendor[address]" id="vendor_address" class="form-control">
+                <label for="phone">Ponsel</label>
+                <input type="tel" name="vendor[phone]" id="phone" class="form-control">
               </div>
 
               <div class="form-group col">
-                <label for="vendor_phone">Ponsel</label>
-                <input type="tel" name="vendor[phone]" id="vendor_phone" class="form-control" required>
+                <label for="email">Email</label>
+                <input type="email" name="vendor[email]" id="email" class="form-control">
               </div>
+
             </div>
 
           </div>

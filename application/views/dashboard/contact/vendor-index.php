@@ -47,30 +47,28 @@
           </div>
 
           <div class="modal-body">
-            <div class="mb-4">
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="name">Nama lengkap</label>
-                  <input type="text" name="vendor[name]" id="name" class="form-control mb-2">
-                </div>
-                <div class="form-group col">
-                  <label for="selling">Menyediakan</label>
-                  <input type="text" name="vendor[selling]" id="selling" class="form-control mb-2">
-                </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="name">Nama lengkap</label>
+                <input type="text" name="vendor[name]" id="name" class="form-control mb-2">
               </div>
-              <div class="form-group">
-                <label for="address">Alamat</label>
-                <input type="text" name="vendor[address]" id="address" class="form-control">
+              <div class="form-group col">
+                <label for="selling">Menyediakan</label>
+                <input type="text" name="vendor[selling]" id="selling" class="form-control mb-2">
               </div>
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="phone">Ponsel</label>
-                  <input type="tel" name="vendor[phone]" id="phone" class="form-control">
-                </div>
-                <div class="form-group col">
-                  <label for="email">Email</label>
-                  <input type="email" name="vendor[email]" id="email" class="form-control">
-                </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Alamat</label>
+              <input type="text" name="vendor[address]" id="address" class="form-control">
+            </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="phone">Ponsel</label>
+                <input type="tel" name="vendor[phone]" id="phone" class="form-control">
+              </div>
+              <div class="form-group col">
+                <label for="email">Email</label>
+                <input type="email" name="vendor[email]" id="email" class="form-control">
               </div>
             </div>
           </div>
