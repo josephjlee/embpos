@@ -27,7 +27,7 @@ class Keuangan extends CI_Controller
 
         $data['invoices'] = $this->invoice_model->list_all_invoices();
 
-        $data['content'] = $this->load->view('dashboard/invoice/invoice-index', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/finance/invoice-index', $data, TRUE);
 
         $data['view_script'] = 'index--invoice.js';
 
@@ -41,7 +41,7 @@ class Keuangan extends CI_Controller
 
         $data['invoice_number'] = $this->new_invoice_number();
 
-        $data['content'] = $this->load->view('dashboard/invoice/invoice-editor', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/finance/invoice-editor', $data, TRUE);
 
         $data['view_script'] = 'editor--invoice.js';
 
@@ -64,7 +64,7 @@ class Keuangan extends CI_Controller
 
         $data['payment_records'] = $this->pembayaran_model->get_payment_by_invoice_id($data['invoice_detail']['invoice_id']);
 
-        $data['content'] = $this->load->view('dashboard/invoice/invoice-editor', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/finance/invoice-editor', $data, TRUE);
 
         $data['view_script'] = 'editor--invoice.js';
 
@@ -91,7 +91,7 @@ class Keuangan extends CI_Controller
 
         $data['product_details']  = $this->penjualan_model->get_product_sale_by_invoice_id($data['invoice_detail']['invoice_id']);
 
-        $data['content'] = $this->load->view('dashboard/invoice/invoice-fullscreen', $data, TRUE);
+        $data['content'] = $this->load->view('dashboard/finance/invoice-fullscreen', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);
     }
@@ -142,7 +142,7 @@ class Keuangan extends CI_Controller
 
         $data['title']    = 'Pembayaran Invoice';
         $data['payments'] = $this->pembayaran_model->get_payment_history();
-        $data['content']  = $this->load->view('dashboard/invoice/payment-index', $data, TRUE);
+        $data['content']  = $this->load->view('dashboard/finance/payment-index', $data, TRUE);
 
         $data['view_script'] = 'index--payment.js';
 
