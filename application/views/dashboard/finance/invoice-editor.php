@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat' ? 'buat' : 'sunting'; ?>">
+<div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat_invoice' ? 'buat' : 'sunting'; ?>">
 
   <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'simpan' : 'perbarui'; ?>
 
@@ -291,7 +291,7 @@
                       <td scope="col" class="text-left">
                         <div class="d-flex justify-content-between">
                           <p>Rp</p>
-                          <input type="text" id="payment-due" style="border:none" class="text-right number" value="<?= isset($invoice_detail['invoice_due']) ? moneyStr($invoice_detail['invoice_due']) : '0'; ?>" <?= $this->uri->segment(2) == 'sunting' ? 'readonly' : ''; ?>>
+                          <input type="text" id="payment-due" style="border:none" class="text-right number" value="<?= isset($invoice_detail['invoice_due']) ? moneyStr($invoice_detail['invoice_due']) : '0'; ?>" <?= $this->uri->segment(2) == 'sunting_invoice' ? 'readonly' : ''; ?>>
                         </div>
                       </td>
                     </tr>
@@ -346,7 +346,7 @@
           </div>
         </div>
 
-        <?php if ($this->uri->segment(2) == 'sunting') : ?>
+        <?php if ($this->uri->segment(2) == 'sunting_invoice') : ?>
 
           <!-- Payment History Card -->
           <div class="card shadow mb-3">
@@ -574,7 +574,7 @@
               </select>
             </div>
 
-            <?php if ($this->uri->segment(2) == 'sunting') : ?>
+            <?php if ($this->uri->segment(2) == 'sunting_invoice') : ?>
               <div class="form-group">
                 <label for="modal-payment-date"><small>Tanggal</small></label>
                 <input type="date" name="payment[payment_date]" id="modal-payment-date" class="form-control">
@@ -731,7 +731,7 @@
 
         <div class="modal-body">
 
-          <?php if ($this->uri->segment(2) == 'sunting') : ?>
+          <?php if ($this->uri->segment(2) == 'sunting_invoice') : ?>
 
             <?php if ($uninvoiced_orders) : ?>
 
@@ -926,7 +926,7 @@
 </script>
 <!-- /.container-fluid -->
 
-<?php if ($this->uri->segment(2) == 'sunting') : ?>
+<?php if ($this->uri->segment(2) == 'sunting_invoice') : ?>
 
   <!-- Detach Product Modal-->
   <div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
