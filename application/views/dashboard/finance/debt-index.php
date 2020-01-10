@@ -284,14 +284,15 @@
     </div>
   </div>
 
-  <!-- Input Payment Modal -->
+  <!-- Input Debt Payment Modal -->
   <div class="modal fade" id="debtPaymentModal" tabindex="-1" role="dialog">
 
     <div class="modal-dialog" role="document">
 
       <form action="" method="post" id="debt-payment-form">
 
-        <input type="hidden" name="debt_payment[debt_id]" id="debt-payment-id" value="">
+        <input type="hidden" name="debt_payment[debt_payment_id]" id="debt-payment-id" value="">
+        <input type="hidden" name="debt_payment[debt_id]" id="debt-id" value="">
         <input type="hidden" name="debt_payment[creditor_id]" id="creditor-id" value="">
 
         <div class="modal-content">
@@ -307,6 +308,20 @@
             <div class="form-group">
               <label for="modal-payment-amount"><small>Nominal</small></label>
               <input type="number" max="" name="debt_payment[amount]" id="debt-payment-amount" class="form-control" placeholder="0" value="">
+            </div>
+
+            <div class="form-group">
+              <label for="update-payment-method"><small>Metode Pembayaran</small></label>
+              <select name="debt_payment[payment_method_id]" id="debt-payment-method" class="custom-select">
+                <option value="">Pilih...</option>
+
+                <?php $payment_methods = $this->pembayaran_model->get_payment_method(); ?>
+
+                <?php foreach ($payment_methods as $payment_method) : ?>
+                  <option value="<?= $payment_method['payment_method_id']; ?>"><?= $payment_method['name']; ?></option>
+                <?php endforeach; ?>
+
+              </select>
             </div>
 
             <div class="form-group">

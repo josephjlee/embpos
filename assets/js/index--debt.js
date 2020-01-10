@@ -178,7 +178,7 @@ $(document).ready(function () {
 		let creditorId = entryRow.data('creditor-id');
 		let debtAmount = entryRow.data('amount');
 
-		$('#debt-payment-form #debt-payment-id').val(debtId);
+		$('#debt-payment-form #debt-id').val(debtId);
 		$('#debt-payment-form #debt-payment-amount').attr('max', debtAmount);
 		$('#debt-payment-form #creditor-id').val(creditorId);
 
@@ -314,7 +314,7 @@ $(document).ready(function () {
 		let creditorData = $(this).serialize();
 
 		let saveCreditor = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/tambah_kreditur`,
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_kreditur`,
 			creditorData
 		)
 
@@ -348,7 +348,7 @@ $(document).ready(function () {
 		let debtPaymentData = $(this).serialize();
 
 		let payDebt = sendAjax(
-			`${window.location.origin}/ajax/keuangan_ajax/bayar_hutang`,
+			`${window.location.origin}/ajax/keuangan_ajax/simpan_pembayaran_hutang`,
 			debtPaymentData
 		)
 
