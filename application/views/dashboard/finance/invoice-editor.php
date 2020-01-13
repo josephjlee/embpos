@@ -493,20 +493,29 @@
           <div class="modal-body">
             <div class="mb-4">
 
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="cust_name"><small>Nama lengkap</small></label>
-                  <input type="text" name="customer[name]" class="form-control mb-2">
-                </div>
+              <div class="form-group">
+                <label for="cust_name"><small>Nama lengkap</small></label>
+                <input type="text" name="customer[name]" class="form-control mb-2">
+              </div>
+
+              <?php $customer_categories = $this->pelanggan_model->get_customer_categories(); ?>
+              <div class="form-row mb-2">
                 <div class="form-group col">
                   <label for="cust_company"><small>Afiliasi</small></label>
-                  <input type="text" name="customer[company]" class="form-control mb-2">
+                  <input type="text" name="customer[company]" class="form-control">
+                </div>
+                <div class="form-group col">
+                  <label for="cust_category"><small>Kategori</small></label>
+                  <select name="customer[customer_category_id]" class="custom-select">
+                    <option value="">Pilih kategori ...</option>
+
+                    <?php foreach ($customer_categories as $customer_category) : ?>
+                      <option value="<?= $customer_category['id'] ?>"><?= $customer_category['name'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="cust_address"><small>Alamat</small></label>
-                <input type="text" name="customer[address]" class="form-control">
-              </div>
+
               <div class="form-row">
                 <div class="form-group col">
                   <label for="cust_phone"><small>Ponsel</small></label>
@@ -516,6 +525,11 @@
                   <label for="cust_email"><small>Email</small></label>
                   <input type="email" name="customer[email]" class="form-control">
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cust_address"><small>Alamat</small></label>
+                <input type="text" name="customer[address]" class="form-control">
               </div>
 
             </div>

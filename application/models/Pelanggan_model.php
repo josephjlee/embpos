@@ -232,6 +232,12 @@ class Pelanggan_model extends CI_Model
 		return $key[0];
 	}
 
+	public function get_customer_categories()
+	{
+		$query = $this->db->query("SELECT customer_category_id AS id, name FROM customer_category");
+		return $query->result_array();
+	}
+
 	public function siapkan_data($customer)
 	{
 		$customer_db_data = [];
