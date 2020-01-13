@@ -12,11 +12,11 @@
 
         <h1 class="h3 text-gray-800 mr-2"><?= $title; ?></h1>
 
-          <div class="ml-auto">
+        <div class="ml-auto">
 
-            <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $design_detail['status']; ?></span></a>
+          <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $design_detail['status']; ?></span></a>
 
-          </div>
+        </div>
 
       </div>
 
@@ -145,7 +145,7 @@
                     <!-- <small>Diunggah pada: 29 Juli 2019</small> -->
                   </div>
                   <div class="ml-auto">
-                    <i class="fas fa-download"></i>
+                    <a href="<?= base_url('assets/img/artwork/') . $design_detail['artwork']; ?>" download><i class="fas fa-download"></i></a>
                   </div>
                 </div>
               <?php else : ?>

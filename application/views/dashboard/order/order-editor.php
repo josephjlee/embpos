@@ -270,7 +270,7 @@
 				<div class="collapse show" id="file-card__body">
 					<div class="card-body">
 
-						<?php if (isset($order['image'])) : ?>
+						<?php if (!empty($order['image'])) : ?>
 							<div class="d-flex align-items-center">
 								<img src="<?= base_url('assets/img/artwork/') . $order['image']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
 								<div>
