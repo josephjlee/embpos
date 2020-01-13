@@ -41,12 +41,11 @@ class Pesanan_pcsr extends CI_Controller
 
     public function perbarui()
     {
-
         // Grab input data and image data
         $order = $this->input->post('order');
 
         // Use existing image or grab new uploaded image
-        $order['image'] = $this->image_exist($order['order_id']) ?? $this->unggah($_FILES['image']);
+        $order['image'] = !empty($this->image_exist($order['order_id'])) ? $this->image_exist($order['order_id']) : $this->unggah($_FILES['image']);
 
         // Save to the db
         $this->pesanan_model->simpan($order);
