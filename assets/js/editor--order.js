@@ -15,7 +15,6 @@ $(document).ready(function () {
 	const colorOrder = $('#spec-modal .modal-body').data('color-order');
 	const fileName = $('#spec-modal .modal-body').data('file');
 	const flashdisk = $('#spec-modal .modal-body').data('flashdisk');
-	const operator = $('#spec-modal .modal-body').data('operator');
 	const machineNum = $('#spec-modal .modal-body').data('machine');
 	const laborPrice = $('#spec-modal .modal-body').data('labor-price') ? $('#spec-modal .modal-body').data('labor-price') : suggestedPrice;
 
@@ -60,15 +59,9 @@ $(document).ready(function () {
 					<input type="text" name="production[machine]" id="mesin" class="form-control" value="${machineNum}">
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="form-group col">
-					<label for="operator"><small>Operator</small></label>
-					<input type="text" name="production[operator]" id="operator" class="form-control" value="${operator}">
-				</div>
-				<div class="form-group col">
-					<label for="harga"><small>Harga (harga asli: Rp${priceVal})</small></label>
-					<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${laborPrice}">
-				</div>
+			<div class="form-group">
+				<label for="harga"><small>Harga (harga asli: Rp${priceVal})</small></label>
+				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${laborPrice}">
 			</div>
 	`;
 

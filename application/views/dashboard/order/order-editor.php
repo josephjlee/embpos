@@ -493,7 +493,7 @@
 						</button>
 					</div>
 
-					<div class="modal-body" data-color-order="<?= $production['color_order']; ?>" data-file="<?= $production['file']; ?>" data-flashdisk="<?= $production['flashdisk'] ?>" data-machine="<?= $production['machine']; ?>" data-operator="<?= $production['operator']; ?>" data-labor-price="<?= $production['labor_price']; ?>">
+					<div class="modal-body" data-color-order="<?= $production['color_order']; ?>" data-file="<?= $production['file']; ?>" data-flashdisk="<?= $production['flashdisk'] ?>" data-machine="<?= $production['machine']; ?>" data-labor-price="<?= $production['labor_price']; ?>">
 
 						<div class="form-group">
 							<label for=""><small>Pengerjaan</small></label>

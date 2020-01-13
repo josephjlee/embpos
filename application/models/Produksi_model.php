@@ -86,7 +86,6 @@ class Produksi_model extends CI_Model
             production.machine,
             production.flashdisk,
             production.file,
-            production.operator,
             production.labor_price,
             production.production_status_id,
             production_status.name as status
@@ -328,7 +327,6 @@ class Produksi_model extends CI_Model
             production.machine,
             production.flashdisk,
             production.file,
-            production.operator,
             production.labor_price,
             item.name as item
         ');

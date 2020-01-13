@@ -108,7 +108,6 @@ class Pesanan_model extends CI_Model
             production.machine,
             production.flashdisk,
             production.file,
-            production.operator,
             production.labor_price,
             process_status.name AS process_status
         ');
