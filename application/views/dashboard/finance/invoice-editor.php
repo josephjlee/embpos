@@ -481,7 +481,7 @@
 
       <div class="modal-content">
 
-        <form action="" id="customer-form">
+        <form id="customer-form">
 
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Tambah Pelanggan Baru</h5>
@@ -495,7 +495,7 @@
 
               <div class="form-group">
                 <label for="cust_name"><small>Nama lengkap</small></label>
-                <input type="text" name="customer[name]" class="form-control mb-2">
+                <input type="text" name="customer[name]" class="form-control mb-2" value="" required>
               </div>
 
               <?php $customer_categories = $this->pelanggan_model->get_customer_categories(); ?>
@@ -506,7 +506,7 @@
                 </div>
                 <div class="form-group col">
                   <label for="cust_category"><small>Kategori</small></label>
-                  <select name="customer[customer_category_id]" class="custom-select">
+                  <select name="customer[customer_category_id]" class="custom-select" required>
                     <option value="">Pilih kategori ...</option>
 
                     <?php foreach ($customer_categories as $customer_category) : ?>
@@ -519,7 +519,7 @@
               <div class="form-row">
                 <div class="form-group col">
                   <label for="cust_phone"><small>Ponsel</small></label>
-                  <input type="tel" name="customer[phone]" class="form-control">
+                  <input type="tel" name="customer[phone]" class="form-control" value="">
                 </div>
                 <div class="form-group col">
                   <label for="cust_email"><small>Email</small></label>
@@ -537,9 +537,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <input type="submit" name="save_customer_data" class="btn btn-primary" id="save-customer" value="Simpan data">
+            <button type="submit" class="btn btn-primary">Simpan Data</button>
           </div>
-
         </form>
 
       </div>

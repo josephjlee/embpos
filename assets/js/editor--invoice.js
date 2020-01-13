@@ -645,7 +645,7 @@ $(document).ready(function () {
 	});
 
 	// Send Customer Form Data
-	$('#save-customer').click(function (event) {
+	$('#customer-form').submit(function (event) {
 
 		// Prevent browser default submit
 		event.preventDefault();
