@@ -46,6 +46,10 @@ class Pelanggan_model extends CI_Model
 				customer.address AS customer_address, 
 				customer.phone AS customer_phone, 
 				customer.email AS cust_email,
+				customer.customer_category_id,
+				(
+					SELECT name FROM customer_category WHERE customer_category.customer_category_id = customer.customer_category_id
+				) AS customer_category,
 				(
 						SELECT IFNULL( SUM(quantity),0 ) FROM product_sale WHERE customer.customer_id = product_sale.customer_id
 				) AS buy_qty,

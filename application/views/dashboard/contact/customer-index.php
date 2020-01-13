@@ -19,6 +19,7 @@
             <th scope="col">Telepon</th>
             <th scope="col">Email</th>
             <th scope="col">Alamat</th>
+            <th scope="col">Kategori</th>
             <th scope="col">Beli</th>
             <th scope="col">Pesan</th>
             <th scope="col">Belanja</th>
@@ -29,7 +30,7 @@
 
           <?php foreach ($customers as $customer) : ?>
 
-            <tr data-id="<?= $customer['customer_id'] ?>" data-name="<?= $customer['customer_name']; ?>" data-phone="<?= $customer['customer_phone']; ?>" data-address="<?= $customer['customer_address']; ?>" data-email="<?= $customer['cust_email']; ?>" data-company="<?= $customer['customer_company']; ?>">
+            <tr data-id="<?= $customer['customer_id'] ?>" data-name="<?= $customer['customer_name']; ?>" data-phone="<?= $customer['customer_phone']; ?>" data-address="<?= $customer['customer_address']; ?>" data-email="<?= $customer['cust_email']; ?>" data-company="<?= $customer['customer_company']; ?>" data-category="<?= $customer['customer_category_id']; ?>">
 
               <td data-sort="<?= $customer['customer_name']; ?>">
                 <?php if ($customer['customer_company']) : ?>
@@ -50,6 +51,10 @@
 
               <td>
                 <?= $customer['customer_address'] ? "{$customer['customer_address']}" : 'tidak diketahui'; ?>
+              </td>
+
+              <td>
+                <?= $customer['customer_category'] ? "{$customer['customer_category']}" : 'tidak diketahui'; ?>
               </td>
 
               <td>
@@ -103,32 +108,45 @@
           </div>
 
           <div class="modal-body">
-            <div class="mb-4">
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="cust_name">Nama lengkap</label>
-                  <input type="text" name="customer[name]" id="cust_name" class="form-control mb-2">
-                </div>
-                <div class="form-group col">
-                  <label for="cust_company">Afiliasi</label>
-                  <input type="text" name="customer[company]" id="cust_company" class="form-control mb-2">
-                </div>
+
+            <div class="form-group mb-2">
+              <label for="cust_name">Nama lengkap</label>
+              <input type="text" name="customer[name]" id="cust_name" class="form-control">
+            </div>
+
+            <?php $customer_categories = $this->pelanggan_model->get_customer_categories(); ?>
+            <div class="form-row mb-2">
+              <div class="form-group col">
+                <label for="cust_company"><small>Afiliasi</small></label>
+                <input type="text" name="customer[company]" id="cust_company" class="form-control">
               </div>
-              <div class="form-group">
-                <label for="cust_address">Alamat</label>
-                <input type="text" name="customer[address]" id="cust_address" class="form-control">
-              </div>
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="cust_phone">Ponsel</label>
-                  <input type="tel" name="customer[phone]" id="cust_phone" class="form-control">
-                </div>
-                <div class="form-group col">
-                  <label for="cust_email">Email</label>
-                  <input type="email" name="customer[email]" id="cust_email" class="form-control">
-                </div>
+              <div class="form-group col">
+                <label for="cust_category"><small>Kategori</small></label>
+                <select name="customer[customer_category_id]" id="cust_category" class="custom-select">
+                  <option value="">Pilih kategori ...</option>
+                  <?php foreach ($customer_categories as $customer_category) : ?>
+                    <option value="<?= $customer_category['id'] ?>"><?= $customer_category['name'] ?></option>
+                  <?php endforeach; ?>
+                </select>
               </div>
             </div>
+
+            <div class="form-row mb-2">
+              <div class="form-group col">
+                <label for="cust_phone">Ponsel</label>
+                <input type="tel" name="customer[phone]" id="cust_phone" class="form-control">
+              </div>
+              <div class="form-group col">
+                <label for="cust_email">Email</label>
+                <input type="email" name="customer[email]" id="cust_email" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cust_address">Alamat</label>
+              <input type="text" name="customer[address]" id="cust_address" class="form-control">
+            </div>
+
           </div>
 
           <div class="modal-footer">

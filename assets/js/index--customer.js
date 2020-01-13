@@ -24,6 +24,7 @@ customerTable.addEventListener('click', function (e) {
 		document.querySelector('#cust_address').value = currentRow.dataset.address;
 		document.querySelector('#cust_phone').value = currentRow.dataset.phone;
 		document.querySelector('#cust_email').value = currentRow.dataset.email;
+		document.querySelector('#cust_category').value = currentRow.dataset.category;
 
 	}
 
