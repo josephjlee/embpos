@@ -10,7 +10,8 @@ $(document).ready(function () {
 			"orderable": false
 		}],
 		"order": [
-			[5, "desc"]
+			[6, "asc"],
+			[5, "asc"]
 		]
 	});
 

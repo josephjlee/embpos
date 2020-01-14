@@ -119,6 +119,8 @@ class Pesanan_model extends CI_Model
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
         $this->db->join('production', 'order.order_id = production.order_id', 'left');
         $this->db->join('process_status', 'order.process_status_id = process_status.process_status_id', 'left');
+        $this->db->order_by('process_status', 'ASC');
+        $this->db->order_by('order_deadline', 'ASC');
         $this->db->where('order.position_id !=', NULL);
 
         return $this->db->get_compiled_select();
