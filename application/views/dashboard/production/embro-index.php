@@ -14,7 +14,6 @@
             <th>Pesanan</th>
             <th>Judul</th>
             <th>Mesin</th>
-            <th>Operator</th>
             <th>Diambil</th>
             <th>Status</th>
             <th>#</th>
@@ -38,9 +37,6 @@
               </td>
               <td>
                 <?= $embro['machine']; ?>
-              </td>
-              <td>
-                <?= $embro['operator']; ?>
               </td>
               <td data-sort="<?= $embro['required']; ?>">
                 <?= date('d/m/Y', strtotime($embro['required'])); ?>
