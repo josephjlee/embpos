@@ -117,6 +117,19 @@ $(document).ready(function () {
 
 	});
 
+	// Set Operator Price Trigger
+	$('#process').on('click', '.set-price-trigger', function (e) {
+		let orderId = $(this).parents('tr').data('order-id');
+		let description = $(this).parents('tr').data('description');
+		let price = $(this).parents('tr').data('price');
+		let laborPrice = $(this).parents('tr').data('labor-price') ? $(this).parents('tr').data('labor-price') : parseInt(price) - 250;
+
+		$('#operator-price-modal .modal-title').html(description);
+		$('#operator-price-modal #order-id').val(orderId);
+		$('#operator-price-modal #original-price').html(price);
+		$('#operator-price-modal #labor-price').val(laborPrice.toString());
+	});
+
 	// Trigger Delete Product
 	$('#invoice-detail-table').on('click', '.product-del-trigger', function (e) {
 

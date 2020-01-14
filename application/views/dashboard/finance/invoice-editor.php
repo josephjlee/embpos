@@ -420,7 +420,9 @@
 
                         <?php $output = $this->produksi_model->get_production_output_by_order_id($order['order_id']); ?>
 
-                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>">
+                        <?php $production = $this->produksi_model->get_labor_price_by_order_id($order['order_id']); ?>
+
+                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>" data-labor-price="<?= $production['labor_price']; ?>">
 
                           <td class="px-0">
                             <div>
@@ -442,6 +444,7 @@
                               <a href="#" class="dropdown-item view-order-detail" data-toggle="modal" data-target="#order-detail-modal">Lihat Detail</a>
                               <a href="#" class="dropdown-item view-order-process" data-toggle="modal" data-target="#order-process-modal">Lihat Proses</a>
                               <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#update-process-modal">Tandai Sebagai</a>
+                              <a href="#" class="dropdown-item set-price-trigger" data-toggle="modal" data-target="#operator-price-modal">Harga Operator</a>
 
                             </div>
 
@@ -1302,6 +1305,45 @@
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary" id="update-process-btn">Perbarui</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Operator Price Modal-->
+  <div class="modal fade" id="operator-price-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+
+      <form action="<?= base_url('processor/produksi_pcsr/atur_produksi'); ?>" method="post" id="set-operator-price-form">
+
+        <input type="hidden" name="production[order_id]" id="order-id" value="">
+        <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="original-price"><small>Harga (harga asli: Rp<span id="original-price"></span>)</small></label>
+              <input type="text" name="production[labor_price]" id="labor-price" class="form-control" value="">
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="update-process-btn">Atur</button>
           </div>
 
         </div>
