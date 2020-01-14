@@ -159,35 +159,38 @@
         </div>
 
         <!-- Machine File Upload Card -->
-        <div class="card shadow mb-3">
-          <!-- Card Header - Accordion -->
-          <a href="#machine-file-card" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
-          </a>
-          <!-- Card Content - Collapse -->
-          <div class="collapse show" id="machine-file-card">
-            <div class="card-body">
+        <?php $file_upload_status = false; ?>
+        <?php if ($file_upload_status) : ?>
+          <div class="card shadow mb-3">
+            <!-- Card Header - Accordion -->
+            <a href="#machine-file-card" class="d-block card-header py-3" data-toggle="collapse" role="button">
+              <h6 class="m-0 font-weight-bold text-primary">File Mesin</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="machine-file-card">
+              <div class="card-body">
 
-              <?php if (isset($design_detail['file'])) : ?>
-                <div class="d-flex align-items-center mb-3">
-                  <img src="<?= base_url('assets/img/artwork/') . $design_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
-                  <div>
-                    <p class="font-weight-bold my-0"><?= $design_detail['file']; ?></p>
+                <?php if (isset($design_detail['file'])) : ?>
+                  <div class="d-flex align-items-center mb-3">
+                    <img src="<?= base_url('assets/img/artwork/') . $design_detail['artwork']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
+                    <div>
+                      <p class="font-weight-bold my-0"><?= $design_detail['file']; ?></p>
+                    </div>
+                    <button type="button" data-toggle="modal" data-target="#del-emb-modal" class="close ml-auto">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                  <button type="button" data-toggle="modal" data-target="#del-emb-modal" class="close ml-auto">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              <?php else : ?>
-                <div class="custom-file">
-                  <input type="file" name="file" class="custom-file-input" id="file">
-                  <label class="custom-file-label" for="customFile">Pilih file...</label>
-                </div>
-              <?php endif; ?>
+                <?php else : ?>
+                  <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="file">
+                    <label class="custom-file-label" for="customFile">Pilih file...</label>
+                  </div>
+                <?php endif; ?>
 
+              </div>
             </div>
           </div>
-        </div>
+        <?php endif; ?>
 
         <!-- Otomatis Input -->
         <div class="card shadow mb-3">
