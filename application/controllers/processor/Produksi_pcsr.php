@@ -39,7 +39,7 @@ class Produksi_pcsr extends CI_Controller
         $production = $this->input->post('production');
 
         // Check file submission, use existing or the uploaded one
-        $production['file'] = $this->file_exist($production['production_id']) ?? $this->unggah($_FILES['file'], $this->input->post('input-src'));
+        // $production['file'] = $this->file_exist($production['production_id']) ?? $this->unggah($_FILES['file'], $this->input->post('input-src'));
 
         // Update production_status_name to 'Desain Selesai'
         $production['production_status_id'] = 3;

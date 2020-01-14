@@ -192,17 +192,29 @@
           </div>
         <?php endif; ?>
 
-        <!-- Otomatis Input -->
+        <!-- Design Detail  Input -->
         <div class="card shadow mb-3">
-          <!-- Card Header - Accordion -->
           <a href="#file-card__body" class="d-block card-header py-3" data-toggle="collapse" role="button">
-            <h6 class="m-0 font-weight-bold text-primary">Urutan Otomatis</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Keterangan</h6>
           </a>
           <!-- Card Content - Collapse -->
           <div class="collapse show" id="file-card__body">
             <div class="card-body">
 
-              <textarea name="production[color_order]" id="color-order" class="form-control" style="font-size:13px"><?= $design_detail['color_order'] ?></textarea>
+              <div class="form-group">
+                <label for="flashdisk"><small>Flashdisk</small></label>
+                <input type="text" name="production[flashdisk]" id="flashdisk" class="form-control" style="font-size:13px" value="<?= $design_detail['flashdisk'] ?>">
+              </div>
+
+              <div class="form-group">
+                <label for="file-path"><small>Nama File</small></label>
+                <input type="text" name="production[file]" id="file-path" class="form-control" style="font-size:13px" value="<?= $design_detail['file'] ?>">
+              </div>
+
+              <div class="form-group">
+                <label for="color-order"><small>Urutan Otomatis</small></label>
+                <textarea name="production[color_order]" id="color-order" class="form-control" style="font-size:13px"><?= $design_detail['color_order'] ?></textarea>
+              </div>
 
             </div>
           </div>
