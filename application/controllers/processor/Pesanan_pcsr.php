@@ -50,8 +50,11 @@ class Pesanan_pcsr extends CI_Controller
         // Save to the db
         $this->pesanan_model->simpan($order);
 
-        // Redirect to current editing page
-        redirect(base_url('pesanan/sunting/') . $order['order_id']);
+        // Grab redirection destination
+        $redirect_target = base_url($this->input->post('redirect-here'));
+
+        // Redirect to the source url
+        redirect($redirect_target);
     }
 
     public function tandai_sebagai()

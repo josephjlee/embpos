@@ -130,6 +130,15 @@ $(document).ready(function () {
 		$('#operator-price-modal #labor-price').val(laborPrice.toString());
 	});
 
+	// Upload Artwork Trigger
+	$('#process').on('click', '.upload-artwork-trigger', function (e) {
+		let orderId = $(this).parents('tr').data('order-id');
+		let description = $(this).parents('tr').data('description');
+
+		$('#upload-artwork-modal .modal-title').html(description);
+		$('#upload-artwork-modal #order-id').val(orderId);
+	});
+
 	// Trigger Delete Product
 	$('#invoice-detail-table').on('click', '.product-del-trigger', function (e) {
 

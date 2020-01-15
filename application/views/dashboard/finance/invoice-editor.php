@@ -445,6 +445,7 @@
                               <a href="#" class="dropdown-item view-order-process" data-toggle="modal" data-target="#order-process-modal">Lihat Proses</a>
                               <a href="#" class="dropdown-item status-mark-trigger" data-toggle="modal" data-target="#update-process-modal">Tandai Sebagai</a>
                               <a href="#" class="dropdown-item set-price-trigger" data-toggle="modal" data-target="#operator-price-modal">Harga Operator</a>
+                              <a href="#" class="dropdown-item upload-artwork-trigger" data-toggle="modal" data-target="#upload-artwork-modal">Unggah Gambar</a>
 
                             </div>
 
@@ -1344,6 +1345,45 @@
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary" id="update-process-btn">Atur</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Upload Artwork Modal-->
+  <div class="modal fade" id="upload-artwork-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+
+      <form action="<?= base_url("processor/pesanan_pcsr/perbarui"); ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="set-operator-price-form">
+
+        <input type="hidden" name="order[order_id]" id="order-id" value="">
+        <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button class="close" type="button" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="custom-file">
+              <input type="file" name="image" class="custom-file-input" id="image">
+              <label class="custom-file-label" for="customFile">Pilih file...</label>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="upload-order-btn">Unggah</button>
           </div>
 
         </div>
