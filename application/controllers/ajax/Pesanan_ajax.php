@@ -88,4 +88,32 @@ class Pesanan_ajax extends CI_Controller
 
 		echo json_encode($new_order);
 	}
+
+	public function list_all_orders()
+	{
+		$orders = [
+			'data' => []
+		];
+
+		foreach ($this->pesanan_model->get_all_orders() as $order) {
+
+			$order['quantity'] = [
+				'display' => moneyStrDot($order['quantity']),
+				'raw'    => $order['quantity']
+			];
+
+			$order['thumbnail'] = isset($order['image']) ? base_url('assets/img/artwork/') . $order['image'] : base_url('assets/icon/') . $order['item_icon'];
+
+			$order['order_deadline'] = [
+				'display' => date('d/m/Y', strtotime($order['order_deadline'])),
+				'raw'     => strtotime($order['order_deadline']),
+				'input'   => date('Y-m-d', strtotime($order['order_deadline']))
+			];
+
+			array_push($orders['data'], $order);
+		};
+
+		header('Content-Type: application/json');
+		echo json_encode($orders);
+	}
 }

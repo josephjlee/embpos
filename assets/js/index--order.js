@@ -1,83 +1,90 @@
 $(document).ready(function () {
 
-	$('#dataTable').DataTable({
-		"language": {
-			"decimal": ",",
-			"thousands": "."
+	// DataTable
+	let table = $('#orderTable').DataTable({
+		"ajax": `${window.location.origin}/ajax/pesanan_ajax/list_all_orders`,
+		"columns": [
+			{ "data": "thumbnail" },
+			{ "data": "order_number" },
+			{ "data": "description" },
+			{ "data": "position_name" },
+			{
+				"data": {
+					"_": "quantity.display",
+					"sort": "quantity.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "order_deadline.display",
+					"sort": "order_deadline.raw"
+				}
+			},
+			{ "data": "process_status" },
+			{ "data": "customer_name" },
+			{ "data": "invoice_number" },
+			{ "data": "order_id" }
+		],
+		"createdRow": function (row, data, dataIndex) {
+			$(row).attr('data-order-id', data.order_id);
 		},
-		"columnDefs": [{
-			"targets": [0, 8],
-			"orderable": false
-		}],
+		"columnDefs": [
+			{
+				"targets": 0,
+				"createdCell": function (td, cellData, rowData, row, col) {
+					$(td).css('text-align', 'center')
+					$(td).html(`<img style="width:33px;height:100%" src="${cellData}">`);
+				}
+			},
+			{
+				"targets": 8,
+				"createdCell": function (td, cellData, rowData, row, col) {
+					$(td).html(`INV-${cellData}`);
+				}
+			},
+			{
+				"targets": -1,
+				"createdCell": function (td, cellData, rowData, row, col) {
+
+					let actionBtn = `
+						<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
+							<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+						</a>
+
+						<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+
+							<a class="dropdown-item" href="${window.location.origin}/pesanan/sunting/${cellData}">
+								Sunting Pesanan
+							</a>
+
+							<a class="dropdown-item status-mark-trigger" href="#" data-toggle="modal" data-target="#mark-as-modal" data-status-id="">Tandai Sebagai</a>
+
+							<a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#del-order-modal">Hapus Pesanan</a>
+
+							<a class="dropdown-item" href="${window.location.origin}/keuangan/sunting_invoice/${rowData.invoice_number}">
+								Lihat Invoice
+							</a>
+
+						</div>`;
+
+					$(td).html(actionBtn);
+				}
+			}
+		],
 		"order": [
 			[6, "asc"],
 			[5, "asc"]
 		]
 	});
 
-	var table = $('#dataTable').DataTable();
+	setInterval(function () {
+		table.ajax.reload();
+	}, 15000);
 
 	$('#filter-select').change(function (e) {
 		let filter = $(this).val();
 		table.columns(6).search(filter).draw();
 	});
 
-	// const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
-
-	// const materialFormEl = `
-	// 		<div class="form-group">
-	// 			<label for="thread"><small>Benang</small></label>
-	// 			<input type="text" name="production_material[thread]" id="thread" class="form-control">
-	// 		</div>
-	// 		<div class="form-group">
-	// 			<label for="stabilizer"><small>Kain Keras</small></label>
-	// 			<input type="text" name="production_material[stabilizer]" id="stabilizer" class="form-control">
-	// 		</div>
-	// `;
-
-	// const designFormEl = `
-	// 		<div class="form-group">
-	// 			<label for="repeat"><small>Ulang</small></label>
-	// 			<input type="text" name="production_design[repeat]" id="repeat" class="form-control">
-	// 		</div>
-	// 	`;
-
-	// const embroFormEl = `
-	// 		<div class="form-group">
-	// 			<label for="otomatis"><small>Otomatis</small></label>
-	// 			<input type="text" name="production_embro[otomatis]" id="otomatis" class="form-control">
-	// 		</div>
-	// 		<div class="form-group">
-	// 			<label for="harga"><small>Harga</small></label>
-	// 			<input type="text" name="production_embro[harga]" id="harga" class="form-control">
-	// 		</div>
-	// `;
-
-	// $('#production-type').change(function (e) {
-
-	// 	// Grab form processor url from data attribute on each select box option
-	// 	let formAction = $(this).find('option:selected').data('form-action');
-
-	// 	// Assign form url to form action
-	// 	$(this).parents('form').attr('action', formAction);
-
-	// 	// Populate form input element based on production type change
-	// 	switch ($(this).val()) {
-
-	// 		case 'material':
-	// 			uniqueFormWrapper.html(materialFormEl);
-	// 			break;
-
-	// 		case 'design':
-	// 			uniqueFormWrapper.html(designFormEl);
-	// 			break;
-
-	// 		case 'embroidery':
-	// 			uniqueFormWrapper.html(embroFormEl);
-	// 			$('#spec-modal #harga').val($('#spec-modal #order-price').val());
-	// 			break;
-	// 	}
-
-	// });
 
 });
