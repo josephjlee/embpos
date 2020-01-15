@@ -1323,7 +1323,7 @@
 
         <input type="hidden" name="production[production_id]" id="production-id" value="">
         <input type="hidden" name="production[order_id]" id="order-id" value="">
-        <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
+        <input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
         <div class="modal-content">
 

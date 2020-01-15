@@ -479,7 +479,7 @@
 
 			<form action="<?= base_url('processor/produksi_pcsr/atur_produksi'); ?>" method="post" id="spec-form">
 
-				<input type="hidden" name="redirect-here" value="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>">
+				<input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
 				<input type="hidden" name="production[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
 

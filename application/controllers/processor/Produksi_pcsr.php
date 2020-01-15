@@ -28,9 +28,7 @@ class Produksi_pcsr extends CI_Controller
 
         $this->produksi_model->simpan($production);
 
-        $redirect_dest = $this->input->post('redirect-here');
-
-        redirect($redirect_dest);
+        redirect($this->input->post('input-src'));
     }
 
     public function rekam_output_desainer()
