@@ -4,6 +4,7 @@
 <form action="<?= base_url("processor/pesanan_pcsr/{$method}"); ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="order-create-form" class="container-fluid create-order mb-4">
 
 	<input type="hidden" name="order[order_id]" value="<?= $order['order_id'] ?? ''; ?>">
+	<input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
 
 	<!-- Page Heading -->
 	<div class="row">
