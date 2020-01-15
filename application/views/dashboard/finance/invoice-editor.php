@@ -420,9 +420,9 @@
 
                         <?php $output = $this->produksi_model->get_production_output_by_order_id($order['order_id']); ?>
 
-                        <?php $production = $this->produksi_model->get_labor_price_by_order_id($order['order_id']); ?>
+                        <?php $production = $this->produksi_model->get_production_by_id($order['order_id']); ?>
 
-                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>" data-labor-price="<?= $production['labor_price']; ?>">
+                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>" data-labor-price="<?= $production['labor_price']; ?>" data-production-id="<?= $production['production_id']; ?>">
 
                           <td class="px-0">
                             <div>
@@ -1321,6 +1321,7 @@
 
       <form action="<?= base_url('processor/produksi_pcsr/atur_produksi'); ?>" method="post" id="set-operator-price-form">
 
+        <input type="hidden" name="production[production_id]" id="production-id" value="">
         <input type="hidden" name="production[order_id]" id="order-id" value="">
         <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
 

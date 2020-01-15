@@ -338,7 +338,7 @@ class Produksi_model extends CI_Model
         return $this->db->get_compiled_select();
     }
 
-    public function get_labor_price_by_order_id($order_id)
+    public function get_production_by_id($order_id)
     {
         return $this->db->get_where('production', ['order_id' => $order_id])->row_array();
     }
