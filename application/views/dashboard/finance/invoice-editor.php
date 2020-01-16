@@ -870,7 +870,7 @@
                 <input type="text" id="dimension" class="form-control dimension number" name="order[dimension]" value="">
               </div>
               <div class="form-group col">
-                <label for=""><small>Warna</small></label>
+                <label for=""><small>Warna Benang</small></label>
                 <input type="text" id="color" class="form-control color number" name="order[color]" value="">
               </div>
               <div class="form-group col">
@@ -1186,7 +1186,7 @@
                 <input type="text" name="order[dimension]" id="dimension" class="form-control dimension number" value="">
               </div>
               <div class="form-group col">
-                <label for=""><small>Warna</small></label>
+                <label for=""><small>Warna Benang</small></label>
                 <input type="text" name="order[color]" id="color" class="form-control color number" value="">
               </div>
               <div class="form-group col">
