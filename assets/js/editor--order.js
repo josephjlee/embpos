@@ -60,7 +60,7 @@ $(document).ready(function () {
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="harga"><small>Harga (harga asli: Rp${priceVal})</small></label>
+				<label for="harga"><small>Harga Operator</small></label>
 				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${laborPrice}">
 			</div>
 	`;
