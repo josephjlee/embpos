@@ -5,9 +5,11 @@ $(document).ready(function () {
 		"ajax": `${window.location.origin}/ajax/pesanan_ajax/list_all_orders`,
 		"columns": [
 			{ "data": "thumbnail" },
-			{ "data": "order_number" },
 			{ "data": "description" },
+			{ "data": "item_name" },
 			{ "data": "position_name" },
+			{ "data": "dimension" },
+			{ "data": "color" },
 			{
 				"data": {
 					"_": "quantity.display",
@@ -22,7 +24,6 @@ $(document).ready(function () {
 			},
 			{ "data": "process_status" },
 			{ "data": "customer_name" },
-			{ "data": "invoice_number" },
 			{ "data": "order_id" }
 		],
 		"createdRow": function (row, data, dataIndex) {
@@ -34,12 +35,6 @@ $(document).ready(function () {
 				"createdCell": function (td, cellData, rowData, row, col) {
 					$(td).css('text-align', 'center')
 					$(td).html(`<img style="width:33px;height:100%" src="${cellData}">`);
-				}
-			},
-			{
-				"targets": 8,
-				"createdCell": function (td, cellData, rowData, row, col) {
-					$(td).html(`INV-${cellData}`);
 				}
 			},
 			{
@@ -72,8 +67,8 @@ $(document).ready(function () {
 			}
 		],
 		"order": [
-			[6, "asc"],
-			[5, "asc"]
+			[8, "asc"],
+			[7, "asc"]
 		]
 	});
 
