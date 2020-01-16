@@ -52,6 +52,7 @@ class Produksi_model extends CI_Model
     public function get_design_list()
     {
         $this->db->select('
+            order.order_id,
             order.image as artwork,
             order.number as order_number,
             order.description as title,

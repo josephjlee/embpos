@@ -1,18 +1,79 @@
 $(document).ready(function () {
 
+	// DataTable
+	let table = $('#designListTable').DataTable({
+		"ajax": `${window.location.origin}/ajax/produksi_ajax/list_all_designs`,
+		"columns": [
+			{ "data": "thumbnail" },
+			{ "data": "order_number" },
+			{ "data": "title" },
+			{ "data": "dimension" },
+			{ "data": "repeat" },
+			{
+				"data": {
+					"_": "required.display",
+					"sort": "required.raw"
+				}
+			},
+			{
+				"data": {
+					"_": "status.display",
+					"sort": "status.raw"
+				}
+			},
+			{ "data": "production_id" }
+		],
+		"columnDefs": [
+			{
+				"targets": [0, 2, 6],
+				"orderable": false
+			},
+			{
+				"targets": 0,
+				"createdCell": function (td, cellData, rowData, row, col) {
+					$(td).css('text-align', 'center')
+					$(td).html(`<img style="width:33px;height:100%" src="${cellData}">`);
+				}
+			},
+			{
+				"targets": 1,
+				"createdCell": function (td, cellData, rowData, row, col) {
+					$(td).html(`PSN-${cellData}`);
+				}
+			},
+			{
+				"targets": -1,
+				"createdCell": function (td, cellData, rowData, row, col) {
 
-	$('#dataTable').DataTable({
-		"language": {
-			"decimal": ",",
-			"thousands": "."
-		},
-		"columnDefs": [{
-			"targets": [0, 2, 6],
-			"orderable": false
-		}],
+					let actionBtn = `
+					<a class="dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown">
+						<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+					</a>
+
+					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+
+						<a class="dropdown-item" href="${window.location.origin}/produksi/detail_desain/${cellData}">
+							Sunting Detail
+						</a>
+
+						<a class="dropdown-item" href="${window.location.origin}/pesanan/sunting/${rowData.order_id}">
+							Lihat Pesanan
+						</a>
+
+					</div>`;
+
+					$(td).html(actionBtn);
+				}
+			}
+		],
 		"order": [
-			[4, "desc"]
+			[6, "asc"],
+			[5, "asc"]
 		]
 	});
+
+	setInterval(function () {
+		table.ajax.reload();
+	}, 15000);
 
 });
