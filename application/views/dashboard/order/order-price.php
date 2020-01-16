@@ -20,6 +20,7 @@
             <th scope="col">Harga</th>
             <th scope="col">Pelanggan</th>
             <th scope="col">Invoice</th>
+            <th scope="col">#</th>
           </tr>
         </thead>
       </table>
