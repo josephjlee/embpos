@@ -116,4 +116,31 @@ class Pesanan_ajax extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode($orders);
 	}
+
+	public function list_order_price()
+	{
+		$orders = [
+			'data' => []
+		];
+
+		foreach ($this->pesanan_model->get_order_price_reference() as $order) {
+
+			$order['quantity'] = [
+				'display' => moneyStrDot($order['quantity']),
+				'raw'    => $order['quantity']
+			];
+
+			$order['price'] = [
+				'display' => moneyStrDot($order['price']),
+				'raw'    => $order['price']
+			];
+
+			$order['thumbnail'] = isset($order['image']) ? base_url('assets/img/artwork/') . $order['image'] : base_url('assets/icon/') . $order['item_icon'];
+
+			array_push($orders['data'], $order);
+		};
+
+		header('Content-Type: application/json');
+		echo json_encode($orders);
+	}
 }

@@ -79,6 +79,21 @@ class Pesanan extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
+    public function referensi_harga()
+    {
+        $data['title'] = 'Referensi Harga';
+
+        $data['orders'] = $this->pesanan_model->get_order_price_reference();
+
+        // pretty_print($data['orders']);
+
+        $data['content'] = $this->load->view('dashboard/order/order-price', $data, true);
+
+        $data['view_script'] = 'index--order-price.js';
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
     public function selesai()
     {
         $data['title'] = 'Pesanan Selesai';

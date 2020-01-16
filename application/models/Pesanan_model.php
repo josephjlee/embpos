@@ -585,6 +585,34 @@ class Pesanan_model extends CI_Model
         return $query->result_array();
     }
 
+    public function get_order_price_reference()
+    {
+        $query = $this->db->query("SELECT
+                    invoice.number AS invoice_number,
+                    customer.customer_id,
+                    customer.name AS customer_name,
+                    item.item_id,
+                    item.name AS item_name,
+                    item.icon AS item_icon,
+                    position.position_id,
+                    position.name AS position_name,
+                    order.image,            
+                    order.order_id,
+                    order.number AS order_number,
+                    order.description,
+                    order.dimension,
+                    order.quantity,
+                    order.price
+                FROM `order`
+                LEFT JOIN item ON order.item_id = item.item_id
+                LEFT JOIN position ON order.position_id = position.position_id
+                LEFT JOIN invoice ON order.invoice_id = invoice.invoice_id
+                LEFT JOIN customer ON order.customer_id = customer.customer_id
+        ");
+
+        return $query->result_array();
+    }
+
     public function siapkan_data($order)
     {
 
