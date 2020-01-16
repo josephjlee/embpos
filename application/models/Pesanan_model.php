@@ -101,6 +101,8 @@ class Pesanan_model extends CI_Model
             order.order_id,
             order.number AS order_number,
             order.description,
+            order.dimension,
+            order.color,
             order.quantity,
             order.price,
             order.process_status_id,

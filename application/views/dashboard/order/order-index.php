@@ -102,14 +102,15 @@
         <thead class="thead-light">
           <tr>
             <th scope="col" class="text-center">Gambar</th>
-            <th scope="col">ID</th>
+            <th scope="col">Judul</th>
             <th scope="col">Barang</th>
             <th scope="col">Posisi</th>
+            <th scope="col">Ukuran</th>
+            <th scope="col">Warna</th>
             <th scope="col">Jml</th>
             <th scope="col">Diambil</th>
             <th scope="col">Status</th>
             <th scope="col">Pelanggan</th>
-            <th scope="col">Invoice</th>
             <th scope="col">#</th>
           </tr>
         </thead>
