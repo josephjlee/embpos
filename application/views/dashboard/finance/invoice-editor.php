@@ -1337,7 +1337,7 @@
           <div class="modal-body">
 
             <div class="form-group">
-              <label for="original-price"><small>Harga (harga asli: Rp<span id="original-price"></span>)</small></label>
+              <label for="labor-price"><small><span id="original-price"></span></small></label>
               <input type="text" name="production[labor_price]" id="labor-price" class="form-control" value="">
             </div>
 
@@ -1345,7 +1345,7 @@
 
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-primary" id="update-process-btn">Atur</button>
+            <button type="submit" class="btn btn-primary" id="set-price-btn">Atur</button>
           </div>
 
         </div>

@@ -123,13 +123,22 @@ $(document).ready(function () {
 		let productionId = $(this).parents('tr').data('production-id');
 		let description = $(this).parents('tr').data('description');
 		let price = $(this).parents('tr').data('price');
-		let laborPrice = $(this).parents('tr').data('labor-price') ? $(this).parents('tr').data('labor-price') : parseInt(price) - 250;
+		let laborPrice = $(this).parents('tr').data('labor-price')
+
+		if (laborPrice) {
+			$('#operator-price-modal #set-price-btn').html('Perbarui');
+			$('#operator-price-modal #original-price').html(`Harga Operator (harga asli: ${price})`);
+			$('#operator-price-modal #labor-price').val(laborPrice);
+		}
+		else {
+			suggestedPrice = parseInt(price) - 250;
+			$('#operator-price-modal #original-price').html(`Saran Harga Operator (harga asli: Rp${price})`);
+			$('#operator-price-modal #labor-price').val(suggestedPrice.toString());
+		};
 
 		$('#operator-price-modal .modal-title').html(description);
 		$('#operator-price-modal #order-id').val(orderId);
 		$('#operator-price-modal #production-id').val(productionId);
-		$('#operator-price-modal #original-price').html(price);
-		$('#operator-price-modal #labor-price').val(laborPrice.toString());
 	});
 
 	// Upload Artwork Trigger
