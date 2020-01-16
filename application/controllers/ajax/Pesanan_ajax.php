@@ -102,7 +102,7 @@ class Pesanan_ajax extends CI_Controller
 				'raw'    => $order['quantity']
 			];
 
-			$order['thumbnail'] = isset($order['image']) ? base_url('assets/img/artwork/') . $order['image'] : base_url('assets/icon/') . $order['item_icon'];
+			$order['thumbnail'] = !empty($order['image']) ? base_url('assets/img/artwork/') . $order['image'] : base_url('assets/icon/') . $order['item_icon'];
 
 			$order['order_deadline'] = [
 				'display' => date('d/m/Y', strtotime($order['order_deadline'])),
