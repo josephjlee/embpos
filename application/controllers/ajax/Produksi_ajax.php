@@ -39,4 +39,32 @@ class Produksi_ajax extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode($designs);
 	}
+
+	public function list_all_embro()
+	{
+		$embros = [
+			'data' => []
+		];
+
+		foreach ($this->produksi_model->get_embro_list() as $embro) {
+
+			$embro['thumbnail'] = isset($embro['artwork']) ? base_url('assets/img/artwork/') . $embro['artwork'] : '-';
+
+			$embro['required'] = [
+				'display' => date('d/m/Y', strtotime($embro['required'])),
+				'raw'     => strtotime($embro['required']),
+				'input'   => date('Y-m-d', strtotime($embro['required']))
+			];
+
+			$embro['status'] = [
+				'display' => $embro['status'],
+				'raw'     => $embro['production_status_id'],
+			];
+
+			array_push($embros['data'], $embro);
+		};
+
+		header('Content-Type: application/json');
+		echo json_encode($embros);
+	}
 }
