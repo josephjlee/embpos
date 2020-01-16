@@ -97,7 +97,6 @@ class Produksi_model extends CI_Model
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
         $this->db->where('file!=', null);
         $this->db->where('color_order<>', '');
-        $this->db->where('machine<>', '');
         $this->db->where('production.production_status_id>', 2);
         $this->db->where('production.production_status_id<', 6);
 
