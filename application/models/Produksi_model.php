@@ -116,9 +116,10 @@ class Produksi_model extends CI_Model
             order.required_date AS deadline,
             order.order_id,
             order.number AS order_number,
-            order.description,
+            order.description AS title,
             order.quantity,
             production.production_id,
+            production_status.production_status_id,
             production_status.name AS status
         ');
         $this->db->from('order');

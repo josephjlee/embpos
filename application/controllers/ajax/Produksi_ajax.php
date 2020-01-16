@@ -67,4 +67,37 @@ class Produksi_ajax extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode($embros);
 	}
+
+	public function list_all_finishing()
+	{
+		$finishing_list = [
+			'data' => []
+		];
+
+		foreach ($this->produksi_model->get_finishing_list() as $finishing) {
+
+			$finishing['thumbnail'] = base_url('assets/img/artwork/') . $finishing['image'];
+
+			$finishing['deadline'] = [
+				'display' => date('d/m/Y', strtotime($finishing['deadline'])),
+				'raw'     => strtotime($finishing['deadline']),
+				'input'   => date('Y-m-d', strtotime($finishing['deadline']))
+			];
+
+			$finishing['status'] = [
+				'display' => $finishing['status'],
+				'raw'     => $finishing['production_status_id'],
+			];
+
+			$finishing['quantity'] = [
+				'display' => moneyStrDot($finishing['quantity']),
+				'raw'     => $finishing['quantity'],
+			];
+
+			array_push($finishing_list['data'], $finishing);
+		};
+
+		header('Content-Type: application/json');
+		echo json_encode($finishing_list);
+	}
 }
