@@ -10,7 +10,7 @@
       <table class="table table-hover" id="embroListTable">
         <thead class="thead-light">
           <tr>
-            <th>Gambar</th>
+            <th class="text-center">Gambar</th>
             <th>Pesanan</th>
             <th>Judul</th>
             <th>Mesin</th>

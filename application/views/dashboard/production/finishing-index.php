@@ -10,7 +10,7 @@
       <table class="table table-hover" id="finishingListTable">
         <thead class="thead-light">
           <tr>
-            <th>Gambar</th>
+            <th class="text-center">Gambar</th>
             <th>ID</th>
             <th>Barang</th>
             <th>Posisi</th>
