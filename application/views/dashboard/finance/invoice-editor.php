@@ -422,11 +422,11 @@
 
                         <?php $production = $this->produksi_model->get_production_by_id($order['order_id']); ?>
 
-                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['process_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>" data-labor-price="<?= $production['labor_price']; ?>" data-production-id="<?= $production['production_id']; ?>">
+                        <tr data-order-id="<?= $order['order_id']; ?>" data-description="<?= $order['description']; ?>" data-order-date="<?= date('Y-m-d', strtotime($order['received_date'])); ?>" data-required-date="<?= date('Y-m-d', strtotime($order['required_date'])); ?>" data-item-id="<?= $order['item_id'] ?>" data-position-id="<?= $order['position_id'] ?>" data-dimension="<?= $order['dimension']; ?>" data-color="<?= $order['color']; ?>" data-color="<?= $order['color']; ?>" data-material="<?= $order['material']; ?>" data-quantity="<?= $order['quantity']; ?>" data-price="<?= $order['price']; ?>" data-amount="<?= $order['amount']; ?>" data-note="<?= $order['note']; ?>" data-process-status-id="<?= $order['production_status_id']; ?>" data-status-design="<?= $production_status['design']; ?>" data-status-embro="<?= $production_status['embro']; ?>" data-status-finishing="<?= $production_status['finishing']; ?>" data-output-design="<?= $output['design']; ?>" data-output-embro="<?= $output['embro']; ?>" data-output-finishing="<?= $output['finishing']; ?>" data-labor-price="<?= $production['labor_price']; ?>" data-production-id="<?= $production['production_id']; ?>">
 
                           <td class="px-0">
                             <div>
-                              <small id="payment-date-display" style="color:#ec8615"><?= $order['process_status']; ?></small>
+                              <small id="payment-date-display" style="color:#ec8615"><?= $order['production_status']; ?></small>
                               <p style="font-size:14px;" id="payment-name-display">
                                 <span style="color:#495057"><?= date('d-m-Y', strtotime($order['required_date'])); ?></span> | <?= $order['description']; ?>
                               </p>
@@ -1287,14 +1287,14 @@
           <div class="modal-body">
 
             <label for="process-status"><small>Tandai sebagai</small></label>
-            <select name="order[process_status_id]" id="process-status" class="custom-select">
+            <select name="order[production_status_id]" id="process-status" class="custom-select">
 
               <option value="">Pilih...</option>
 
-              <?php $process_list = $this->db->get('process_status')->result_array(); ?>
+              <?php $process_list = $this->db->get('production_status')->result_array(); ?>
 
               <?php foreach ($process_list as $status) : ?>
-                <option value="<?= $status['process_status_id']; ?>">
+                <option value="<?= $status['production_status_id']; ?>">
                   <?= $status['name']; ?>
                 </option>
               <?php endforeach; ?>

@@ -105,13 +105,13 @@ class Pesanan_model extends CI_Model
             order.color,
             order.quantity,
             order.price,
-            order.process_status_id,
+            order.production_status_id,
             production.color_order,
             production.machine,
             production.flashdisk,
             production.file,
             production.labor_price,
-            process_status.name AS process_status
+            production_status.name AS production_status
         ');
 
         $this->db->from('order');
@@ -120,8 +120,8 @@ class Pesanan_model extends CI_Model
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
         $this->db->join('production', 'order.order_id = production.order_id', 'left');
-        $this->db->join('process_status', 'order.process_status_id = process_status.process_status_id', 'left');
-        $this->db->order_by('process_status', 'ASC');
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id', 'left');
+        $this->db->order_by('production_status', 'ASC');
         $this->db->order_by('order_deadline', 'ASC');
         $this->db->where('order.position_id !=', NULL);
 
@@ -139,7 +139,7 @@ class Pesanan_model extends CI_Model
     {
 
         $select_all_orders = $this->select_all_orders();
-        $select_finished_orders = "{$select_all_orders} AND `order`.`process_status_id` = 5";
+        $select_finished_orders = "{$select_all_orders} AND `order`.`production_status_id` = 5";
 
         $finished_order_query = $this->db->query($select_finished_orders);
         return $finished_order_query->result_array();
@@ -149,7 +149,7 @@ class Pesanan_model extends CI_Model
     {
 
         $select_all_orders = $this->select_all_orders();
-        $select_active_orders = "{$select_all_orders} AND `order`.`process_status_id` != 1 AND `order`.`process_status_id` != 5";
+        $select_active_orders = "{$select_all_orders} AND `order`.`production_status_id` != 1 AND `order`.`production_status_id` != 9";
 
         $active_order_query = $this->db->query($select_active_orders);
         return $active_order_query->result_array();
@@ -159,7 +159,7 @@ class Pesanan_model extends CI_Model
     {
 
         $select_all_orders = $this->select_all_orders();
-        $select_active_orders = "{$select_all_orders} AND `order`.`process_status_id` = 1";
+        $select_active_orders = "{$select_all_orders} AND `order`.`production_status_id` = 1";
 
         $active_order_query = $this->db->query($select_active_orders);
         return $active_order_query->result_array();
@@ -194,9 +194,9 @@ class Pesanan_model extends CI_Model
             (order.price*order.quantity) AS amount,
             order.received_date,
             order.required_date,
-            order.process_status_id,
+            order.production_status_id,
             order.note,
-            process_status.name AS process_status
+            production_status.name AS production_status
         ');
 
         $this->db->from('order');
@@ -204,7 +204,7 @@ class Pesanan_model extends CI_Model
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
         $this->db->join('customer', 'order.customer_id = customer.customer_id');
-        $this->db->join('process_status', 'order.process_status_id = process_status.process_status_id', 'left');
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id', 'left');
         $this->db->where('order.position_id !=', NULL);
         $this->db->where('order_id', $order_id);
 
@@ -405,15 +405,15 @@ class Pesanan_model extends CI_Model
             (order.price*order.quantity) AS amount,
             order.received_date,
             order.required_date,
-            order.process_status_id,
+            order.production_status_id,
             order.status_date,            
-            process_status.name AS process_status
+            production_status.name AS production_status
         ');
         $this->db->from('order');
         $this->db->join('item', 'order.item_id = item.item_id');
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id');
-        $this->db->join('process_status', 'order.process_status_id = process_status.process_status_id', 'left');
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id', 'left');
         $this->db->where('order.invoice_id', $invoice_id);
 
         $order_query = $this->db->get();
@@ -428,12 +428,7 @@ class Pesanan_model extends CI_Model
         $this->db->where('invoice_id', $invoice_id);
         $total_order = $this->db->get()->row_array()['total_order'];
 
-        $this->db->select('COUNT(product_sale_id) AS total_order');
-        $this->db->from('product_sale');
-        $this->db->where('invoice_id', $invoice_id);
-        $total_product_sale = $this->db->get()->row_array()['total_order'];
-
-        return $total_order + $total_product_sale;
+        return $total_order;
     }
 
     public function get_finished_order_by_invoice_id($invoice_id)
@@ -442,16 +437,10 @@ class Pesanan_model extends CI_Model
         $this->db->select('COUNT(order_id) AS total_completed');
         $this->db->from('order');
         $this->db->where('invoice_id', $invoice_id);
-        $this->db->where('process_status_id', 5);
+        $this->db->where('production_status_id', 9);
         $finished_order = $this->db->get()->row_array()['total_completed'];
 
-        $this->db->select('COUNT(product_sale_id) AS total_completed');
-        $this->db->from('product_sale');
-        $this->db->where('invoice_id', $invoice_id);
-        $this->db->where('process_status_id', 5);
-        $finished_product_sale = $this->db->get()->row_array()['total_completed'];
-
-        return $finished_order + $finished_product_sale;
+        return $finished_order;
     }
 
     public function get_active_order_by_invoice_id($invoice_id)
@@ -460,11 +449,11 @@ class Pesanan_model extends CI_Model
         $this->db->select('COUNT(order_id) AS total_active');
         $this->db->from('order');
         $this->db->where('invoice_id', $invoice_id);
-        $this->db->where('process_status_id!=', 1);
-        $this->db->where('process_status_id!=', 5);
+        $this->db->where('production_status_id!=', 1);
+        $this->db->where('production_status_id!=', 9);
+        $active_order = $this->db->get()->row_array()['total_active'];
 
-        $active_order_query = $this->db->get();
-        return $active_order_query->row_array()['total_active'];
+        return $active_order;
     }
 
     public function check_order_progress($invoice_id)
@@ -580,7 +569,7 @@ class Pesanan_model extends CI_Model
                     required_date AS deadline,
                     DATEDIFF(required_date, CURDATE()) AS countdown
                 FROM `order`
-                WHERE DATEDIFF(required_date, CURDATE()) <= 5 AND process_status_id < 5");
+                WHERE DATEDIFF(required_date, CURDATE()) <= 5 AND production_status_id < 5");
 
         return $query->result_array();
     }

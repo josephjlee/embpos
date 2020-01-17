@@ -21,7 +21,7 @@
 
 					<a href="<?= $is_invoiced['number'] ? base_url('keuangan/sunting_invoice/') . $is_invoiced['number'] : '#'; ?>"><span class="badge badge-primary py-2 px-3 text-uppercase mr-2"><?= $is_invoiced['message']; ?></span></a>
 
-					<a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $order['process_status']; ?></span></a>
+					<a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $order['production_status']; ?></span></a>
 
 				</div>
 
@@ -446,14 +446,14 @@
 
 					<div class="modal-body">
 
-						<select name="order[process_status_id]" id="process-status" class="custom-select">
+						<select name="order[production_status_id]" id="process-status" class="custom-select">
 
 							<option value="">Pilih...</option>
 
-							<?php $process_list = $this->db->get('process_status')->result_array(); ?>
+							<?php $process_list = $this->db->get('production_status')->result_array(); ?>
 
 							<?php foreach ($process_list as $status) : ?>
-								<option value="<?= $status['process_status_id']; ?>" <?= $status['process_status_id'] == $order['process_status_id'] ? 'selected' : ''; ?>><?= $status['name']; ?></option>
+								<option value="<?= $status['production_status_id']; ?>" <?= $status['production_status_id'] == $order['production_status_id'] ? 'selected' : ''; ?>><?= $status['name']; ?></option>
 							<?php endforeach; ?>
 
 						</select>

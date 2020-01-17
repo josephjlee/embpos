@@ -22,7 +22,7 @@ $(document).ready(function () {
 					"sort": "order_deadline.raw"
 				}
 			},
-			{ "data": "process_status" },
+			{ "data": "production_status" },
 			{ "data": "customer_name" },
 			{ "data": "order_id" }
 		],
