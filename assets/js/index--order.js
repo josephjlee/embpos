@@ -78,7 +78,7 @@ $(document).ready(function () {
 
 	$('#filter-select').change(function (e) {
 		let filter = $(this).val();
-		table.columns(6).search(filter).draw();
+		table.columns(8).search(filter).draw();
 	});
 
 
