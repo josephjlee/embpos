@@ -71,6 +71,7 @@ class Produksi_model extends CI_Model
 
         $this->db->where('order.image<>', '');
         $this->db->where('production.production_status_id<=', 3);
+        $this->db->where('production.production_status_id!=', 4);
 
         return $this->db->get()->result_array();
     }
