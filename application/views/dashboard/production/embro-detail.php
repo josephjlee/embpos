@@ -144,8 +144,6 @@
 
               <button type="submit" id="save-data-btn" class="mr-2 action-btn"><i class="fas fa-save fa-2x"></i></button>
 
-              <a href="#" data-toggle="modal" data-target="#update-process-modal" class="action-btn mr-3"><i class="fas fa-tasks fa-2x"></i></a>
-
               <a href="#" data-toggle="modal" data-target="#output-modal" class="action-btn"><i class="fas fa-calculator fa-2x"></i></a>
 
             </div>
@@ -260,53 +258,6 @@
     </div>
 
   </form>
-
-  <!-- Mark as Modal-->
-  <div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-
-      <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail'); ?>" method="post" id="update-process-form">
-
-        <input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
-        <input type="hidden" name="production[production_id]" id="production-id" value="<?= $embro_detail['production_id']; ?>">
-        <input type="hidden" name="input-src" value="<?= current_url(); ?>">
-
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title">Status Pengerjaan</h5>
-            <button class="close" type="button" data-dismiss="modal">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-
-            <select name="production[production_status_id]" id="process-status" class="custom-select">
-
-              <option value="">Pilih...</option>
-
-              <?php $embro_status_list = $this->produksi_model->get_embro_status(); ?>
-
-              <?php foreach ($embro_status_list as $status) : ?>
-                <option value="<?= $status['production_status_id']; ?>" <?= $status['production_status_id'] == $embro_detail['production_status_id'] ? 'selected' : ''; ?>><?= $status['name']; ?></option>
-              <?php endforeach; ?>
-
-            </select>
-
-          </div>
-
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-primary" id="update-process-btn">Perbarui</button>
-          </div>
-
-        </div>
-
-      </form>
-
-    </div>
-  </div>
 
   <!-- Output Modal -->
   <div class="modal fade" id="output-modal" tabindex="-1" role="dialog">
