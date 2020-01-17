@@ -3,6 +3,7 @@
 
   <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
 
+    <input type="hidden" name="order[order_id]" id="order-id" value="<?= $finishing_detail['order_id']; ?>">
     <input type="hidden" name="production[production_id]" value="<?= $finishing_detail['production_id']; ?>">
 
     <!-- Page Heading -->
@@ -216,6 +217,7 @@
 
       <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail'); ?>" method="post" id="update-process-form">
 
+        <input type="hidden" name="order[order_id]" id="order-id" value="<?= $finishing_detail['order_id']; ?>">
         <input type="hidden" name="production[production_id]" id="production-id" value="<?= $finishing_detail['production_id']; ?>">
         <input type="hidden" name="input-src" value="<?= current_url(); ?>">
 
@@ -263,6 +265,7 @@
 
       <form action="<?= base_url('processor/produksi_pcsr/rekam_output_finishing'); ?>" method="post">
 
+        <input type="hidden" name="order[order_id]" id="order-id" value="<?= $finishing_detail['order_id']; ?>">
         <input type="hidden" name="output[production_id]" value="<?= $finishing_detail['production_id']; ?>">
         <input type="hidden" name="current-output" value="<?= $total_output; ?>">
         <input type="hidden" name="order-qty" value="<?= $finishing_detail['quantity']; ?>">

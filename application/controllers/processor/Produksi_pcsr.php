@@ -9,6 +9,7 @@ class Produksi_pcsr extends CI_Controller
         parent::__construct();
 
         $this->load->model('produksi_model');
+        $this->load->model('pesanan_model');
     }
 
     /*
@@ -45,6 +46,11 @@ class Produksi_pcsr extends CI_Controller
         // Execute update process
         $this->produksi_model->perbarui($production);
 
+        // Update the production_status_id for order table as well
+        $order = $this->input->post('order');
+        $order['production_status_id'] = $production['production_status_id'];
+        $this->pesanan_model->perbarui($order);
+
         // Redirect to its original page
         redirect($this->input->post('input-src'));
     }
@@ -66,6 +72,11 @@ class Produksi_pcsr extends CI_Controller
         $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 6 : 5;
 
         $this->produksi_model->perbarui($production);
+
+        // Update the production_status_id for order table as well
+        $order = $this->input->post('order');
+        $order['production_status_id'] = $production['production_status_id'];
+        $this->pesanan_model->perbarui($order);
 
         // Redirect to its original page
         redirect($this->input->post('input-src'));
@@ -89,6 +100,11 @@ class Produksi_pcsr extends CI_Controller
 
         $this->produksi_model->perbarui($production);
 
+        // Update the production_status_id for order table as well
+        $order = $this->input->post('order');
+        $order['production_status_id'] = $production['production_status_id'];
+        $this->pesanan_model->perbarui($order);
+
         // Redirect to its original page
         redirect($this->input->post('input-src'));
     }
@@ -97,7 +113,12 @@ class Produksi_pcsr extends CI_Controller
     {
         $production = $this->input->post('production');
 
+        $order = $this->input->post('order');
+        $order['production_status_id'] = $production['production_status_id'];
+
         $this->produksi_model->perbarui($production);
+
+        $this->pesanan_model->perbarui($order);
 
         redirect($this->input->post('input-src'));
     }
