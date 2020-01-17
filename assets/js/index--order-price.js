@@ -20,6 +20,7 @@ $(document).ready(function () {
         }
       },
       { "data": "customer_name" },
+      { "data": "customer_category" },
       { "data": "invoice_number" },
       { "data": "order_id" }
     ],
@@ -32,7 +33,7 @@ $(document).ready(function () {
         }
       },
       {
-        "targets": 7,
+        "targets": 8,
         "createdCell": function (td, cellData, rowData, row, col) {
           $(td).html(`INV-${cellData}`);
         }

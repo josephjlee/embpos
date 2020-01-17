@@ -591,6 +591,7 @@ class Pesanan_model extends CI_Model
                     invoice.number AS invoice_number,
                     customer.customer_id,
                     customer.name AS customer_name,
+                    customer_category.name AS customer_category,
                     item.item_id,
                     item.name AS item_name,
                     item.icon AS item_icon,
@@ -608,6 +609,7 @@ class Pesanan_model extends CI_Model
                 LEFT JOIN position ON order.position_id = position.position_id
                 LEFT JOIN invoice ON order.invoice_id = invoice.invoice_id
                 LEFT JOIN customer ON order.customer_id = customer.customer_id
+                LEFT JOIN customer_category ON customer.customer_category_id = customer_category.customer_category_id
         ");
 
         return $query->result_array();

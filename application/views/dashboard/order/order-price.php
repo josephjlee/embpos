@@ -19,6 +19,7 @@
             <th scope="col">Jml</th>
             <th scope="col">Harga</th>
             <th scope="col">Pelanggan</th>
+            <th scope="col">Segmen</th>
             <th scope="col">Invoice</th>
             <th scope="col">#</th>
           </tr>
