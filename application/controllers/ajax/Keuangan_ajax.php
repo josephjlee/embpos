@@ -9,9 +9,49 @@ class Keuangan_ajax extends CI_Controller
 
     parent::__construct();
 
+    $this->load->model('invoice_model');
+    $this->load->model('pesanan_model');
     $this->load->model('keuangan_model');
     $this->load->model('vendor_model');
     $this->load->model('kreditur_model');
+  }
+
+  public function list_all_invoices()
+  {
+    $invoices = [
+      'data' => []
+    ];
+
+    foreach ($this->invoice_model->list_all_invoices() as $invoice) {
+
+      $invoice['period'] = date('m', strtotime($invoice['invoice_date'])) == date('m') ? 'this-month' : 'other-month';
+
+      $invoice['payment_due'] = [
+        'display' => moneyStrDot($invoice['payment_due']) . ',00',
+        'raw'    => $invoice['payment_due']
+      ];
+
+      $invoice['payment_date'] = [
+        'display' => date('d/m/Y', strtotime($invoice['payment_date'])),
+        'raw'     => strtotime($invoice['payment_date']),
+        'input'   => date('Y-m-d', strtotime($invoice['payment_date']))
+      ];
+
+      $invoice['invoice_date'] = [
+        'display' => date('d/m/Y', strtotime($invoice['invoice_date'])),
+        'raw'     => strtotime($invoice['invoice_date']),
+        'input'   => date('Y-m-d', strtotime($invoice['invoice_date']))
+      ];
+
+      $invoice['payment_status'] = $this->invoice_model->check_payment_status($invoice['invoice_id'])['payment_status'];
+
+      $invoice['order_progress'] = $this->pesanan_model->check_order_progress($invoice['invoice_id']);
+
+      array_push($invoices['data'], $invoice);
+    };
+
+    header('Content-Type: application/json');
+    echo json_encode($invoices);
   }
 
   public function simpan_hutang()
