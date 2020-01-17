@@ -240,20 +240,17 @@
 
             <div class="form-group">
 
-              <label for="modal-operator"><small>Operator</small></label>
+              <label for="modal-finishing"><small>Finishing</small></label>
 
-              <?php $operators = $this->produksi_model->get_employee_name_by_job_id(3); ?>
+              <?php $finishings = $this->produksi_model->get_employee_name_by_job_id(3); ?>
 
-              <select name="output[employee_id]" id="modal-operator">
+              <select name="output[employee_id]" id="modal-finishing">
 
                 <option value="">Pilih...</option>
 
-                <?php foreach ($operators as $operator) : ?>
-                  <option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
+                <?php foreach ($finishings as $finishing) : ?>
+                  <option value="<?= $finishing['employee_id']; ?>"><?= $finishing['nick_name']; ?></option>
                 <?php endforeach; ?>
-
-                <!-- Manually adding Iis -->
-                <option value="3">Iis</option>
 
               </select>
 
