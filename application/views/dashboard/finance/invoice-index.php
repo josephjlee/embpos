@@ -72,6 +72,7 @@
     </div>
 
     <!-- Active Order -->
+
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-warning shadow h-100 py-2">
         <div class="card-body">
@@ -137,16 +138,6 @@
 
 <script>
   const invoiceIndexCard = document.querySelector('#invoice-index-card');
-  const invStatusNodeList = document.querySelectorAll('.invoice-status-col');
-  const invStatusArray = Array.from(invStatusNodeList);
-
-  let totalActiveInv = 0;
-  for (let index = 0; index < invStatusArray.length; index++) {
-    if (invStatusArray[index].innerText == 'Tuntas') continue;
-    totalActiveInv++
-  }
-
-  document.querySelector('#active-inv').innerHTML = totalActiveInv;
 
   invoiceIndexCard.addEventListener('click', (e) => {
 

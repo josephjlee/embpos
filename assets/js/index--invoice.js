@@ -43,12 +43,6 @@ $(document).ready(function () {
 				}
 			},
 			{
-				"targets": 5,
-				"createdCell": function (td, cellData, rowData, row, col) {
-					$(td).addClass(rowData.period);
-				}
-			},
-			{
 				"targets": -1,
 				"createdCell": function (td, cellData, rowData, row, col) {
 
@@ -84,6 +78,13 @@ $(document).ready(function () {
 		let filter = $(this).val();
 		table.columns(4).search(filter).draw();
 	});
+
+	$activeInvoice = $('#active-inv');
+	$activeInvoice.load(`${window.location.origin}/ajax/keuangan_ajax/get_total_active_invoice`);
+
+	setInterval(function () {
+		$activeInvoice.load(`${window.location.origin}/ajax/keuangan_ajax/get_total_active_invoice`);
+	}, 15000);
 });
 
 

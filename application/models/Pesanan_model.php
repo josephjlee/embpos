@@ -488,6 +488,22 @@ class Pesanan_model extends CI_Model
         return $status;
     }
 
+    public function get_invoice_total_wip($invoices)
+    {
+        $wip = 0;
+
+        foreach ($invoices as $invoice) {
+
+            $order_progress = $this->check_order_progress($invoice['invoice_id']);
+
+            if ($order_progress == 'Diproses') {
+                $wip++;
+            }
+        }
+
+        return $wip;
+    }
+
     public function get_order_value_by_month($month)
     {
         $query = $this->db->query("SELECT 

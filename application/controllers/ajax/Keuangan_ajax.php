@@ -24,8 +24,6 @@ class Keuangan_ajax extends CI_Controller
 
     foreach ($this->invoice_model->list_all_invoices() as $invoice) {
 
-      $invoice['period'] = date('m', strtotime($invoice['invoice_date'])) == date('m') ? 'this-month' : 'other-month';
-
       $invoice['payment_due'] = [
         'display' => moneyStrDot($invoice['payment_due']) . ',00',
         'raw'    => $invoice['payment_due']
@@ -52,6 +50,16 @@ class Keuangan_ajax extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($invoices);
+  }
+
+  public function get_total_active_invoice()
+  {
+    $invoices = $this->invoice_model->list_all_invoices();
+
+    $wip = $this->pesanan_model->get_invoice_total_wip($invoices);
+
+    header('Content-Type: application/json');
+    echo json_encode($wip);
   }
 
   public function simpan_hutang()
