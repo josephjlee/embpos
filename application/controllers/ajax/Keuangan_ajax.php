@@ -25,7 +25,7 @@ class Keuangan_ajax extends CI_Controller
     foreach ($this->invoice_model->list_all_invoices() as $invoice) {
 
       $invoice['payment_due'] = [
-        'display' => moneyStrDot($invoice['payment_due']) . ',00',
+        'display' => moneyStrDot($invoice['payment_due']),
         'raw'    => $invoice['payment_due']
       ];
 
