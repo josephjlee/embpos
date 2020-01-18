@@ -149,15 +149,19 @@
 
             <div class="form-group">
               <label for="creditor_name">Nama lengkap</label>
-              <input type="text" name="creditor[name]" id="creditor_name" class="form-control mb-2" required>
+              <input type="text" name="creditor[name]" id="creditor_name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="creditor_address">Alamat</label>
+              <input type="text" name="creditor[address]" id="creditor_address" class="form-control">
             </div>
 
             <div class="form-row">
               <div class="form-group col">
-                <label for="creditor_address">Alamat</label>
-                <input type="text" name="creditor[address]" id="creditor_address" class="form-control">
+                <label for="email">Email</label>
+                <input type="email" name="creditor[email]" id="creditor_email" class="form-control">
               </div>
-
               <div class="form-group col">
                 <label for="creditor_phone">Ponsel</label>
                 <input type="tel" name="creditor[phone]" id="creditor_phone" class="form-control" required>
