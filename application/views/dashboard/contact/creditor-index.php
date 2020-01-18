@@ -48,24 +48,22 @@
           </div>
 
           <div class="modal-body">
-            <div class="mb-4">
-              <div class="form-group">
-                <label for="name">Nama lengkap</label>
-                <input type="text" name="creditor[name]" id="name" class="form-control mb-2">
+            <div class="form-group">
+              <label for="name">Nama lengkap</label>
+              <input type="text" name="creditor[name]" id="name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="address">Alamat</label>
+              <input type="text" name="creditor[address]" id="address" class="form-control">
+            </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="phone">Ponsel</label>
+                <input type="tel" name="creditor[phone]" id="phone" class="form-control">
               </div>
-              <div class="form-group">
-                <label for="address">Alamat</label>
-                <input type="text" name="creditor[address]" id="address" class="form-control">
-              </div>
-              <div class="form-row">
-                <div class="form-group col">
-                  <label for="phone">Ponsel</label>
-                  <input type="tel" name="creditor[phone]" id="phone" class="form-control">
-                </div>
-                <div class="form-group col">
-                  <label for="email">Email</label>
-                  <input type="email" name="creditor[email]" id="email" class="form-control">
-                </div>
+              <div class="form-group col">
+                <label for="email">Email</label>
+                <input type="email" name="creditor[email]" id="email" class="form-control">
               </div>
             </div>
           </div>
