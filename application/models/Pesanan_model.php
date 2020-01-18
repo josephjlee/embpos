@@ -468,7 +468,12 @@ class Pesanan_model extends CI_Model
             'Tuntas'
         ];
 
-        $status = $order_status[0];
+        $status = null;
+
+        if ($total == 0) {
+            $status = $order_status[2];
+            return $status;
+        }
 
         switch (true) {
             case $finished == 0 && $active == 0:
