@@ -496,7 +496,7 @@ class Pesanan_model extends CI_Model
 
             $order_progress = $this->check_order_progress($invoice['invoice_id']);
 
-            if ($order_progress == 'Diproses') {
+            if ($order_progress != 'Tuntas') {
                 $wip++;
             }
         }
