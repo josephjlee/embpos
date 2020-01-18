@@ -106,6 +106,45 @@
             <th scope="col">#</th>
           </tr>
         </thead>
+        <tbody style="font-size:14px">
+          <?php foreach ($invoices as $invoice) : ?>
+            <tr data-invoice-id="<?= $invoice['invoice_id']; ?>">
+              <td data-sort="<?= $invoice['number']; ?>">
+                <a style="color:#858796" href="<?= base_url('keuangan/sunting_invoice/') . $invoice['number']; ?>">INV-<?= $invoice['number']; ?></a>
+              </td>
+              <td>
+                <?= $invoice['customer']; ?>
+              </td>
+              <td data-sort="<?= strtotime($invoice['payment_date']); ?>">
+                <?= date('d/m/Y', strtotime($invoice['payment_date'])); ?>
+              </td>
+              <td>
+                <?= moneyStrDot($invoice['payment_due']); ?>
+              </td>
+              <td>
+                <?= $this->invoice_model->check_payment_status($invoice['invoice_id'])['payment_status']; ?>
+              </td>
+              <td <?= date('m', strtotime($invoice['invoice_date'])) == date('m') ? 'class="invoice-status-col"' : ''; ?>>
+                <?= $this->pesanan_model->check_order_progress($invoice['invoice_id']); ?>
+              </td>
+              <td data-sort="<?= strtotime($invoice['invoice_date']); ?>">
+                <?= date('d/m/Y', strtotime($invoice['invoice_date'])); ?>
+              </td>
+              <td>
+                <a class=" dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                  <a href="<?= base_url('keuangan/sunting_invoice/') . $invoice['number']; ?>" class="dropdown-item">
+                    Sunting Invoice
+                  </a>
+                  <a href="#" data-toggle="modal" data-target="#del-invoice-modal" class="dropdown-item del-modal-trigger">
+                    Hapus Invoice
+                  </a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
       </table>
     </div>
   </div>
