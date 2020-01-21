@@ -11,8 +11,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <?php if ($this->uri->segment('1') == 'invoice' && $this->uri->segment('2') == 'tampil') : ?>
-    <title><?= $title; ?></title>  
+  <?php if ($this->uri->segment('1') == 'keuangan' && $this->uri->segment('2') == 'lihat_invoice') : ?>
+    <title><?= $title; ?></title>
   <?php else : ?>
     <title>Embryo | <?= $title; ?></title>
   <?php endif; ?>
@@ -20,10 +20,10 @@
   <!-- Libraries-->
   <link href="<?= base_url('vendors/'); ?>fontawesome-free/css/all.min.css" rel="stylesheet">
   <link href="<?= base_url('vendors/'); ?>sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
-<?php foreach ($css_list as $css) : ?>
-  <link href="<?= base_url($css['src']); ?>" rel="stylesheet"> 
-<?php endforeach;?>
-  
+  <?php foreach ($css_list as $css) : ?>
+    <link href="<?= base_url($css['src']); ?>" rel="stylesheet">
+  <?php endforeach; ?>
+
   <!-- Custom style -->
   <link href="<?= base_url('assets/'); ?>css/custom-style.css" rel="stylesheet">
 
@@ -31,5 +31,5 @@
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
