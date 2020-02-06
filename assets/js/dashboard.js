@@ -232,15 +232,18 @@ $.ajax({
 
 // Unpaid Invoice Table
 $('#unpaid-invoice-table').DataTable({
-  "lengthMenu": [5, 15, 30]
+  "lengthMenu": [5, 15, 30],
+  "pagingType": "simple"
 });
 
 // Unpaid Debt Table
 $('#unpaid-debt-table').DataTable({
-  "lengthMenu": [5, 15, 30]
+  "lengthMenu": [5, 15, 30],
+  "pagingType": "simple"
 });
 
 // Order Deadline Table
 $('#order-deadline-table').DataTable({
-  "lengthMenu": [5, 15, 30]
+  "lengthMenu": [5, 15, 30],
+  "pagingType": "simple"
 });
