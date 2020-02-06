@@ -590,7 +590,7 @@ class Pesanan_model extends CI_Model
                     required_date AS deadline,
                     DATEDIFF(required_date, CURDATE()) AS countdown
                 FROM `order`
-                WHERE DATEDIFF(required_date, CURDATE()) <= 5 AND production_status_id < 5");
+                WHERE DATEDIFF(required_date, CURDATE()) <= 5 AND production_status_id < 9");
 
         return $query->result_array();
     }
