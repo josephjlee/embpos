@@ -25,7 +25,7 @@ class Invoice_action extends CI_Controller
 	|     
 	*/
 
-	public function simpan()
+	public function tambah()
 	{
 		// Grab invoice data from form submission
 		$invoice 	= $this->input->post('invoice');
@@ -34,7 +34,7 @@ class Invoice_action extends CI_Controller
 		$payment 	= $this->input->post('payment');
 
 		// Save invoice data into invoice table
-		$this->invoice_model->simpan($invoice);
+		$this->db->insert('invoice', $invoice);
 
 		// Get the id of the newly inserted invoice for recording the product sale
 		$new_invoice_id = $this->db->insert_id();
@@ -44,7 +44,7 @@ class Invoice_action extends CI_Controller
 
 		// Save product sales when product added
 		if ($products) {
-			$this->penjualan_model->tambah($products, $new_invoice_id, $customer_id);
+			$this->penjualan_model->tambah($products, $new_invoice_id);
 			$this->produk_model->update_stock_on_purchase($products);
 		}
 
@@ -66,7 +66,7 @@ class Invoice_action extends CI_Controller
 		$payment['payment_date'] 	= $invoice['invoice_date'];
 
 		// Save $payment data
-		$this->pembayaran_model->simpan($payment);
+		$this->db->insert('payment', $payment);
 
 		// Redirect to its detil page using the newly created invoice_number
 		$invoice_number = $this->invoice_model->get_invoice_number($new_invoice_id);
@@ -106,7 +106,7 @@ class Invoice_action extends CI_Controller
 		}
 
 		// Save invoice update
-		$this->invoice_model->simpan($invoice);
+		$this->db->update('invoice', $invoice, ['invoice_id' => $invoice['invoice_id']]);
 
 		// Record order entry based on order status (existing or new)
 		if ($orders) {
@@ -134,12 +134,12 @@ class Invoice_action extends CI_Controller
 			// When existing products submitted, run update
 			if ($existing_products) {
 				$this->produk_model->update_stock_on_update($existing_products);
-				$this->penjualan_model->perbarui($existing_products, $invoice['invoice_id'], $invoice['customer_id']);
+				$this->penjualan_model->perbarui($existing_products, $invoice['invoice_id']);
 			}
 
 			// When new products submitted, run insert
 			if ($new_products) {
-				$this->penjualan_model->tambah($new_products, $invoice['invoice_id'], $invoice['customer_id']);
+				$this->penjualan_model->tambah($new_products, $invoice['invoice_id']);
 				$this->produk_model->update_stock_on_purchase($new_products);
 			}
 		}
@@ -154,7 +154,8 @@ class Invoice_action extends CI_Controller
 		$payment['customer_id'] 	= $invoice['customer_id'];
 
 		// Save $payment data
-		$this->pembayaran_model->simpan($payment);
+		$payment['amount'] = str_replace(',', '', $payment['amount']);
+		$this->db->insert('payment', $payment);
 
 		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}
@@ -164,7 +165,7 @@ class Invoice_action extends CI_Controller
 
 		$invoice = $this->input->post('invoice');
 
-		$this->invoice_model->hapus($invoice);
+		$this->db->delete('invoice', ['invoice_id' => $invoice['invoice_id']]);
 
 		redirect(base_url('invoice/semua'));
 	}
@@ -187,7 +188,7 @@ class Invoice_action extends CI_Controller
 		$invoice 			= $this->input->post('invoice');
 		$product_sale = $this->input->post('product_sale');
 
-		$this->penjualan_model->hapus($product_sale);
+		$this->db->delete('product_sale', ['product_sale_id' => $product_sale['product_sale_id']]);
 
 		// Redirect to current edit page to refresh the data
 		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
@@ -203,8 +204,10 @@ class Invoice_action extends CI_Controller
 		$payment['invoice_id'] 	= $invoice['invoice_id'];
 		$payment['customer_id'] = $invoice['customer_id'];
 
+		$payment['amount'] = str_replace(',', '', $payment['amount']);
+
 		// Insert the payment data using simpan method of pembayaran_model
-		$this->pembayaran_model->simpan($payment);
+		$this->db->insert('payment', $payment);
 
 		// Redirect to current detil page to refresh the data
 		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
@@ -216,8 +219,10 @@ class Invoice_action extends CI_Controller
 		$invoice = $this->input->post('invoice');
 		$payment = $this->input->post('payment');
 
+		$payment['amount'] = str_replace(',', '', $payment['amount']);
+
 		// Update the payment data using simpan method of pembayaran_model
-		$this->pembayaran_model->simpan($payment);
+		$this->db->update('payment', $payment, ['payment_id' => $payment['payment_id']]);
 
 		// Redirect to current detil page to refresh the data
 		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
@@ -229,7 +234,7 @@ class Invoice_action extends CI_Controller
 		$invoice = $this->input->post('invoice');
 		$payment = $this->input->post('payment');
 
-		$this->pembayaran_model->hapus($payment);
+		$this->db->delete('payment', ['payment_id' => $payment['payment_id']]);
 
 		redirect(base_url('keuangan/sunting_invoice/') . $invoice['number']);
 	}

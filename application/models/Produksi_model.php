@@ -2,53 +2,6 @@
 
 class Produksi_model extends CI_Model
 {
-    public function simpan($production)
-    {
-        if (!empty($production['production_id'])) {
-            return $this->perbarui($production);
-        }
-
-        return $this->buat($production);
-    }
-
-    public function buat($production)
-    {
-        $design_data = $this->siapkan_data($production);
-
-        return $this->db->insert('production', $design_data);
-    }
-
-    public function perbarui($production)
-    {
-        $production_data = $this->siapkan_data($production);
-
-        $this->db->where('production_id', $production['production_id']);
-
-        return $this->db->update('production', $production_data);
-    }
-
-    public function rekam_output($output, $table)
-    {
-        $output_data = $this->siapkan_data($output);
-
-        return $this->db->insert($table, $output_data);
-    }
-
-    public function siapkan_data($production)
-    {
-        $design_db_data = [];
-
-        foreach ($production as $col => $val) {
-            $design_db_data[$col] = $val;
-
-            if ($col == 'labor_price') {
-                $design_db_data[$col] = str_replace(',', '', $val);
-            }
-        }
-
-        return $design_db_data;
-    }
-
     public function get_design_list()
     {
         $this->db->select('
@@ -269,7 +222,6 @@ class Produksi_model extends CI_Model
 
         return round(($finishing_output['quantity'] / $finishing_output['order_qty']) * 100);
     }
-
 
     public function check_production_status_by_order_id($order_id)
     {

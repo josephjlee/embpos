@@ -3,18 +3,18 @@
 class Penjualan_model extends CI_Model
 {
 
-  public function tambah($products, $invoice_id, $customer_id)
+  public function tambah($products, $invoice_id)
   {
 
-    $product_sale_data = $this->siapkan_data($products, $invoice_id, $customer_id);
+    $product_sale_data = $this->siapkan_data($products, $invoice_id);
 
     return $this->db->insert_batch('product_sale', $product_sale_data);
   }
 
-  public function perbarui($products, $invoice_id, $customer_id)
+  public function perbarui($products, $invoice_id)
   {
 
-    $product_sale_data = $this->siapkan_data($products, $invoice_id, $customer_id);
+    $product_sale_data = $this->siapkan_data($products, $invoice_id);
 
     return $this->db->update_batch('product_sale', $product_sale_data, 'product_sale_id');
   }
@@ -24,6 +24,7 @@ class Penjualan_model extends CI_Model
     $this->db->select('
             product_sale.product_sale_id,
             product_sale.product_id,
+            product_sale.customer_id,
             product.title,
             product_sale.quantity,
             product_sale.price,
@@ -91,13 +92,7 @@ class Penjualan_model extends CI_Model
     return $product_sale_avg;
   }
 
-  public function hapus($product_sale)
-  {
-    $this->db->where('product_sale_id', $product_sale['product_sale_id']);
-    return $this->db->delete('product_sale');
-  }
-
-  public function siapkan_data($products, $invoice_id, $customer_id)
+  public function siapkan_data($products, $invoice_id)
   {
 
     $product_db_data = [];
@@ -109,7 +104,6 @@ class Penjualan_model extends CI_Model
       foreach ($product as $col => $val) {
 
         $product_entry['invoice_id'] = $invoice_id;
-        $product_entry['customer_id'] = $customer_id;
 
         $product_entry[$col] = $val;
 

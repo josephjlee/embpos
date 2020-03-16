@@ -66,11 +66,15 @@ class Keuangan_ajax extends CI_Controller
   {
     $debt = $this->input->post('debt');
 
-    $this->keuangan_model->simpan($debt);
-
-    $message = $debt['debt_id'] ? 'Detail hutang berhasil diperbarui' : 'Hutang baru berhasil dicatat';
-
-    $response['action'] = $debt['debt_id'] ? 'update' : 'create';
+    if (!empty($debt['debt_id'])) {
+      $this->db->update('debt', $debt, ['debt_id' => $debt['debt_id']]);
+      $message = 'Detail hutang berhasil diperbarui';
+      $response['action'] = 'update';
+    } else {
+      $this->db->insert('debt', $debt);
+      $message = 'Hutang baru berhasil dicatat';
+      $response['action'] = 'create';
+    }
 
     $response['alert'] = "<div class='row'>
                 <div class='col'>
@@ -93,12 +97,10 @@ class Keuangan_ajax extends CI_Controller
     $debt = $this->input->post('debt');
 
     // Delete debt table entry by the received debt_id
-    $this->db->where('debt_id', $debt['debt_id']);
-    $this->db->delete('debt');
+    $this->db->delete('debt', ['debt_id' => $debt['debt_id']]);
 
     // Delete debt_payment table entry by the received debt_id
-    $this->db->where('debt_id', $debt['debt_id']);
-    $this->db->delete('debt_payment');
+    $this->db->delete('debt_payment', ['debt_id' => $debt['debt_id']]);
 
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
@@ -162,13 +164,11 @@ class Keuangan_ajax extends CI_Controller
 
     $debt_payment = $this->input->post('debt_payment');
 
-    $message = '';
-
     if (!empty($debt_payment['debt_payment_id'])) {
-      $this->keuangan_model->perbarui_pembayaran_hutang($debt_payment);
+      $this->db->update('debt_payment', $debt_payment, ['debt_payment_id' => $debt_payment['debt_payment_id']]);
       $message = 'Detail pembayaran hutang telah diperbarui';
     } else {
-      $this->keuangan_model->bayar_hutang($debt_payment);
+      $this->db->insert('debt_payment', $debt_payment);
       $message = 'Pembayaran hutang berhasil disimpan';
     }
 
@@ -257,9 +257,7 @@ class Keuangan_ajax extends CI_Controller
   public function delete_debt_payment_by_id()
   {
     $debt_payment_id = $this->input->post('debt-payment-id');
-
-    $this->db->where('debt_payment_id', $debt_payment_id);
-    $this->db->delete('debt_payment');
+    $this->db->delete('debt_payment', ['debt_payment_id' => $debt_payment_id]);
 
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
@@ -287,7 +285,7 @@ class Keuangan_ajax extends CI_Controller
     // Data processing for creditor data with creditor_id
     if (!empty($creditor['creditor_id'])) {
       // Run update kreditur query
-      $this->kreditur_model->perbarui($creditor);
+      $this->db->update('creditor', $creditor, ['creditor' => $creditor['creditor_id']]);
 
       // FIll $message with update notification
       $message = 'Detail kreditur berhasil diperbarui';
@@ -296,7 +294,7 @@ class Keuangan_ajax extends CI_Controller
     } else {
 
       // By default run tambah kreditur query
-      $this->kreditur_model->tambah($creditor);
+      $this->db->insert('creditor', $creditor);
 
       // Grab creditor_id of the newly created creditor
       $new_creditor_id = $this->db->insert_id();
@@ -365,12 +363,10 @@ class Keuangan_ajax extends CI_Controller
     $creditor = $this->input->post('creditor');
 
     // Delete creditor table entry by the received creditor_id
-    $this->db->where('creditor_id', $creditor['creditor_id']);
-    $this->db->delete('creditor');
+    $this->db->delete('creditor', ['creditor_id' => $creditor['creditor_id']]);
 
     // Delete debt by the creditor_id
-    $this->db->where('creditor_id', $creditor['creditor_id']);
-    $this->db->delete('debt');
+    $this->db->delete('debt', ['creditor_id' => $creditor['creditor_id']]);
 
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
@@ -393,13 +389,10 @@ class Keuangan_ajax extends CI_Controller
     // Insert vendor data into table
     $vendor = $this->input->post('vendor');
 
-    // Create message placeholder variable
-    $message = '';
-
     // Data processing for vendor data with vendor_id
     if (!empty($vendor['vendor_id'])) {
       // Run update vendor query
-      $this->vendor_model->perbarui($vendor);
+      $this->db->update('vendor', $vendor, ['vendor_id' => $vendor['vendor_id']]);
 
       // FIll $message with update notification
       $message = 'Detail vendor berhasil diperbarui';
@@ -408,7 +401,7 @@ class Keuangan_ajax extends CI_Controller
     } else {
 
       // By default run tambah vendor query
-      $this->vendor_model->tambah($vendor);
+      $this->db->insert('vendor', $vendor);
 
       // Grab vendor_id of the newly created vendor
       $new_vendor_id = $this->db->insert_id();
@@ -467,12 +460,10 @@ class Keuangan_ajax extends CI_Controller
     $vendor = $this->input->post('vendor');
 
     // Delete vendor table entry by the received vendor_id
-    $this->db->where('vendor_id', $vendor['vendor_id']);
-    $this->db->delete('vendor');
+    $this->db->delete('vendor', ['vendor_id' => $vendor['vendor_id']]);
 
     // Delete expense table entry by vendor_id
-    $this->db->where('vendor_id', $vendor['vendor_id']);
-    $this->db->delete('expense');
+    $this->db->delete('expense', ['vendor_id' => $vendor['vendor_id']]);
 
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">
@@ -493,11 +484,15 @@ class Keuangan_ajax extends CI_Controller
   {
     $expense = $this->input->post('expense');
 
-    $this->keuangan_model->simpan_pengeluaran($expense);
-
-    $message = $expense['expense_id'] ? 'Detail pengeluaran berhasil diperbarui' : 'Pengeluaran baru berhasil dicatat';
-
-    $response['action'] = $expense['expense_id'] ? 'update' : 'create';
+    if (!empty($expense['expense_id'])) {
+      $this->db->update('expense', $expense, ['expense_id' => $expense['expense_id']]);
+      $message = 'Detail pengeluaran berhasil diperbarui';
+      $response['action'] = 'update';
+    } else {
+      $this->db->insert('expense', $expense);
+      $message = 'Pengeluaran baru berhasil dicatat';
+      $response['action'] = 'create';
+    }
 
     $response['alert'] = "<div class='row'>
                             <div class='col'>
@@ -546,8 +541,7 @@ class Keuangan_ajax extends CI_Controller
     $expense = $this->input->post('expense');
 
     // Delete expense table entry by the received expense_id
-    $this->db->where('expense_id', $expense['expense_id']);
-    $this->db->delete('expense');
+    $this->db->delete('expense', ['expense_id' => $expense['expense_id']]);
 
     $response['alert'] = '<div class="row mb-2">
                             <div class="col">

@@ -79,7 +79,7 @@ class Pesanan_ajax extends CI_Controller
 		// echo json_encode($order);
 		// exit;
 
-		$this->pesanan_model->tambah($order);
+		$this->db->insert('order', $order);
 
 		$new_order_id = $this->db->insert_id();
 

@@ -3,40 +3,6 @@
 class Invoice_model extends CI_Model
 {
 
-    public function simpan($invoice)
-    {
-
-        if (!empty($invoice['invoice_id'])) {
-            return $this->perbarui($invoice);
-        }
-
-        return $this->tambah($invoice);
-    }
-
-    public function tambah($invoice)
-    {
-
-        $invoice_data = $this->siapkan_data($invoice);
-
-        return $this->db->insert('invoice', $invoice_data);
-    }
-
-    public function perbarui($invoice)
-    {
-
-        $invoice_data = $this->siapkan_data($invoice);
-
-        $this->db->where('invoice_id', $invoice['invoice_id']);
-
-        return $this->db->update('invoice', $invoice_data);
-    }
-
-    public function hapus($invoice)
-    {
-        $this->db->where('invoice_id', $invoice['invoice_id']);
-        return $this->db->delete('invoice');
-    }
-
     public function simpan_pembayaran($payment)
     {
 
@@ -540,21 +506,5 @@ class Invoice_model extends CI_Model
             ORDER BY invoice.number");
 
         return $query->result_array();
-    }
-
-    public function siapkan_data($product)
-    {
-
-        $product_db_data = [];
-
-        foreach ($product as $col => $val) {
-            $product_db_data[$col] = $val;
-
-            if ($col == 'discount' || $col == 'amount') {
-                $product_db_data[$col] = str_replace(',', '', $val);
-            }
-        }
-
-        return $product_db_data;
     }
 }

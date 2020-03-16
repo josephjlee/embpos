@@ -107,7 +107,7 @@ $(document).ready(function () {
 
 	}
 
-	function createProductEntry(productId, productIndex, itemIndex) {
+	function createProductEntry(customerId, productId, productIndex, itemIndex) {
 
 		/**
 		 * --------------------------------
@@ -127,6 +127,7 @@ $(document).ready(function () {
 
 		let productRowTemplate = `
 				<tr data-item-index="${itemIndex}" data-product-index="${productIndex}" data-product-id="${productId}" class="product-entry" id="product-entry-${productId}">
+					<input type="hidden" name="products[${productIndex}][customer_id]" value="${customerId}">
 					<input type="hidden" name="products[${productIndex}][product_id]" value="${productId}">
 					<input type="hidden" name="products[${productIndex}][product_sale_id]" value="">
 					<td id="product-del-btn-col" class="pr-0">
@@ -310,6 +311,9 @@ $(document).ready(function () {
 		// Prevent default link behavior
 		e.preventDefault();
 
+		// Grab customerId from invoice
+		let customerId = $('#customers').val();
+		console.log(customerId);
 		// Grab productId from the clicked plus button
 		let productId = $(this).data('product-id');
 
@@ -318,7 +322,7 @@ $(document).ready(function () {
 		productIndex = getEntryIndexFor('product');
 
 		// Create product using createProductEntry function
-		let productEntry = createProductEntry(productId, productIndex, itemIndex);
+		let productEntry = createProductEntry(customerId, productId, productIndex, itemIndex);
 
 		// Append product entry into tableBody
 		tableBody.append(productEntry);

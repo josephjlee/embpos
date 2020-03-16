@@ -21,12 +21,21 @@ class Pelanggan_action extends CI_Controller
     |     
     */
 
-    public function simpan_data()
+    public function tambah()
     {
 
         $customer = $this->input->post('customer');
 
-        $this->pelanggan_model->simpan($customer);
+        $this->db->insert('customer', $customer);
+
+        redirect(base_url('kontak/pelanggan'));
+    }
+
+    public function perbarui()
+    {
+        $customer = $this->input->post('customer');
+
+        $this->db->update('customer', $customer, ['customer_id' => $customer['customer_id']]);
 
         redirect(base_url('kontak/pelanggan'));
     }
@@ -37,7 +46,7 @@ class Pelanggan_action extends CI_Controller
 
         $customer = $this->input->post('customer');
 
-        $this->pelanggan_model->hapus($customer);
+        $this->db->delete('customer', ['customer_id' => $customer['customer_id']]);
 
         redirect(base_url('kontak/pelanggan'));
     }

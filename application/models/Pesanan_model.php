@@ -3,34 +3,6 @@
 class Pesanan_model extends CI_Model
 {
 
-    public function simpan($order)
-    {
-
-        if (!empty($order['order_id'])) {
-            return $this->perbarui($order);
-        }
-
-        return $this->tambah($order);
-    }
-
-    public function tambah($order)
-    {
-
-        $order_data = $this->siapkan_data($order);
-
-        return $this->db->insert('order', $order_data);
-    }
-
-    public function perbarui($order)
-    {
-
-        $order_data = $this->siapkan_data($order);
-
-        $this->db->where('order_id', $order['order_id']);
-
-        return $this->db->update('order', $order_data);
-    }
-
     public function perbarui_banyak($orders)
     {
         $orders_data = [];
@@ -43,12 +15,6 @@ class Pesanan_model extends CI_Model
         }
 
         return $this->db->update_batch('order', $orders_data, 'order_id');
-    }
-
-    public function hapus($order)
-    {
-        $this->db->where('order_id', $order['order_id']);
-        return $this->db->delete('order');
     }
 
     public function assign_invoice_id($orders, $invoice_id)
@@ -623,21 +589,5 @@ class Pesanan_model extends CI_Model
         ");
 
         return $query->result_array();
-    }
-
-    public function siapkan_data($order)
-    {
-
-        $order_db_data = [];
-
-        foreach ($order as $col => $val) {
-            $order_db_data[$col] = $val;
-
-            if ($col == 'quantity' || $col == 'price') {
-                $order_db_data[$col] = str_replace(',', '', $val);
-            }
-        }
-
-        return $order_db_data;
     }
 }

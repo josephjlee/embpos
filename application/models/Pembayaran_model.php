@@ -2,41 +2,6 @@
 
 class Pembayaran_model extends CI_Model
 {
-
-  public function simpan($payment)
-  {
-
-    if (!empty($payment['payment_id'])) {
-      return $this->perbarui($payment);
-    }
-
-    return $this->tambah($payment);
-  }
-
-  public function tambah($payment)
-  {
-
-    $payment_data = $this->siapkan_data($payment);
-
-    return $this->db->insert('payment', $payment_data);
-  }
-
-  public function perbarui($payment)
-  {
-
-    $payment_data = $this->siapkan_data($payment);
-
-    $this->db->where('payment_id', $payment['payment_id']);
-
-    return $this->db->update('payment', $payment_data);
-  }
-
-  public function hapus($payment)
-  {
-    $this->db->where('payment_id', $payment['payment_id']);
-    return $this->db->delete('payment');
-  }
-
   public function get_payment_by_invoice_id($invoice_id)
   {
     $this->db->select('

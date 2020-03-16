@@ -27,8 +27,12 @@ class Produksi_action extends CI_Controller
 
         $production['file'] = $this->file_exist($production['production_id']) ?? $this->unggah($_FILES['file'], $this->input->post('input-src'));
 
-        $this->produksi_model->simpan($production);
+        if (!empty($production['production_id'])) {
+            $this->db->update('production', $production, ['production_id' => $production['production_id']]);
+            redirect($this->input->post('input-src'));
+        }
 
+        $this->db->insert('production', $production);
         redirect($this->input->post('input-src'));
     }
 
@@ -44,12 +48,12 @@ class Produksi_action extends CI_Controller
         $production['production_status_id'] = 3;
 
         // Execute update process
-        $this->produksi_model->perbarui($production);
+        $this->db->update('production', $production, ['production_id' => $production['production_id']]);
 
         // Update the production_status_id for order table as well
         $order = $this->input->post('order');
         $order['production_status_id'] = $production['production_status_id'];
-        $this->pesanan_model->perbarui($order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         // Redirect to its original page
         redirect($this->input->post('input-src'));
@@ -61,7 +65,7 @@ class Produksi_action extends CI_Controller
         $output = $this->input->post('output');
 
         // Record operator's output
-        $this->produksi_model->rekam_output($output, 'output_embro');
+        $this->db->insert('output_embro', $output);
 
         // Grab current output and order quantity data
         $current_output = $this->input->post('current-output');
@@ -71,12 +75,12 @@ class Produksi_action extends CI_Controller
         $production['production_id'] = $output['production_id'];
         $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 6 : 5;
 
-        $this->produksi_model->perbarui($production);
+        $this->db->update('production', $production, ['production_id' => $production['production_id']]);
 
         // Update the production_status_id for order table as well
         $order = $this->input->post('order');
         $order['production_status_id'] = $production['production_status_id'];
-        $this->pesanan_model->perbarui($order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         // Redirect to its original page
         redirect($this->input->post('input-src'));
@@ -88,7 +92,7 @@ class Produksi_action extends CI_Controller
         $output = $this->input->post('output');
 
         // Record operator's output
-        $this->produksi_model->rekam_output($output, 'output_finishing');
+        $this->db->insert('output_finishing', $output);
 
         // Grab current output and order quantity data
         $current_output = $this->input->post('current-output');
@@ -98,12 +102,12 @@ class Produksi_action extends CI_Controller
         $production['production_id'] = $output['production_id'];
         $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 9 : 8;
 
-        $this->produksi_model->perbarui($production);
+        $this->db->update('production', $production, ['production_id' => $production['production_id']]);
 
         // Update the production_status_id for order table as well
         $order = $this->input->post('order');
         $order['production_status_id'] = $production['production_status_id'];
-        $this->pesanan_model->perbarui($order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         // Redirect to its original page
         redirect($this->input->post('input-src'));
@@ -116,9 +120,9 @@ class Produksi_action extends CI_Controller
         $order = $this->input->post('order');
         $order['production_status_id'] = $production['production_status_id'];
 
-        $this->produksi_model->perbarui($production);
+        $this->db->update('production', $production, ['production_id' => $production['production_id']]);
 
-        $this->pesanan_model->perbarui($order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         redirect($this->input->post('input-src'));
     }

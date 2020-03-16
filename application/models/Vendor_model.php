@@ -3,40 +3,6 @@
 class Vendor_model extends CI_Model
 {
 
-	public function simpan($vendor)
-	{
-
-		if (!empty($vendor['vendor_id'])) {
-			return $this->perbarui($vendor);
-		}
-
-		return $this->tambah($vendor);
-	}
-
-	public function tambah($vendor)
-	{
-
-		$vendorData = $this->siapkan_data($vendor);
-
-		return $this->db->insert('vendor', $vendorData);
-	}
-
-	public function perbarui($vendor)
-	{
-
-		$vendorData = $this->siapkan_data($vendor);
-
-		$this->db->where('vendor_id', $vendor['vendor_id']);
-		return $this->db->update('vendor', $vendorData);
-	}
-
-	public function hapus($vendor)
-	{
-
-		$this->db->where('vendor_id', $vendor['vendor_id']);
-		return $this->db->delete('vendor');
-	}
-
 	public function list_all_vendors()
 	{
 		$query = $this->db->query("SELECT 

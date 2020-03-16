@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat_invoice' ? 'buat' : 'sunting'; ?>">
 
-  <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'simpan' : 'perbarui'; ?>
+  <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'tambah' : 'perbarui'; ?>
 
   <form action='<?= base_url("action/invoice_action/{$method}"); ?>' method="post" id="invoice-form">
 
@@ -199,6 +199,7 @@
                   <?php foreach ($current_products as $current_product) : ?>
 
                     <tr id="product-entry-<?= $current_product['product_id']; ?>" class="product-entry" data-item-index="<?= $current_item_index; ?>" data-product-index="<?= $product_index; ?>" data-product-id="<?= $current_product['product_id']; ?>" data-product-sale-id="<?= $current_product['product_sale_id']; ?>">
+                      <input type="hidden" name="products[<?= $product_index ?>][customer_id]" value="<?= $current_product['customer_id']; ?>">
                       <input type="hidden" name="products[<?= $product_index ?>][product_sale_id]" value="<?= $current_product['product_sale_id']; ?>">
                       <input type="hidden" name="products[<?= $product_index ?>][product_id]" value="<?= $current_product['product_id']; ?>">
                       <td id="product-del-btn-col" class="pr-0">

@@ -96,7 +96,7 @@
 
       <div class="modal-content">
 
-        <form action="<?= base_url('action/pelanggan_action/simpan_data'); ?>" method="post" id="customerForm">
+        <form action="" method="post" id="customerForm">
 
           <input type="hidden" name="customer[customer_id]" id="cust_id" value="">
 

@@ -3,39 +3,6 @@
 class Kreditur_model extends CI_Model
 {
 
-	public function simpan($creditor)
-	{
-
-		if (!empty($creditor['creditor_id'])) {
-			return $this->perbarui($creditor);
-		}
-
-		return $this->tambah($creditor);
-	}
-
-	public function tambah($creditor)
-	{
-
-		$creditorData = $this->siapkan_data($creditor);
-
-		return $this->db->insert('creditor', $creditorData);
-	}
-
-	public function perbarui($creditor)
-	{
-
-		$creditorData = $this->siapkan_data($creditor);
-
-		$this->db->where('creditor_id', $creditor['creditor_id']);
-		return $this->db->update('creditor', $creditorData);
-	}
-
-	public function hapus($creditor)
-	{
-		$this->db->where('creditor_id', $creditor['creditor_id']);
-		return $this->db->delete('creditor');
-	}
-
 	public function list_all_creditors()
 	{
 		$query = $this->db->query("SELECT 
@@ -181,16 +148,5 @@ class Kreditur_model extends CI_Model
 		$key = array_keys($ready);
 
 		return $key[0];
-	}
-
-	public function siapkan_data($creditor)
-	{
-		$creditor_db_data = [];
-
-		foreach ($creditor as $col => $val) {
-			$creditor_db_data[$col] = $val;
-		}
-
-		return $creditor_db_data;
 	}
 }

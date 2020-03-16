@@ -24,8 +24,10 @@ class Pesanan_action extends CI_Controller
     {
         $order = $this->input->post('order');
         $order['image'] = $this->unggah($_FILES['image']);
+        $order['quantity'] = str_replace(',', '', $order['quantity']);
+        $order['price'] = str_replace(',', '', $order['price']);
 
-        $this->pesanan_model->simpan($order);
+        $this->db->insert('order', $order);
 
         redirect(base_url('pesanan/buat'));
     }
@@ -33,8 +35,10 @@ class Pesanan_action extends CI_Controller
     public function simpan_dari_invoice()
     {
         $order = $this->input->post('order');
+        $order['quantity'] = str_replace(',', '', $order['quantity']);
+        $order['price'] = str_replace(',', '', $order['price']);
 
-        $this->pesanan_model->simpan($order);
+        $this->db->insert('order', $order);
 
         redirect(base_url($this->input->post('source-url')));
     }
@@ -47,8 +51,11 @@ class Pesanan_action extends CI_Controller
         // Use existing image or grab new uploaded image
         $order['image'] = !empty($this->image_exist($order['order_id'])) ? $this->image_exist($order['order_id']) : $this->unggah($_FILES['image']);
 
+        $order['quantity'] = str_replace(',', '', $order['quantity']);
+        $order['price'] = str_replace(',', '', $order['price']);
+
         // Save to the db
-        $this->pesanan_model->simpan($order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         // Grab redirection destination
         $redirect_target = base_url($this->input->post('redirect-here'));
@@ -64,7 +71,7 @@ class Pesanan_action extends CI_Controller
         $date  = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
         $order['status_date'] = $date->format('Y-m-d H:i:s');
 
-        $this->pesanan_model->simpan($order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         $redirect_here = $this->input->post('redirect-here') ?? 'pesanan/sunting/' . $order['order_id'];
         redirect(base_url($redirect_here));
@@ -83,7 +90,7 @@ class Pesanan_action extends CI_Controller
     {
         $order = $this->input->post('order');
 
-        $this->pesanan_model->hapus($order);
+        $this->db->delete('order', ['order_id' => $order['order_id']]);
 
         redirect(base_url('pesanan/daftar'));
     }

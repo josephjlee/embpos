@@ -5,14 +5,13 @@ class Pelanggan_ajax extends CI_Controller
 {
 
   public function __construct()
-	{
+  {
 
-		parent::__construct();
+    parent::__construct();
 
     $this->load->model('pelanggan_model');
-    
   }
-  
+
   public function get_customer_contact()
   {
 
@@ -22,13 +21,13 @@ class Pelanggan_ajax extends CI_Controller
 
     echo json_encode($customer_data);
   }
-  
+
   public function tambah_pelanggan()
   {
 
     $customer = $this->input->post('customer');
 
-    $this->pelanggan_model->tambah($customer);
+    $this->db->insert('customer', $customer);
 
     $new_customer_id = $this->db->insert_id();
 

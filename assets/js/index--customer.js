@@ -1,9 +1,11 @@
 const inputCustTrigger = document.querySelector('#input-cust-trigger');
 const customerTable = document.querySelector('#customer-table-card #dataTable');
+const customerForm = document.querySelector('#customerForm');
 
 inputCustTrigger.addEventListener('click', function (e) {
 
-	document.querySelector('#customerForm').reset();
+	customerForm.reset();
+	customerForm.setAttribute('action', `${window.location.origin}/action/pelanggan_action/tambah`)
 
 });
 
@@ -16,8 +18,9 @@ customerTable.addEventListener('click', function (e) {
 
 	if (clickedEl.matches('.edit-modal-trigger')) {
 
+		customerForm.setAttribute('action', `${window.location.origin}/action/pelanggan_action/perbarui`);
+
 		document.querySelector('#addCustomerModal #cust_id').value = currentRow.dataset.id;
-		console.log(currentRow.dataset.id);
 
 		document.querySelector('#cust_name').value = currentRow.dataset.name;
 		document.querySelector('#cust_company').value = currentRow.dataset.company;

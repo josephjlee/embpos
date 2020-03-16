@@ -27,7 +27,7 @@ class Keuangan_action extends CI_Controller
 
         $creditor = $this->input->post('creditor');
 
-        $this->kreditur_model->tambah($creditor);
+        $this->db->insert('creditor', $creditor);
 
         redirect(base_url($this->input->post('request-source')));
     }
@@ -37,7 +37,7 @@ class Keuangan_action extends CI_Controller
 
         $creditor = $this->input->post('creditor');
 
-        $this->kreditur_model->hapus($creditor);
+        $this->db->delete('creditor', $creditor, ['creditor_id' => $creditor['creditor_id']]);
 
         redirect(base_url('kontak/kreditur'));
     }
@@ -46,8 +46,12 @@ class Keuangan_action extends CI_Controller
     {
         $debt = $this->input->post('debt');
 
-        $this->keuangan_model->simpan($debt);
+        if (!empty($debt['debt_id'])) {
+            $this->db->update('debt', $debt, ['debt_id' => $debt['debt_id']]);
+            redirect(base_url($this->input->post('request-source')));
+        }
 
+        $this->db->insert('debt', $debt);
         redirect(base_url($this->input->post('request-source')));
     }
 }

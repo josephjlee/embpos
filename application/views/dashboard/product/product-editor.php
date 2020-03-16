@@ -1,6 +1,6 @@
 <?php $method = $this->uri->segment(2) == 'tambah' ? 'simpan' : 'perbarui' ?>
 
-<form action="<?= base_url("action/produk_action/{$method}") ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="order-create-form" class="container-fluid create-order mb-4">
+<form action="<?= base_url("action/produk_action/{$method}") ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="product-create-form" class="container-fluid create-product mb-4">
 
 	<input type="hidden" name="product[product_id]" id="hidden-product-id" value="<?= $product['product_id'] ?? ''; ?>">
 
@@ -20,7 +20,7 @@
 				<?= $this->session->flashdata('message'); ?>
 			<?php endif; ?>
 
-			<!-- Order Form -->
+			<!-- Product Form -->
 			<div class="card shadow mb-3">
 
 				<div class="card-body">

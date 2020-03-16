@@ -28,8 +28,11 @@ class Produk_action extends CI_Controller
     // Grab input data and image data
     $product = $this->input->post('product');
     $product['image'] = $this->unggah($_FILES['image']);
+    $product['base_price'] = str_replace(',', '', $product['base_price']);
+    $product['sell_price'] = str_replace(',', '', $product['sell_price']);
+    $product['stock'] = str_replace(',', '', $product['stock']);
 
-    $this->produk_model->simpan($product);
+    $this->db->insert('product', $product);
 
     redirect(base_url('produk/semua'));
   }
@@ -43,8 +46,12 @@ class Produk_action extends CI_Controller
     // Use existing image or grab new uploaded image
     $product['image'] = $this->image_exist($product['product_id']) ?? $this->unggah($_FILES['image']);
 
+    $product['base_price'] = str_replace(',', '', $product['base_price']);
+    $product['sell_price'] = str_replace(',', '', $product['sell_price']);
+    $product['stock'] = str_replace(',', '', $product['stock']);
+
     // Save to the db
-    $this->produk_model->simpan($product);
+    $this->db->update('product', $product, ['product_id' => $product['product_id']]);
 
     // Redirect to current editing page
     redirect(base_url('produk/sunting/') . $product['product_id']);
@@ -55,7 +62,7 @@ class Produk_action extends CI_Controller
 
     $product = $this->input->post('product');
 
-    $this->produk_model->hapus($product);
+    $this->db->delete('product', ['product_id' => $product['product_id']]);
 
     redirect(base_url('produk/semua'));
   }

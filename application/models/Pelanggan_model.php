@@ -3,40 +3,6 @@
 class Pelanggan_model extends CI_Model
 {
 
-	public function simpan($customer)
-	{
-
-		if (!empty($customer['customer_id'])) {
-			return $this->perbarui($customer);
-		}
-
-		return $this->tambah($customer);
-	}
-
-	public function tambah($customer)
-	{
-
-		$customerData = $this->siapkan_data($customer);
-
-		return $this->db->insert('customer', $customerData);
-	}
-
-	public function perbarui($customer)
-	{
-
-		$customerData = $this->siapkan_data($customer);
-
-		$this->db->where('customer_id', $customer['customer_id']);
-		return $this->db->update('customer', $customerData);
-	}
-
-	public function hapus($customer)
-	{
-
-		$this->db->where('customer_id', $customer['customer_id']);
-		return $this->db->delete('customer');
-	}
-
 	public function select_all_customers_data()
 	{
 		$this->db->select('

@@ -2,56 +2,6 @@
 
 class Keuangan_model extends CI_Model
 {
-
-  public function simpan($debt)
-  {
-
-    if (!empty($debt['debt_id'])) {
-      return $this->perbarui($debt);
-    }
-
-    return $this->tambah($debt);
-  }
-
-  public function tambah($debt)
-  {
-
-    $debt_data = $this->siapkan_data($debt);
-
-    return $this->db->insert('debt', $debt_data);
-  }
-
-  public function perbarui($debt)
-  {
-    $debt_data = $this->siapkan_data($debt);
-
-    $this->db->where('debt_id', $debt['debt_id']);
-
-    return $this->db->update('debt', $debt_data);
-  }
-
-  public function hapus($debt)
-  {
-    $this->db->where('debt_id', $debt['debt_id']);
-    return $this->db->delete('debt');
-  }
-
-  public function bayar_hutang($debt_payment)
-  {
-    $debt_payment_data = $this->siapkan_data($debt_payment);
-
-    return $this->db->insert('debt_payment', $debt_payment_data);
-  }
-
-  public function perbarui_pembayaran_hutang($debt_payment)
-  {
-    $debt_payment_data = $this->siapkan_data($debt_payment);
-
-    $this->db->where('debt_payment_id', $debt_payment['debt_payment_id']);
-
-    return $this->db->update('debt_payment', $debt_payment_data);
-  }
-
   public function list_all_debts()
   {
 
@@ -283,39 +233,6 @@ class Keuangan_model extends CI_Model
     return $query->row_array();
   }
 
-  public function simpan_pengeluaran($expense)
-  {
-
-    if (!empty($expense['expense_id'])) {
-      return $this->perbarui_pengeluaran($expense);
-    }
-
-    return $this->tambah_pengeluaran($expense);
-  }
-
-  public function tambah_pengeluaran($expense)
-  {
-
-    $expense_data = $this->siapkan_data($expense);
-
-    return $this->db->insert('expense', $expense_data);
-  }
-
-  public function perbarui_pengeluaran($expense)
-  {
-    $expense_data = $this->siapkan_data($expense);
-
-    $this->db->where('expense_id', $expense['expense_id']);
-
-    return $this->db->update('expense', $expense_data);
-  }
-
-  public function hapus_pengeluaran($expense)
-  {
-    $this->db->where('expense_id', $expense['expense_id']);
-    return $this->db->delete('expense');
-  }
-
   public function list_all_expenses()
   {
 
@@ -354,22 +271,6 @@ class Keuangan_model extends CI_Model
     ");
 
     return $query->result_array();
-  }
-
-  public function siapkan_data($debt)
-  {
-
-    $debt_db_data = [];
-
-    foreach ($debt as $col => $val) {
-      $debt_db_data[$col] = $val;
-
-      if ($col == 'stock' || $col == 'base_price' || $col == 'sell_price') {
-        $debt_db_data[$col] = str_replace(',', '', $val);
-      }
-    }
-
-    return $debt_db_data;
   }
 
   public function get_total_expense_by_month($month)
