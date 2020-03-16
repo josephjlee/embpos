@@ -1,6 +1,6 @@
 <?php $method = $this->uri->segment(2) == 'tambah' ? 'simpan' : 'perbarui' ?>
 
-<form action="<?= base_url("processor/produk_pcsr/{$method}") ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="order-create-form" class="container-fluid create-order mb-4">
+<form action="<?= base_url("action/produk_action/{$method}") ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="order-create-form" class="container-fluid create-order mb-4">
 
 	<input type="hidden" name="product[product_id]" id="hidden-product-id" value="<?= $product['product_id'] ?? ''; ?>">
 
@@ -38,22 +38,22 @@
 					<div class="form-row">
 
 						<div class="form-group col">
-	
+
 							<label for="item"><small>Jenis barang</small></label>
 							<select name="product[item_id]" id="item">
-								
+
 								<option value="">Pilih...</option>
-								
+
 								<?php $product_category = $this->produk_model->get_product_category(); ?>
 
 								<?php if ($product['item_id']) : ?>
-								<?php foreach ($product_category as $item) : ?>
-								<option value="<?= $item['item_id']; ?>" <?= $product['item_id'] == $item['item_id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
-								<?php endforeach; ?>
+									<?php foreach ($product_category as $item) : ?>
+										<option value="<?= $item['item_id']; ?>" <?= $product['item_id'] == $item['item_id'] ? 'selected' : ''; ?>><?= $item['name']; ?></option>
+									<?php endforeach; ?>
 								<?php endif; ?>
 
 								<?php foreach ($product_category as $item) : ?>
-								<option value="<?= $item['item_id']; ?>"><?= $item['name']; ?></option>
+									<option value="<?= $item['item_id']; ?>"><?= $item['name']; ?></option>
 								<?php endforeach; ?>
 
 							</select>
@@ -119,15 +119,15 @@
 					<div class="card-body">
 
 						<?php if (isset($product['image'])) : ?>
-						<div class="d-flex align-items-center mb-3">
-							<img src="<?= base_url('assets/img/product/') . $product['image']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
-							<div>
-								<p class="font-weight-bold my-0"><?= $product['image']; ?></p>
+							<div class="d-flex align-items-center mb-3">
+								<img src="<?= base_url('assets/img/product/') . $product['image']; ?>" alt="" class="img-thumbnail mr-2" style="width:15%;height:100%">
+								<div>
+									<p class="font-weight-bold my-0"><?= $product['image']; ?></p>
+								</div>
+								<button type="button" data-toggle="modal" data-target="#del-product-img-modal" class="close ml-auto">
+									<span aria-hidden="true">&times;</span>
+								</button>
 							</div>
-							<button type="button" data-toggle="modal" data-target="#del-product-img-modal" class="close ml-auto">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
 						<?php endif; ?>
 
 						<div class="custom-file">
@@ -147,7 +147,7 @@
 <!-- Delete Product Image Modal-->
 <div class="modal fade" id="del-product-img-modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
-		<form action="<?= base_url('processor/produk_pcsr/lepas_gambar'); ?>" method="post" id="del-product-img-form">
+		<form action="<?= base_url('action/produk_action/lepas_gambar'); ?>" method="post" id="del-product-img-form">
 			<input type="hidden" name="product[product_id]" id="product-id" value="<?= $product['product_id'] ?? ''; ?>">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -169,7 +169,7 @@
 <!-- Delete Product Modal -->
 <div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
-		<form action="<?= base_url('processor/produk_pcsr/hapus_produk'); ?>" method="post" id="del-product-form">
+		<form action="<?= base_url('action/produk_action/hapus_produk'); ?>" method="post" id="del-product-form">
 			<input type="hidden" name="product[product_id]" id="product-id" value="<?= $product['product_id'] ?? ''; ?>">
 			<div class="modal-content">
 				<div class="modal-header">

@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <?php $method = $this->uri->segment(2) == 'buat' ? 'simpan' : 'perbarui'; ?>
 
-<form action="<?= base_url("processor/pesanan_pcsr/{$method}"); ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="order-create-form" class="container-fluid create-order mb-4">
+<form action="<?= base_url("action/pesanan_action/{$method}"); ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="order-create-form" class="container-fluid create-order mb-4">
 
 	<input type="hidden" name="order[order_id]" value="<?= $order['order_id'] ?? ''; ?>">
 	<input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
@@ -386,7 +386,7 @@
 	<!-- Delete Artwork Modal-->
 	<div class="modal fade" id="del-artwork-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
-			<form action="<?= base_url('processor/pesanan_pcsr/lepas_artwork'); ?>" method="post" id="del-order-artwork-form">
+			<form action="<?= base_url('action/pesanan_action/lepas_artwork'); ?>" method="post" id="del-order-artwork-form">
 				<input type="hidden" name="order[order_id]" id="order-id" value="<?= $order['order_id'] ?? ''; ?>">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -408,7 +408,7 @@
 	<!-- Delete Order Modal -->
 	<div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
-			<form action="<?= base_url('processor/pesanan_pcsr/hapus_pesanan'); ?>" method="post" id="del-order-form">
+			<form action="<?= base_url('action/pesanan_action/hapus_pesanan'); ?>" method="post" id="del-order-form">
 				<input type="hidden" name="order[order_id]" id="modal-order-id" value="<?= $order['order_id']; ?>">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -431,7 +431,7 @@
 	<div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 
-			<form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
+			<form action="<?= base_url('action/pesanan_action/tandai_sebagai'); ?>" method="post" id="update-process-form">
 
 				<input type="hidden" name="order[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
 
@@ -477,7 +477,7 @@
 
 		<div class="modal-dialog" role="document">
 
-			<form action="<?= base_url('processor/produksi_pcsr/atur_produksi'); ?>" method="post" id="spec-form">
+			<form action="<?= base_url('action/produksi_action/atur_produksi'); ?>" method="post" id="spec-form">
 
 				<input type="hidden" name="input-src" value="<?= current_url(); ?>">
 

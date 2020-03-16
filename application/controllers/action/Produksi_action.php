@@ -2,7 +2,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Produksi_pcsr extends CI_Controller
+class Produksi_action extends CI_Controller
 {
     public function __construct()
     {

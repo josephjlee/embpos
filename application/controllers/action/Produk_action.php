@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Produk_pcsr extends CI_Controller
+class Produk_action extends CI_Controller
 {
 
   public function __construct()
@@ -68,7 +68,6 @@ class Produk_pcsr extends CI_Controller
     $this->produk_model->detach_image($product);
 
     redirect(base_url('produk/sunting/') . $product['product_id']);
-    
   }
 
   /*
@@ -116,5 +115,4 @@ class Produk_pcsr extends CI_Controller
 
     return $this->db->get()->row_array()['image'];
   }
-  
 }

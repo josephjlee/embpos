@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-  <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
+  <form action="<?= base_url('action/produksi_action/perbarui_detail') ?>" method="post">
 
     <input type="hidden" name="order[order_id]" id="order-id" value="<?= $finishing_detail['order_id']; ?>">
     <input type="hidden" name="production[production_id]" value="<?= $finishing_detail['production_id']; ?>">
@@ -214,7 +214,7 @@
 
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/produksi_pcsr/rekam_output_finishing'); ?>" method="post">
+      <form action="<?= base_url('action/produksi_action/rekam_output_finishing'); ?>" method="post">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="<?= $finishing_detail['order_id']; ?>">
         <input type="hidden" name="output[production_id]" value="<?= $finishing_detail['production_id']; ?>">

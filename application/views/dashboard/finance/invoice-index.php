@@ -156,7 +156,7 @@
 <!-- Delete Invoice Modal-->
 <div class="modal fade" id="del-invoice-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <form action="<?= base_url('processor/invoice_pcsr/hapus_invoice'); ?>" method="post" id="delete-invoice-form">
+    <form action="<?= base_url('action/invoice_action/hapus_invoice'); ?>" method="post" id="delete-invoice-form">
       <input type="hidden" name="invoice[invoice_id]" id="modal-invoice-id" value="">
       <div class="modal-content">
         <div class="modal-header">

@@ -122,7 +122,7 @@
   <div class="modal fade" id="mark-as-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
+      <form action="<?= base_url('action/pesanan_action/tandai_sebagai'); ?>" method="post" id="update-process-form">
 
         <input type="hidden" name="redirect-here" value="<?= "{$this->uri->segment(1)}/{$this->uri->segment(2)}/{$this->uri->segment(3)}" ?>">
 
@@ -190,13 +190,13 @@
               <label for=""><small>Pengerjaan</small></label>
               <select id="production-type" class="custom-select">
                 <option value="">Pilih...</option>
-                <option value="material" data-form-action="<?= base_url('processor/produksi_pcsr/atur_spek_material'); ?>">
+                <option value="material" data-form-action="<?= base_url('action/produksi_action/atur_spek_material'); ?>">
                   Bahan Baku
                 </option>
-                <option value="design" data-form-action="<?= base_url('processor/produksi_pcsr/pesan_desain'); ?>">
+                <option value="design" data-form-action="<?= base_url('action/produksi_action/pesan_desain'); ?>">
                   Desain
                 </option>
-                <option value="embroidery" data-form-action="<?= base_url('processor/produksi_pcsr/atur_spek_bordir'); ?>">
+                <option value="embroidery" data-form-action="<?= base_url('action/produksi_action/atur_spek_bordir'); ?>">
                   Bordir
                 </option>
               </select>
@@ -221,7 +221,7 @@
   <!-- Delete Order Modal -->
   <div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/pesanan_pcsr/hapus_pesanan'); ?>" method="post" id="del-order-form">
+      <form action="<?= base_url('action/pesanan_action/hapus_pesanan'); ?>" method="post" id="del-order-form">
         <input type="hidden" name="order[order_id]" id="del-modal-order-id" value="">
         <div class="modal-content">
           <div class="modal-header">

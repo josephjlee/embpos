@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-  <form action="<?= base_url('processor/produksi_pcsr/perbarui_detail') ?>" method="post">
+  <form action="<?= base_url('action/produksi_action/perbarui_detail') ?>" method="post">
 
     <input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
     <input type="hidden" name="production[production_id]" value="<?= $embro_detail['production_id']; ?>">
@@ -264,7 +264,7 @@
 
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/produksi_pcsr/rekam_output_operator'); ?>" method="post">
+      <form action="<?= base_url('action/produksi_action/rekam_output_operator'); ?>" method="post">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
         <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">

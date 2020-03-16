@@ -2,7 +2,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Keuangan_pcsr extends CI_Controller
+class Keuangan_action extends CI_Controller
 {
 
     public function __construct()
@@ -44,8 +44,6 @@ class Keuangan_pcsr extends CI_Controller
 
     public function sunting_hutang()
     {
-        // pretty_print($_POST);
-
         $debt = $this->input->post('debt');
 
         $this->keuangan_model->simpan($debt);

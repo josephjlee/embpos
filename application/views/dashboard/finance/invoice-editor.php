@@ -3,7 +3,7 @@
 
   <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'simpan' : 'perbarui'; ?>
 
-  <form action='<?= base_url("processor/invoice_pcsr/{$method}"); ?>' method="post" id="invoice-form">
+  <form action='<?= base_url("action/invoice_action/{$method}"); ?>' method="post" id="invoice-form">
 
     <input type="hidden" name="invoice[invoice_id]" id="invoice_id" value="<?= $invoice_detail['invoice_id'] ?? ''; ?>">
     <input type="hidden" name="invoice[discount]" id="hidden-discount" value="<?= isset($invoice_detail['discount']) ? moneyStr($invoice_detail['discount']) : '0'; ?>">
@@ -948,7 +948,7 @@
   <!-- Detach Product Modal-->
   <div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/invoice_pcsr/lepas_produk'); ?>" method="post" id="detach-product-form">
+      <form action="<?= base_url('action/invoice_action/lepas_produk'); ?>" method="post" id="detach-product-form">
         <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
         <input type="hidden" name="product_sale[product_sale_id]" id="modal-product-sale-id" value="">
         <div class="modal-content">
@@ -971,7 +971,7 @@
   <!-- Detach Order Modal-->
   <div class="modal fade" id="del-order-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/invoice_pcsr/lepas_pesanan'); ?>" method="post" id="detach-order-form">
+      <form action="<?= base_url('action/invoice_action/lepas_pesanan'); ?>" method="post" id="detach-order-form">
         <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
         <input type="hidden" name="order[order_id]" id="modal-order-id" value="">
         <div class="modal-content">
@@ -994,7 +994,7 @@
   <!-- Delete Invoice Modal-->
   <div class="modal fade" id="delOrderModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/invoice_pcsr/hapus_invoice'); ?>" method="post" id="delete-invoice-form">
+      <form action="<?= base_url('action/invoice_action/hapus_invoice'); ?>" method="post" id="delete-invoice-form">
         <input type="hidden" name="invoice[invoice_id]" id="invoice-id" value="<?= $invoice_detail['invoice_id']; ?>">
         <div class="modal-content">
           <div class="modal-header">
@@ -1018,7 +1018,7 @@
 
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/invoice_pcsr/perbarui_pembayaran') ?>" method="post" id="update-payment-form">
+      <form action="<?= base_url('action/invoice_action/perbarui_pembayaran') ?>" method="post" id="update-payment-form">
 
         <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number'] ?? ''; ?>">
 
@@ -1072,7 +1072,7 @@
   <!-- Delete Payment Modal-->
   <div class="modal fade" id="deletePaymentModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/invoice_pcsr/hapus_pembayaran'); ?>" method="post" id="delete-payment-form">
+      <form action="<?= base_url('action/invoice_action/hapus_pembayaran'); ?>" method="post" id="delete-payment-form">
         <input type="hidden" name="invoice[number]" id="invoice-number" value="<?= $invoice_detail['invoice_number']; ?>">
         <input type="hidden" name="payment[payment_id]" id="del-payment-modal__payment-id" value="">
         <div class="modal-content">
@@ -1096,7 +1096,7 @@
   <div class="modal fade" id="order-detail-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/pesanan_pcsr/simpan_dari_invoice'); ?>" method="post">
+      <form action="<?= base_url('action/pesanan_action/simpan_dari_invoice'); ?>" method="post">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="">
         <input type="hidden" name="source-url" id="source-url" value="<?= $this->uri->uri_string(); ?>">
@@ -1270,7 +1270,7 @@
   <div class="modal fade" id="update-process-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/pesanan_pcsr/tandai_sebagai'); ?>" method="post" id="update-process-form">
+      <form action="<?= base_url('action/pesanan_action/tandai_sebagai'); ?>" method="post" id="update-process-form">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="">
         <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">
@@ -1319,7 +1319,7 @@
   <div class="modal fade" id="operator-price-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/produksi_pcsr/atur_produksi'); ?>" method="post" id="set-operator-price-form">
+      <form action="<?= base_url('action/produksi_action/atur_produksi'); ?>" method="post" id="set-operator-price-form">
 
         <input type="hidden" name="production[production_id]" id="production-id" value="">
         <input type="hidden" name="production[order_id]" id="order-id" value="">
@@ -1359,7 +1359,7 @@
   <div class="modal fade" id="upload-artwork-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url("processor/pesanan_pcsr/perbarui"); ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="set-operator-price-form">
+      <form action="<?= base_url("action/pesanan_action/perbarui"); ?>" enctype="multipart/form-data" accept-charset="utf-8" method="post" id="set-operator-price-form">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="">
         <input type="hidden" name="redirect-here" value="<?= $this->uri->uri_string(); ?>">

@@ -165,7 +165,7 @@
 <!-- Delete Product Modal -->
 <div class="modal fade" id="del-product-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <form action="<?= base_url('processor/produk_pcsr/hapus_produk'); ?>" method="post" id="del-product-form">
+    <form action="<?= base_url('action/produk_action/hapus_produk'); ?>" method="post" id="del-product-form">
       <input type="hidden" name="product[product_id]" id="modal-product-id" value="">
       <div class="modal-content">
         <div class="modal-header">

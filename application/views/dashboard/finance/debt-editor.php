@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div id="invoice-editor" class="container-fluid invoice-detail">
 
-  <form action='<?= base_url("processor/keuangan_pcsr/sunting_hutang"); ?>' method="post" id="debt-form">
+  <form action='<?= base_url("action/keuangan_action/sunting_hutang"); ?>' method="post" id="debt-form">
 
     <input type="hidden" name="request-source" value="<?= $this->uri->uri_string(); ?>">
     <input type="hidden" name="debt[debt_id]" value="<?= $debt_detail['debt_id']; ?>">
@@ -335,7 +335,7 @@
   <!-- Delete debt Modal-->
   <div class="modal fade" id="delOrderModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/debt_pcsr/hapus_debt'); ?>" method="post" id="delete-debt-form">
+      <form action="<?= base_url('action/debt_action/hapus_debt'); ?>" method="post" id="delete-debt-form">
         <input type="hidden" name="debt[debt_id]" id="debt-id" value="<?= $debt_detail['debt_id']; ?>">
         <div class="modal-content">
           <div class="modal-header">
@@ -359,7 +359,7 @@
 
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('processor/debt_pcsr/perbarui_pembayaran') ?>" method="post" id="update-payment-form">
+      <form action="<?= base_url('action/debt_action/perbarui_pembayaran') ?>" method="post" id="update-payment-form">
 
         <input type="hidden" name="debt[number]" id="debt-number" value="<?= $debt_detail['debt_number'] ?? ''; ?>">
 
@@ -413,7 +413,7 @@
   <!-- Delete Payment Modal-->
   <div class="modal fade" id="deletePaymentModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/debt_pcsr/hapus_pembayaran'); ?>" method="post" id="delete-payment-form">
+      <form action="<?= base_url('action/debt_action/hapus_pembayaran'); ?>" method="post" id="delete-payment-form">
         <input type="hidden" name="debt[number]" id="debt-number" value="<?= $debt_detail['debt_number']; ?>">
         <input type="hidden" name="payment[payment_id]" id="del-payment-modal__payment-id" value="">
         <div class="modal-content">

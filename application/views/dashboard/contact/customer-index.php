@@ -96,7 +96,7 @@
 
       <div class="modal-content">
 
-        <form action="<?= base_url('processor/pelanggan_pcsr/simpan_data'); ?>" method="post" id="customerForm">
+        <form action="<?= base_url('action/pelanggan_action/simpan_data'); ?>" method="post" id="customerForm">
 
           <input type="hidden" name="customer[customer_id]" id="cust_id" value="">
 
@@ -162,7 +162,7 @@
   <!-- Delete Customer Modal -->
   <div class="modal fade" id="delCustomerModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <form action="<?= base_url('processor/pelanggan_pcsr/hapus_data'); ?>" method="post" id="delete-order-form">
+      <form action="<?= base_url('action/pelanggan_action/hapus_data'); ?>" method="post" id="delete-order-form">
         <input type="hidden" name="customer[customer_id]" id="cust_id" value="">
         <div class="modal-content">
           <div class="modal-header">
