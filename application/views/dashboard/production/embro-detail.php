@@ -206,7 +206,7 @@
                               <span id="output-amount-display"><?= moneyStr($output['quantity']); ?></span>pcs
                             </small>
                             <p style="font-size:14px;" id="output-name-display" class="my-0">
-                              <span style="color:#495057"><?= date('d-m-Y', strtotime($output['date'])); ?> | Shift <?= $output['shift']; ?> |</span> <?= $output['operator']; ?>
+                              <span style="color:#495057"><?= date('d-m-Y', strtotime($output['finished'])); ?> | Shift <?= $output['shift']; ?> |</span> <?= $output['operator']; ?>
                             </p>
                           </div>
                         </td>
@@ -284,39 +284,54 @@
 
           <div class="modal-body">
 
+            <div class="form-row">
+
+              <div class="form-group col-lg">
+
+                <label for="modal-operator"><small>Operator</small></label>
+
+                <?php $operators = $this->produksi_model->get_employee_name_by_job_id(2); ?>
+
+                <select name="output[employee_id]" id="modal-operator">
+
+                  <option value="">Pilih operator</option>
+
+                  <?php foreach ($operators as $operator) : ?>
+                    <option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
+                  <?php endforeach; ?>
+
+                </select>
+
+              </div>
+
+              <div class="form-group col-lg">
+
+                <label for="modal-shift"><small>Shift</small></label>
+
+                <select name="output[shift]" id="modal-shift" class="custom-select">
+                  <option value="">Pilih...</option>
+                  <option value="1">Siang</option>
+                  <option value="2">Malam</option>
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="started">Mulai</label>
+                <input type="date" name="output[started]" id="started" class="form-control date-time-picker">
+              </div>
+              <div class="form-group col">
+                <label for="started">Sampai</label>
+                <input type="date" name="output[finished]" id="finished" class="form-control date-time-picker">
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="modal-output-qty"><small>Jumlah (kurang <?= $embro_detail['quantity'] - $total_output; ?>pcs)</small></label>
               <input type="number" min="1" max="<?= $embro_detail['quantity'] - $total_output; ?>" name="output[quantity]" id="modal-output-qty" class="form-control" value="" placeholder="0">
-            </div>
-
-            <div class="form-group">
-
-              <label for="modal-operator"><small>Operator</small></label>
-
-              <?php $operators = $this->produksi_model->get_employee_name_by_job_id(2); ?>
-
-              <select name="output[employee_id]" id="modal-operator">
-
-                <option value="">Pilih operator</option>
-
-                <?php foreach ($operators as $operator) : ?>
-                  <option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
-                <?php endforeach; ?>
-
-              </select>
-
-            </div>
-
-            <div class="form-group">
-
-              <label for="modal-shift"><small>Shift</small></label>
-
-              <select name="output[shift]" id="modal-shift" class="custom-select">
-                <option value="">Pilih...</option>
-                <option value="1">Siang</option>
-                <option value="2">Malam</option>
-              </select>
-
             </div>
 
           </div>
@@ -334,4 +349,12 @@
   </div>
 
 </div>
+
+<script>
+  // Otherwise, selectors are also supported
+  flatpickr(".date-time-picker", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+  });
+</script>
 <!-- /.container-fluid -->
