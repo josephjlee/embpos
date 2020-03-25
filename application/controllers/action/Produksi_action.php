@@ -64,16 +64,20 @@ class Produksi_action extends CI_Controller
         // Grab output data from form submission
         $output = $this->input->post('output');
 
-        // Record operator's output
-        $this->db->insert('output_embro', $output);
+        // Record/update operator's output
+        if (!empty($output['output_embro_id'])) {
+            $this->db->update('output_embro', $output, ['output_embro_id' => $output['output_embro_id']]);
+        } else {
+            $this->db->insert('output_embro', $output);
+        }
 
         // Grab current output and order quantity data
         $current_output = $this->input->post('current-output');
         $order_quantity = $this->input->post('order-qty');
 
-        // Check total output after update. If equal to order quantity then update production_status_id to 6
+        // Check total output after update. If equal or greater than order quantity then update production_status_id to 6
         $production['production_id'] = $output['production_id'];
-        $production['production_status_id'] = $current_output + $output['quantity'] == $order_quantity ? 6 : 5;
+        $production['production_status_id'] = $current_output + $output['quantity'] >= $order_quantity ? 6 : 5;
 
         $this->db->update('production', $production, ['production_id' => $production['production_id']]);
 

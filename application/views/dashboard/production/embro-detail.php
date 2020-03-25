@@ -144,7 +144,7 @@
 
               <button type="submit" id="save-data-btn" class="mr-2 action-btn"><i class="fas fa-save fa-2x"></i></button>
 
-              <a href="#" data-toggle="modal" data-target="#output-modal" class="action-btn"><i class="fas fa-calculator fa-2x"></i></a>
+              <a href="#" data-toggle="modal" data-target="#output-modal" class="action-btn" id="new-output-trigger"><i class="fas fa-calculator fa-2x"></i></a>
 
             </div>
           </div>
@@ -198,7 +198,7 @@
 
                     <?php foreach ($output_records as $output) : ?>
 
-                      <tr data-output-id="<?= $output['output_id']; ?>" data-output-quantity="<?= $output['quantity']; ?>" data-output-operator="<?= $output['employee_id']; ?>" data-output-shift="<?= $output['shift']; ?>">
+                      <tr data-output-id="<?= $output['output_id']; ?>" data-output-quantity="<?= $output['quantity']; ?>" data-output-operator="<?= $output['employee_id']; ?>" data-output-shift="<?= $output['shift']; ?>" data-output-started="<?= $output['started']; ?>" data-output-finished="<?= $output['finished']; ?>">
 
                         <td class="px-0">
                           <div>
@@ -217,7 +217,7 @@
                           </a>
                           <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
                             <div class="dropdown-header">Tindakan:</div>
-                            <a href="" class="dropdown-item update-output-trigger" data-toggle="modal" data-target="#updateoutputModal">Sunting Detail</a>
+                            <a href="" class="dropdown-item update-output-trigger" data-toggle="modal" data-target="#output-modal">Sunting Detail</a>
                             <a href="" class="dropdown-item del-output-trigger" data-toggle="modal" data-target="#deleteoutputModal">Hapus Pembayaran</a>
                           </div>
                         </td>
@@ -264,11 +264,12 @@
 
     <div class="modal-dialog" role="document">
 
-      <form action="<?= base_url('action/produksi_action/rekam_output_operator'); ?>" method="post">
+      <form action="<?= base_url('action/produksi_action/rekam_output_operator'); ?>" method="post" id="output-form">
 
         <input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
-        <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">
+        <input type="hidden" name="output[output_embro_id]" value="" id="output-embro-id">
         <input type="hidden" name="output[production_id]" value="<?= $embro_detail['production_id']; ?>">
+        <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">
         <input type="hidden" name="current-output" value="<?= $total_output; ?>">
         <input type="hidden" name="order-qty" value="<?= $embro_detail['quantity']; ?>">
         <input type="hidden" name="input-src" value="<?= current_url(); ?>">
@@ -276,7 +277,7 @@
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title">Catat Output</h5>
+            <h5 class="modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -321,17 +322,17 @@
             <div class="form-row">
               <div class="form-group col">
                 <label for="started">Mulai</label>
-                <input type="date" name="output[started]" id="started" class="form-control date-time-picker">
+                <input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
               </div>
               <div class="form-group col">
                 <label for="started">Sampai</label>
-                <input type="date" name="output[finished]" id="finished" class="form-control date-time-picker">
+                <input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
               </div>
             </div>
 
             <div class="form-group">
               <label for="modal-output-qty"><small>Jumlah (kurang <?= $embro_detail['quantity'] - $total_output; ?>pcs)</small></label>
-              <input type="number" min="1" max="<?= $embro_detail['quantity'] - $total_output; ?>" name="output[quantity]" id="modal-output-qty" class="form-control" value="" placeholder="0">
+              <input type="number" min="1" name="output[quantity]" id="modal-output-qty" class="form-control" value="" placeholder="0">
             </div>
 
           </div>
@@ -349,12 +350,4 @@
   </div>
 
 </div>
-
-<script>
-  // Otherwise, selectors are also supported
-  flatpickr(".date-time-picker", {
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-  });
-</script>
 <!-- /.container-fluid -->
