@@ -49,9 +49,9 @@ class Produksi_model extends CI_Model
         $this->db->from('production');
         $this->db->join('order', 'production.order_id = order.order_id');
         $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
-        $this->db->where('file!=', null);
-        $this->db->where('color_order<>', '');
-        $this->db->where('production.production_status_id>', 2);
+        // $this->db->where('file!=', null);
+        // $this->db->where('color_order<>', '');
+        // $this->db->where('production.production_status_id>', 2);
         $this->db->where('production.production_status_id<', 6);
 
         return $this->db->get()->result_array();
@@ -111,8 +111,9 @@ class Produksi_model extends CI_Model
         $this->db->select('
             output_embro.output_embro_id AS output_id,
             output_embro.quantity,
-            output_embro.date,
             output_embro.shift,
+            output_embro.started,
+            output_embro.finished,
             employee.nick_name AS operator,
             employee.employee_id
         ');
@@ -245,17 +246,17 @@ class Produksi_model extends CI_Model
         $start_date = $period['start'];
         $end_date = $period['end'];
 
-        $sql = "
-            SELECT 
-                employee.employee_id, 
-                employee.name,
-                IFNULL(SUM(output_embro.quantity),0) AS quantity,
-                (IFNULL(SUM(output_embro.quantity),0) * IFNULL(ANY_VALUE(production.labor_price),0)) AS value
-            FROM employee
-            LEFT JOIN output_embro ON employee.employee_id = output_embro.employee_id
-            LEFT JOIN production ON output_embro.production_id = production.production_id
-            WHERE output_embro.date BETWEEN '{$start_date}' AND '{$end_date}'
-            GROUP BY employee.employee_id
+        $sql = "SELECT 
+                    employee.employee_id, 
+                    employee.name,
+                    IFNULL(SUM(output_embro.quantity),0) AS quantity,
+                    (IFNULL(SUM(output_embro.quantity),0) * IFNULL(ANY_VALUE(production.labor_price),0)) AS value
+                FROM employee
+                LEFT JOIN output_embro ON employee.employee_id = output_embro.employee_id
+                LEFT JOIN production ON output_embro.production_id = production.production_id
+                WHERE employee.job_role_id = 2
+                -- WHERE output_embro.finished BETWEEN '{$start_date}' AND '{$end_date}'
+                GROUP BY employee.employee_id
         ";
 
         return $this->db->query($sql)->result_array();
@@ -486,5 +487,31 @@ class Produksi_model extends CI_Model
         ];
 
         return $cards;
+    }
+
+    public function get_embro_output_log()
+    {
+        $query = $this->db->query("SELECT 
+                    `order`.description,
+                    employee.nick_name AS operator,
+                    output_embro.quantity,
+                    output_embro.machine,
+                    output_embro.shift,
+                    output_embro.started,
+                    output_embro.finished,
+                    output_embro.output_embro_id,
+                    production.labor_price,
+                    (output_embro.quantity * production.labor_price) AS value
+                FROM
+                    embryo.output_embro
+                        JOIN
+                    production ON output_embro.production_id = production.production_id
+                        JOIN
+                    `order` ON production.order_id = `order`.order_id
+                        JOIN
+                    employee ON output_embro.employee_id = employee.employee_id
+        ");
+
+        return $query->result_array();
     }
 }
