@@ -23,6 +23,8 @@
   <?php foreach ($css_list as $css) : ?>
     <link href="<?= base_url($css['src']); ?>" rel="stylesheet">
   <?php endforeach; ?>
+  <link rel="stylesheet" href="<?= base_url('vendors/flatpickr/dist/flatpickr.min.css') ?>">
+  <script src="<?= base_url('vendors/flatpickr/dist/flatpickr.js') ?>"></script>
 
   <!-- Custom style -->
   <link href="<?= base_url('assets/'); ?>css/custom-style.css" rel="stylesheet">
