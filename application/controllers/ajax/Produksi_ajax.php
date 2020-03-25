@@ -100,4 +100,18 @@ class Produksi_ajax extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode($finishing_list);
 	}
+
+	public function list_embro_output_log()
+	{
+		$embro = [
+			'data' => []
+		];
+
+		foreach ($this->produksi_model->get_embro_output_log() as $embro_log) {
+			array_push($embro['data'], $embro_log);
+		};
+
+		header('Content-Type: application/json');
+		echo json_encode($embro);
+	}
 }

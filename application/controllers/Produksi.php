@@ -107,6 +107,20 @@ class Produksi extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
+    public function jurnal()
+    {
+        $data['title'] = 'Jurnal Produksi';
+
+        $data['view_script'] = 'index--production_log.js';
+
+        // pretty_print($this->produksi_model->get_embro_output_log());
+        // exit;
+
+        $data['content'] = $this->load->view('dashboard/production/production-index', $data, TRUE);
+
+        $this->load->view('layout/dashboard', $data);
+    }
+
     public function proses()
     {
         $data['title'] = 'Proses Berjalan';
