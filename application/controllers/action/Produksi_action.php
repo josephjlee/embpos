@@ -36,6 +36,21 @@ class Produksi_action extends CI_Controller
         redirect($this->input->post('input-src'));
     }
 
+    public function atur_bordir()
+    {
+        $production = $this->input->post('production');
+
+        foreach ($production['machine'] as $machine) {
+            $data = [
+                'order_id' => $production['order_id'],
+                'labor_price' => $production['labor_price'],
+                'machine' => $machine
+            ];
+            $this->db->insert('production', $data);
+        }
+        redirect($this->input->post('input-src'));
+    }
+
     public function rekam_output_desainer()
     {
         // Grab the color order data submited by the designer

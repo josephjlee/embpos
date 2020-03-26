@@ -12,6 +12,7 @@ $(document).ready(function () {
 	const priceVal = priceInput.val();
 	const suggestedPrice = moneyStr(moneyInt(priceVal) - 250);
 
+	const productionId = $('#spec-modal .modal-body').data('production-id');
 	const colorOrder = $('#spec-modal .modal-body').data('color-order');
 	const fileName = $('#spec-modal .modal-body').data('file');
 	const flashdisk = $('#spec-modal .modal-body').data('flashdisk');
@@ -39,29 +40,49 @@ $(document).ready(function () {
 		`;
 
 	const embroFormEl = `
-			<div class="form-row">
-				<div class="form-group col">
-					<label for="otomatis"><small>Otomatis</small></label>
-					<input type="text" name="production[color_order]" id="otomatis" class="form-control" value="${colorOrder}">
-				</div>
-				<div class="form-group col">
-					<label for="file"><small>Nama File</small></label>
-					<input type="text" name="production[file]" id="file" class="form-control" value="${fileName}">
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col">
-					<label for="flashdisk"><small>Flashdisk</small></label>
-					<input type="text" name="production[flashdisk]" id="flashdisk" class="form-control" value="${flashdisk}">
-				</div>
-				<div class="form-group col">
-					<label for="mesin"><small>Mesin</small></label>
-					<input type="text" name="production[machine]" id="mesin" class="form-control" value="${machineNum}">
-				</div>
-			</div>
 			<div class="form-group">
 				<label for="harga"><small>Harga Operator</small></label>
-				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${laborPrice}">
+				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="">
+			</div>
+
+			<p class="mb-1"><small>Kerjakan di Mesin:</small></p>
+			<div class="form-row">
+				<div class="form-group col">
+					<div class="custom-control custom-checkbox col">
+						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-1" value="1">
+						<label class="custom-control-label" for="machine-1">1</label>
+					</div>
+				</div>
+				<div class="form-group col">
+					<div class="custom-control custom-checkbox col">
+						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-2" value="2">
+						<label class="custom-control-label" for="machine-2">2</label>
+					</div>
+				</div>
+				<div class="form-group col">
+					<div class="custom-control custom-checkbox col">
+						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-3" value="3">
+						<label class="custom-control-label" for="machine-3">3</label>
+					</div>
+				</div>
+				<div class="form-group col">
+					<div class="custom-control custom-checkbox col">
+						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-4" value="4">
+						<label class="custom-control-label" for="machine-4">4</label>
+					</div>
+				</div>
+				<div class="form-group col">
+					<div class="custom-control custom-checkbox col">
+						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-5" value="5">
+						<label class="custom-control-label" for="machine-5">5</label>
+					</div>
+				</div>
+				<div class="form-group col">
+					<div class="custom-control custom-checkbox col">
+						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-6" value="6">
+						<label class="custom-control-label" for="machine-6">6</label>
+					</div>
+				</div>
 			</div>
 	`;
 
@@ -173,6 +194,7 @@ $(document).ready(function () {
 
 			case 'embroidery':
 				uniqueFormWrapper.html(embroFormEl);
+				$('#spec-form').attr('action', `${window.location.origin}/action/produksi_action/atur_bordir`);
 				break;
 		}
 
