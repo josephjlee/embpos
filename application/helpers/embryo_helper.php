@@ -38,19 +38,25 @@ function moneyBadge($num)
     return $badge_color;
 }
 
-function deadlineBadge($day)
+function deadlineBadge($status_id)
 {
     $badge_color = 'default';
 
     switch (true) {
-        case $day < 0:
+        case $status_id == 1:
             $badge_color = 'danger';
             break;
-        case $day < 5 && $day > 0:
+        case $status_id == 2 || $status_id == 3:
+            $badge_color = 'warning';
+            break;
+        case $status_id == 5:
+            $badge_color = 'secondary';
+            break;
+        case $status_id == 6:
             $badge_color = 'info';
             break;
-        case $day < 3 && $day > 0:
-            $badge_color = 'warning';
+        case $status_id == 8:
+            $badge_color = 'primary';
             break;
     }
 

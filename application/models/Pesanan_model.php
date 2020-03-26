@@ -553,6 +553,7 @@ class Pesanan_model extends CI_Model
                     number,
                     order_id,
                     description,
+                    production_status_id AS status_id,
                     required_date AS deadline,
                     DATEDIFF(required_date, CURDATE()) AS countdown
                 FROM `order`

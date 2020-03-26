@@ -256,7 +256,7 @@
                 <tr>
                   <td class="px-0"><a href="<?= base_url('pesanan/sunting/') . $near_deadline['order_id']; ?>"><?= $near_deadline['description']; ?></a></td>
                   <td class="text-right px-0">
-                    <span class="badge badge-<?= deadlineBadge($near_deadline['countdown']); ?>"><?= $near_deadline['countdown'] < 0 ? 'Lewat ' . abs($near_deadline['countdown']) . ' hari' : 'Kurang ' . abs($near_deadline['countdown']) . ' hari'; ?></span>
+                    <span class="badge badge-<?= deadlineBadge($near_deadline['status_id']); ?>"><?= $near_deadline['countdown'] < 0 ? 'Lewat ' . abs($near_deadline['countdown']) . ' hari' : 'Kurang ' . abs($near_deadline['countdown']) . ' hari'; ?></span>
                   </td>
                 </tr>
               <?php endforeach; ?>
