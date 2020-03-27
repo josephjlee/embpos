@@ -12,13 +12,6 @@ $(document).ready(function () {
 	const priceVal = priceInput.val();
 	const suggestedPrice = moneyStr(moneyInt(priceVal) - 250);
 
-	const productionId = $('#spec-modal .modal-body').data('production-id');
-	const colorOrder = $('#spec-modal .modal-body').data('color-order');
-	const fileName = $('#spec-modal .modal-body').data('file');
-	const flashdisk = $('#spec-modal .modal-body').data('flashdisk');
-	const machineNum = $('#spec-modal .modal-body').data('machine');
-	const laborPrice = $('#spec-modal .modal-body').data('labor-price') ? $('#spec-modal .modal-body').data('labor-price') : suggestedPrice;
-
 	const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
 
 	const materialFormEl = `
@@ -42,7 +35,7 @@ $(document).ready(function () {
 	const embroFormEl = `
 			<div class="form-group">
 				<label for="harga"><small>Harga Operator</small></label>
-				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="">
+				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${suggestedPrice}">
 			</div>
 
 			<p class="mb-1"><small>Kerjakan di Mesin:</small></p>
@@ -228,6 +221,28 @@ $(document).ready(function () {
 			$('#addCustomerModal').modal('hide');
 
 		});
+
+	});
+
+	$('#embro-production').on('click', '.update-machine-trigger', function (event) {
+
+		const selectedRow = $(this).parents('tr');
+		const machineNum = selectedRow.data('machine');
+		const laborPrice = selectedRow.data('labor-price');
+		const productionId = selectedRow.data('production-id');
+
+		$('#editMachineModal #production-id').val(productionId);
+		$('#editMachineModal #machine-number').val(machineNum);
+		$('#editMachineModal #machine-price').val(laborPrice);
+
+	});
+
+	$('#embro-production').on('click', '.del-machine-trigger', function (event) {
+
+		const selectedRow = $(this).parents('tr');
+		const productionId = selectedRow.data('production-id');
+
+		$('#deleteMachineModal #modal-production-id').val(productionId);
 
 	});
 

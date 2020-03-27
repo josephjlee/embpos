@@ -295,6 +295,55 @@
 
 			<?php if ($this->uri->segment(2) == 'sunting') : ?>
 
+				<!-- Assigned Machine -->
+				<div class="card shadow mb-3">
+					<a href="#embro-production" class="d-block card-header py-3" data-toggle="collapse" role="button">
+						<h6 class="m-0 font-weight-bold text-primary">Pengerjaan Bordir</h6>
+					</a>
+					<div class="collapse show" id="embro-production">
+						<div class="card-body py-0">
+
+							<table class="table">
+								<tbody>
+
+									<?php $embro_production = $this->produksi_model->get_assigned_machine_by_order_id($order['order_id']); ?>
+									<?php if (!empty($embro_production)) : ?>
+
+										<?php foreach ($embro_production as $machine) : ?>
+
+											<tr data-production-id="<?= $machine['production_id']; ?>" data-machine="<?= $machine['machine']; ?>" data-labor-price="<?= $machine['labor_price']; ?>">
+												<td class="px-0">
+													<a href="<?= base_url('produksi/detail_bordir/') . $machine['production_id']; ?>" style="font-size:14px;" id="machine-info" class="mb-0">
+														<span style="color:#495057">Mesin-<?= $machine['machine']; ?></span> | Rp<?= $machine['labor_price']; ?>,00
+													</a>
+												</td>
+												<td class="px-0 align-middle text-right">
+													<a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+														<i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
+													</a>
+													<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+														<a href="" class="dropdown-item update-machine-trigger" data-toggle="modal" data-target="#editMachineModal">Sunting Detail</a>
+														<a href="" class="dropdown-item del-machine-trigger" data-toggle="modal" data-target="#deleteMachineModal">Hapus Mesin</a>
+													</div>
+												</td>
+											</tr>
+
+										<?php endforeach; ?>
+
+									<?php else : ?>
+
+										<tr>
+											<td class="px-0">Belum dibordir.</td>
+										</tr>
+
+									<?php endif; ?>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
 				<!-- Order Progress Card -->
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
@@ -472,7 +521,7 @@
 		</div>
 	</div>
 
-	<!-- Production Modal-->
+	<!-- Set Production Modal-->
 	<div class="modal fade" id="spec-modal" tabindex="-1" role="dialog" data-repeat="<?= $production['repeat'] ?? ''; ?>">
 
 		<div class="modal-dialog" role="document">
@@ -483,7 +532,7 @@
 
 				<input type="hidden" name="production[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
 
-				<input type="hidden" name="production[production_id]" id="production-id" value="<?= $production['production_id'] ?? ''; ?>">
+				<input type="hidden" name="production[production_id]" id="production-id" value="">
 
 				<div class="modal-content">
 
@@ -494,7 +543,7 @@
 						</button>
 					</div>
 
-					<div class="modal-body" data-production-id="<?= $production['production_id']; ?>" data-color-order="<?= $production['color_order']; ?>" data-file="<?= $production['file']; ?>" data-flashdisk="<?= $production['flashdisk'] ?>" data-machine="<?= $production['machine']; ?>" data-labor-price="<?= $production['labor_price']; ?>">
+					<div class="modal-body">
 
 						<div class="form-group">
 							<label for=""><small>Pengerjaan</small></label>
@@ -519,6 +568,84 @@
 
 			</form>
 
+		</div>
+	</div>
+
+	<!-- editMachineModal -->
+	<div class="modal fade" id="editMachineModal" tabindex="-1" role="dialog" data-repeat="<?= $production['repeat'] ?? ''; ?>">
+
+		<div class="modal-dialog" role="document">
+
+			<form action="<?= base_url('action/produksi_action/atur_produksi'); ?>" method="post" id="machine-form">
+
+				<input type="hidden" name="input-src" value="<?= current_url(); ?>">
+
+				<input type="hidden" name="production[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
+
+				<input type="hidden" name="production[production_id]" id="production-id" value="">
+
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">Sunting Mesin</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+
+						<div class="form-group">
+							<label for="machine-number"><small>Mesin</small></label>
+							<select name="production[machine]" id="machine-number" class="custom-select">
+								<option value="">Pilih...</option>
+								<option value="1">Mesin-1</option>
+								<option value="2">Mesin-2</option>
+								<option value="3">Mesin-3</option>
+								<option value="4">Mesin-4</option>
+								<option value="5">Mesin-5</option>
+								<option value="6">Mesin-6</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="machine-price"><small>Harga</small></label>
+							<input type="number" name="production[labor_price]" id="machine-price" class="form-control">
+						</div>
+
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn btn-primary" id="set-spec-btn">Atur</button>
+					</div>
+
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+
+	<!-- deleteMachineModal -->
+	<div class="modal fade" id="deleteMachineModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<form action="<?= base_url('action/produksi_action/hapus_produksi'); ?>" method="post" id="del-machine-form">
+				<input type="hidden" name="production[production_id]" id="modal-production-id" value="">
+				<input type="hidden" name="requester" value="<?= current_url(); ?>">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Yakin akan menghapus?</h5>
+						<button class="close" type="button" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Klik "Hapus" jika Anda yakin untuk menghapus produksi di mesin ini.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn btn-primary" id="del-order-btn">Hapus</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 

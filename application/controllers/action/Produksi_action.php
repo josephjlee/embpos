@@ -146,6 +146,15 @@ class Produksi_action extends CI_Controller
         redirect($this->input->post('input-src'));
     }
 
+    public function hapus_produksi()
+    {
+        $production = $this->input->post('production');
+
+        $this->db->delete('production', ['production_id' => $production['production_id']]);
+
+        redirect($this->input->post('requester'));
+    }
+
     /*
     | -------------------------------------------------------------------
     | UTILITY-TYPE METHOD

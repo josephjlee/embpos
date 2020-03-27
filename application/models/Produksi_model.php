@@ -514,4 +514,19 @@ class Produksi_model extends CI_Model
 
         return $query->result_array();
     }
+
+    public function get_assigned_machine_by_order_id($order_id)
+    {
+        $query = $this->db->query("SELECT 
+                    production.production_id,
+                    production.labor_price,
+                    production.machine
+                FROM
+                    production
+                WHERE 
+                    order_id = {$order_id}
+        ");
+
+        return $query->result_array();
+    }
 }
