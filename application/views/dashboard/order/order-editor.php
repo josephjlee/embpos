@@ -314,7 +314,7 @@
 											<tr data-production-id="<?= $machine['production_id']; ?>" data-machine="<?= $machine['machine']; ?>" data-labor-price="<?= $machine['labor_price']; ?>">
 												<td class="px-0">
 													<a href="<?= base_url('produksi/detail_bordir/') . $machine['production_id']; ?>" style="font-size:14px;" id="machine-info" class="mb-0">
-														<span style="color:#495057">Mesin-<?= $machine['machine']; ?></span> | Rp<?= $machine['labor_price']; ?>,00
+														<span style="color:#495057">Mesin-<?= $machine['machine']; ?></span> | Rp<?= moneyStrDot($machine['labor_price']); ?>,00
 													</a>
 												</td>
 												<td class="px-0 align-middle text-right">
