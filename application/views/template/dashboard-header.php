@@ -26,6 +26,10 @@
   <link rel="stylesheet" href="<?= base_url('vendors/flatpickr/dist/flatpickr.min.css') ?>">
   <script src="<?= base_url('vendors/flatpickr/dist/flatpickr.js') ?>"></script>
 
+  <link rel="stylesheet" href="<?= base_url('vendors/datatables/buttons.dataTables.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('vendors/datatables/buttons.bootstrap4.min.css') ?>">
+
+
   <!-- Custom style -->
   <link href="<?= base_url('assets/'); ?>css/custom-style.css" rel="stylesheet">
 

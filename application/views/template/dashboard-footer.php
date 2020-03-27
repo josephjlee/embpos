@@ -55,6 +55,14 @@ $page_script = "{$this->uri->segment(1)}-{$this->uri->segment(2)}.js";
 <?php foreach ($libraries as $library) : ?>
   <script src="<?= base_url($library['src']) ?>"></script>
 <?php endforeach; ?>
+<script src="<?= base_url('vendors/datatables/dataTables.buttons.min.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/buttons.bootstrap4.min.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/buttons.flash.min.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/jszip.min.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/pdfmake.min.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/vfs_fonts.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/buttons.html5.min.js') ?>"></script>
+<script src="<?= base_url('vendors/datatables/buttons.print.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/tangan-kanan.js') ?>"></script>
 
 <!-- Template JS -->

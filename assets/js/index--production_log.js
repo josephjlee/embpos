@@ -90,6 +90,36 @@ $(document).ready(function () {
 		"order": [
 			[4, "desc"]
 		],
+		"dom": 'Bfrtip',
+		"buttons": {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					text: '<i class="far fa-clone"></i>',
+					titleAttr: 'Copy'
+				},
+				{
+					extend: 'excelHtml5',
+					text: '<i class="fa fa-file-excel"></i>',
+					titleAttr: 'Excel'
+				},
+				{
+					extend: 'pdfHtml5',
+					text: '<i class="fa fa-file-pdf"></i>',
+					titleAttr: 'PDF'
+				},
+				{
+					extend: 'print',
+					text: '<i class="fas fa-print"></i>',
+					titleAttr: 'CSV'
+				}
+			],
+			dom: {
+				button: {
+					className: 'btn'
+				}
+			}
+		},
 		"footerCallback": function (row, data, start, end, display) {
 			var api = this.api(), data;
 
