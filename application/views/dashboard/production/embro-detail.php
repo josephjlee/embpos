@@ -285,37 +285,33 @@
 
           <div class="modal-body">
 
-            <div class="form-row">
+            <div class="form-group">
 
-              <div class="form-group col-lg">
+              <label for="modal-operator"><small>Operator</small></label>
 
-                <label for="modal-operator"><small>Operator</small></label>
+              <?php $operators = $this->produksi_model->get_employee_name_by_job_id(2); ?>
 
-                <?php $operators = $this->produksi_model->get_employee_name_by_job_id(2); ?>
+              <select name="output[employee_id]" id="modal-operator">
 
-                <select name="output[employee_id]" id="modal-operator">
+                <option value="">Pilih operator</option>
 
-                  <option value="">Pilih operator</option>
+                <?php foreach ($operators as $operator) : ?>
+                  <option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
+                <?php endforeach; ?>
 
-                  <?php foreach ($operators as $operator) : ?>
-                    <option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
-                  <?php endforeach; ?>
+              </select>
 
-                </select>
+            </div>
 
-              </div>
+            <div class="form-group">
 
-              <div class="form-group col-lg">
+              <label for="modal-shift"><small>Shift</small></label>
 
-                <label for="modal-shift"><small>Shift</small></label>
-
-                <select name="output[shift]" id="modal-shift" class="custom-select">
-                  <option value="">Pilih...</option>
-                  <option value="1">Siang</option>
-                  <option value="2">Malam</option>
-                </select>
-
-              </div>
+              <select name="output[shift]" id="modal-shift" class="custom-select">
+                <option value="">Pilih...</option>
+                <option value="1">Siang</option>
+                <option value="2">Malam</option>
+              </select>
 
             </div>
 
