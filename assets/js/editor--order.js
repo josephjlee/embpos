@@ -270,9 +270,7 @@ $(document).ready(function () {
 		const outputMachine = $(this).parents('tr').data('output-machine');
 		const outputStarted = $(this).parents('tr').data('output-started');
 		const outputFinished = $(this).parents('tr').data('output-finished');
-		// const outputIsHelper = $(this).parents('tr').data('output-helper');
-
-		console.log(outputFinished);
+		const outputIsHelper = $(this).parents('tr').data('output-helper');
 
 		outputModal.find('.modal-title').html('Sunting Output');
 		outputModal.find('#output-embro-id').val(outputId);
@@ -282,9 +280,10 @@ $(document).ready(function () {
 		outputModal.find('#modal-finished').val(outputFinished);
 		outputModal.find('#modal-output-qty').val(outputQty);
 		outputModal.find('#modal-operator').val(outputOperator);
-		// outputModal.find('#modal-is-helper').val(outputIsHelper);
 
-		console.log(outputModal.find('#modal-finished'));
+		if (outputIsHelper == 1) {
+			outputModal.find('#modal-is-helper').prop('checked', true);
+		}
 
 	})
 
