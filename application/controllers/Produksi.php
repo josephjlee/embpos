@@ -116,9 +116,6 @@ class Produksi extends CI_Controller
 
         $data['view_script'] = 'index--production_log.js';
 
-        // pretty_print($this->produksi_model->get_embro_output_log());
-        // exit;
-
         $data['content'] = $this->load->view('dashboard/production/production-index', $data, TRUE);
 
         $this->load->view('layout/dashboard', $data);

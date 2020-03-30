@@ -489,6 +489,7 @@ class Produksi_model extends CI_Model
         $query = $this->db->query("SELECT 
                     `order`.description,
                     `order`.labor_price,
+                    `order`.order_id,
                     employee.nick_name AS operator,
                     output_embro.quantity,
                     output_embro.machine,
@@ -498,9 +499,9 @@ class Produksi_model extends CI_Model
                     output_embro.output_embro_id,
                     (output_embro.quantity * `order`.labor_price) AS value
                 FROM
-                    embryo.output_embro
+                    output_embro
                         JOIN
-                    `order` ON `order`.order_id = `order`.order_id
+                    `order` ON output_embro.order_id = `order`.order_id
                         JOIN
                     employee ON output_embro.employee_id = employee.employee_id
         ");
