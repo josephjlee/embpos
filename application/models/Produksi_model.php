@@ -13,18 +13,16 @@ class Produksi_model extends CI_Model
             order.material,
             order.color,
             order.required_date as required,
-            production.production_id,
-            production.repeat,
-            production.production_status_id,
+            order.design_repeat,
+            order.production_status_id,
             production_status.name as status
         ');
-        $this->db->from('production');
-        $this->db->join('order', 'production.order_id = order.order_id');
-        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
+        $this->db->from('order');
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id');
 
         $this->db->where('order.image<>', '');
-        $this->db->where('production.production_status_id<=', 3);
-        $this->db->where('production.production_status_id!=', 4);
+        $this->db->where('order.production_status_id<=', 3);
+        $this->db->where('order.production_status_id!=', 4);
 
         return $this->db->get()->result_array();
     }
@@ -70,17 +68,15 @@ class Produksi_model extends CI_Model
             order.number AS order_number,
             order.description AS title,
             order.quantity,
-            production.production_id,
             production_status.production_status_id,
             production_status.name AS status
         ');
         $this->db->from('order');
         $this->db->join('item', 'order.item_id = item.item_id');
         $this->db->join('position', 'order.position_id = position.position_id');
-        $this->db->join('production', 'order.order_id = production.order_id');
-        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
-        $this->db->where('production.production_status_id>', 5);
-        $this->db->where('production.production_status_id<', 9);
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id');
+        $this->db->where('order.production_status_id>', 5);
+        $this->db->where('order.production_status_id<', 9);
 
         return $this->db->get()->result_array();
     }
@@ -149,8 +145,7 @@ class Produksi_model extends CI_Model
             SUM(output_embro.quantity) AS quantity
         ');
         $this->db->from('output_embro');
-        $this->db->join('production', 'output_embro.production_id = production.production_id');
-        $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->join('order', 'output_embro.order_id = order.order_id');
         $this->db->where('order.order_id', $order_id);
         $this->db->where('is_helper', 0);
         $this->db->group_by('order.order_id');
@@ -166,8 +161,7 @@ class Produksi_model extends CI_Model
             SUM(output_finishing.quantity) AS quantity
         ');
         $this->db->from('output_finishing');
-        $this->db->join('production', 'output_finishing.production_id = production.production_id');
-        $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->join('order', 'output_finishing.order_id = order.order_id');
         $this->db->where('order.order_id', $order_id);
         $this->db->group_by('order.order_id');
 
@@ -278,21 +272,19 @@ class Produksi_model extends CI_Model
             order.quantity,
             order.required_date as required,
             order.note,
-            production.production_id,
-            production.repeat,
-            production.color_order,
-            production.production_status_id,
+            order.design_repeat,
+            order.color_order,
+            order.production_status_id,
+            order.machine_number as machine,
+            order.flashdisk,
+            order.machine_file as file,
+            order.labor_price,
             production_status.name as status,
-            production.machine,
-            production.flashdisk,
-            production.file,
-            production.labor_price,
             item.name as item
         ');
-        $this->db->from('production');
-        $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->from('order');
         $this->db->join('item', 'order.item_id = item.item_id');
-        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id');
 
         return $this->db->get_compiled_select();
     }
@@ -496,6 +488,7 @@ class Produksi_model extends CI_Model
     {
         $query = $this->db->query("SELECT 
                     `order`.description,
+                    `order`.labor_price,
                     employee.nick_name AS operator,
                     output_embro.quantity,
                     output_embro.machine,
@@ -503,14 +496,11 @@ class Produksi_model extends CI_Model
                     output_embro.started,
                     output_embro.finished,
                     output_embro.output_embro_id,
-                    production.labor_price,
-                    (output_embro.quantity * production.labor_price) AS value
+                    (output_embro.quantity * `order`.labor_price) AS value
                 FROM
                     embryo.output_embro
                         JOIN
-                    production ON output_embro.production_id = production.production_id
-                        JOIN
-                    `order` ON production.order_id = `order`.order_id
+                    `order` ON `order`.order_id = `order`.order_id
                         JOIN
                     employee ON output_embro.employee_id = employee.employee_id
         ");

@@ -74,7 +74,9 @@ class Produksi_action extends CI_Controller
     public function rekam_output_operator()
     {
         // Grab output data from form submission
+        $order = $this->input->post('order');
         $output = $this->input->post('output');
+        $output['order_id'] = $order['order_id'];
 
         if (empty($output['is_helper'])) {
             $output['is_helper'] = 0;
@@ -92,14 +94,7 @@ class Produksi_action extends CI_Controller
         $order_quantity = $this->input->post('order-qty');
 
         // Check total output after update. If equal or greater than order quantity then update production_status_id to 6
-        $production['production_id'] = $output['production_id'];
-        $production['production_status_id'] = $current_output + $output['quantity'] >= $order_quantity ? 6 : 5;
-
-        $this->db->update('production', $production, ['production_id' => $production['production_id']]);
-
-        // Update the production_status_id for order table as well
-        $order = $this->input->post('order');
-        $order['production_status_id'] = $production['production_status_id'];
+        $order['production_status_id'] = $current_output + $output['quantity'] >= $order_quantity ? 6 : 5;
         $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         // Redirect to its original page
