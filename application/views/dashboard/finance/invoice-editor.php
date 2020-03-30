@@ -428,9 +428,11 @@
                           <td class="px-0">
                             <div>
                               <small id="payment-date-display" style="color:#ec8615"><?= $order['production_status']; ?></small>
-                              <a href="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>" style="font-size:14px;" id="payment-name-display">
-                                <span style="color:#495057"><?= date('d-m-Y', strtotime($order['required_date'])); ?></span> | <?= $order['description']; ?>
-                              </a>
+                              <p>
+                                <a href="<?= base_url('pesanan/sunting/') . $order['order_id']; ?>" style="font-size:14px;" id="payment-name-display">
+                                  <span style="color:#495057"><?= date('d-m-Y', strtotime($order['required_date'])); ?></span> | <?= $order['description']; ?>
+                                </a>
+                              </p>
                             </div>
                           </td>
 
