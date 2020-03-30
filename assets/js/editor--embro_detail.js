@@ -40,6 +40,12 @@ $('document').ready(function () {
     outputModal.find('#modal-output-qty').val(outputQty);
 
     selectize.setValue(outputOperator, false);
-  })
+  });
+
+  $('#output-history').on('click', '.del-output-trigger', function (event) {
+    const outputId = $(this).parents('tr').data('output-id');
+    console.log(outputId);
+    $('#del-output-modal #output-id').val(outputId);
+  });
 
 })

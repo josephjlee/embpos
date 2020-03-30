@@ -290,6 +290,12 @@ $(document).ready(function () {
 
 	});
 
+	$('#output-history').on('click', '.del-output-trigger', function (event) {
+		const outputId = $(this).parents('tr').data('output-id');
+		console.log(outputId);
+		$('#del-output-modal #output-id').val(outputId);
+	});
+
 	// Output money format on keyup
 	$('#quantity').keyup(numberFormat);
 	$('#price').keyup(numberFormat);

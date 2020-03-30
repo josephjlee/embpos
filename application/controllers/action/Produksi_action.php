@@ -151,6 +151,13 @@ class Produksi_action extends CI_Controller
         redirect($this->input->post('requester'));
     }
 
+    public function hapus_output_embro()
+    {
+        $output = $this->input->post('output');
+        $this->db->delete('output_embro', ['output_embro_id' => $output['output_embro_id']]);
+        redirect($this->input->post('referrer'));
+    }
+
     /*
     | -------------------------------------------------------------------
     | UTILITY-TYPE METHOD
