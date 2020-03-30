@@ -69,16 +69,12 @@ $(document).ready(function () {
 
 						<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-							<a class="dropdown-item" href="${window.location.origin}/pesanan/sunting/${cellData}">
-								Sunting Pesanan
+							<a class="dropdown-item" href="${window.location.origin}/produksi/detail_bordir/${rowData.order_id}">
+								Lihat Tugas
 							</a>
 
-							<a class="dropdown-item status-mark-trigger" href="#" data-toggle="modal" data-target="#mark-as-modal" data-status-id="">Tandai Sebagai</a>
-
-							<a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#del-order-modal">Hapus Pesanan</a>
-
-							<a class="dropdown-item" href="${window.location.origin}/keuangan/sunting_invoice/${rowData.invoice_number}">
-								Lihat Invoice
+							<a class="dropdown-item del-modal-trigger" href="#" data-toggle="modal" data-target="#del-output-modal" data-output-id="${rowData.output_embro_id}">
+								Hapus Output
 							</a>
 
 						</div>`;
@@ -166,6 +162,11 @@ $(document).ready(function () {
 	// setInterval(function () {
 	// 	table.ajax.reload();
 	// }, 15000);
+
+	table.on('click', '.del-modal-trigger', function (event) {
+		const outputId = $(this).data('output-id');
+		$('#del-output-modal #output-id').val(outputId);
+	});
 
 	// $('#filter-select').change(function (e) {
 	// 	let filter = $(this).val();
