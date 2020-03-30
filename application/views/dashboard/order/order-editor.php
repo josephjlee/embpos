@@ -328,7 +328,7 @@
 													</small>
 													<p class="my-0">
 														<a href="<?= base_url('produksi/detail_bordir/') . $order['order_id']; ?>" style="font-size:14px;" id="output-name-display">
-															<span style="color:#495057"><?= date('d-m-Y', strtotime($output['finished'])); ?> | <?= date('H:i', strtotime($output['finished'])); ?> | <?= $output['machine'] ?> |</span> <?= $output['operator']; ?>
+															<span style="color:#495057"><?= date('d-m-Y', strtotime($output['finished'])); ?> | <?= date('H:i', strtotime($output['finished'])); ?> | <?= $output['machine'] ?> |</span> <?= $output['operator']; ?> <?= $output['is_helper'] == 1 ? '(asisten)' : ''; ?>
 														</a>
 													</p>
 												</td>

@@ -76,6 +76,10 @@ class Produksi_action extends CI_Controller
         // Grab output data from form submission
         $output = $this->input->post('output');
 
+        if (empty($output['is_helper'])) {
+            $output['is_helper'] = 0;
+        }
+
         // Record/update operator's output
         if (!empty($output['output_embro_id'])) {
             $this->db->update('output_embro', $output, ['output_embro_id' => $output['output_embro_id']]);
