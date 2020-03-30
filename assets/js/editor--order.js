@@ -284,8 +284,11 @@ $(document).ready(function () {
 		if (outputIsHelper == 1) {
 			outputModal.find('#modal-is-helper').prop('checked', true);
 		}
+		else {
+			outputModal.find('#modal-is-helper').prop('checked', false);
+		}
 
-	})
+	});
 
 	// Output money format on keyup
 	$('#quantity').keyup(numberFormat);
