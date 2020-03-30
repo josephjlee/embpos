@@ -37,22 +37,21 @@ class Produksi_model extends CI_Model
             order.number as order_number,
             order.description as title,
             order.required_date as required,
-            production.production_id,
-            production.color_order,
-            production.machine,
-            production.flashdisk,
-            production.file,
-            production.labor_price,
-            production.production_status_id,
+            order.color_order,
+            order.machine_number as machine,
+            order.flashdisk,
+            order.machine_file,
+            order.labor_price,
+            order.production_status_id,
             production_status.name as status
         ');
-        $this->db->from('production');
-        $this->db->join('order', 'production.order_id = order.order_id');
-        $this->db->join('production_status', 'production.production_status_id = production_status.production_status_id');
+        $this->db->from('order');
+        // $this->db->join('order', 'production.order_id = order.order_id');
+        $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id');
         // $this->db->where('file!=', null);
         // $this->db->where('color_order<>', '');
         // $this->db->where('production.production_status_id>', 2);
-        $this->db->where('production.production_status_id<', 6);
+        $this->db->where('order.production_status_id<', 6);
 
         return $this->db->get()->result_array();
     }
@@ -106,20 +105,23 @@ class Produksi_model extends CI_Model
         return $design_output;
     }
 
-    public function get_embro_output_by_production_id($production_id)
+    public function get_embro_output_by_order_id($order_id)
     {
         $this->db->select('
             output_embro.output_embro_id AS output_id,
+            output_embro.machine,
             output_embro.quantity,
             output_embro.shift,
             output_embro.started,
             output_embro.finished,
+            output_embro.is_helper,
             employee.nick_name AS operator,
             employee.employee_id
         ');
         $this->db->from('output_embro');
         $this->db->join('employee', 'output_embro.employee_id = employee.employee_id');
-        $this->db->where('output_embro.production_id', $production_id);
+        $this->db->where('output_embro.order_id', $order_id);
+        $this->db->order_by('output_embro.finished', 'desc');
 
         return $this->db->get()->result_array();
     }
@@ -150,6 +152,7 @@ class Produksi_model extends CI_Model
         $this->db->join('production', 'output_embro.production_id = production.production_id');
         $this->db->join('order', 'production.order_id = order.order_id');
         $this->db->where('order.order_id', $order_id);
+        $this->db->where('is_helper', 0);
         $this->db->group_by('order.order_id');
 
         return $this->db->get()->row_array();
@@ -518,15 +521,52 @@ class Produksi_model extends CI_Model
     public function get_assigned_machine_by_order_id($order_id)
     {
         $query = $this->db->query("SELECT 
-                    production.production_id,
-                    production.labor_price,
-                    production.machine
+                    `order`.machine_number as number
                 FROM
-                    production
+                    `order`
                 WHERE 
                     order_id = {$order_id}
         ");
 
-        return $query->result_array();
+        $machine_col =  $query->row_array();
+
+        if (empty($machine_col['number'])) {
+            return [];
+        }
+        return explode(",", $machine_col['number']);
+    }
+
+    public function get_order_production_detail($order_id)
+    {
+        $query = $this->db->query("SELECT
+                    order.number as order_number,
+                    order.order_id,
+                    order.image as artwork,
+                    order.description as title,
+                    order.dimension,
+                    order.material,
+                    order.color,
+                    order.quantity,
+                    order.required_date as required,
+                    order.note,
+                    order.design_repeat,
+                    order.color_order,
+                    order.flashdisk,
+                    order.machine_file as file,
+                    order.machine_number as machine,
+                    order.labor_price,
+                    item.name as item,
+                    production_status.name as status
+                FROM 
+                    `order`
+                        JOIN 
+                    item ON order.item_id = item.item_id
+                        JOIN 
+                    production_status ON `order`.production_status_id = production_status.production_status_id
+                WHERE 
+                    order.order_id = {$order_id}
+
+        ");
+        return $query->row_array();
     }
 }

@@ -44,7 +44,7 @@ class Pesanan extends CI_Controller
 
         $data['is_invoiced'] = $this->pesanan_model->check_invoice($order_id);
 
-        $data['output'] = $this->produksi_model->get_production_output_by_order_id($order_id);
+        $data['production_output'] = $this->produksi_model->get_production_output_by_order_id($order_id);
 
         $data['production_status'] = $this->produksi_model->check_production_status_by_order_id($order_id);
 
@@ -170,5 +170,17 @@ class Pesanan extends CI_Controller
         }
 
         return $this->upload->data()['file_name'];
+    }
+
+    public function update_machine_labor()
+    {
+        $data = $this->db->query("SELECT 
+                    order_id,
+                    GROUP_CONCAT(machine) AS machine_number,
+                    ANY_VALUE(labor_price) AS labor_price
+                FROM
+                    embryo.production
+                GROUP BY order_id")->result_array();
+        $this->db->update_batch('order', $data, 'order_id');
     }
 }

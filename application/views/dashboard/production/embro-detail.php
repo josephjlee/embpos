@@ -4,7 +4,6 @@
   <form action="<?= base_url('action/produksi_action/perbarui_detail') ?>" method="post">
 
     <input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
-    <input type="hidden" name="production[production_id]" value="<?= $embro_detail['production_id']; ?>">
 
     <!-- Page Heading -->
     <div class="row mb-2">
@@ -142,8 +141,6 @@
 
             <div class="card-body d-flex align-items-center">
 
-              <button type="submit" id="save-data-btn" class="mr-2 action-btn"><i class="fas fa-save fa-2x"></i></button>
-
               <a href="#" data-toggle="modal" data-target="#output-modal" class="action-btn" id="new-output-trigger"><i class="fas fa-calculator fa-2x"></i></a>
 
             </div>
@@ -268,7 +265,6 @@
 
         <input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
         <input type="hidden" name="output[output_embro_id]" value="" id="output-embro-id">
-        <input type="hidden" name="output[production_id]" value="<?= $embro_detail['production_id']; ?>">
         <input type="hidden" name="output[machine]" value="<?= $embro_detail['machine']; ?>">
         <input type="hidden" name="current-output" value="<?= $total_output; ?>">
         <input type="hidden" name="order-qty" value="<?= $embro_detail['quantity']; ?>">
@@ -303,25 +299,52 @@
 
             </div>
 
-            <div class="form-group">
+            <div class="form-row">
+              <div class="form-group col">
 
-              <label for="modal-shift"><small>Shift</small></label>
+                <label for="modal-machine"><small>Mesin</small></label>
 
-              <select name="output[shift]" id="modal-shift" class="custom-select">
-                <option value="">Pilih...</option>
-                <option value="1">Siang</option>
-                <option value="2">Malam</option>
-              </select>
+                <?php $machines = $this->produksi_model->get_assigned_machine_by_order_id($embro_detail['order_id']); ?>
 
+                <select name="output[machine]" id="modal-machine" class="custom-select">
+                  <option value="">Pilih...</option>
+                  <?php if (count($machines) == 0) : ?>
+                    <option value="1">Mesin-1</option>
+                    <option value="2">Mesin-2</option>
+                    <option value="3">Mesin-3</option>
+                    <option value="4">Mesin-4</option>
+                    <option value="5">Mesin-5</option>
+                    <option value="6">Mesin-6</option>
+                  <?php elseif (count($machines) == 1) : ?>
+                    <option value="<?= $machines[0]; ?>" selected>Mesin-<?= $machines[0]; ?></option>
+                  <?php else : ?>
+                    <?php for ($i = 0; $i < count($machines); $i++) : ?>
+                      <option value="<?= $machines[$i]; ?>">Mesin-<?= $machines[$i]; ?></option>
+                    <?php endfor; ?>
+                  <?php endif; ?>
+                </select>
+
+              </div>
+              <div class="form-group col">
+
+                <label for="modal-shift"><small>Shift</small></label>
+
+                <select name="output[shift]" id="modal-shift" class="custom-select">
+                  <option value="">Pilih...</option>
+                  <option value="1" selected>Siang</option>
+                  <option value="2">Malam</option>
+                </select>
+
+              </div>
             </div>
 
             <div class="form-row">
               <div class="form-group col">
-                <label for="started">Mulai</label>
+                <label for="started"><small>Mulai</small></label>
                 <input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
               </div>
               <div class="form-group col">
-                <label for="started">Sampai</label>
+                <label for="started"><small>Sampai</small></label>
                 <input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
               </div>
             </div>

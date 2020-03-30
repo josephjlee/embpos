@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+	// Initialize Flatpickr
+	flatpickr(".date-time-picker", {
+		enableTime: true,
+		dateFormat: "Y-m-d H:i",
+	});
+
 	let customerForm = $('#customer-form');
 	let saveCustBtn = $('#save-customer');
 
@@ -42,37 +48,37 @@ $(document).ready(function () {
 			<div class="form-row">
 				<div class="form-group col">
 					<div class="custom-control custom-checkbox col">
-						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-1" value="1">
+						<input type="checkbox" name="production[machine_number][]" class="custom-control-input" id="machine-1" value="1">
 						<label class="custom-control-label" for="machine-1">1</label>
 					</div>
 				</div>
 				<div class="form-group col">
 					<div class="custom-control custom-checkbox col">
-						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-2" value="2">
+						<input type="checkbox" name="production[machine_number][]" class="custom-control-input" id="machine-2" value="2">
 						<label class="custom-control-label" for="machine-2">2</label>
 					</div>
 				</div>
 				<div class="form-group col">
 					<div class="custom-control custom-checkbox col">
-						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-3" value="3">
+						<input type="checkbox" name="production[machine_number][]" class="custom-control-input" id="machine-3" value="3">
 						<label class="custom-control-label" for="machine-3">3</label>
 					</div>
 				</div>
 				<div class="form-group col">
 					<div class="custom-control custom-checkbox col">
-						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-4" value="4">
+						<input type="checkbox" name="production[machine_number][]" class="custom-control-input" id="machine-4" value="4">
 						<label class="custom-control-label" for="machine-4">4</label>
 					</div>
 				</div>
 				<div class="form-group col">
 					<div class="custom-control custom-checkbox col">
-						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-5" value="5">
+						<input type="checkbox" name="production[machine_number][]" class="custom-control-input" id="machine-5" value="5">
 						<label class="custom-control-label" for="machine-5">5</label>
 					</div>
 				</div>
 				<div class="form-group col">
 					<div class="custom-control custom-checkbox col">
-						<input type="checkbox" name="production[machine][]" class="custom-control-input" id="machine-6" value="6">
+						<input type="checkbox" name="production[machine_number][]" class="custom-control-input" id="machine-6" value="6">
 						<label class="custom-control-label" for="machine-6">6</label>
 					</div>
 				</div>
@@ -245,6 +251,42 @@ $(document).ready(function () {
 		$('#deleteMachineModal #modal-production-id').val(productionId);
 
 	});
+
+	const outputModal = $('#output-modal');
+
+	$('#new-output-trigger').click(function (event) {
+		// Reset previous value
+		$('#output-form')[0].reset();
+
+		// Set Modal Title
+		outputModal.find('.modal-title').html('Catat Output');
+	});
+
+	$('#output-history').on('click', '.update-output-trigger', function (event) {
+		const outputId = $(this).parents('tr').data('output-id');
+		const outputQty = $(this).parents('tr').data('output-quantity');
+		const outputOperator = $(this).parents('tr').data('output-operator');
+		const outputShift = $(this).parents('tr').data('output-shift');
+		const outputMachine = $(this).parents('tr').data('output-machine');
+		const outputStarted = $(this).parents('tr').data('output-started');
+		const outputFinished = $(this).parents('tr').data('output-finished');
+		// const outputIsHelper = $(this).parents('tr').data('output-helper');
+
+		console.log(outputFinished);
+
+		outputModal.find('.modal-title').html('Sunting Output');
+		outputModal.find('#output-embro-id').val(outputId);
+		outputModal.find('#modal-shift').val(outputShift);
+		outputModal.find('#modal-machine').val(outputMachine);
+		outputModal.find('#modal-started').val(outputStarted);
+		outputModal.find('#modal-finished').val(outputFinished);
+		outputModal.find('#modal-output-qty').val(outputQty);
+		outputModal.find('#modal-operator').val(outputOperator);
+		// outputModal.find('#modal-is-helper').val(outputIsHelper);
+
+		console.log(outputModal.find('#modal-finished'));
+
+	})
 
 	// Output money format on keyup
 	$('#quantity').keyup(numberFormat);

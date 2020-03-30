@@ -9,7 +9,7 @@ $('document').ready(function () {
   // Enable tooltip
   $('#embro-progress-bar').tooltip();
 
-  // Otherwise, selectors are also supported
+  // Initialize Flatpickr
   flatpickr(".date-time-picker", {
     enableTime: true,
     dateFormat: "Y-m-d H:i",

@@ -61,13 +61,16 @@ class Produksi extends CI_Controller
         $this->load->view('layout/dashboard', $data);
     }
 
-    public function detail_bordir($production_id)
+    public function detail_bordir($order_id)
     {
-        $data['title'] = "Pesanan Bordir: BRD-{$production_id}";
+        $data['title'] = "Pesanan Bordir: BRD-{$order_id}";
 
-        $data['embro_detail'] = $this->produksi_model->get_production_detail_by_id($production_id);
+        $data['embro_detail'] = $this->produksi_model->get_order_production_detail($order_id);
 
-        $data['output_records'] = $this->produksi_model->get_embro_output_by_production_id($production_id);
+
+        $data['output_records'] = $this->produksi_model->get_embro_output_by_order_id($order_id);
+        // pretty_print($data['output_records']);
+        // exit;
 
         $data['view_script'] = 'editor--embro_detail.js';
 
@@ -149,4 +152,19 @@ class Produksi extends CI_Controller
 
         return $period;
     }
+
+    // public function production_id_to_order_id()
+    // {
+    //     $productions = $this->db->query("SELECT 
+    //                         output_embro.output_embro_id, 
+    //                         output_embro.production_id,
+    //                         production.order_id
+    //                     FROM
+    //                         output_embro
+    //                     JOIN
+    //                         production ON output_embro.production_id = production.production_id
+    //     ")->result_array();
+
+    //     $this->db->update_batch('output_embro', $productions, 'output_embro_id');
+    // }
 }

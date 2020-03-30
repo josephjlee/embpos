@@ -255,6 +255,8 @@
 
 						<a href="#" data-toggle="modal" data-target="#spec-modal" class="action-btn"><i class="fas fa-sliders-h fa-2x"></i></a>
 
+						<a href="#" data-toggle="modal" data-target="#output-modal" class="action-btn" id="new-output-trigger"><i class="fas fa-calculator fa-2x"></i></a>
+
 						<a href="#" data-toggle="modal" data-target="#del-order-modal" class="action-btn"><i class="fas fa-trash-alt fa-2x"></i></a>
 
 					</div>
@@ -295,72 +297,94 @@
 
 			<?php if ($this->uri->segment(2) == 'sunting') : ?>
 
-				<!-- Assigned Machine -->
+				<!-- Output History Card -->
 				<div class="card shadow mb-3">
-					<a href="#embro-production" class="d-block card-header py-3" data-toggle="collapse" role="button">
-						<h6 class="m-0 font-weight-bold text-primary">Pengerjaan Bordir</h6>
+
+					<a href="#output-history" class="d-block card-header py-3" data-toggle="collapse" role="button">
+						<h6 class="m-0 font-weight-bold text-primary">Riwayat Bordir</h6>
 					</a>
-					<div class="collapse show" id="embro-production">
+
+					<div class="collapse show" id="output-history">
+
 						<div class="card-body py-0">
 
 							<table class="table">
+
 								<tbody>
 
-									<?php $embro_production = $this->produksi_model->get_assigned_machine_by_order_id($order['order_id']); ?>
-									<?php if (!empty($embro_production)) : ?>
+									<?php $total_output = 0; ?>
 
-										<?php foreach ($embro_production as $machine) : ?>
+									<?php $output_records = $this->produksi_model->get_embro_output_by_order_id($order['order_id']); ?>
 
-											<tr data-production-id="<?= $machine['production_id']; ?>" data-machine="<?= $machine['machine']; ?>" data-labor-price="<?= $machine['labor_price']; ?>">
+									<?php if (!empty($output_records)) : ?>
+
+										<?php foreach ($output_records as $output) : ?>
+
+											<tr data-output-id="<?= $output['output_id']; ?>" data-output-quantity="<?= $output['quantity']; ?>" data-output-operator="<?= $output['employee_id']; ?>" data-output-shift="<?= $output['shift']; ?>" data-output-started="<?= $output['started']; ?>" data-output-finished="<?= $output['finished']; ?>" data-output-machine="<?= $output['machine']; ?>" data-output-helper="<?= $output['is_helper']; ?>">
+
 												<td class="px-0">
-													<a href="<?= base_url('produksi/detail_bordir/') . $machine['production_id']; ?>" style="font-size:14px;" id="machine-info" class="mb-0">
-														<span style="color:#495057">Mesin-<?= $machine['machine']; ?></span> | Rp<?= moneyStrDot($machine['labor_price']); ?>,00
-													</a>
+													<small id="output-date-display" style="color:#ec8615">
+														<span id="output-amount-display"><?= moneyStr($output['quantity']); ?></span>pcs
+													</small>
+													<p class="my-0">
+														<a href="<?= base_url('produksi/detail_bordir/') . $order['order_id']; ?>" style="font-size:14px;" id="output-name-display">
+															<span style="color:#495057"><?= date('d-m-Y', strtotime($output['finished'])); ?> | <?= date('H:i', strtotime($output['finished'])); ?> | <?= $output['machine'] ?> |</span> <?= $output['operator']; ?>
+														</a>
+													</p>
 												</td>
+
 												<td class="px-0 align-middle text-right">
 													<a class="dropdown-toggle text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
 														<i class="fas fa-ellipsis-v fa-sm fa-fw" style="color:#aba9bf"></i>
 													</a>
 													<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-														<a href="" class="dropdown-item update-machine-trigger" data-toggle="modal" data-target="#editMachineModal">Sunting Detail</a>
-														<a href="" class="dropdown-item del-machine-trigger" data-toggle="modal" data-target="#deleteMachineModal">Hapus Mesin</a>
+														<div class="dropdown-header">Tindakan:</div>
+														<a href="" class="dropdown-item update-output-trigger" data-toggle="modal" data-target="#output-modal">Sunting Detail</a>
+														<a href="" class="dropdown-item del-output-trigger" data-toggle="modal" data-target="#deleteoutputModal">Hapus Pembayaran</a>
 													</div>
 												</td>
+
 											</tr>
+
+											<?php $total_output += (int) $output['quantity']; ?>
 
 										<?php endforeach; ?>
 
 									<?php else : ?>
 
 										<tr>
-											<td class="px-0">Belum dibordir.</td>
+											<td class="px-0">Belum ada output.</td>
 										</tr>
 
 									<?php endif; ?>
 
 								</tbody>
+
 							</table>
+
 						</div>
+
 					</div>
+
 				</div>
 
 				<!-- Order Progress Card -->
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary">Pengerjaan</h6>
+						<h6 class="m-0 font-weight-bold text-primary">Perkembangan</h6>
 					</div>
 					<div class="card-body">
 						<h4 class="small font-weight-bold">Desain <span class="float-right"><?= $production_status['design']; ?>%</span></h4>
 						<div class="progress mb-4">
-							<div class="progress-bar bg-danger" id="design-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['design']; ?>" <?= 'style="width:' . $production_status['design'] . '%"'; ?>></div>
+							<div class="progress-bar bg-danger" id="design-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $production_output['design']; ?>" <?= 'style="width:' . $production_status['design'] . '%"'; ?>></div>
 						</div>
 						<h4 class="small font-weight-bold">Bordir <span class="float-right"><?= $production_status['embro']; ?>%</span></h4>
 						<div class="progress mb-4">
-							<div class="progress-bar bg-warning" id="embro-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['embro']; ?>pcs" <?= 'style="width:' . $production_status['embro'] . '%"'; ?>></div>
+							<div class="progress-bar bg-warning" id="embro-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $production_output['embro']; ?>pcs" <?= 'style="width:' . $production_status['embro'] . '%"'; ?>></div>
 						</div>
 						<h4 class="small font-weight-bold">Finishing <span class="float-right"><?= $production_status['finishing']; ?>%</span></h4>
 						<div class="progress mb-4">
-							<div class="progress-bar" id="finishing-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $output['finishing']; ?>pcs" <?= 'style="width:' . $production_status['finishing'] . '%"'; ?>></div>
+							<div class="progress-bar" id="finishing-progress-bar" role="progressbar" data-toggle="tooltip" title="<?= $production_output['finishing']; ?>pcs" <?= 'style="width:' . $production_status['finishing'] . '%"'; ?>></div>
 						</div>
 					</div>
 				</div>
@@ -532,8 +556,6 @@
 
 				<input type="hidden" name="production[order_id]" id="order-id" value="<?= $order['order_id']; ?>">
 
-				<input type="hidden" name="production[production_id]" id="production-id" value="">
-
 				<div class="modal-content">
 
 					<div class="modal-header">
@@ -646,6 +668,126 @@
 					</div>
 				</div>
 			</form>
+		</div>
+	</div>
+
+	<!-- Output Modal -->
+	<div class="modal fade" id="output-modal" tabindex="-1" role="dialog">
+
+		<div class="modal-dialog" role="document">
+
+			<form action="<?= base_url('action/produksi_action/rekam_output_operator'); ?>" method="post" id="output-form">
+
+				<?php $embro_detail = $this->produksi_model->get_order_production_detail($order['order_id']); ?>
+				<input type="hidden" name="order[order_id]" id="order-id" value="<?= $embro_detail['order_id']; ?>">
+				<input type="hidden" name="output[output_embro_id]" value="" id="output-embro-id">
+				<input type="hidden" name="current-output" value="<?= $total_output; ?>">
+				<input type="hidden" name="order-qty" value="<?= $embro_detail['quantity']; ?>">
+				<input type="hidden" name="input-src" value="<?= current_url(); ?>">
+
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title"></h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+
+						<div class="form-group">
+
+							<label for="modal-operator"><small>Operator</small></label>
+
+
+							<select name="output[employee_id]" id="modal-operator" class="custom-select">
+
+								<option value="">Pilih operator</option>
+
+								<?php $operators = $this->produksi_model->get_employee_name_by_job_id(2); ?>
+
+								<?php foreach ($operators as $operator) : ?>
+									<option value="<?= $operator['employee_id']; ?>"><?= $operator['nick_name']; ?></option>
+								<?php endforeach; ?>
+
+							</select>
+
+						</div>
+
+						<div class="form-row">
+							<div class="form-group col">
+
+								<label for="modal-machine"><small>Mesin</small></label>
+
+								<?php $machines = $this->produksi_model->get_assigned_machine_by_order_id($order['order_id']); ?>
+
+								<select name="output[machine]" id="modal-machine" class="custom-select">
+									<option value="">Pilih...</option>
+									<?php if (count($machines) == 0) : ?>
+										<option value="1">Mesin-1</option>
+										<option value="2">Mesin-2</option>
+										<option value="3">Mesin-3</option>
+										<option value="4">Mesin-4</option>
+										<option value="5">Mesin-5</option>
+										<option value="6">Mesin-6</option>
+									<?php elseif (count($machines) == 1) : ?>
+										<option value="<?= $machines[0]; ?>" selected>Mesin-<?= $machines[0]; ?></option>
+									<?php else : ?>
+										<?php for ($i = 0; $i < count($machines); $i++) : ?>
+											<option value="<?= $machines[$i]; ?>">Mesin-<?= $machines[$i]; ?></option>
+										<?php endfor; ?>
+									<?php endif; ?>
+								</select>
+
+							</div>
+							<div class="form-group col">
+
+								<label for="modal-shift"><small>Shift</small></label>
+
+								<select name="output[shift]" id="modal-shift" class="custom-select">
+									<option value="">Pilih...</option>
+									<option value="1" selected>Siang</option>
+									<option value="2">Malam</option>
+								</select>
+
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group col">
+								<label for="started"><small>Mulai</small></label>
+								<input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
+							</div>
+							<div class="form-group col">
+								<label for="started"><small>Sampai</small></label>
+								<input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="modal-output-qty"><small>Jumlah (kurang <?= $embro_detail['quantity'] - $total_output; ?>pcs)</small></label>
+							<input type="number" min="1" name="output[quantity]" id="modal-output-qty" class="form-control" value="" placeholder="0">
+						</div>
+
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="modal-is-helper" name="output[is_helper]" value="1">
+								<label class="custom-control-label" for="modal-is-helper">Asisten?</label>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+						<button type="submit" class="btn btn-primary" id="save-payment-btn">Simpan data</button>
+					</div>
+
+				</div>
+
+			</form>
+
 		</div>
 	</div>
 

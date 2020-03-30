@@ -20,7 +20,7 @@ $(document).ready(function () {
 					"sort": "status.raw"
 				}
 			},
-			{ "data": "production_id" }
+			{ "data": "order_id" }
 		],
 		"columnDefs": [
 			{
@@ -51,7 +51,7 @@ $(document).ready(function () {
 
 					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
 
-						<a class="dropdown-item" href="${window.location.origin}/produksi/detail_bordir/${cellData}">
+						<a class="dropdown-item" href="${window.location.origin}/produksi/detail_bordir/${rowData.order_id}">
 							Sunting Detail
 						</a>
 

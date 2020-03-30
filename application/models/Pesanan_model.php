@@ -72,11 +72,11 @@ class Pesanan_model extends CI_Model
             order.quantity,
             order.price,
             order.production_status_id,
-            production.color_order,
-            production.machine,
-            production.flashdisk,
-            production.file,
-            production.labor_price,
+            order.color_order,
+            order.machine_number AS machine,
+            order.flashdisk,
+            order.machine_file AS file,
+            order.labor_price,
             production_status.name AS production_status
         ');
 
@@ -85,7 +85,6 @@ class Pesanan_model extends CI_Model
         $this->db->join('item', 'order.item_id = item.item_id', 'left');
         $this->db->join('position', 'order.position_id = position.position_id', 'left');
         $this->db->join('invoice', 'order.invoice_id = invoice.invoice_id', 'left');
-        $this->db->join('production', 'order.order_id = production.order_id', 'left');
         $this->db->join('production_status', 'order.production_status_id = production_status.production_status_id', 'left');
         $this->db->order_by('production_status', 'ASC');
         $this->db->order_by('order_deadline', 'ASC');

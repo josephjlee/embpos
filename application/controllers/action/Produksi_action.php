@@ -40,14 +40,11 @@ class Produksi_action extends CI_Controller
     {
         $production = $this->input->post('production');
 
-        foreach ($production['machine'] as $machine) {
-            $data = [
-                'order_id' => $production['order_id'],
-                'labor_price' => $production['labor_price'],
-                'machine' => $machine
-            ];
-            $this->db->insert('production', $data);
-        }
+        // Concatenate array of machine number into comma separated machine_number
+        $production['machine_number'] = implode(',', $production['machine_number']);
+
+        $this->db->update('order', $production, ['order_id' => $production['order_id']]);
+
         redirect($this->input->post('input-src'));
     }
 
