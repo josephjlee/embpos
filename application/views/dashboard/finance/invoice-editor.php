@@ -21,6 +21,10 @@
 
           <a href="<?= base_url('keuangan/lihat_invoice/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
 
+          <a href="" id="export-pdf" class="pb-1 action-btn"><i class="fa fa-fw fa-file-pdf fa-lg"></i></a>
+
+          <a href="" class="pb-1 action-btn"><i class="fas fa-fw fa-print fa-lg"></i></a>
+
           <div class="ml-auto">
             <span class="badge badge-primary mr-2 py-2 px-3 text-uppercase"><?= $invoice_detail['payment_status']; ?></span>
             <span class="badge badge-danger py-2 px-3 text-uppercase"><?= $invoice_detail['order_status']; ?></span>
