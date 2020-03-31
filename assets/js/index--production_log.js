@@ -159,9 +159,9 @@ $(document).ready(function () {
 		}
 	});
 
-	// setInterval(function () {
-	// 	table.ajax.reload();
-	// }, 15000);
+	setInterval(function () {
+		table.ajax.reload();
+	}, 15000);
 
 	table.on('click', '.del-modal-trigger', function (event) {
 		const outputId = $(this).data('output-id');
