@@ -14,6 +14,8 @@
 
         <div class="ml-auto">
 
+          <a href="<?= base_url('pesanan/sunting/') . $embro_detail['order_id']; ?>"><span class="badge badge-primary py-2 px-3 mr-2 text-uppercase">PSN-<?= $embro_detail['order_id']; ?></span></a>
+
           <a href="#"><span class="badge badge-danger py-2 px-3 text-uppercase"><?= $embro_detail['status']; ?></span></a>
 
         </div>
