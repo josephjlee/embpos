@@ -41,7 +41,9 @@ class Produksi_action extends CI_Controller
         $production = $this->input->post('production');
 
         // Concatenate array of machine number into comma separated machine_number
-        $production['machine_number'] = implode(',', $production['machine_number']);
+        if (isset($production['machine_number'])) {
+            $production['machine_number'] = implode(',', $production['machine_number']);
+        }
 
         // Remove thousand separator from labor_price input
         $production['labor_price'] = str_replace(',', '', $production['labor_price']);
