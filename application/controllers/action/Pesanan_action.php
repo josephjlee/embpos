@@ -51,8 +51,14 @@ class Pesanan_action extends CI_Controller
         // Use existing image or grab new uploaded image
         $order['image'] = !empty($this->image_exist($order['order_id'])) ? $this->image_exist($order['order_id']) : $this->unggah($_FILES['image']);
 
+        // Remove thousand separator from number-type input data
         $order['quantity'] = str_replace(',', '', $order['quantity']);
         $order['price'] = str_replace(',', '', $order['price']);
+
+        // Concatenate array of machine number into comma separated machine_number
+        if (isset($order['machine_number'])) {
+            $order['machine_number'] = implode(',', $order['machine_number']);
+        }
 
         // Save to the db
         $this->db->update('order', $order, ['order_id' => $order['order_id']]);

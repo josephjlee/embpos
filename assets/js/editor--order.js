@@ -18,6 +18,8 @@ $(document).ready(function () {
 	const priceVal = priceInput.val();
 	const suggestedPrice = moneyStr(moneyInt(priceVal) - 250);
 
+	const assignedLaborPrice = $('#spec-modal-trigger').data('labor-price');
+
 	const uniqueFormWrapper = $('#spec-modal .modal-body #unique-form-wrapper');
 
 	const materialFormEl = `
@@ -40,8 +42,8 @@ $(document).ready(function () {
 
 	const embroFormEl = `
 			<div class="form-group">
-				<label for="harga"><small>Harga Operator</small></label>
-				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${suggestedPrice}">
+				<label for="harga"><small>Harga Operator (disarankan: Rp${suggestedPrice})</small></label>
+				<input type="text" name="production[labor_price]" id="harga" class="form-control" value="${assignedLaborPrice}" placeholder="0">
 			</div>
 
 			<p class="mb-1"><small>Kerjakan di Mesin:</small></p>
@@ -253,6 +255,10 @@ $(document).ready(function () {
 	});
 
 	const outputModal = $('#output-modal');
+
+	/**
+	 * Output Functionality
+	 */
 
 	$('#new-output-trigger').click(function (event) {
 		// Reset previous value

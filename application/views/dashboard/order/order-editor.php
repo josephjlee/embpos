@@ -219,16 +219,37 @@
 						<input type="text" name="" id="amount" class="form-control amount" value="<?= isset($order['amount']) ? moneyStr($order['amount']) : ''; ?>" readonly>
 					</div>
 
+					<div class="form-group">
+						<label for="note"><small>Catatan</small></label>
+						<textarea name="order[note]" id="note" class="form-control" style="font-size:13px"><?= $order['note'] ?? ''; ?></textarea>
+					</div>
+
 				</div>
 
 			</div>
 
-			<!-- Order Form - Footer -->
+			<!-- Production Form -->
 			<div class="card shadow">
 				<div class="card-body">
-					<label for="note"><small>Catatan</small></label>
-					<textarea name="order[note]" id="note" class="form-control" style="font-size:13px"><?= $order['note'] ?? ''; ?></textarea>
+					<div class="form-group">
+						<label for="harga"><small>Harga Operator (disarankan: Rp<?= moneyStrDot($order['price'] - 250); ?>)</small></label>
+						<input type="text" name="order[labor_price]" id="harga" class="form-control" value="<?= $production['labor_price']; ?>" placeholder="0">
+					</div>
+
+					<p class="mb-1"><small>Kerjakan di Mesin:</small></p>
+					<div class="form-row">
+						<?php for ($i = 1; $i < 7; $i++) : ?>
+							<div class="form-group col">
+								<div class="custom-control custom-checkbox col">
+									<input type="checkbox" name="order[machine_number][]" class="custom-control-input" id="machine-<?= $i; ?>" value="<?= $i; ?>" <?= in_array($i, explode(',', $production['machine'])) ? 'checked' : ''; ?>>
+									<label class="custom-control-label" for="machine-<?= $i; ?>"><?= $i; ?></label>
+								</div>
+							</div>
+						<?php endfor; ?>
+					</div>
+
 				</div>
+
 			</div>
 
 		</div>
@@ -252,8 +273,6 @@
 						<?php if ($this->uri->segment(2) == 'sunting') : ?>
 							<a href="#" data-toggle="modal" data-target="#update-process-modal" class="action-btn"><i class="fas fa-tasks fa-2x"></i></a>
 						<?php endif; ?>
-
-						<a href="#" data-toggle="modal" data-target="#spec-modal" class="action-btn"><i class="fas fa-sliders-h fa-2x"></i></a>
 
 						<a href="#" data-toggle="modal" data-target="#output-modal" class="action-btn" id="new-output-trigger"><i class="fas fa-calculator fa-2x"></i></a>
 
@@ -717,6 +736,17 @@
 
 						<div class="form-row">
 							<div class="form-group col">
+								<label for="started"><small>Mulai</small></label>
+								<input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
+							</div>
+							<div class="form-group col">
+								<label for="started"><small>Sampai</small></label>
+								<input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group col">
 
 								<label for="modal-machine"><small>Mesin</small></label>
 
@@ -751,17 +781,6 @@
 									<option value="2">Malam</option>
 								</select>
 
-							</div>
-						</div>
-
-						<div class="form-row">
-							<div class="form-group col">
-								<label for="started"><small>Mulai</small></label>
-								<input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
-							</div>
-							<div class="form-group col">
-								<label for="started"><small>Sampai</small></label>
-								<input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
 							</div>
 						</div>
 
