@@ -303,6 +303,17 @@
 
             <div class="form-row">
               <div class="form-group col">
+                <label for="started"><small>Mulai</small></label>
+                <input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
+              </div>
+              <div class="form-group col">
+                <label for="started"><small>Sampai</small></label>
+                <input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
 
                 <label for="modal-machine"><small>Mesin</small></label>
 
@@ -337,17 +348,6 @@
                   <option value="2">Malam</option>
                 </select>
 
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group col">
-                <label for="started"><small>Mulai</small></label>
-                <input type="date" name="output[started]" id="modal-started" class="form-control date-time-picker">
-              </div>
-              <div class="form-group col">
-                <label for="started"><small>Sampai</small></label>
-                <input type="date" name="output[finished]" id="modal-finished" class="form-control date-time-picker">
               </div>
             </div>
 
