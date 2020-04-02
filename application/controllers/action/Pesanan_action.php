@@ -38,7 +38,7 @@ class Pesanan_action extends CI_Controller
         $order['quantity'] = str_replace(',', '', $order['quantity']);
         $order['price'] = str_replace(',', '', $order['price']);
 
-        $this->db->insert('order', $order);
+        $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         redirect(base_url($this->input->post('source-url')));
     }
