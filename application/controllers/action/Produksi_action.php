@@ -99,7 +99,11 @@ class Produksi_action extends CI_Controller
         $order_quantity = $this->input->post('order-qty');
 
         // Check total output after update. If equal or greater than order quantity then update production_status_id to 6
-        $order['production_status_id'] = $current_output + $output['quantity'] >= $order_quantity ? 6 : 5;
+        if ($output['is_helper'] == 0) {
+            $order['production_status_id'] = $current_output + $output['quantity'] >= $order_quantity ? 6 : 5;
+        }
+
+        // Update the order table
         $this->db->update('order', $order, ['order_id' => $order['order_id']]);
 
         // Redirect to its original page

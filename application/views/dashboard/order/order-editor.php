@@ -365,7 +365,7 @@
 
 											</tr>
 
-											<?php $total_output += (int) $output['quantity']; ?>
+											<?php $output['is_helper'] == 0 ? $total_output += (int) $output['quantity'] : $total_output += (int) 0; ?>
 
 										<?php endforeach; ?>
 
