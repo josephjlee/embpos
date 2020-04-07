@@ -33,6 +33,9 @@ class Invoice_action extends CI_Controller
 		$orders 	= $this->input->post('orders');
 		$payment 	= $this->input->post('payment');
 
+		// Remove thousand separator from discount input
+		$invoice['discount'] = str_replace(',', '', $invoice['discount']);
+
 		// Save invoice data into invoice table
 		$this->db->insert('invoice', $invoice);
 
@@ -104,6 +107,9 @@ class Invoice_action extends CI_Controller
 			// Return product that don't have product_sale_id yet
 			return empty($products['product_sale_id']);
 		}
+
+		// Remove thousand separator from discount input
+		$invoice['discount'] = str_replace(',', '', $invoice['discount']);
 
 		// Save invoice update
 		$this->db->update('invoice', $invoice, ['invoice_id' => $invoice['invoice_id']]);
