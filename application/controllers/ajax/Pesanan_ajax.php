@@ -143,4 +143,63 @@ class Pesanan_ajax extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode($orders);
 	}
+
+	public function list_order_for_invoice_pdf()
+	{
+		$invoice_id = $this->input->post('invoice_id');
+
+		$orders = $this->db->query("SELECT 
+								description,
+								quantity,
+								price,
+								(quantity*price) AS value
+							FROM
+								`order`
+							WHERE 
+								invoice_id = {$invoice_id}
+		")->result_array();
+
+		$row_set = [];
+		$row_set[] = [
+			[
+				'text' => 'Pesanan',
+				'style' => ['itemsHeader', 'center']
+			],
+			[
+				'text' => 'Jml',
+				'style' => ['itemsHeader', 'right']
+			],
+			[
+				'text' => 'Harga',
+				'style' => ['itemsHeader', 'right']
+			],
+			[
+				'text' => 'Nilai',
+				'style' => ['itemsHeader', 'right']
+			]
+		];
+
+		foreach ($orders as $key => $order) {
+			$row = [];
+			foreach ($order as $key => $value) {
+				if ($key == 'description') {
+					$row[] = [
+						'text' => moneyStrDot($value),
+						'style'	=> 'itemTitle'
+					];
+				} else {
+					$row[] = [
+						'text' => moneyStrDot($value),
+						'style'	=> 'itemNumber'
+					];
+				}
+			}
+			array_push($row_set, $row);
+		}
+
+		// pretty_print($row_set);
+
+		header('Content-Type: application/json');
+		echo json_encode($row_set);
+	}
 }

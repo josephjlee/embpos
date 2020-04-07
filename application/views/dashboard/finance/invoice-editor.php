@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat_invoice' ? 'buat' : 'sunting'; ?>">
+<div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat_invoice' ? 'buat' : 'sunting'; ?>" data-customer-name="<?= $cust['customer_name']; ?>" data-customer-company="<?= $cust['customer_company']; ?>" data-invoice-filename="<?= $invoice_filename ?>">
 
   <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'tambah' : 'perbarui'; ?>
 
@@ -51,7 +51,7 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-file-invoice fa-fw"></i></div>
                 </div>
-                <input type="text" name="invoice[number]" id="order-number" placeholder="nomor invoice" value="<?= $invoice_number ?? $invoice_detail['invoice_number']; ?>" class="form-control">
+                <input type="text" name="invoice[number]" id="invoice-number" placeholder="nomor invoice" value="<?= $invoice_number ?? $invoice_detail['invoice_number']; ?>" class="form-control">
               </div>
 
               <div class="input-group customer-select-wrapper">

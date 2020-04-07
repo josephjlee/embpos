@@ -64,6 +64,16 @@ class Keuangan extends CI_Controller
 
         $data['payment_records'] = $this->pembayaran_model->get_payment_by_invoice_id($data['invoice_detail']['invoice_id']);
 
+        $data['cust'] = $this->pelanggan_model->get_customer_by_id($data['invoice_detail']['customer_id']);
+
+        // Prepare data for page title
+        $invoice = $data['invoice_detail']['invoice_number'];
+        $customer = $data['cust']['customer_name'];
+        $date = date('dmy');
+
+        // Generate the tile using data above
+        $data['invoice_filename'] = "INV_{$invoice}_{$customer}_{$date}.pdf";
+
         $data['content'] = $this->load->view('dashboard/finance/invoice-editor', $data, TRUE);
 
         $data['view_script'] = 'editor--invoice.js';
