@@ -143,15 +143,4 @@ class Vendor_model extends CI_Model
 
 		return $key[0];
 	}
-
-	public function siapkan_data($vendor)
-	{
-		$vendor_db_data = [];
-
-		foreach ($vendor as $col => $val) {
-			$vendor_db_data[$col] = $val;
-		}
-
-		return $vendor_db_data;
-	}
 }

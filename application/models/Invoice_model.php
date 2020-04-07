@@ -2,15 +2,6 @@
 
 class Invoice_model extends CI_Model
 {
-
-    public function simpan_pembayaran($payment)
-    {
-
-        $payment_data = $this->siapkan_data($payment);
-
-        return $this->db->insert('payment', $payment_data);
-    }
-
     public function get_order_sub_total($invoice_id)
     {
 

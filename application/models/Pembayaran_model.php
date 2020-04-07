@@ -138,20 +138,4 @@ class Pembayaran_model extends CI_Model
 
     return $query->result_array();
   }
-
-  public function siapkan_data($payment)
-  {
-
-    $payment_db_data = [];
-
-    foreach ($payment as $col => $val) {
-      $payment_db_data[$col] = $val;
-
-      if ($col == 'amount') {
-        $payment_db_data[$col] = str_replace(',', '', $val);
-      }
-    }
-
-    return $payment_db_data;
-  }
 }
