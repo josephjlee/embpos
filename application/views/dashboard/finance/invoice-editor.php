@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat_invoice' ? 'buat' : 'sunting'; ?>" data-customer-name="<?= $cust['customer_name']; ?>" data-customer-company="<?= $cust['customer_company']; ?>" data-invoice-filename="<?= $invoice_filename ?>">
+<div id="invoice-editor" class="container-fluid invoice-detail" data-page-type="<?= $this->uri->segment('2') == 'buat_invoice' ? 'buat' : 'sunting'; ?>">
 
   <?php $method = $this->uri->segment(2) == 'buat_invoice' ? 'tambah' : 'perbarui'; ?>
 
@@ -19,11 +19,7 @@
 
         <?php if ($this->uri->segment(2) == 'sunting_invoice') : ?>
 
-          <a href="<?= base_url('keuangan/lihat_invoice/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></a>
-
-          <a href="" id="export-pdf" class="pb-1 action-btn"><i class="fa fa-fw fa-file-pdf fa-lg"></i></a>
-
-          <a href="" class="pb-1 action-btn"><i class="fas fa-fw fa-print fa-lg"></i></a>
+          <a href="<?= base_url('keuangan/lihat_invoice/') . $invoice_detail['invoice_number']; ?>" class="pb-1 action-btn"><i class="fas fa-fw fa-file-export fa-lg"></i></a>
 
           <div class="ml-auto">
             <span class="badge badge-primary mr-2 py-2 px-3 text-uppercase"><?= $invoice_detail['payment_status']; ?></span>

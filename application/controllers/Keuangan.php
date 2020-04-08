@@ -64,16 +64,6 @@ class Keuangan extends CI_Controller
 
         $data['payment_records'] = $this->pembayaran_model->get_payment_by_invoice_id($data['invoice_detail']['invoice_id']);
 
-        $data['cust'] = $this->pelanggan_model->get_customer_by_id($data['invoice_detail']['customer_id']);
-
-        // Prepare data for page title
-        $invoice = $data['invoice_detail']['invoice_number'];
-        $customer = $data['cust']['customer_name'];
-        $date = date('dmy');
-
-        // Generate the tile using data above
-        $data['invoice_filename'] = "INV_{$invoice}_{$customer}_{$date}.pdf";
-
         $data['content'] = $this->load->view('dashboard/finance/invoice-editor', $data, TRUE);
 
         $data['view_script'] = 'editor--invoice.js';
@@ -100,6 +90,8 @@ class Keuangan extends CI_Controller
         $data['order_details']  = $this->pesanan_model->get_order_by_invoice_id($data['invoice_detail']['invoice_id']);
 
         $data['product_details']  = $this->penjualan_model->get_product_sale_by_invoice_id($data['invoice_detail']['invoice_id']);
+
+        $data['view_script'] = 'preview--invoice.js';
 
         $data['content'] = $this->load->view('dashboard/finance/invoice-fullscreen', $data, TRUE);
 

@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="<?= base_url('vendors/flatpickr/dist/flatpickr.min.css') ?>">
   <script src="<?= base_url('vendors/flatpickr/dist/flatpickr.js') ?>"></script>
 
+  <script src="<?= base_url('vendors/html2canvas.min.js') ?>"></script>
+
   <link rel="stylesheet" href="<?= base_url('vendors/datatables/buttons.dataTables.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('vendors/datatables/buttons.bootstrap4.min.css') ?>">
 

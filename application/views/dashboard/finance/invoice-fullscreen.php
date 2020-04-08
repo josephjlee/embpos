@@ -1,10 +1,12 @@
 <!-- Begin Page Content -->
-<div class="container-fluid invoice-detail">
+<div id="invoice-preview" class="container-fluid invoice-detail" data-invoice-filename="<?= $title; ?>" data-customer-name="<?= $customer['customer_name']; ?>" data-customer-affiliation="<?= $customer['customer_company']; ?>" data-subtotal="<?= moneyStrDot($invoice_detail['sub_total']); ?>" data-discount="<?= moneyStrDot($invoice_detail['discount']); ?>" data-total-due="<?= moneyStrDot($invoice_detail['total_due']); ?>" data-paid="<?= moneyStrDot($invoice_detail['paid']); ?>" data-payment-due="<?= moneyStrDot($invoice_detail['invoice_due']); ?>" data-invoice-note="<?= $invoice_detail['note']; ?>" data-invoice-date="<?= date('j F Y', strtotime($invoice_detail['invoice_date'])); ?>" data-payment-date="<?= date('j F Y', strtotime($invoice_detail['payment_date'])); ?>" data-invoice-number="<?= $invoice_detail['invoice_number']; ?>" data-invoice-id="<?= $invoice_detail['invoice_id']; ?>">
 
   <!-- Title -->
   <div class="row mb-2">
-    <div class="col">
+    <div class="col d-flex align-items-center">
       <h1 class="h3 text-gray-800 mr-2"><?= $title; ?></h1>
+      <a href="#" id="export-png" class="action-btn"><i class="fas fa-fw fa-file-image fa-lg"></i></i></a>
+      <a href="#" id="export-pdf" class="action-btn"><i class="fa fa-fw fa-file-pdf fa-lg"></i></a>
     </div>
   </div>
 
@@ -17,7 +19,7 @@
       <!-- Version 1 -->
       <div class="card shadow mb-4">
 
-        <div class="card-body pt-2">
+        <div class="card-body pt-2" id="capture">
 
           <div class="row bg-primary text-white py-3 mb-4" style="border-top-left-radius: 0.35rem;border-top-right-radius: 0.35rem">
 
